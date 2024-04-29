@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane style="-fx-background-color: #ffd500;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.RegionsController">
+   <center>
+      <Label text="Regions" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
