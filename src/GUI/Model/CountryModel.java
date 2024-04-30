@@ -24,5 +24,4 @@ public class CountryModel {
         //System.out.println(countryNames);
         return countryNames;
     }
-
 }

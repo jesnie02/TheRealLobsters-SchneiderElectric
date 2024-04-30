@@ -5,8 +5,9 @@ import GUI.Model.MultiplierModel;
 
 public class CalculatorManager implements ICalculateManager{
 
-    private MultiplierManager multiplierManager;
-
+    private MultiplierModel multiplierModel;
+    private double hourlyRate;
+    private double fixedAmount;
 
     @Override
     /**
@@ -20,6 +21,16 @@ public class CalculatorManager implements ICalculateManager{
         return calculation;
     }
 
+    @Override
+    public void setHourlyRateAndFixedAmount(double hourlyRate, double fixedAmt) {
+        this.hourlyRate = hourlyRate;
+        this.fixedAmount = fixedAmt;
+    }
+
+    public double getCalculatedHourlyRateWithFixedAmount() {
+        double calculatedHourlyRateWithFixedAmountResult = hourlyRate * fixedAmount;
+        return calculatedHourlyRateWithFixedAmountResult;
+    }
 
 
 }
