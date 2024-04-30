@@ -1,8 +1,13 @@
 package GUI.Controller;
 
+import GUI.Model.CountryModel;
+import GUI.Model.TeamsModel;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class MultipliersController {
 
@@ -10,13 +15,32 @@ public class MultipliersController {
     private MFXSlider sliderGM, sliderMU;
     @FXML
     private TextField txtGM, txtMU;
+    private CountryModel countryModel;
+    private TeamsModel teamsModel;
 
     private double grossMargin, markUp;
+    @FXML
+    private ComboBox cBoxProfile_Multiplier, cBoxTeam_Multiplier;
+
 
     @FXML
     private void initialize(){
-        getSliderValue();
-        setValueInField();
+        try {
+            getSliderValue();
+            setValueInField();
+            cBoxTeam_Multiplier.setItems(teamsModel.getAllTeams());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public MultipliersController(){
+        try {
+            countryModel = new CountryModel();
+            teamsModel = new TeamsModel();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -43,5 +67,7 @@ public class MultipliersController {
     public double getMUValue(){
         return sliderMU.getValue();
     }
+
+
 
 }

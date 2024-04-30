@@ -1,10 +1,11 @@
 package BLL;
 
 import GUI.Controller.MultipliersController;
+import GUI.Model.MultiplierModel;
 
 public class CalculatorManager implements ICalculateManager{
 
-    private MultipliersController multipliersController;
+    private MultiplierModel multiplierModel;
 
     @Override
     /**
@@ -14,10 +15,10 @@ public class CalculatorManager implements ICalculateManager{
      * @return
      */
     public double getDalyRateWithMultiplier(double rate, double percentage){
-        if (multipliersController.getGMValue() == 0){
-            percentage = multipliersController.getMUValue();
+        if (multiplierModel.getGrossMarginValue() == 0){
+            percentage = multiplierModel.getMarkupValue();
         } else {
-            percentage = multipliersController.getGMValue();
+            percentage = multiplierModel.getGrossMarginValue();
         }
 
         double calculation = rate * (percentage / 100);
@@ -27,6 +28,6 @@ public class CalculatorManager implements ICalculateManager{
 
 
     private void setController(){
-        multipliersController = new MultipliersController();
+        multiplierModel = new MultiplierModel();
     }
 }

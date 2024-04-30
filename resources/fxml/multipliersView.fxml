@@ -17,12 +17,12 @@
          <children>
             <VBox alignment="CENTER" prefHeight="337.0" prefWidth="561.0">
                <children>
-                  <ComboBox prefHeight="25.0" prefWidth="251.0" promptText="Teams">
+                  <ComboBox fx:id="cBoxTeam_Multiplier" prefHeight="25.0" prefWidth="251.0" promptText="Teams">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox prefHeight="25.0" prefWidth="249.0" promptText="Profiles">
+                  <ComboBox fx:id="cBoxProfile_Multiplier" prefHeight="25.0" prefWidth="249.0" promptText="Profiles">
                      <VBox.margin>
                         <Insets bottom="8.0" />
                      </VBox.margin>
