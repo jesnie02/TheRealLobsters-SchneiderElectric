@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -94,7 +94,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox prefHeight="26.0" prefWidth="142.0" />
+                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Choose country" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -107,7 +107,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox prefHeight="26.0" prefWidth="142.0" />
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
