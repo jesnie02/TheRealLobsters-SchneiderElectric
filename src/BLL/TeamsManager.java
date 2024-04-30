@@ -13,7 +13,7 @@ public class TeamsManager {
         teamsDAO = new DAL.Teams_DAO();
     }
 
-    public List<Team> getAllTeams() throws Exception {
-        return teamsDAO.getAllTeams();
+    public List<Team> getAllProjectTeams() throws Exception {
+        return teamsDAO.getAllProjectTeams();
     }
 }

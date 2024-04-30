@@ -21,13 +21,13 @@ public class Teams_DAO implements ITeamsDataAccess {
 
 
     @Override
-    public List<Team> getAllTeams() throws Exception {
+    public List<Team> getAllProjectTeams() throws Exception {
 
         List<Team> allTeams = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
 
-            String sql = "SELECT * FROM Teams";
+            String sql = "SELECT * FROM ProjectTeams";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 Team team = new Team(

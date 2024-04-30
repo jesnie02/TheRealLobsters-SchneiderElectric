@@ -27,7 +27,7 @@ public class CreateProfileController {
     public void initialize() {
         try {
             cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
-            cBoxTeam_CreateProfile.setItems(teamsModel.getAllTeams());
+            cBoxTeam_CreateProfile.setItems(teamsModel.getAllProjectTeams());
         } catch (Exception e) {
             e.printStackTrace();
         }

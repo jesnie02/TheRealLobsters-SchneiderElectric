@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
-
 public class MultipliersController {
 
     @FXML
@@ -28,7 +26,7 @@ public class MultipliersController {
         try {
             getSliderValue();
             setValueInField();
-            cBoxTeam_Multiplier.setItems(teamsModel.getAllTeams());
+            cBoxTeam_Multiplier.setItems(teamsModel.getAllProjectTeams());
         } catch (Exception e){
             e.printStackTrace();
         }

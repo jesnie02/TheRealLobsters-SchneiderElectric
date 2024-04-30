@@ -94,7 +94,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Choose country" />
+                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -107,7 +107,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Choose team" />
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
