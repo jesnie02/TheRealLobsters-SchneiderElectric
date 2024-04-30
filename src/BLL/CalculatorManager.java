@@ -5,29 +5,21 @@ import GUI.Model.MultiplierModel;
 
 public class CalculatorManager implements ICalculateManager{
 
-    private MultiplierModel multiplierModel;
+    private MultiplierManager multiplierManager;
+
 
     @Override
     /**
      *
-     * @param rate = daily rate or hourly rate
+     * @param dayRate = daily rate
      * @param percentage
      * @return
      */
-    public double getDalyRateWithMultiplier(double rate, double percentage){
-        if (multiplierModel.getGrossMarginValue() == 0){
-            percentage = multiplierModel.getMarkupValue();
-        } else {
-            percentage = multiplierModel.getGrossMarginValue();
-        }
-
-        double calculation = rate * (percentage / 100);
-
+    public double getDalyRateWithMultiplier(double dayRate, double percentage){
+        double calculation = dayRate * (1 + percentage / 100);
         return calculation;
     }
 
 
-    private void setController(){
-        multiplierModel = new MultiplierModel();
-    }
+
 }

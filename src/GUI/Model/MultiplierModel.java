@@ -1,25 +1,31 @@
 package GUI.Model;
 
+import BLL.CalculatorManager;
+import BLL.MultiplierManager;
 import GUI.Controller.MultipliersController;
 
 public class MultiplierModel {
 
-    MultipliersController multipliersController;
+    private MultipliersController multipliersController;
+    private MultiplierManager multiplierManager;
+
+
+
+
+    public MultiplierModel(MultipliersController multipliersController){
+        this.multipliersController = multipliersController;
+        this.multiplierManager = new MultiplierManager(new CalculatorManager());
+    }
 
     public double getGrossMarginValue(){
-        double percentage = multipliersController.getGMValue();
-        return percentage;
+        return multipliersController.getGMValue();
     }
 
     public double getMarkupValue() {
-        double percentage = multipliersController.getMUValue();
-        return percentage;
+        return multipliersController.getMUValue();
     }
 
-
-    private void setController(){
-       multipliersController = new MultipliersController();
+    public double getResultOfDayRWithMultiplier(double dayRate, double percentage) {
+        return multiplierManager.calculateDayRateWithMultiplier(dayRate, percentage);
     }
-
-
 }
