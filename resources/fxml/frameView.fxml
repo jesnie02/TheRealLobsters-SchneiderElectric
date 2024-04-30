@@ -41,26 +41,27 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" />
                </VBox.margin>
             </Separator>
-            <Button mnemonicParsing="false" onAction="#buttonOpenDashboard" prefHeight="26.0" prefWidth="111.0" text="Dashboard">
+            <Button mnemonicParsing="false" onAction="#openDashboard" prefHeight="26.0" prefWidth="111.0" text="Dashboard">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonOpenProfiles" prefHeight="26.0" prefWidth="116.0" text="Profiles">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openProfiles" prefHeight="26.0" prefWidth="116.0" text="Profiles">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonOpenTeams" prefHeight="26.0" prefWidth="112.0" text="Teams">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openTeams" prefHeight="26.0" prefWidth="112.0" text="Teams">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonOpenRegions" prefHeight="26.0" prefWidth="110.0" text="Regions">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="26.0" prefWidth="110.0" text="Regions">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
             </Button>
+            <Button layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#openMultiplier" prefHeight="26.0" prefWidth="110.0" text="Multiplier" />
             <VBox alignment="BOTTOM_CENTER" prefHeight="240.0" prefWidth="100.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#buttonLogOut" text="Log out" />

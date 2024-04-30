@@ -130,7 +130,7 @@ public class FrameController implements Initializable {
      * It pops the last node from the pageHistory stack and transitions to it.
      */
     @FXML
-    private void buttonOpenDashboard(ActionEvent actionEvent) {
+    private void openDashboard(ActionEvent actionEvent) {
         loadView("DashboardView.fxml");
     }
 
@@ -140,7 +140,7 @@ public class FrameController implements Initializable {
      * It loads the profile view.
      */
     @FXML
-    private void buttonOpenProfiles(ActionEvent actionEvent) {
+    private void openProfiles(ActionEvent actionEvent) {
         loadView("ProfileView.fxml");
     }
 
@@ -149,7 +149,7 @@ public class FrameController implements Initializable {
      * It loads the teams view.
      */
     @FXML
-    private void buttonOpenTeams(ActionEvent actionEvent) {
+    private void openTeams(ActionEvent actionEvent) {
         loadView("TeamsView.fxml");
     }
 
@@ -158,10 +158,14 @@ public class FrameController implements Initializable {
      * It loads the regions view.
      */
     @FXML
-    private void buttonOpenRegions(ActionEvent actionEvent) {
-        loadView("RegionsView.fxml");
+    private void openGeography(ActionEvent actionEvent) {
+        loadView("geographyView.fxml");
     }
 
+    @FXML
+    private void openMultiplier(ActionEvent actionEvent) {
+        loadView("multipliersView.fxml");
+    }
 
     /**
      * This method loads the create profile view.
@@ -177,6 +181,7 @@ public class FrameController implements Initializable {
     private void buttonLogOut(ActionEvent actionEvent) {
 
     }
+
 
 
 }

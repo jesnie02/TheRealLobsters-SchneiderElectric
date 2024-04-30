@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXSlider?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane prefHeight="397.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultipliersController">
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="337.0" prefWidth="561.0">
+               <children>
+                  <ComboBox prefHeight="25.0" prefWidth="251.0" promptText="Teams">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ComboBox prefHeight="25.0" prefWidth="249.0" promptText="Profiles">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <HBox alignment="CENTER" prefHeight="15.0" prefWidth="315.0">
+                     <children>
+                        <Label text="Gross margin:">
+                           <HBox.margin>
+                              <Insets right="16.0" />
+                           </HBox.margin>
+                        </Label>
+                        <MFXSlider>
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
+                        </MFXSlider>
+                        <TextField prefHeight="25.0" prefWidth="33.0">
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="\%" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="19.0" prefWidth="315.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="71.0" text="Markup:">
+                           <HBox.margin>
+                              <Insets right="16.0" />
+                           </HBox.margin>
+                        </Label>
+                        <MFXSlider>
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
+                        </MFXSlider>
+                        <TextField prefHeight="25.0" prefWidth="33.0">
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="\%" />
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="337.0" prefWidth="571.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="155.0" prefWidth="301.0">
+                     <VBox.margin>
+                        <Insets bottom="32.0" left="16.0" right="16.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="21.0" prefWidth="269.0">
+                           <children>
+                              <Label text="Gross margin Result:">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="32.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="51.0" text="300000" />
+                              <Label text="€" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="16.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="21.0" prefWidth="269.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="109.0" text="Markup Result:">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="32.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="51.0" text="280000" />
+                              <Label text="€" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Button">
+                     <VBox.margin>
+                        <Insets bottom="40.0" right="16.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <top>
+      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="24.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label prefHeight="29.0" prefWidth="168.0" text="Multipliers">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox prefHeight="30.0" prefWidth="699.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <VBox prefHeight="338.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="329.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
