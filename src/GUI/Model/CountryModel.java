@@ -18,6 +18,7 @@ public class CountryModel {
         ObservableList<String> countryNames = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getAllCountries().stream()
                         .map(BE.Countries::getCountryName)
+                        .sorted()
                         .collect(Collectors.toList())
         );
         System.out.println(countryNames); // Add this line
