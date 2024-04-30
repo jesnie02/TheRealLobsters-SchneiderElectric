@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="397.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultipliersController">
+<BorderPane prefHeight="397.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultipliersController">
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -35,12 +34,12 @@
                               <Insets right="16.0" />
                            </HBox.margin>
                         </Label>
-                        <MFXSlider>
+                        <MFXSlider fx:id="sliderGM" decimalPrecision="1" minorTicksCount="10" popupPadding="0.0" prefHeight="0.0" prefWidth="190.0" showMinorTicks="true" showTicksAtEdges="false">
                            <HBox.margin>
                               <Insets right="8.0" />
                            </HBox.margin>
                         </MFXSlider>
-                        <TextField prefHeight="25.0" prefWidth="33.0">
+                        <TextField fx:id="txtGM" prefHeight="25.0" prefWidth="33.0">
                            <HBox.margin>
                               <Insets right="8.0" />
                            </HBox.margin>
@@ -58,12 +57,12 @@
                               <Insets right="16.0" />
                            </HBox.margin>
                         </Label>
-                        <MFXSlider>
+                        <MFXSlider fx:id="sliderMU" decimalPrecision="1" minorTicksCount="10" popupPadding="0.0" prefHeight="0.0" prefWidth="190.0" showMinorTicks="true" showTicksAtEdges="false">
                            <HBox.margin>
                               <Insets right="8.0" />
                            </HBox.margin>
                         </MFXSlider>
-                        <TextField prefHeight="25.0" prefWidth="33.0">
+                        <TextField fx:id="txtMU" prefHeight="25.0" prefWidth="33.0">
                            <HBox.margin>
                               <Insets right="8.0" />
                            </HBox.margin>
