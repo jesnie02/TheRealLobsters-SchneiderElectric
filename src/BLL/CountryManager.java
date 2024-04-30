@@ -16,4 +16,5 @@ public class CountryManager {
     public List<Countries> getAllCountries() throws Exception {
         return countryDAO.getAllCountries();
     }
+
 }

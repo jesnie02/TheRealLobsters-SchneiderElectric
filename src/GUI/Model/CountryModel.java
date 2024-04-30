@@ -21,7 +21,8 @@ public class CountryModel {
                         .sorted()
                         .collect(Collectors.toList())
         );
-        System.out.println(countryNames); // Add this line
+        System.out.println(countryNames);
         return countryNames;
     }
+
 }

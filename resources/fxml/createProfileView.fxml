@@ -107,7 +107,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" />
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Choose team" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />

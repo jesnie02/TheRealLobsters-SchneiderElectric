@@ -1,6 +1,6 @@
 package DAL;
 
-import BE.Countries;
+import BE.Team;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
@@ -11,34 +11,34 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Country_DAO implements ICountryDataAccess {
+public class Teams_DAO implements ITeamsDataAccess {
 
     private final DBConnector dbConnector;
 
-    public Country_DAO() throws IOException {
+    public Teams_DAO() throws IOException {
         dbConnector = new DBConnector();
     }
 
 
     @Override
-    public List<Countries> getAllCountries() throws Exception {
+    public List<Team> getAllTeams() throws Exception {
 
-        List<Countries> allCountries = new ArrayList<>();
+        List<Team> allTeams = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
 
-            String sql = "SELECT * FROM Country";
+            String sql = "SELECT * FROM Teams";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
-                Countries countries = new Countries(
-                        rs.getInt("CountryId"),
-                        rs.getString("CountryName")
+                Team team = new Team(
+                        rs.getInt("TeamsId"),
+                        rs.getString("TeamName")
                 );
-                allCountries.add(countries);
+                allTeams.add(team);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return allCountries;
+        return allTeams;
     }
 }
