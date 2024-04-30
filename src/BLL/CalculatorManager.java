@@ -2,11 +2,18 @@ package BLL;
 
 import GUI.Controller.MultipliersController;
 
-public class CalculaterManager {
+public class CalculatorManager implements ICalculateManager{
 
     private MultipliersController multipliersController;
 
-    public double getDalyRateWithMarkup(double rate, double percentage){
+    @Override
+    /**
+     *
+     * @param rate = daily rate or hourly rate
+     * @param percentage
+     * @return
+     */
+    public double getDalyRateWithMultiplier(double rate, double percentage){
         if (multipliersController.getGMValue() == 0){
             percentage = multipliersController.getMUValue();
         } else {
