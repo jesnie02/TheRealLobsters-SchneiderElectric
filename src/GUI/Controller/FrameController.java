@@ -99,6 +99,7 @@ public class FrameController implements Initializable {
             transitionToNewScene(node);
         } catch (IOException e) {
             showErrorAlert("Error Loading View", "Failed to load the view: " + BASE_PATH + viewName + "\n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -171,7 +172,7 @@ public class FrameController implements Initializable {
      * This method loads the create profile view.
      */
     public void loadCreateProfileView() {
-        loadView("CreateProfileView.fxml");
+        loadView("createProfileView.fxml");
     }
 
     /**

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -48,14 +48,14 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="246.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="324.0" prefHeight="23.0" prefWidth="246.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Anual salary:">
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Firstname:">
                                  <HBox.margin>
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="142.0" />
+                              <TextField fx:id="txtFirstnameProfile" prefHeight="26.0" prefWidth="210.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -63,12 +63,47 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="34.0" prefHeight="23.0" prefWidth="246.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Overhead Multiplier percentage:">
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Lastname:">
                                  <HBox.margin>
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField prefHeight="26.0" prefWidth="142.0" />
+                              <TextField fx:id="txtLastnameProfile" prefHeight="26.0" prefWidth="210.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="246.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Anual salary:">
+                                 <HBox.margin>
+                                    <Insets right="25.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="210.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="34.0" prefHeight="23.0" prefWidth="246.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="187.0" text="Overhead Multiplier percentage:">
+                                 <HBox.margin>
+                                    <Insets right="25.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <MFXSlider fx:id="sliderOverhead" prefHeight="6.0" prefWidth="130.0">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </MFXSlider>
+                              <TextField fx:id="txtOverheadView" prefHeight="26.0" prefWidth="37.0">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin></TextField>
+                              <Label prefHeight="18.0" prefWidth="16.0" text="\%" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -81,7 +116,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="txtFixedAmount" prefHeight="26.0" prefWidth="142.0" />
+                              <TextField fx:id="txtFixedAmount" prefHeight="26.0" prefWidth="210.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -94,7 +129,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Select" />
+                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="210.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -107,7 +142,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="142.0" promptText="Select" />
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="210.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -120,7 +155,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField prefHeight="26.0" prefWidth="142.0" />
+                              <TextField fx:id="txtEffectiveHours" prefHeight="26.0" prefWidth="210.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -133,7 +168,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <CheckBox mnemonicParsing="false">
+                              <CheckBox fx:id="checkOverhead" mnemonicParsing="false">
                                  <HBox.margin>
                                     <Insets right="40.0" />
                                  </HBox.margin>
@@ -143,7 +178,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <CheckBox mnemonicParsing="false" />
+                              <CheckBox fx:id="checkProduction" mnemonicParsing="false" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -156,12 +191,12 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <MFXSlider decimalPrecision="1" minorTicksCount="10" popupPadding="0.0" prefHeight="0.0" prefWidth="190.0" showMinorTicks="true" showTicksAtEdges="false">
+                              <MFXSlider fx:id="sliderUtilization" decimalPrecision="1" minorTicksCount="10" popupPadding="0.0" prefHeight="0.0" prefWidth="190.0" showMinorTicks="true" showTicksAtEdges="false">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField prefHeight="26.0" prefWidth="30.0" />
+                              <TextField fx:id="txtUtilizationView" prefHeight="26.0" prefWidth="30.0" />
                               <Label text="\%">
                                  <padding>
                                     <Insets left="8.0" />
@@ -185,16 +220,6 @@
                                           <Insets left="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="54.0" text="Result: " />
-                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="41.0" text="25">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                       <padding>
-                                          <Insets right="8.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="24.0" text="€" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
@@ -233,6 +258,9 @@
                                     </Label>
                                     <Label prefHeight="18.0" prefWidth="39.0" text="0" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="8.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="300.0">
                                  <children>
@@ -243,6 +271,27 @@
                                     </Label>
                                     <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
                                     <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="8.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="132.0" prefHeight="26.0" prefWidth="300.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="208.0" text="Result:">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="48.0" text="25">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="24.0" text="€" />
                                  </children>
                               </HBox>
                            </children>
@@ -256,16 +305,6 @@
                                           <Insets left="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="49.0" text="Result: " />
-                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="52.0" text="300">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                       <padding>
-                                          <Insets right="8.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="27.0" text="€" />
                                  </children>
                                  <padding>
                                     <Insets bottom="8.0" />
@@ -321,6 +360,27 @@
                                     <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
                                     <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="8.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="139.0" prefHeight="26.0" prefWidth="300.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="199.0" text="Result:">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="52.0" text="300">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="27.0" text="€" />
+                                 </children>
                               </HBox>
                            </children>
                         </VBox>
@@ -336,7 +396,12 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="127.0" text="Save" />
+                  <Label fx:id="lblShowMassage" prefHeight="18.0" prefWidth="318.0">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#saveProfileToDatabase" prefHeight="41.0" prefWidth="127.0" text="Save" />
                </children>
                <VBox.margin>
                   <Insets right="25.0" top="25.0" />

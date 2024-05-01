@@ -1,10 +1,12 @@
 package GUI.Model;
 
+
 import BE.Country;
 import BLL.CountryManager;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class CountryModel {
@@ -15,14 +17,18 @@ public class CountryModel {
         countryManager = new BLL.CountryManager();
     }
 
-    public ObservableList<String> getAllCountries() throws Exception {
-        ObservableList<String> countryNames = javafx.collections.FXCollections.observableArrayList(
+    public ObservableList<Country> getAllCountries() throws Exception {
+        ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getAllCountries().stream()
-                        .map(Country::getCountryName)
-                        .sorted()
+                        .sorted(Comparator.comparing(Country::getCountryName))
+                        .map(country -> new Country(country.getCountryId(), country.getCountryName()) {
+                            @Override
+                            public String toString() {
+                                return getCountryName();
+                            }
+                        })
                         .collect(Collectors.toList())
         );
-        //System.out.println(countryNames);
-        return countryNames;
+        return countries;
     }
 }
