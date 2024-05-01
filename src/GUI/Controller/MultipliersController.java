@@ -1,7 +1,4 @@
 package GUI.Controller;
-
-import BLL.CalculatorManager;
-import BLL.MultiplierManager;
 import GUI.Model.CountryModel;
 import GUI.Model.MultiplierModel;
 import GUI.Model.ProfileModel;

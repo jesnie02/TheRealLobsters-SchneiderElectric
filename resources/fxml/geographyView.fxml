@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane style="-fx-background-color: #ffd500;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.RegionsController">
+<BorderPane style="-fx-background-color: #ffd500;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.GeographyController">
    <center>
       <Label text="Regions" BorderPane.alignment="CENTER" />
    </center>

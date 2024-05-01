@@ -1,16 +1,16 @@
 package BE;
 
-public class Countries {
+public class Country {
 
     private int CountryId;
     private String CountryName;
 
-    public Countries(int id, String name) {
+    public Country(int id, String name) {
         this.CountryId = id;
         this.CountryName = name;
     }
 
-    public Countries(String name) {
+    public Country(String name) {
         this.CountryName = name;
     }
 
@@ -32,6 +32,9 @@ public class Countries {
 
     @Override
     public String toString() {
-        return CountryName;
+        return "Country{" +
+                "CountryId=" + CountryId +
+                ", CountryName='" + CountryName + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package DAL;
 
-import BE.Countries;
+import BE.Country;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
@@ -21,20 +21,20 @@ public class Country_DAO implements ICountryDataAccess {
 
 
     @Override
-    public List<Countries> getAllCountries() throws Exception {
+    public List<Country> getAllCountries() throws Exception {
 
-        List<Countries> allCountries = new ArrayList<>();
+        List<Country> allCountries = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
 
             String sql = "SELECT * FROM Country";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
-                Countries countries = new Countries(
+                Country country = new Country(
                         rs.getInt("CountryId"),
                         rs.getString("CountryName")
                 );
-                allCountries.add(countries);
+                allCountries.add(country);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,6 +1,6 @@
 package BLL;
 
-import BE.Countries;
+import BE.Country;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,7 @@ public class CountryManager {
         countryDAO = new DAL.Country_DAO();
     }
 
-    public List<Countries> getAllCountries() throws Exception {
+    public List<Country> getAllCountries() throws Exception {
         return countryDAO.getAllCountries();
     }
 

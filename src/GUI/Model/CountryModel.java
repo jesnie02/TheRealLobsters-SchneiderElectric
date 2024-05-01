@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Country;
 import BLL.CountryManager;
 import javafx.collections.ObservableList;
 
@@ -17,7 +18,7 @@ public class CountryModel {
     public ObservableList<String> getAllCountries() throws Exception {
         ObservableList<String> countryNames = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getAllCountries().stream()
-                        .map(BE.Countries::getCountryName)
+                        .map(Country::getCountryName)
                         .sorted()
                         .collect(Collectors.toList())
         );

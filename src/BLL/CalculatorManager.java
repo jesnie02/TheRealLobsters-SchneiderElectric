@@ -32,5 +32,4 @@ public class CalculatorManager implements ICalculateManager{
         return calculatedHourlyRateWithFixedAmountResult;
     }
 
-
 }
