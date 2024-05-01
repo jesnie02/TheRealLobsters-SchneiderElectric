@@ -1,13 +1,20 @@
 package GUI.Controller;
 
 import GUI.Model.*;
-import javafx.scene.control.*;
-import java.io.IOException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class CreateProfileController {
-    public ComboBox cBoxCountry_CreateProfile, cBoxTeam_CreateProfile;
-    public TextField txtAnnualSalary, txtFixedAmount;
-    public Label lblHourlyResult, lblFixedAmountResult;
+    @FXML
+    private ComboBox<String> cBoxCountry_CreateProfile, cBoxTeam_CreateProfile;
+    @FXML
+    private Label lblHourlyResult, lblFixedAmountResult;
+    @FXML
+    private TextField txtFixedAmount;
 
     private CountryModel countryModel;
     private TeamsModel teamsModel;
@@ -23,33 +30,27 @@ public class CreateProfileController {
         }
     }
 
+    @FXML
     public void initialize() {
         try {
             cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
             cBoxTeam_CreateProfile.setItems(teamsModel.getAllProjectTeams());
-            txtAnnualSalary.textProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("txtAnnualSalary changed from " + oldValue + " to " + newValue);
-                sendValuesToProfileModel();
-                displayCalculatedHourlyRate();
-            });
 
-            txtFixedAmount.textProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("txtFixedAmount changed from " + oldValue + " to " + newValue);
-                sendValuesToProfileModel();
-                displayCalculatedHourlyRate();
-            });
+            ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                calculateHourlyRateWithFixedAmount();
+            };
 
+            txtFixedAmount.textProperty().addListener(textFieldListener);
+            lblHourlyResult.textProperty().addListener(textFieldListener);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void sendValuesToProfileModel() {
-        profileModel.setHourlyResultAndFixedAmount(lblHourlyResult.getText(), txtFixedAmount.getText());
-        System.out.println("Values have been sent to the model: " + lblHourlyResult.getText() + ", " + txtFixedAmount.getText());
-    }
-
-    public void displayCalculatedHourlyRate() {
-        lblFixedAmountResult.setText(String.valueOf(profileModel.fetchAndReturnCalculatedHourlyRateWithFixedAmount()));
+    public void calculateHourlyRateWithFixedAmount() {
+        double hourlyRate = Double.parseDouble(lblHourlyResult.getText());
+        double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
+        double result = profileModel.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
+        lblFixedAmountResult.setText(String.valueOf(result));
     }
 }

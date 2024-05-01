@@ -1,13 +1,6 @@
 package BLL;
 
-import GUI.Controller.MultipliersController;
-import GUI.Model.MultiplierModel;
-
 public class CalculatorManager implements ICalculateManager{
-
-    private MultiplierModel multiplierModel;
-    private double hourlyRate;
-    private double fixedAmount;
 
     @Override
     /**
@@ -22,14 +15,14 @@ public class CalculatorManager implements ICalculateManager{
     }
 
     @Override
-    public void setHourlyRateAndFixedAmount(double hourlyRate, double fixedAmt) {
-        this.hourlyRate = hourlyRate;
-        this.fixedAmount = fixedAmt;
+    /**
+     *
+     * @param hourlyRate
+     * @param fixedAmount
+     * @return
+     */
+    public double getHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount){
+        double calculation = hourlyRate + fixedAmount;
+        return calculation;
     }
-
-    public double getCalculatedHourlyRateWithFixedAmount() {
-        double calculatedHourlyRateWithFixedAmountResult = hourlyRate * fixedAmount;
-        return calculatedHourlyRateWithFixedAmountResult;
-    }
-
 }

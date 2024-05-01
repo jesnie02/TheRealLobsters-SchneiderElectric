@@ -4,5 +4,11 @@ public interface ICalculateManager {
 
     double getDalyRateWithMultiplier(double rate, double percentage);
 
-    void setHourlyRateAndFixedAmount(double hourlyRate, double fixedAmt);
+    /**
+     *
+     * @param hourlyRate
+     * @param fixedAmount
+     * @return
+     */
+    double getHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount);
 }
