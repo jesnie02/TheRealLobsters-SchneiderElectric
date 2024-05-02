@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsController1">
+   <children>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="239.0" style="-fx-background-color: #3DCD58;">
+         <children>
+            <Label alignment="CENTER" text="Team 1" />
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <Label text="Locataion:">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Label">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="16.0" left="16.0" top="8.0" />
+         </padding>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="27.0" prefWidth="224.0">
+         <children>
+            <Label text="Geography:">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Label">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="16.0" left="16.0" top="8.0" />
+         </padding>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="27.0">
+         <children>
+            <Label text="Number of members:">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Label">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="16.0" left="16.0" top="8.0" />
+         </padding>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="61.0">
+         <children>
+            <Label text="Annual avg team cost:">
+               <HBox.margin>
+                  <Insets right="16.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Label" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="16.0" left="16.0" top="8.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
