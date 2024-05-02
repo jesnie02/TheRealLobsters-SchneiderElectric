@@ -20,7 +20,6 @@ public class TeamsModel {
                         .sorted()
                         .collect(Collectors.toList())
         );
-        //System.out.println(teamNames);
         return teamNames;
     }
 }

@@ -24,9 +24,17 @@ public class ProfileManager {
         return profileDAO.getAllProfiles();
     }
 
-
-
     public void saveProfile(Profile newProfile) {
         profileDAO.saveProfile(newProfile);
     }
+
+    public Profile getProfileByName(String name) {
+    for (Profile profile : getAllProfiles()) {
+        if ((profile.getfName() + " " + profile.getlName()).equals(name)) {
+            return profile;
+        }
+    }
+    return null;
+    }
+
 }

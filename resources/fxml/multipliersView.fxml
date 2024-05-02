@@ -77,11 +77,13 @@
             </VBox>
             <VBox alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="337.0" prefWidth="571.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="155.0" prefWidth="301.0">
-                     <VBox.margin>
-                        <Insets bottom="32.0" left="16.0" right="16.0" />
-                     </VBox.margin>
+                  <VBox alignment="CENTER" layoutX="26.0" layoutY="90.0" prefHeight="155.0" prefWidth="301.0">
                      <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Based on hourly rate:" />
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER" prefHeight="21.0" prefWidth="269.0">
                            <children>
                               <Label text="Gross margin Result:">
@@ -89,7 +91,7 @@
                                     <Insets left="16.0" right="32.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="lblGMResult" prefHeight="17.0" prefWidth="51.0" text="300000" />
+                              <Label fx:id="lblGMHourlyResult" prefHeight="17.0" prefWidth="51.0" />
                               <Label text="€" />
                            </children>
                            <VBox.margin>
@@ -103,7 +105,47 @@
                                     <Insets left="16.0" right="32.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="lblMUResult" prefHeight="17.0" prefWidth="51.0" text="280000" />
+                              <Label fx:id="lblMUHourlyResult" prefHeight="17.0" prefWidth="51.0" />
+                              <Label text="€" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="32.0" left="16.0" right="16.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="155.0" prefWidth="301.0">
+                     <VBox.margin>
+                        <Insets bottom="32.0" left="16.0" right="16.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Based on daily rate:" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="21.0" prefWidth="269.0">
+                           <children>
+                              <Label text="Gross margin Result:">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="32.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lblGMDailyResult" prefHeight="17.0" prefWidth="51.0" />
+                              <Label text="€" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="16.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="21.0" prefWidth="269.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="109.0" text="Markup Result:">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="32.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lblMUDailyResult" prefHeight="17.0" prefWidth="51.0" />
                               <Label text="€" />
                            </children>
                         </HBox>

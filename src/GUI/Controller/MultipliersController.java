@@ -20,7 +20,7 @@ public class MultipliersController {
     @FXML
     private ComboBox cBoxProfile_Multiplier, cBoxTeam_Multiplier;
     @FXML
-    private Label lblGMResult, lblMUResult;
+    private Label lblMUDailyResult, lblGMDailyResult, lblGMHourlyResult, lblMUHourlyResult;
     private CountryModel countryModel;
     private TeamsModel teamsModel;
     private MultiplierModel multiplierModel;
@@ -81,13 +81,50 @@ public class MultipliersController {
 
     @FXML
     private void calculateResult(ActionEvent actionEvent) throws NumberFormatException {
-        double dayRate = 1000;
-        double hourlyRate = 80;
-            double percentage = Double.parseDouble(txtGM.getText());
-            double result = multiplierModel.getResultOfHourlyRateWithMultiplier(hourlyRate, percentage);
-            lblGMResult.setText(String.format("%.2f", result));
-            double percentageMU = Double.parseDouble(txtMU.getText());
-            double result1 = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentageMU);
-            lblMUResult.setText(String.format("%.2f", result1));
-        }
+        double dayRate = getDailyRate(); //TODO: Get the day rate from the database
+        double hourlyRate = getHourlyRate(); //TODO: Get the hourly rate from the database
+
+        calculateAndSetResult(dayRate, hourlyRate);
     }
+
+    private void calculateAndSetResult(double dayRate, double hourlyRate) {
+        double percentageDGM = parseTextField(txtGM);
+        double percentageDMU = parseTextField(txtMU);
+
+        // Here we get the result of the daily rate with the multiplier from the slider
+        double resultDailyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(dayRate, percentageDGM);
+        lblGMDailyResult.setText(formatResult(resultDailyGM));
+
+        double resultDailyMU = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentageDMU);
+        lblMUDailyResult.setText(formatResult(resultDailyMU));
+
+        // Here we get the result of the hourly rate with the multiplier from the slider
+        double resultHourlyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(hourlyRate, percentageDGM);
+        lblGMHourlyResult.setText(formatResult(resultHourlyGM));
+
+        double resultHourlyMU = multiplierModel.getResultOfDayRWithMultiplier(hourlyRate, percentageDMU);
+        lblMUHourlyResult.setText(formatResult(resultHourlyMU));
+    }
+
+    private double parseTextField(TextField textField) {
+        return Double.parseDouble(textField.getText());
+    }
+
+    private String formatResult(double result) {
+        return String.format("%.2f", result);
+    }
+
+    private double getDailyRate() {
+        String selectedProfile = cBoxProfile_Multiplier.getValue().toString();
+        double dailyRate = profileModel.getDailyRateForProfile(selectedProfile);
+
+        return dailyRate; //TODO: Get the daily rate from the database
+    }
+
+    private double getHourlyRate() {
+        String selectedProfile = cBoxProfile_Multiplier.getValue().toString();
+        double hourlyRate = profileModel.getHourlyRateForProfile(selectedProfile);
+        return hourlyRate; //TODO: Get the hourly rate from the database
+    }
+
+}

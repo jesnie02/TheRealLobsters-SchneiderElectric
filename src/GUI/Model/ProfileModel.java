@@ -46,4 +46,22 @@ public class ProfileModel {
         );
         return profileName;
     }
+
+    public double getDailyRateForProfile(String profileName) {
+    Profile profile = profileManager.getProfileByName(profileName);
+    if (profile != null) {
+        return profile.getDailyRate();
+    } else {
+        throw new RuntimeException("Profile not found");
+    }
+}
+
+    public double getHourlyRateForProfile(String selectedProfile) {
+        Profile profile = profileManager.getProfileByName(selectedProfile);
+        if (profile != null) {
+            return profile.getHourlySalary();
+        } else {
+            throw new RuntimeException("Profile not found");
+        }
+    }
 }
