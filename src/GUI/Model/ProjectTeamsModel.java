@@ -40,8 +40,7 @@ public class ProjectTeamsModel {
 
     public enum ProjectTeamRateType {
         AVGHOURLY,
-        AVGDAILY,
-        AVGANNUAL
+        AVGDAILY
     }
 
     public double getRateForProjectTeam(String projectTeamName, ProjectTeamRateType rateType) throws Exception {
