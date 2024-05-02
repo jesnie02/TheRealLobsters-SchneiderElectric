@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsController1">
+<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-radius: 8; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsController1">
    <children>
-      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="239.0" style="-fx-background-color: #3DCD58;">
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="239.0" style="-fx-background-color: #3DCD58; -fx-background-radius: 8 8 0 0;">
          <children>
             <Label alignment="CENTER" text="Team 1" />
          </children>

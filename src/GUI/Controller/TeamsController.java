@@ -26,10 +26,7 @@ public class TeamsController implements Initializable {
         for (int i = 0; i < 10; i++) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
             Node teamsView = loader.load();
-            TeamsController1 teamsController1 = loader.getController();
-            // teamsController1.setData("Some URL"); // Commented out
             tPaneTeamOverview.getChildren().add(teamsView);
-
         }
     }
 
@@ -37,10 +34,9 @@ public class TeamsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            tPaneTeamOverview.setPrefColumns(3);
-            tPaneTeamOverview.setHgap(10);
-            tPaneTeamOverview.setVgap(10);
-            tPaneTeamOverview.setPadding(new Insets(16, 10, 10, 24));
+            tPaneTeamOverview.setHgap(36);
+            tPaneTeamOverview.setVgap(50);
+            tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
             tPaneTeamOverview.setAlignment(Pos.CENTER);
             loadTeamsInTilePane();
         } catch (IOException e) {

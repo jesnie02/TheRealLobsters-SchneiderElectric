@@ -128,7 +128,6 @@ public class Profile {
         DEVELOPER,
         ROLE3,
         ROLE2
-
     }
 
     public void setProjectTeams(List<ProjectTeam> projectTeams) {

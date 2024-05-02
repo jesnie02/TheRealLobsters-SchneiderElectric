@@ -8,11 +8,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 
 <BorderPane prefHeight="457.0" prefWidth="818.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
    <center>
-      <ScrollPane prefWidth="652.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+      <ScrollPane fitToWidth="true" prefWidth="652.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="50.0" left="50.0" right="50.0" />
          </BorderPane.margin>
@@ -40,17 +41,8 @@
                   <Insets left="8.0" />
                </padding>
             </Label>
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="606.0">
-               <children>
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" text="+ Create projectTeam" />
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <padding>
-                  <Insets right="32.0" />
-               </padding>
-            </HBox>
+            <Pane prefHeight="28.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
+            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="144.0" text="+ Create projectTeam" />
          </children>
       </HBox>
    </top>

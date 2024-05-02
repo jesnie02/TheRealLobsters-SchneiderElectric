@@ -2,6 +2,8 @@ package BLL;
 
 public class CalculatorManager implements ICalculateManager{
 
+    //BigDecimal
+
     @Override
     public double getDailyRate(double annualSalary) {
         return 0;

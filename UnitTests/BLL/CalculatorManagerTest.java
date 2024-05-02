@@ -118,6 +118,7 @@ class CalculatorManagerTest {
 
     //--------------------------------------------------------------------------------------------------------
 
+
     @Test
     /**
      * Test for getHourlyRateWithMultiplierCreateProfile method
