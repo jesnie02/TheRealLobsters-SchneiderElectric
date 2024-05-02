@@ -1,5 +1,6 @@
 package BLL;
 
+import BE.Profile;
 import BE.ProjectTeam;
 import DAL.ProjectTeams_DAO;
 
@@ -16,5 +17,9 @@ public class TeamsManager {
 
     public List<ProjectTeam> getAllProjectTeams() throws Exception {
         return teamsDAO.getAllProjectTeams();
+    }
+
+    public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
+        teamsDAO.addProfileToTeam(projectTeam);
     }
 }

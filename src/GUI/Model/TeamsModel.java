@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Profile;
 import BE.ProjectTeam;
 import javafx.collections.ObservableList;
 
@@ -21,5 +22,9 @@ public class TeamsModel {
                         .collect(Collectors.toList())
         );
         return teamNames;
+    }
+
+    public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
+        TeamsManager.addProfileToTeam(projectTeam);
     }
 }

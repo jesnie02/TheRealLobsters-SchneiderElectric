@@ -1,13 +1,11 @@
 package DAL;
 
+import BE.Profile;
 import BE.ProjectTeam;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,4 +39,21 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
         return allProjectTeams;
     }
+
+    @Override
+    public void addProfileToTeam(ProjectTeam projectTeam) {
+        String sql = "INSERT INTO ProjectTeams (TeamName) VALUES (?)";
+
+        //String sql = "INSERT INTO ProjectTeams (TeamName, SumOfAnnualSalary, SumOfDailyRate, SumOfHourlyRate, AvgOfAnnualSalary, AvgOfDailyRate, AvgOfHourlyRate, NumberOfProfiles, CountryId) VALUES (?,?,?,?,?,?,?,?,?)";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, projectTeam.getTeamName());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO: Handle exception
+        }
+    }
 }
+

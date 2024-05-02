@@ -2,9 +2,12 @@ package GUI.Controller;
 
 import BE.Country;
 import BE.Profile;
+import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
+import GUI.Model.TeamsModel;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,6 +57,7 @@ public class CreateProjectTeamController implements Initializable {
 
     private ProfileModel profileModel;
     private CountryModel countryModel;
+    private TeamsModel teamsModel;
 
 
 
@@ -67,6 +71,7 @@ public class CreateProjectTeamController implements Initializable {
         try {
             countryModel = new CountryModel();
             profileModel = new ProfileModel();
+            teamsModel = new TeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
         } catch (Exception e) {
@@ -155,14 +160,30 @@ public class CreateProjectTeamController implements Initializable {
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.getSelectionModel().clearSelection();
         }
-
     }
 
 
     @FXML
     void createProjectTeamToDatabase(ActionEvent event) {
+        ObservableList<Profile> profiles = tblProfileToTeam.getItems();
 
+        ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
+        projectTeam.setProfiles(profiles);
+
+        try {
+            teamsModel.addProfileToTeam(projectTeam);
+            System.out.println(projectTeam + "hejsa");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        txtProjectTeamName.getText();
+        cBoxCountry.getSelectionModel().getSelectedItem();
+        System.out.println("Create Project Team to Database" + txtProjectTeamName.getText());
+        System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
+        System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
     }
+
 
 
 }
