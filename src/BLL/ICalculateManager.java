@@ -8,11 +8,12 @@ public interface ICalculateManager {
 
     double getDalyRateWithMultiplier(double rate, double percentage);
     double getHourlyRateWithMultiplier(double hourlyRate, double percentage);
-    /**
-     *
-     * @param hourlyRate
-     * @param fixedAmount
-     * @return
-     */
-    double getHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount);
+
+    double getHourlyRateWithFixedAmountCreateProfile(double hourlyRate, double fixedAmount);
+
+    double getHourlyRateWithMultiplierCreateProfile(double hourlyRate, double percentage) throws IllegalArgumentException;
+
+    double getHourlyRateWithEffectiveHoursCreateProfile(double hourlyRate, double effectiveHours) throws IllegalArgumentException;
+
+    double getHourlyRateWithUtilizationCreateProfile(double hourlyRate, double utilization) throws IllegalArgumentException;
 }

@@ -17,7 +17,7 @@ public class ProfileManager {
     }
 
     public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
-        return calculatorManager.getHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
+        return calculatorManager.getHourlyRateWithFixedAmountCreateProfile(hourlyRate, fixedAmount);
     }
 
     public List<Profile> getAllProfiles(){
