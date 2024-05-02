@@ -1,8 +1,7 @@
 package GUI.Controller;
-import GUI.Model.CountryModel;
 import GUI.Model.MultiplierModel;
 import GUI.Model.ProfileModel;
-import GUI.Model.TeamsModel;
+import GUI.Model.ProjectTeamsModel;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +20,7 @@ public class MultipliersController {
     private ComboBox cBoxProfile_Multiplier, cBoxTeam_Multiplier;
     @FXML
     private Label lblMUDailyResult, lblGMDailyResult, lblGMHourlyResult, lblMUHourlyResult;
-    private CountryModel countryModel;
-    private TeamsModel teamsModel;
+    private ProjectTeamsModel projectTeamsModel;
     private MultiplierModel multiplierModel;
     private ProfileModel profileModel;
     private double grossMargin, markUp;
@@ -33,21 +31,37 @@ public class MultipliersController {
     @FXML
     private void initialize() {
         try {
-            countryModel = new CountryModel();
-            teamsModel = new TeamsModel();
+            projectTeamsModel = new ProjectTeamsModel();
             profileModel = new ProfileModel();
             multiplierModel = new MultiplierModel(this);
 
             setUpSliders();
             setValueInField();
             setUpComboBoxes();
+            setUpTextfields();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private void setUpTextfields() {
+        txtGM.textProperty().addListener(((observable, oldValue, newValue) -> {
+            try {
+                double value = Double.parseDouble(newValue);
+                sliderGM.setValue(value);
+            } catch (NumberFormatException e) {
 
+            }
+        }));
+        txtMU.textProperty().addListener(((observable, oldValue, newValue) -> {
+            try {
+                double value = Double.parseDouble(newValue);
+                sliderMU.setValue(value);
+            } catch (NumberFormatException e) {
 
+            }
+        }));
+    }
 
     private void setUpSliders() {
         sliderGM.valueProperty().addListener(((observable, oldValue, newValue) -> {
@@ -58,10 +72,11 @@ public class MultipliersController {
             markUp = newValue.doubleValue();
             setValueInField();
         }));
+
     }
 
     private void setUpComboBoxes() throws Exception {
-        cBoxTeam_Multiplier.setItems(teamsModel.getAllProjectTeams());
+        cBoxTeam_Multiplier.setItems(projectTeamsModel.getEveryProjectTeam());
         cBoxProfile_Multiplier.setItems(profileModel.showAllProfilesNames());
     }
 
@@ -70,39 +85,43 @@ public class MultipliersController {
         txtMU.setText(String.valueOf(markUp));
     }
 
-    public double getGMValue() {
-        return grossMargin;
-    }
-
-    public double getMUValue() {
-        return markUp;
-    }
-
-
     @FXML
-    private void calculateResult(ActionEvent actionEvent) throws NumberFormatException {
-        double dayRate = getDailyRate(); //TODO: Get the day rate from the database
-        double hourlyRate = getHourlyRate(); //TODO: Get the hourly rate from the database
-
-        calculateAndSetResult(dayRate, hourlyRate);
+    private void calculateResult(ActionEvent actionEvent) throws Exception {
+        calculateAndSetResult();
     }
 
-    private void calculateAndSetResult(double dayRate, double hourlyRate) {
-        double percentageDGM = parseTextField(txtGM);
-        double percentageDMU = parseTextField(txtMU);
+    private void calculateAndSetResult() throws Exception {
+        double percentageGM = parseTextField(txtGM);
+        double percentageMU = parseTextField(txtMU);
 
+        if (cBoxProfile_Multiplier.getValue() != null) {
+            double hourlyRate = getHourlyRate();
+            double dayRate = getDailyRate();
+
+            calculateAndSetResultForRate(dayRate, hourlyRate, percentageGM, percentageMU);
+        } else if (cBoxTeam_Multiplier.getValue() != null) {
+            double avgHourlyRate = getAvgHourlyRate();
+            double avgDailyRate = getAvgDailyRate();
+
+            calculateAndSetResultForRate(avgDailyRate, avgHourlyRate, percentageGM, percentageMU);
+        } else {
+            throw new Exception("No profile or team selected");//TODO: Handle this exception
+        }
+    }
+
+    private void calculateAndSetResultForRate(double dayRate, double hourlyRate, double percentageGM, double percentageMU) {
         // Here we get the result of the daily rate with the multiplier from the slider
-        double resultDailyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(dayRate, percentageDGM);
+        double resultDailyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(dayRate, percentageGM);
         lblGMDailyResult.setText(formatResult(resultDailyGM));
 
-        double resultDailyMU = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentageDMU);
+        double resultDailyMU = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentageMU);
         lblMUDailyResult.setText(formatResult(resultDailyMU));
 
         // Here we get the result of the hourly rate with the multiplier from the slider
-        double resultHourlyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(hourlyRate, percentageDGM);
+        double resultHourlyGM = multiplierModel.getResultOfHourlyRateWithMultiplier(hourlyRate, percentageGM);
         lblGMHourlyResult.setText(formatResult(resultHourlyGM));
 
-        double resultHourlyMU = multiplierModel.getResultOfDayRWithMultiplier(hourlyRate, percentageDMU);
+        double resultHourlyMU = multiplierModel.getResultOfDayRWithMultiplier(hourlyRate, percentageMU);
         lblMUHourlyResult.setText(formatResult(resultHourlyMU));
     }
 
@@ -114,17 +133,29 @@ public class MultipliersController {
         return String.format("%.2f", result);
     }
 
-    private double getDailyRate() {
+    private double getRate(ProfileModel.RateType rateType) {
         String selectedProfile = cBoxProfile_Multiplier.getValue().toString();
-        double dailyRate = profileModel.getDailyRateForProfile(selectedProfile);
+        return profileModel.getRateForProfile(selectedProfile, rateType);
+    }
 
-        return dailyRate; //TODO: Get the daily rate from the database
+    private double getDailyRate() {
+        return getRate(ProfileModel.RateType.DAILY);
     }
 
     private double getHourlyRate() {
-        String selectedProfile = cBoxProfile_Multiplier.getValue().toString();
-        double hourlyRate = profileModel.getHourlyRateForProfile(selectedProfile);
-        return hourlyRate; //TODO: Get the hourly rate from the database
+        return getRate(ProfileModel.RateType.HOURLY);
     }
 
+    public double getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType rateType) throws Exception {
+        String selectedTeam = cBoxTeam_Multiplier.getValue().toString();
+        return projectTeamsModel.getRateForProjectTeam(selectedTeam, rateType);
+    }
+
+    private double getAvgDailyRate() throws Exception{
+        return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGDAILY);
+    }
+
+    private double getAvgHourlyRate() throws Exception{
+        return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGHOURLY);
+    }
 }

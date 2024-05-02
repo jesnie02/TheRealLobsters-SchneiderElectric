@@ -5,7 +5,7 @@ import BE.Profile;
 import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
-import GUI.Model.TeamsModel;
+import GUI.Model.ProjectTeamsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,7 +57,7 @@ public class CreateProjectTeamController implements Initializable {
 
     private ProfileModel profileModel;
     private CountryModel countryModel;
-    private TeamsModel teamsModel;
+    private ProjectTeamsModel projectTeamsModel;
 
 
 
@@ -71,7 +71,7 @@ public class CreateProjectTeamController implements Initializable {
         try {
             countryModel = new CountryModel();
             profileModel = new ProfileModel();
-            teamsModel = new TeamsModel();
+            projectTeamsModel = new ProjectTeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
         } catch (Exception e) {
@@ -171,7 +171,7 @@ public class CreateProjectTeamController implements Initializable {
         projectTeam.setProfiles(profiles);
 
         try {
-            teamsModel.addProfileToTeam(projectTeam);
+            projectTeamsModel.addProfileToTeam(projectTeam);
             System.out.println(projectTeam + "hejsa");
         } catch (Exception e) {
             throw new RuntimeException(e);

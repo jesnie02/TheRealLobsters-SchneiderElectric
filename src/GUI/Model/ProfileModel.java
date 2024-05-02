@@ -49,29 +49,31 @@ public class ProfileModel {
         return profileName;
     }
 
-
-
     public List<Profile> getAllProfiles() {
         return profileManager.getAllProfiles();
     }
 
-    public double getDailyRateForProfile(String profileName) {
-    Profile profile = profileManager.getProfileByName(profileName);
-    if (profile != null) {
-        return profile.getDailyRate();
-    } else {
-        throw new RuntimeException("Profile not found");
-    }
-}
 
-    public double getHourlyRateForProfile(String selectedProfile) {
-        Profile profile = profileManager.getProfileByName(selectedProfile);
-        if (profile != null) {
-            return profile.getHourlySalary();
+    public enum RateType {
+        HOURLY,
+        DAILY,
+    }
+
+    public double getRateForProfile(String profileName, RateType rateType) {
+        Profile profile = profileManager.getProfileByName(profileName);
+        if (profile == null) {
+            throw new RuntimeException("Profile not found");//TODO: Handle this exception
         } else {
-            throw new RuntimeException("Profile not found");
+            switch (rateType) {
+                case HOURLY:
+                    return profile.getHourlySalary();
+                case DAILY:
+                    return profile.getDailyRate();
+                default:
+                    throw new RuntimeException("Rate type not found");//TODO: Handle this exception
+            }
+
         }
     }
-
 
 }

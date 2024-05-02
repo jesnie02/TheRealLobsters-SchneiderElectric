@@ -22,7 +22,7 @@ public class ProjectTeam {
         this.TeamName = name;
     }
 
-    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int count, List<Profile> profiles) {
+    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary) {
         TeamId = teamId;
         TeamName = teamName;
         this.sumOfHourlyRate = sumOfHourlyRate;
@@ -31,8 +31,6 @@ public class ProjectTeam {
         this.avgHourlyRate = avgHourlyRate;
         this.sumOfAnnualSalary = sumOfAnnualSalary;
         this.avgAnnualSalary = avgAnnualSalary;
-        this.count = count;
-        this.profiles = profiles;
     }
 
 
@@ -59,6 +57,30 @@ public class ProjectTeam {
 
     public void setTeamName(String teamName) {
         TeamName = teamName;
+    }
+
+    public double getSumOfHourlyRate() {
+        return sumOfHourlyRate;
+    }
+
+    public double getSumOfDailyRate() {
+        return sumOfDailyRate;
+    }
+
+    public double getAvgDailyRate() {
+        return avgDailyRate;
+    }
+
+    public void setAvgDailyRate(double avgDailyRate) {
+        this.avgDailyRate = avgDailyRate;
+    }
+
+    public double getAvgHourlyRate() {
+        return avgHourlyRate;
+    }
+
+    public void setAvgHourlyRate(double avgHourlyRate) {
+        this.avgHourlyRate = avgHourlyRate;
     }
 
     @Override

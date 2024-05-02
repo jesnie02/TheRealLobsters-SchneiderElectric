@@ -126,6 +126,8 @@ public class Profile {
     public enum ProjectRole{
         DESIGN,
         DEVELOPER,
+        ENGINEER,
+        MANAGER,
         ROLE3,
         ROLE2
     }

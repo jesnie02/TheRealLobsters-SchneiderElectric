@@ -16,8 +16,7 @@ public class CalculatorManager implements ICalculateManager{
 
     @Override
     /**
-     *
-     * @param dayRate
+     * @param dayRate = is loaded from the profile or team (avgDay) selected.
      * @param percentage = gets the value from the slider in view.
      * Multiplikation of dayRate with percentage
      * only throw exception if dayRate is negative
@@ -27,22 +26,19 @@ public class CalculatorManager implements ICalculateManager{
         if (dayRate < 0 ) {
             throw new IllegalArgumentException("Day rate cannot be negative");
         }
-        double calculation = dayRate * (1 + percentage / 100);
+        double calculation = dayRate * (1 + percentage / 100); //TODO: Add a test
         return calculation;
     }
 
     @Override
     /**
-     * @param hourlyRate
+     * @param hourlyRate = is loaded from the profile or team (avgHourly) selected.
      * @param percentage = gets the value from the slider in view.
      */
-
-    //TODO: Add a test for this method @Mads
     public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
-        double calculation = hourlyRate * (1 + percentage / 100);
+        double calculation = hourlyRate * (1 + percentage / 100); //TODO: Add a test for this method @Mads
         return calculation;
     }
-
 
     @Override
     /**

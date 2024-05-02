@@ -40,6 +40,31 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return allProjectTeams;
     }
 
+    public List<ProjectTeam> getEveryProjectTeam(){
+        List<ProjectTeam> everyProjectTeam = new ArrayList<>();
+        try(Connection conn = dbConnector.getConnection();
+            Statement stmt = conn.createStatement()){
+
+            String sql = "SELECT * FROM ProjectTeams";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("TeamsId");
+                String teamName = rs.getString("TeamName");
+                double sumOfHourlyRate = rs.getDouble("SumOfHourlyRate");
+                double sumOfDailyRate = rs.getDouble("SumOfDailyRate");
+                double avgDailyRate = rs.getDouble("AvgOfDailyRate");
+                double avgHourlyRate = rs.getDouble("AvgOfHourlyRate");
+                double sumOfAnnualSalary = rs.getDouble("SumOfAnnualSalary");
+                double avgAnnualSalary = rs.getDouble("AvgOfAnnualSalary");
+                ProjectTeam projectTeam = new ProjectTeam(id, teamName, sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary);
+                everyProjectTeam.add(projectTeam);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e); //TODO: Handle exception
+        }
+        return everyProjectTeam;
+    }
+
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
         String sql = "INSERT INTO ProjectTeams (TeamName) VALUES (?)";

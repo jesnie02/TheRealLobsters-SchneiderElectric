@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.Country;
-import GUI.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -11,15 +10,13 @@ import javafx.scene.control.TextField;
 
 import BE.Profile;
 import GUI.Model.ProfileModel;
-import GUI.Model.TeamsModel;
+import GUI.Model.ProjectTeamsModel;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import GUI.Model.CountryModel;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +46,7 @@ public class CreateProfileController implements Initializable {
 
 
     private CountryModel countryModel;
-    private TeamsModel teamsModel;
+    private ProjectTeamsModel projectTeamsModel;
     private ProfileModel profileModel;
 
 
@@ -109,7 +106,7 @@ public class CreateProfileController implements Initializable {
     public CreateProfileController(){
         try {
             countryModel = new CountryModel();
-            teamsModel = new TeamsModel();
+            projectTeamsModel = new ProjectTeamsModel();
             profileModel = new ProfileModel();
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +117,7 @@ public class CreateProfileController implements Initializable {
     public void initialize() {
         try {
             cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
-            cBoxTeam_CreateProfile.setItems(teamsModel.getAllProjectTeams());
+            cBoxTeam_CreateProfile.setItems(projectTeamsModel.getAllProjectTeams());
 
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                 calculateHourlyRateWithFixedAmount();

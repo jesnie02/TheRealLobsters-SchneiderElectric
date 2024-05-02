@@ -40,7 +40,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 //System.out.println(allProfiles);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); //TODO: Handle exception
         }
         return allProfiles;
     }

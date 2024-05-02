@@ -17,13 +17,6 @@ public class MultiplierModel {
         this.multiplierManager = new MultiplierManager(new CalculatorManager());
     }
 
-    public double getGrossMarginValue(){
-        return multipliersController.getGMValue();
-    }
-
-    public double getMarkupValue() {
-        return multipliersController.getMUValue();
-    }
 
     public double getResultOfDayRWithMultiplier(double dayRate, double percentage) {
         return multiplierManager.calculateDayRateWithMultiplier(dayRate, percentage);
