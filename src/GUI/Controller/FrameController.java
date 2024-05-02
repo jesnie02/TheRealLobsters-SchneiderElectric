@@ -184,5 +184,8 @@ public class FrameController implements Initializable {
     }
 
 
+    void loadCreateTeamView() {
+        loadView("createProjectTeamView.fxml");
 
+    }
 }

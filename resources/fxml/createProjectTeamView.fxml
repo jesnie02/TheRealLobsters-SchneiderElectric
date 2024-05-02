@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane prefHeight="465.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
+   <center>
+      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="25.0" prefWidth="653.0">
+               <children>
+                  <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="29.0" prefWidth="198.0" text="Create Team">
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="317.0" prefWidth="653.0" spacing="32.0">
+               <children>
+                  <VBox prefHeight="318.0" prefWidth="534.0">
+                     <HBox.margin>
+                        <Insets left="25.0" top="25.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="275.0" text="Team details">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="275.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="89.0" text="Team name:" />
+                              <TextField prefHeight="18.0" prefWidth="186.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="89.0" text="Country:" />
+                              <ComboBox prefHeight="26.0" prefWidth="185.0" promptText="Select" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="24.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="275.0" text="Combined team member rates">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum annual salary:" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="320000">
+                                 <padding>
+                                    <Insets right="8.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="144.0" prefHeight="32.0" prefWidth="275.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum daily rate:" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="880">
+                                 <padding>
+                                    <Insets right="8.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="176.0" prefHeight="32.0" prefWidth="275.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum hourly rate:" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="110">
+                                 <padding>
+                                    <Insets right="8.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="318.0" prefWidth="555.0">
+                     <HBox.margin>
+                        <Insets right="25.0" top="25.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="299.0" text="Team members">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="297.0" text="Select one or more profiles">
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </Label>
+                        <ComboBox prefHeight="26.0" prefWidth="284.0" promptText="Profiles">
+                           <VBox.margin>
+                              <Insets bottom="16.0" left="25.0" right="25.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="245.0" text="Select Profile">
+                           <VBox.margin>
+                              <Insets bottom="16.0" left="25.0" right="25.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label prefHeight="18.0" prefWidth="297.0" text="Profiles">
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </Label>
+                        <TableView prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="95.4666748046875" text="name" />
+                            <TableColumn prefWidth="63.733306884765625" text="Country" />
+                              <TableColumn prefWidth="65.59994506835938" text="Daily rate" />
+                              <TableColumn prefWidth="70.6666259765625" text="Hourly rate" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Create team">
+               <VBox.margin>
+                  <Insets right="25.0" top="24.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <top>
+      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

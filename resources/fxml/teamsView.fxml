@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
-<BorderPane prefHeight="457.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
+<BorderPane prefHeight="518.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
    <center>
       <TilePane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -38,7 +38,7 @@
             </Label>
             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="606.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="+ Create projectTeam" />
+                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" text="+ Create projectTeam" />
                </children>
                <HBox.margin>
                   <Insets />
