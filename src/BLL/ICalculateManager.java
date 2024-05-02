@@ -2,8 +2,12 @@ package BLL;
 
 public interface ICalculateManager {
 
-    double getDalyRateWithMultiplier(double rate, double percentage);
 
+    double getDailyRate(double annualSalary);
+    double getHourlyRate(double dailyRate);
+
+    double getDalyRateWithMultiplier(double rate, double percentage);
+    double getHourlyRateWithMultiplier(double hourlyRate, double percentage);
     /**
      *
      * @param hourlyRate

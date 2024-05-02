@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class ProfileModel {
 
@@ -35,5 +36,14 @@ public class ProfileModel {
 
     public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
         return profileManager.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
+    }
+
+    public ObservableList<String> showAllProfilesNames(){
+        ObservableList<String> profileName = javafx.collections.FXCollections.observableArrayList(
+                profileManager.getAllProfiles().stream()
+                        .map(profile -> profile.getfName() + " " + profile.getlName())
+                        .collect(Collectors.toList())
+        );
+        return profileName;
     }
 }

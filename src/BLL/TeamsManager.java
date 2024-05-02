@@ -1,19 +1,20 @@
 package BLL;
 
-import BE.Team;
+import BE.ProjectTeam;
+import DAL.ProjectTeams_DAO;
 
 import java.io.IOException;
 import java.util.List;
 
 public class TeamsManager {
 
-    private final DAL.Teams_DAO teamsDAO;
+    private final ProjectTeams_DAO teamsDAO;
 
     public TeamsManager() throws IOException {
-        teamsDAO = new DAL.Teams_DAO();
+        teamsDAO = new ProjectTeams_DAO();
     }
 
-    public List<Team> getAllProjectTeams() throws Exception {
+    public List<ProjectTeam> getAllProjectTeams() throws Exception {
         return teamsDAO.getAllProjectTeams();
     }
 }

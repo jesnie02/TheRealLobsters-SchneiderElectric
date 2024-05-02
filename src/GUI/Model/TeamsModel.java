@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.ProjectTeam;
 import javafx.collections.ObservableList;
 
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class TeamsModel {
     public ObservableList<String> getAllProjectTeams() throws Exception {
         ObservableList<String> teamNames = javafx.collections.FXCollections.observableArrayList(
                 TeamsManager.getAllProjectTeams().stream()
-                        .map(BE.Team::getTeamName)
+                        .map(ProjectTeam::getTeamName)
                         .sorted()
                         .collect(Collectors.toList())
         );

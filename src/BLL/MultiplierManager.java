@@ -14,5 +14,9 @@ public class MultiplierManager {
         return calculatorManager.getDalyRateWithMultiplier(rate, percentage);
     }
 
+    public double calculateHourlyRateWithMultiplier(double rate, double percentage){
+        return calculatorManager.getHourlyRateWithMultiplier(rate, percentage);
+    }
+
 
 }

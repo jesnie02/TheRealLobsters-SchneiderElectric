@@ -62,7 +62,7 @@ public class MultipliersController {
 
     private void setUpComboBoxes() throws Exception {
         cBoxTeam_Multiplier.setItems(teamsModel.getAllProjectTeams());
-        //cBoxProfile_Multiplier.setItems(profileModel.getAllProfiles());
+        cBoxProfile_Multiplier.setItems(profileModel.showAllProfilesNames());
     }
 
     private void setValueInField() {
@@ -80,10 +80,14 @@ public class MultipliersController {
 
 
     @FXML
-    private void calculateResult(ActionEvent actionEvent) {
-        double dayRate = 100;
-        double percentage = Double.parseDouble(txtMU.getText());
-        double result = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentage);
-        lblMUResult.setText(String.format("%.2f", result));
+    private void calculateResult(ActionEvent actionEvent) throws NumberFormatException {
+        double dayRate = 1000;
+        double hourlyRate = 80;
+            double percentage = Double.parseDouble(txtGM.getText());
+            double result = multiplierModel.getResultOfHourlyRateWithMultiplier(hourlyRate, percentage);
+            lblGMResult.setText(String.format("%.2f", result));
+            double percentageMU = Double.parseDouble(txtMU.getText());
+            double result1 = multiplierModel.getResultOfDayRWithMultiplier(dayRate, percentageMU);
+            lblMUResult.setText(String.format("%.2f", result1));
+        }
     }
-}

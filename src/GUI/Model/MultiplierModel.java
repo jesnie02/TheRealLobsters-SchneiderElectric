@@ -28,4 +28,8 @@ public class MultiplierModel {
     public double getResultOfDayRWithMultiplier(double dayRate, double percentage) {
         return multiplierManager.calculateDayRateWithMultiplier(dayRate, percentage);
     }
+
+    public double getResultOfHourlyRateWithMultiplier(double hourlyRate, double percentage){
+        return multiplierManager.calculateHourlyRateWithMultiplier(hourlyRate, percentage);
+    }
 }

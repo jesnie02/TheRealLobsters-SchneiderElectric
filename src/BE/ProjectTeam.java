@@ -1,16 +1,21 @@
 package BE;
 
-public class Team {
+public class ProjectTeam {
 
-    int TeamId;
-    String TeamName;
+    private int TeamId;
+    private String TeamName;
+    private double sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary;
+    private int count;
 
-    public Team(int id, String name) {
+
+
+
+    public ProjectTeam(int id, String name) {
         this.TeamId = id;
         this.TeamName = name;
     }
 
-    public Team(String name) {
+    public ProjectTeam(String name) {
         this.TeamName = name;
     }
 

@@ -1,107 +1,160 @@
 package BE;
 
+import java.util.List;
+
 public class Profile {
 
-
-    private String firstName;
-    private String lastName;
-    private float annualSalary;
-    private int countryId;
-
-    private int hourlyResult;
-    private int dailyResult;
-    private boolean overheadCost;
-
-
-
+    private int profileId, countryId;
     private ProjectRole projectRole;
+    private String projectTeam, fName, lName;
+    private boolean overheadCost;
+    private double annualSalary, hourlySalary, dailyRate;
+    private List<Country> country;
+    private List<ProjectTeam> projectTeams;
 
 
-
-    public Profile(String firstName, String lastName, float annualSalary, int countryId, String projectRole, int hourlyResult, int dailyResult, boolean overheadCost) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.annualSalary = annualSalary;
+    public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+        this.profileId = profileId;
         this.countryId = countryId;
-        this.projectRole = ProjectRole.valueOf(projectRole);
-        this.hourlyResult = hourlyResult;
-        this.dailyResult = dailyResult;
+        this.projectTeam = projectTeam;
+        this.projectRole = projectRole;
+        this.fName = fName;
+        this.lName = lName;
         this.overheadCost = overheadCost;
-    }
-
-
-    public enum ProjectRole {
-        ROLE1,
-        ROLE2,
-        ROLE3
-
-    }
-
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    private void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public float getAnnualSalary() {
-        return annualSalary;
-    }
-
-    private void setAnnualSalary(float annualSalary) {
         this.annualSalary = annualSalary;
+        this.hourlySalary = hourlySalary;
+        this.dailyRate = dailyRate;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Profile(int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+        this.countryId = countryId;
+        this.projectTeam = projectTeam;
+        this.projectRole = projectRole;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlySalary;
+        this.dailyRate = dailyRate;
     }
 
-    private void setLastName(String lastName) {
-        this.lastName = lastName;
+    public int getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
     }
 
     public int getCountryId() {
         return countryId;
     }
 
-    private void setCountryId(int countryId) {
+    public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 
-    public ProjectRole getProjectRole() {
-        return projectRole;
+    public String getProjectTeam() {
+        return projectTeam;
     }
 
-    private void setProjectRole(ProjectRole projectRole) {
-        this.projectRole = projectRole;
+    public void setProjectTeam(String projectTeam) {
+        this.projectTeam = projectTeam;
     }
 
-    public int getHourlyResult() {
-        return hourlyResult;
+    public void setCountry(List<Country> country) {
+        this.country = country;
     }
 
-    private void setHourlyResult(String hourlyResult) {
-        this.hourlyResult = Integer.parseInt(hourlyResult);
+    public String getfName() {
+        return fName;
     }
 
-    public int getDailyResult() {
-        return dailyResult;
+    public void setfName(String fName) {
+        this.fName = fName;
     }
 
-    private void setDailyResult(String dailyResult) {
-        this.dailyResult = Integer.parseInt(dailyResult);
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
     }
 
     public boolean isOverheadCost() {
         return overheadCost;
     }
 
-    private void setOverheadCost(boolean overheadCost) {
+    public void setOverheadCost(boolean overheadCost) {
         this.overheadCost = overheadCost;
     }
 
+    public double getAnnualSalary() {
+        return annualSalary;
+    }
+
+    public void setAnnualSalary(double annualSalary) {
+        this.annualSalary = annualSalary;
+    }
+
+    public double getHourlySalary() {
+        return hourlySalary;
+    }
+
+    public void setHourlySalary(double hourlySalary) {
+        this.hourlySalary = hourlySalary;
+    }
+
+    public double getDailyRate() {
+        return dailyRate;
+    }
+
+    public void setDailyRate(double dailyRate) {
+        this.dailyRate = dailyRate;
+    }
+
+    public List<Country> getCountry(){
+        return country;
+    }
+
+    public List<ProjectTeam> getProjectTeams(){
+        return projectTeams;
+    }
+
+    public enum ProjectRole{
+        DESIGN,
+        DEVELOPER,
+        ROLE3,
+        ROLE2
+
+    }
+
+    public void setProjectTeams(List<ProjectTeam> projectTeams) {
+        this.projectTeams = projectTeams;
+    }
+
+    public ProjectRole getProjectRole() {
+        return projectRole;
+    }
+
+    public void setProjectRole(ProjectRole projectRole) {
+        this.projectRole = projectRole;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "profileId=" + profileId +
+                ", countryId=" + countryId +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", overheadCost=" + overheadCost +
+                ", annualSalary=" + annualSalary +
+                ", hourlySalary=" + hourlySalary +
+                ", dailyRate=" + dailyRate +
+                '}';
+    }
 
 
 }

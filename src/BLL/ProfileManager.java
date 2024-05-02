@@ -4,6 +4,7 @@ import BE.Profile;
 import DAL.Profile_DAO;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ProfileManager {
 
@@ -18,6 +19,11 @@ public class ProfileManager {
     public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
         return calculatorManager.getHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
     }
+
+    public List<Profile> getAllProfiles(){
+        return profileDAO.getAllProfiles();
+    }
+
 
 
     public void saveProfile(Profile newProfile) {

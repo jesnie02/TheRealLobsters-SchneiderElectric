@@ -1,6 +1,6 @@
 package DAL;
 
-import BE.Team;
+import BE.ProjectTeam;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
@@ -11,34 +11,34 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teams_DAO implements ITeamsDataAccess {
+public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     private final DBConnector dbConnector;
 
-    public Teams_DAO() throws IOException {
+    public ProjectTeams_DAO() throws IOException {
         dbConnector = new DBConnector();
     }
 
 
     @Override
-    public List<Team> getAllProjectTeams() throws Exception {
+    public List<ProjectTeam> getAllProjectTeams() throws Exception {
 
-        List<Team> allTeams = new ArrayList<>();
+        List<ProjectTeam> allProjectTeams = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
 
             String sql = "SELECT * FROM ProjectTeams";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
-                Team team = new Team(
+                ProjectTeam projectTeam = new ProjectTeam(
                         rs.getInt("TeamsId"),
                         rs.getString("TeamName")
                 );
-                allTeams.add(team);
+                allProjectTeams.add(projectTeam);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return allTeams;
+        return allProjectTeams;
     }
 }

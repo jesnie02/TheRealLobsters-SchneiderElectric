@@ -5,10 +5,20 @@ import java.util.function.ToDoubleBiFunction;
 public class CalculatorManager implements ICalculateManager{
 
     @Override
+    public double getDailyRate(double annualSalary) {
+        return 0;
+    }
+
+    @Override
+    public double getHourlyRate(double dailyRate) {
+        return 0;
+    }
+
+    @Override
     /**
      *
-     * @param dayRate = daily rate
-     * @param percentage
+     * @param dayRate
+     * @param percentage = gets the value from the slider in view.
      * @return
      */
     public double getDalyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException{
@@ -18,6 +28,17 @@ public class CalculatorManager implements ICalculateManager{
         double calculation = dayRate * (1 + percentage / 100);
         return calculation;
     }
+
+    @Override
+    /**
+     * @param hourlyRate
+     * @param percentage = gets the value from the slider in view.
+     */
+    public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
+        double calculation = hourlyRate * (1 + percentage / 100);
+        return calculation;
+    }
+
 
     @Override
     /**
