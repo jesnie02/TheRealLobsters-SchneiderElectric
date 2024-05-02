@@ -13,6 +13,7 @@ public class Profile {
     private List<ProjectTeam> projectTeams;
 
 
+
     public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
         this.profileId = profileId;
         this.countryId = countryId;
@@ -142,7 +143,9 @@ public class Profile {
         this.projectRole = projectRole;
     }
 
-
+    public String getFullName() {
+        return fName + " " + lName;
+    }
 
     @Override
     public String toString() {

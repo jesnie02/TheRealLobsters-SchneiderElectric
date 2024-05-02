@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane prefHeight="465.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
    <center>
       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
@@ -45,7 +44,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="89.0" text="Team name:" />
-                              <TextField prefHeight="18.0" prefWidth="186.0">
+                              <TextField fx:id="txtProjectTeamName" prefHeight="18.0" prefWidth="186.0">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -58,7 +57,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="89.0" text="Country:" />
-                              <ComboBox prefHeight="26.0" prefWidth="185.0" promptText="Select" />
+                              <ComboBox fx:id="cBoxCountry" prefHeight="26.0" prefWidth="185.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="24.0" />
@@ -75,7 +74,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum annual salary:" />
-                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="320000">
+                              <Label fx:id="lblAnnualSalarySum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="320000">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -89,7 +88,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="144.0" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum daily rate:" />
-                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="880">
+                              <Label fx:id="lblDailyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="880">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -103,7 +102,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="176.0" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum hourly rate:" />
-                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="110">
+                              <Label fx:id="lblHourlyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="110">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -134,12 +133,12 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <ComboBox prefHeight="26.0" prefWidth="284.0" promptText="Profiles">
+                        <ComboBox fx:id="cBoxProfiles" prefHeight="26.0" prefWidth="284.0">
                            <VBox.margin>
                               <Insets bottom="16.0" left="25.0" right="25.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="245.0" text="Select Profile">
+                        <Button mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="245.0" text="Select Profile">
                            <VBox.margin>
                               <Insets bottom="16.0" left="25.0" right="25.0" />
                            </VBox.margin>
@@ -149,19 +148,25 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tblProfileToTeam" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="95.4666748046875" text="name" />
-                            <TableColumn prefWidth="63.733306884765625" text="Country" />
-                              <TableColumn prefWidth="65.59994506835938" text="Daily rate" />
-                              <TableColumn prefWidth="70.6666259765625" text="Hourly rate" />
+                              <TableColumn fx:id="colTeamProfileId" minWidth="0.0" prefWidth="42.4000244140625" text="ProfileId" visible="false" />
+                            <TableColumn fx:id="colTeamName" prefWidth="38.39990234375" text="name" />
+                            <TableColumn fx:id="colTeamCountry" minWidth="0.0" prefWidth="52.800048828125" text="Country" />
+                              <TableColumn fx:id="colTeamDailyRate" prefWidth="50.666748046875" text="Daily " />
+                              <TableColumn fx:id="colTeamHourlyRate" minWidth="6.13323974609375" prefWidth="63.199920654296875" text="Hourly" />
+                              <TableColumn fx:id="colTeamCountryId" prefWidth="63.2000732421875" text="CountryId" visible="false" />
+                              <TableColumn fx:id="colTeamAnnualSalary" minWidth="6.13323974609375" prefWidth="63.199920654296875" text="Annual Salary" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Create team">
+            <Button mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="85.0" text="Create team">
                <VBox.margin>
                   <Insets right="25.0" top="24.0" />
                </VBox.margin>

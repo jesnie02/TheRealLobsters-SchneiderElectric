@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProfileModel {
@@ -47,6 +49,12 @@ public class ProfileModel {
         return profileName;
     }
 
+
+
+    public List<Profile> getAllProfiles() {
+        return profileManager.getAllProfiles();
+    }
+
     public double getDailyRateForProfile(String profileName) {
     Profile profile = profileManager.getProfileByName(profileName);
     if (profile != null) {
@@ -64,4 +72,6 @@ public class ProfileModel {
             throw new RuntimeException("Profile not found");
         }
     }
+
+
 }
