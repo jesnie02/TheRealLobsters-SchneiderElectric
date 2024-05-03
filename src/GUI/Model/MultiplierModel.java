@@ -23,6 +23,6 @@ public class MultiplierModel {
     }
 
     public double getResultOfHourlyRateWithMultiplier(double hourlyRate, double percentage){
-        return multiplierManager.calculateHourlyRateWithMultiplier(hourlyRate, percentage);
+       return multiplierManager.calculateHourlyRateWithMultiplier(hourlyRate, percentage);
     }
 }

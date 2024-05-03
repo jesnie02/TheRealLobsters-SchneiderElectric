@@ -56,11 +56,10 @@ public class TeamsController implements Initializable {
         this.frameController = FrameController.getInstance();
     }
 
-
-
-
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
         frameController.loadCreateTeamView();
     }
+
+
 }

@@ -9,9 +9,11 @@ import java.util.List;
 public class ProjectTeamsManager {
 
     private final ProjectTeams_DAO teamsDAO;
+    private ICalculateManager iCalculateManager;
 
     public ProjectTeamsManager() throws IOException {
         teamsDAO = new ProjectTeams_DAO();
+        iCalculateManager = new CalculatorManager();
     }
 
     public List<ProjectTeam> getAllProjectTeams() throws Exception {
@@ -19,6 +21,8 @@ public class ProjectTeamsManager {
     }
 
     public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
+        projectTeam.setAvgAnnualSalary(iCalculateManager.avgAnnualSalary(projectTeam.getProfiles()));
+        projectTeam.setSumOfAnnualSalary(iCalculateManager.annualSalary(projectTeam.getProfiles()));
         teamsDAO.addProfileToTeam(projectTeam);
     }
 
@@ -34,4 +38,10 @@ public class ProjectTeamsManager {
         }
         return null;
     }
+
+    public double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount){
+        return iCalculateManager.getHourlyRateWithMultiplier(annualSalary, fixedAmount);
+    }
+
+
 }

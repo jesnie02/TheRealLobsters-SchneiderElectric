@@ -1,5 +1,9 @@
 package BLL;
 
+import BE.Profile;
+
+import java.util.List;
+
 public class CalculatorManager implements ICalculateManager{
 
 
@@ -32,9 +36,16 @@ public class CalculatorManager implements ICalculateManager{
     }
 
     @Override
-    public double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount) {
-        return 0;
+    public double annualSalary(List<Profile> profiles) {
+        double annualSalary = 0;
+        for (Profile profile :profiles){
+            annualSalary += (profile.getAnnualSalary() + profile.getFixedAmount());
+        }
+        return annualSalary;
     }
 
-
+    @Override
+    public double avgAnnualSalary(List<Profile> profiles){
+        return annualSalary(profiles)/profiles.size();
+    }
 }

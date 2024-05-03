@@ -1,5 +1,9 @@
 package BLL;
 
+import BE.Profile;
+
+import java.util.List;
+
 public interface ICalculateManager {
 
 
@@ -8,5 +12,6 @@ public interface ICalculateManager {
     double getDailyRateWithMultiplier(double rate, double percentage);
     double getHourlyRateWithMultiplier(double hourlyRate, double percentage);
 
-    double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount);
+    double avgAnnualSalary(List<Profile> profiles);
+    double annualSalary(List<Profile> profiles);
 }

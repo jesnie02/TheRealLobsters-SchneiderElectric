@@ -35,7 +35,8 @@ public class Profile_DAO implements IProfileDataAccess {
                 double annualSalary = rs.getDouble("AnualSalary");
                 double hourlyRate = rs.getDouble("HourlySalary");
                 double dailyRate = rs.getDouble("DailyRate");
-                Profile profile = new Profile(profileId, country, projectTeam, Profile.ProjectRole.valueOf(projectRole), fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate);
+                double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
+                Profile profile = new Profile(profileId, country, projectTeam, Profile.ProjectRole.valueOf(projectRole), fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours);
                 allProfiles.add(profile);
                 //System.out.println(allProfiles);
             }

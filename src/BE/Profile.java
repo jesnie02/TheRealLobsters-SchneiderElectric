@@ -8,9 +8,10 @@ public class Profile {
     private ProjectRole projectRole;
     private String projectTeam, fName, lName;
     private boolean overheadCost;
-    private double annualSalary, hourlySalary, dailyRate, fixedAmount;
+    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
+
 
     // For testing purposes
     public Profile(double annualSalary, double fixedAmount) {
@@ -18,7 +19,7 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+    public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
         this.profileId = profileId;
         this.countryId = countryId;
         this.projectTeam = projectTeam;
@@ -29,6 +30,7 @@ public class Profile {
         this.annualSalary = annualSalary;
         this.hourlySalary = hourlySalary;
         this.dailyRate = dailyRate;
+        this.dailyWorkingHours = dailyWorkingHours;
     }
 
     public Profile(int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
@@ -155,6 +157,14 @@ public class Profile {
 
     public String getFullName() {
         return fName + " " + lName;
+    }
+
+    public double getDailyWorkingHours() {
+        return dailyWorkingHours;
+    }
+
+    public void setDailyWorkingHours(double dailyWorkingHours) {
+        this.dailyWorkingHours = dailyWorkingHours;
     }
 
     @Override

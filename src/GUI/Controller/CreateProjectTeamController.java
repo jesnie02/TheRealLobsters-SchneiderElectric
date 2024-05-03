@@ -6,6 +6,7 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import com.sun.security.jgss.GSSUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -182,6 +183,7 @@ public class CreateProjectTeamController implements Initializable {
 
         txtProjectTeamName.getText();
         cBoxCountry.getSelectionModel().getSelectedItem();
+        System.out.println();colTeamAnnualSalary.getCellData(0);
         System.out.println("Create Project Team to Database" + txtProjectTeamName.getText());
         System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
         System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());

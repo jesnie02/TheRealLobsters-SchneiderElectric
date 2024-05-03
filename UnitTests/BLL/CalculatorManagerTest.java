@@ -60,31 +60,14 @@ class CalculatorManagerTest {
 
     @Test
     /**
-     * Test for getSumOfAnnualSalaryForTeam method
-     * Test for correct addition of annual salary's of the profiles in the team
+     * Test for getDailyRateWithMultiplier method
+     * Test for valid input with multiplication of negative percentage
      */
-    void getSumOfAnnualSalaryForTeam_returnsCorrectValueForValidInput() {
+    void getDailyRateWithMultiplier_throwsExceptionForNegativeDayRate() {
         //arrange
-        List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(100, 50));
-        profiles.add(new Profile(200, 0));
-        profiles.add(new Profile(300, 0));
-
-        double annualSalary = 0;
-        for (Profile profile :profiles){
-            annualSalary += profile.getAnnualSalary();
-        }
-        double fixedAmount = 0;
-        for (Profile profile :profiles){
-            fixedAmount += profile.getFixedAmount();
-        }
-        double expected = 650;
-
-        //act
-        double actual = calculatorManager.getSumOfAnnualSalaryForTeam(expected, fixedAmount);
-        //assert
-        assertEquals(expected, actual);
+        double dayRate = -100;
+        double percentage = 20;
+        //act and assert
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.getDailyRateWithMultiplier(dayRate, percentage));
     }
-
-
 }
