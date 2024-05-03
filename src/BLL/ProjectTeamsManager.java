@@ -23,6 +23,10 @@ public class ProjectTeamsManager {
     public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
         projectTeam.setAvgAnnualSalary(iCalculateManager.avgAnnualSalary(projectTeam.getProfiles()));
         projectTeam.setSumOfAnnualSalary(iCalculateManager.annualSalary(projectTeam.getProfiles()));
+        projectTeam.setAvgHourlyRate(iCalculateManager.avgHourlyRate(projectTeam.getProfiles()));
+        projectTeam.setSumOfHourlyRate(iCalculateManager.sumOfHourlyRate(projectTeam.getProfiles()));
+        projectTeam.setAvgDailyRate(iCalculateManager.avgDailyRate(projectTeam.getProfiles()));
+        projectTeam.setSumOfDailyRate(iCalculateManager.sumOfDailyRate(projectTeam.getProfiles()));
         teamsDAO.addProfileToTeam(projectTeam);
     }
 

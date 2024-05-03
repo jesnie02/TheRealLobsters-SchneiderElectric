@@ -59,7 +59,5 @@ public class ProjectTeamsModel {
         }
     }
 
-    public double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount){
-        return projectTeamsManager.getSumOfAnnualSalaryForTeam(annualSalary, fixedAmount);
-    }
+
 }

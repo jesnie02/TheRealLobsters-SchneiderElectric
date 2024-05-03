@@ -134,6 +134,14 @@ public class Profile {
         return projectTeams;
     }
 
+    public double getHourlyRate() {
+        return hourlySalary;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlySalary = hourlyRate;
+    }
+
     public enum ProjectRole{
         DESIGN,
         DEVELOPER,

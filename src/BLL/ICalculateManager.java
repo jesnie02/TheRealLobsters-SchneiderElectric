@@ -14,4 +14,10 @@ public interface ICalculateManager {
 
     double avgAnnualSalary(List<Profile> profiles);
     double annualSalary(List<Profile> profiles);
-}
+
+    double sumOfHourlyRate(List<Profile> profiles);
+    double avgHourlyRate(List<Profile> profiles);
+    double avgDailyRate(List<Profile> profiles);
+    double sumOfDailyRate(List<Profile> profiles);
+
+    }

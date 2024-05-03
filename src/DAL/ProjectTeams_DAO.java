@@ -68,7 +68,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
-        String sql = "INSERT INTO ProjectTeams (TeamName, CountryId, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ProjectTeams (TeamName, CountryId, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -78,6 +78,10 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmt.setInt(3, projectTeam.getProfiles().size());
             pstmt.setDouble(4, projectTeam.getAvgAnnualSalary());
             pstmt.setDouble(5, projectTeam.getSumOfAnnualSalary());
+            pstmt.setDouble(6, projectTeam.getAvgHourlyRate());
+            pstmt.setDouble(7, projectTeam.getSumOfHourlyRate());
+            pstmt.setDouble(8, projectTeam.getAvgDailyRate());
+            pstmt.setDouble(9, projectTeam.getSumOfDailyRate());
             pstmt.executeUpdate();
 
 

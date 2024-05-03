@@ -49,6 +49,35 @@ public class CalculatorManager implements ICalculateManager{
         return annualSalary(profiles)/profiles.size();
     }
 
+    @Override
+    public double sumOfHourlyRate(List<Profile> profiles) {
+        double sumOfHourlyRate = 0;
+        for (Profile profile :profiles){
+            sumOfHourlyRate += profile.getHourlyRate();
+        }
+        return sumOfHourlyRate;
+    }
+
+    @Override
+    public double avgHourlyRate(List<Profile> profiles){
+        return sumOfHourlyRate(profiles)/profiles.size();
+    }
+
+    @Override
+    public double sumOfDailyRate(List<Profile> profiles) {
+        double sumOfDailyRate = 0;
+        for (Profile profile :profiles){
+            sumOfDailyRate += profile.getDailyRate();
+        }
+        return sumOfDailyRate;
+    }
+
+    @Override
+    public double avgDailyRate(List<Profile> profiles) {
+        return sumOfDailyRate(profiles)/profiles.size();
+    }
+
+
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
             double annualFixedAmountProfile, double effectiveHoursProfile,
@@ -58,11 +87,10 @@ public class CalculatorManager implements ICalculateManager{
         double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100)) / (overheadMultiplierProfile/ 100);
         double result = actualAnnualSalary / actualEffectivehours;
         //TODO: REMOVE SOUTS @JONAS
-        System.out.println(actualAnnualSalary);
-        System.out.println(actualEffectivehours);
-        System.out.println(result);
+        System.out.println("actualAnnualSalary:  " + actualAnnualSalary);
+        System.out.println("actualEffectivehours:  " +actualEffectivehours);
+        System.out.println("result:  " + result);
         return result;
-
     }
 
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
