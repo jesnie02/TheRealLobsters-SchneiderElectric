@@ -55,8 +55,9 @@ public class CalculatorManager implements ICalculateManager{
             double utilizationPercentageProfile) {
 
         double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
-        double actualEffectivehours = effectiveHoursProfile * (utilizationPercentageProfile / 100) * (overheadMultiplierProfile/ 100);
+        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100)) / (overheadMultiplierProfile/ 100);
         double result = actualAnnualSalary / actualEffectivehours;
+        //TODO: REMOVE SOUTS @JONAS
         System.out.println(actualAnnualSalary);
         System.out.println(actualEffectivehours);
         System.out.println(result);
@@ -66,6 +67,7 @@ public class CalculatorManager implements ICalculateManager{
 
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         double result = dailyWorkingHours * hourlyRate;
+        //TODO: REMOVE SOUTS @JONAS
         System.out.println(dailyWorkingHours);
         System.out.println(hourlyRate);
         System.out.println(result);
