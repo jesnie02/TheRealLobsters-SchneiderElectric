@@ -148,6 +148,19 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Daily working hours:">
+                                 <HBox.margin>
+                                    <Insets right="25.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="txtDailyWorkingHours" prefHeight="26.0" prefWidth="210.0" text="7.4" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="168.0" prefHeight="23.0" prefWidth="246.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="174.0" text="Annual effective working hours:">
@@ -229,7 +242,7 @@
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="48.0" text="25">
+                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="48.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -263,7 +276,7 @@
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="52.0" text="300">
+                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="52.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>

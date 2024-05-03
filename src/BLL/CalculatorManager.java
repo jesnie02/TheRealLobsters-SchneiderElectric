@@ -48,4 +48,27 @@ public class CalculatorManager implements ICalculateManager{
     public double avgAnnualSalary(List<Profile> profiles){
         return annualSalary(profiles)/profiles.size();
     }
+
+    public double calculateAndSetHourlyRateCreateProfile(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile,
+            double utilizationPercentageProfile) {
+
+        double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
+        double actualEffectivehours = effectiveHoursProfile * (utilizationPercentageProfile / 100) * (overheadMultiplierProfile/ 100);
+        double result = actualAnnualSalary / actualEffectivehours;
+        System.out.println(actualAnnualSalary);
+        System.out.println(actualEffectivehours);
+        System.out.println(result);
+        return result;
+
+    }
+
+    public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
+        double result = dailyWorkingHours * hourlyRate;
+        System.out.println(dailyWorkingHours);
+        System.out.println(hourlyRate);
+        System.out.println(result);
+        return result;
+    }
 }

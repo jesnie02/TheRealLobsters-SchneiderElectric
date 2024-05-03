@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,9 +35,6 @@ public class ProfileModel {
         return roleList;
     }
 
-    /*public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
-        return profileManager.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
-    }*/
 
     public ObservableList<String> showAllProfilesNames(){
         ObservableList<String> profileName = javafx.collections.FXCollections.observableArrayList(
@@ -51,6 +47,21 @@ public class ProfileModel {
 
     public List<Profile> getAllProfiles() {
         return profileManager.getAllProfiles();
+    }
+
+    public double calculateAndSetHourlyRateCreateProfile(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile,
+            double utilizationPercentageProfile) {
+
+        return profileManager.calculateAndSetHourlyRateCreateProfile(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentageProfile);
+    }
+
+    public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
+        return profileManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
 
 

@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class CreateProfileController implements Initializable {
 
+    public TextField txtDailyWorkingHours;
     // slider for overhead and utilization and textField to show the value of the slider
     @FXML
     private MFXSlider sliderOverhead, sliderUtilization;
@@ -50,6 +51,8 @@ public class CreateProfileController implements Initializable {
     private ProfileModel profileModel;
 
 
+
+
     /**
      * This method is called after all @FXML annotated members have been injected.
      * It sets up listeners on sliders and checkboxes, and populates the country and team ComboBoxes.
@@ -58,8 +61,7 @@ public class CreateProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listenersOnSliders();
         setupCheckboxListeners();
-        //txtFixedAmount.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
-        //lblHourlyResult.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
+        setupListenersOnTextFields();
         try {
             cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
             cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
@@ -101,6 +103,20 @@ public class CreateProfileController implements Initializable {
                 checkOverhead.setSelected(false);
             }
         });
+    }
+
+    private void setupListenersOnTextFields() {
+        ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calculateAndSetHourlyRateCreateProfile();
+            calculateAndSetDailyRateCreateProdifle();
+        };
+
+        txtFixedAmount.textProperty().addListener(textFieldListener);
+        txtEffectiveHours.textProperty().addListener(textFieldListener);
+        txtAnnualSalary.textProperty().addListener(textFieldListener);
+        txtOverheadView.textProperty().addListener(textFieldListener);
+        txtUtilizationView.textProperty().addListener(textFieldListener);
+        txtDailyWorkingHours.textProperty().addListener(textFieldListener);
     }
 
     public CreateProfileController(){
@@ -154,14 +170,39 @@ public class CreateProfileController implements Initializable {
         profileModel.saveProfile(newProfile);
 
         lblShowMassage.setText("Profile has been saved");
+
     }
 
-    /*public void calculateHourlyRateWithFixedAmount() {
-        double hourlyRate = Double.parseDouble(lblHourlyResult.getText());
-        double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
-        double result = profileModel.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
-        lblFixedAmountResult.setText(String.valueOf(result));
-    }*/
+    public double calculateAndSetHourlyRateCreateProfile() {
+        if (txtAnnualSalary.getText().isEmpty() || txtOverheadView.getText().isEmpty() || txtFixedAmount.getText().isEmpty() || txtEffectiveHours.getText().isEmpty() || txtUtilizationView.getText().isEmpty()) {
+            return 0.0;
+        }
+
+        double annualSalaryProfile = Double.parseDouble(txtAnnualSalary.getText().replace(",", "."));
+        double overheadMultiplierProfile = Double.parseDouble(txtOverheadView.getText().replace(",", "."));
+        double annualFixedAmountProfile = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
+        double effectiveHoursProfile = Double.parseDouble(txtEffectiveHours.getText().replace(",", "."));
+        double utilizationPercentageProfile = Double.parseDouble(txtUtilizationView.getText().replace(",", "."));
+        double result = profileModel.calculateAndSetHourlyRateCreateProfile(annualSalaryProfile,
+                overheadMultiplierProfile,
+                annualFixedAmountProfile,
+                effectiveHoursProfile,
+                utilizationPercentageProfile);
+        lblHourlyResult.setText(String.valueOf(result));
+        return result;
+    }
+
+    public double calculateAndSetDailyRateCreateProdifle() {
+        if (txtDailyWorkingHours.getText().isEmpty() || lblHourlyResult.getText().isEmpty()) {
+            return 0.0;
+        }
+
+        double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText().replace(",", "."));
+        double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
+        double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
+        lblDailyResult.setText(String.valueOf(result));
+        return result;
+    }
 
 
     /**

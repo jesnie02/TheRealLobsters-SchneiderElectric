@@ -16,9 +16,6 @@ public class ProfileManager {
         profileDAO = new Profile_DAO();
     }
 
-    /*public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
-        return calculatorManager.getHourlyRateWithFixedAmountCreateProfile(hourlyRate, fixedAmount);
-    }*/
 
     public List<Profile> getAllProfiles(){
         return profileDAO.getAllProfiles();
@@ -37,4 +34,18 @@ public class ProfileManager {
     return null;
     }
 
+    public double calculateAndSetHourlyRateCreateProfile(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile,
+            double utilizationPercentageProfile) {
+
+        return calculatorManager.calculateAndSetHourlyRateCreateProfile(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentageProfile);
+    }
+
+    public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
+        return calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
+    }
 }
