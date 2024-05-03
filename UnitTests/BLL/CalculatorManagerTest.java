@@ -18,50 +18,52 @@ class CalculatorManagerTest {
 
     @Test
     /**
-     * Test for getDalyRateWithMultiplier method
+     * Test for getDailyRateWithMultiplier method
      * Test for valid input with multiplication of percentage
      */
-    void getDalyRateWithMultiplier_returnsCorrectValueForValidInput() {
-        double dayRate = 100.0;
-        double percentage = 20.0;
-        double expected = 120.0;
-
-        double actual = calculatorManager.getDalyRateWithMultiplier(dayRate, percentage);
-
+    void getDailyRateWithMultiplier_returnsCorrectValueForValidInput() {
+        //arrange
+        double dayRate = 100;
+        double percentage = 20;
+        double expected = 120;
+        //act
+        double actual = calculatorManager.getDailyRateWithMultiplier(dayRate, percentage);
+        //assert
         assertEquals(expected, actual);
     }
 
     @Test
     /**
-     * Test for getDalyRateWithMultiplier method
+     * Test for getDailyRateWithMultiplier method
      * Test for valid input with multiplication of zero
      */
-    void getDalyRateWithMultiplier_returnsZeroForZeroDayRate() {
-        double dayRate = 0.0;
-        double percentage = 20.0;
-
-        double actual = calculatorManager.getDalyRateWithMultiplier(dayRate, percentage);
-
-        assertEquals(0.0, actual);
+    void getDailyRateWithMultiplier_returnsZeroForZeroDayRate() {
+        //arrange
+        double dayRate = 20;
+        double percentage = 0.0;
+        //act
+        double actual = calculatorManager.getDailyRateWithMultiplier(dayRate, percentage);
+        //assert
+        assertEquals(20, actual);
 
         dayRate = 0;
         percentage = 50.0;
 
-        actual = calculatorManager.getDalyRateWithMultiplier(dayRate, percentage);
+        actual = calculatorManager.getDailyRateWithMultiplier(dayRate, percentage);
 
         assertEquals(0.0, actual);
     }
 
     @Test
     /**
-     * Test for getDalyRateWithMultiplier method
+     * Test for getDailyRateWithMultiplier method
      * Test for negative day rate
      */
-    void getDalyRateWithMultiplier_throwsExceptionForNegativeDayRate() {
+    void getDailyRateWithMultiplier_throwsExceptionForNegativeDayRate() {
         double dayRate = -100.0;
         double percentage = 20.0;
 
-        assertThrows(IllegalArgumentException.class, () -> calculatorManager.getDalyRateWithMultiplier(dayRate, percentage));
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.getDailyRateWithMultiplier(dayRate, percentage));
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -116,56 +118,6 @@ class CalculatorManagerTest {
         assertThrows(IllegalArgumentException.class, () -> calculatorManager.getHourlyRateWithFixedAmountCreateProfile(hourlyRate, fixedAmount));
     }
 
-    //--------------------------------------------------------------------------------------------------------
-
-
-    @Test
-    /**
-     * Test for getHourlyRateWithMultiplierCreateProfile method
-     * Test for valid input with multiplication of percentage
-     */
-    void getHourlyRateWithMultiplierCreateProfile_returnsCorrectValueForValidInput() {
-        double hourlyRate = 100.0;
-        double percentage = 20.0;
-        double expected = 120.0;
-
-        double actual = calculatorManager.getHourlyRateWithMultiplierCreateProfile(hourlyRate, percentage);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    /**
-     * Test for getHourlyRateWithMultiplierCreateProfile method
-     * Test for valid input with multiplication of zero
-     */
-    void getHourlyRateWithMultiplierCreateProfile_returnsZeroForHourlyRateCreateProfile() {
-        double hourlyRate = 20.0;
-        double percentage = 0.0;
-
-        double actual = calculatorManager.getHourlyRateWithMultiplierCreateProfile(hourlyRate, percentage);
-
-        assertEquals(20, actual);
-
-        hourlyRate = 0.0;
-        percentage = 20.0;
-
-        actual = calculatorManager.getHourlyRateWithMultiplierCreateProfile(hourlyRate, percentage);
-
-        assertEquals(0.0, actual);
-    }
-
-    @Test
-    /**
-     * Test for getHourlyRateWithMultiplierCreateProfile method
-     * Test for negative hourly rate
-     */
-    void getHourlyRateWithMultiplierCreateProfile_throwsExceptionForNegativeHourlyRate() {
-        double hourlyRate = -100.0;
-        double percentage = 20.0;
-
-        assertThrows(IllegalArgumentException.class, () -> calculatorManager.getHourlyRateWithMultiplierCreateProfile(hourlyRate, percentage));
-    }
 
     //--------------------------------------------------------------------------------------------------------
 

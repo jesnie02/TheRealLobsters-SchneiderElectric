@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -222,60 +222,6 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Multiplier percentage: ">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
-                                    <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Configurable fixed amount:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="lblFixedAmountResult" prefHeight="18.0" prefWidth="39.0" text="0.00 " />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="63.0" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Annual effective working hours:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="39.0" text="0" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Utilization percentage:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
-                                    <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="132.0" prefHeight="26.0" prefWidth="300.0">
                                  <children>
                                     <Label prefHeight="18.0" prefWidth="208.0" text="Result:">
@@ -309,60 +255,6 @@
                                  <padding>
                                     <Insets bottom="8.0" />
                                  </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Multiplier percentage: ">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
-                                    <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Configurable fixed amount:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="39.0" text="0.00 " />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Annual effective working hours:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="39.0" text="0" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="227.0" text="Utilization percentage:">
-                                       <HBox.margin>
-                                          <Insets left="8.0" right="8.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="33.0" text="0,0 " />
-                                    <Label prefHeight="18.0" prefWidth="14.0" text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="139.0" prefHeight="26.0" prefWidth="300.0">
                                  <children>

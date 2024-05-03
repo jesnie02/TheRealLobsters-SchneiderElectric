@@ -11,7 +11,7 @@ public class MultiplierManager {
     }
 
     public double calculateDayRateWithMultiplier(double rate, double percentage){
-        return calculatorManager.getDalyRateWithMultiplier(rate, percentage);
+        return calculatorManager.getDailyRateWithMultiplier(rate, percentage);
     }
 
     public double calculateHourlyRateWithMultiplier(double rate, double percentage){

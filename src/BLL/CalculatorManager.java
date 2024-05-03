@@ -2,7 +2,6 @@ package BLL;
 
 public class CalculatorManager implements ICalculateManager{
 
-    //BigDecimal
 
     @Override
     public double getDailyRate(double annualSalary) {
@@ -16,13 +15,13 @@ public class CalculatorManager implements ICalculateManager{
 
     @Override
     /**
-     * @param dayRate = is loaded from the profile or team (avgDay) selected.
+     * @param dayRate = is loaded from the profile (dayRate) or team (avgDay) selected.
      * @param percentage = gets the value from the slider in view.
      * Multiplikation of dayRate with percentage
      * only throw exception if dayRate is negative
      * @return
      */
-    public double getDalyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException{
+    public double getDailyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException{
         if (dayRate < 0 ) {
             throw new IllegalArgumentException("Day rate cannot be negative");
         }
@@ -32,7 +31,7 @@ public class CalculatorManager implements ICalculateManager{
 
     @Override
     /**
-     * @param hourlyRate = is loaded from the profile or team (avgHourly) selected.
+     * @param hourlyRate = is loaded from the profile (hourlyRate) or team (avgHourly) selected.
      * @param percentage = gets the value from the slider in view.
      */
     public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
@@ -43,17 +42,17 @@ public class CalculatorManager implements ICalculateManager{
     @Override
     /**
      *
-     * @param hourlyRate
+     * @param annualRate
      * @param fixedAmount
      * Additon of fixed amount to hourly rate
      * only throw exception if hourlyRate is negative
      * @return
      */
-    public double getHourlyRateWithFixedAmountCreateProfile(double hourlyRate, double fixedAmount) throws IllegalArgumentException{
-        if (hourlyRate < 0) {
-            throw new IllegalArgumentException("Hourly rate cannot be negative");
+    public double getHourlyRateWithFixedAmountCreateProfile(double annualRate, double fixedAmount) throws IllegalArgumentException{
+        if (annualRate < 0) {
+            throw new IllegalArgumentException("Annual rate cannot be negative");
         }
-        double calculation = hourlyRate + fixedAmount;
+        double calculation = annualRate + fixedAmount; //TODO: skal rettes til
         return calculation;
     }
 
