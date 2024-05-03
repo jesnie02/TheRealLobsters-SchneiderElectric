@@ -161,8 +161,8 @@ public class CreateProfileController implements Initializable {
         double annualSalary = Double.parseDouble(txtAnnualSalary.getText());
         int countryId = ( cBoxCountry_CreateProfile.getValue()).getCountryId();
         String projectRole = cBoxTeam_CreateProfile.getValue();
-        double hourlyResult = Integer.parseInt(lblHourlyResult.getText());
-        double dailyResult = Integer.parseInt(lblDailyResult.getText());
+        double hourlyResult = Double.parseDouble(lblHourlyResult.getText());
+        double dailyResult = Double.parseDouble(lblDailyResult.getText());
         boolean overheadCost = checkOverhead.isSelected();
 
         Profile newProfile = new Profile(countryId, projectRole, Profile.ProjectRole.valueOf(projectRole), firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult);
