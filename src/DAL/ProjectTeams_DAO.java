@@ -68,21 +68,27 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
-        String sql = "INSERT INTO ProjectTeams (TeamName, CountryId) VALUES (?, ?)";
+        String sql = "INSERT INTO ProjectTeams (TeamName, CountryId, NumberOfProfiles) VALUES (?, ?, ?)";
+        String updateSql = "UPDATE ProjectTeams SET NumberOfProfiles = ? WHERE TeamName = ?";
 
         try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
 
             pstmt.setString(1, projectTeam.getTeamName());
             pstmt.setInt(2, projectTeam.getCountry().getCountryId());
+            pstmt.setInt(3, projectTeam.getProfiles().size());
 
             pstmt.executeUpdate();
+
+            updatePstmt.setInt(1, projectTeam.getProfiles().size());
+            updatePstmt.setString(2, projectTeam.getTeamName());
+
+            updatePstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); //TODO: Handle exception
         }
     }
 
-    private void addCountryToTeam(String teamName, Country country) {
-    }
 }
 
