@@ -3,19 +3,19 @@ package BLL;
 public class MultiplierManager {
 
 
-    private CalculatorManager calculatorManager;
+    private ICalculateManager iCalculateManager;
 
 
-    public MultiplierManager(CalculatorManager calculatorManager){
-        this.calculatorManager = calculatorManager;
+    public MultiplierManager(ICalculateManager calculatorManager){
+        this.iCalculateManager = calculatorManager;
     }
 
     public double calculateDayRateWithMultiplier(double rate, double percentage){
-        return calculatorManager.getDailyRateWithMultiplier(rate, percentage);
+        return iCalculateManager.getDailyRateWithMultiplier(rate, percentage);
     }
 
     public double calculateHourlyRateWithMultiplier(double rate, double percentage){
-        return calculatorManager.getHourlyRateWithMultiplier(rate, percentage);
+        return iCalculateManager.getHourlyRateWithMultiplier(rate, percentage);
     }
 
 

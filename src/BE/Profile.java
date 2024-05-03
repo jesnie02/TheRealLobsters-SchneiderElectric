@@ -8,11 +8,15 @@ public class Profile {
     private ProjectRole projectRole;
     private String projectTeam, fName, lName;
     private boolean overheadCost;
-    private double annualSalary, hourlySalary, dailyRate;
+    private double annualSalary, hourlySalary, dailyRate, fixedAmount;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
 
-
+    // For testing purposes
+    public Profile(double annualSalary, double fixedAmount) {
+        this.annualSalary = annualSalary;
+        this.fixedAmount = fixedAmount;
+    }
 
     public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
         this.profileId = profileId;
@@ -98,6 +102,11 @@ public class Profile {
     public void setAnnualSalary(double annualSalary) {
         this.annualSalary = annualSalary;
     }
+
+    public double getFixedAmount() {
+        return fixedAmount;
+    }
+
 
     public double getHourlySalary() {
         return hourlySalary;

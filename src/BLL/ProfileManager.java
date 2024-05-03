@@ -16,9 +16,9 @@ public class ProfileManager {
         profileDAO = new Profile_DAO();
     }
 
-    public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
+    /*public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
         return calculatorManager.getHourlyRateWithFixedAmountCreateProfile(hourlyRate, fixedAmount);
-    }
+    }*/
 
     public List<Profile> getAllProfiles(){
         return profileDAO.getAllProfiles();

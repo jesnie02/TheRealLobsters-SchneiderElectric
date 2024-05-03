@@ -36,9 +36,9 @@ public class ProfileModel {
         return roleList;
     }
 
-    public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
+    /*public double calculateHourlyRateWithFixedAmount(double hourlyRate, double fixedAmount) {
         return profileManager.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
-    }
+    }*/
 
     public ObservableList<String> showAllProfilesNames(){
         ObservableList<String> profileName = javafx.collections.FXCollections.observableArrayList(

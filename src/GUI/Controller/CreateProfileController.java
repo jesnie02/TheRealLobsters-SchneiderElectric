@@ -58,8 +58,8 @@ public class CreateProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listenersOnSliders();
         setupCheckboxListeners();
-        txtFixedAmount.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
-        lblHourlyResult.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
+        //txtFixedAmount.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
+        //lblHourlyResult.textProperty().addListener((observable, oldValue, newValue) -> calculateHourlyRateWithFixedAmount());
         try {
             cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
             cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
@@ -120,7 +120,7 @@ public class CreateProfileController implements Initializable {
             cBoxTeam_CreateProfile.setItems(projectTeamsModel.getAllProjectTeams());
 
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                calculateHourlyRateWithFixedAmount();
+                //calculateHourlyRateWithFixedAmount();
             };
 
             txtFixedAmount.textProperty().addListener(textFieldListener);
@@ -156,12 +156,12 @@ public class CreateProfileController implements Initializable {
         lblShowMassage.setText("Profile has been saved");
     }
 
-    public void calculateHourlyRateWithFixedAmount() {
+    /*public void calculateHourlyRateWithFixedAmount() {
         double hourlyRate = Double.parseDouble(lblHourlyResult.getText());
         double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
         double result = profileModel.calculateHourlyRateWithFixedAmount(hourlyRate, fixedAmount);
         lblFixedAmountResult.setText(String.valueOf(result));
-    }
+    }*/
 
 
     /**
