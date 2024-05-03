@@ -9,7 +9,7 @@ public class ProjectTeam {
     private double sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary;
     private int count;
     private List<Profile> profiles;
-
+    private Country country;
 
 
     public ProjectTeam(String name) {
@@ -87,4 +87,46 @@ public class ProjectTeam {
     public String toString() {
         return TeamName;
     }
+
+    public double getSumOfAnnualSalary() {
+        return sumOfAnnualSalary;
+    }
+
+    public double getAvgAnnualSalary() {
+        return avgAnnualSalary;
+    }
+
+    public void setSumOfAnnualSalary(double sumOfAnnualSalary) {
+        this.sumOfAnnualSalary = sumOfAnnualSalary;
+    }
+
+    public void setAvgAnnualSalary(double avgAnnualSalary) {
+        this.avgAnnualSalary = avgAnnualSalary;
+    }
+
+    public void setSumOfHourlyRate(double sumOfHourlyRate) {
+        this.sumOfHourlyRate = sumOfHourlyRate;
+    }
+
+    public void setSumOfDailyRate(double sumOfDailyRate) {
+        this.sumOfDailyRate = sumOfDailyRate;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+
 }

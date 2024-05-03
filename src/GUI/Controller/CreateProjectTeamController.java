@@ -170,6 +170,9 @@ public class CreateProjectTeamController implements Initializable {
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
 
+        Country selectedCountry = cBoxCountry.getSelectionModel().getSelectedItem();
+        projectTeam.setCountry(selectedCountry);
+
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
             System.out.println(projectTeam + "hejsa");

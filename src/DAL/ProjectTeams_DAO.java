@@ -1,5 +1,6 @@
 package DAL;
 
+import BE.Country;
 import BE.Profile;
 import BE.ProjectTeam;
 import DAL.DBConnector.DBConnector;
@@ -67,18 +68,21 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
-        String sql = "INSERT INTO ProjectTeams (TeamName) VALUES (?)";
+        String sql = "INSERT INTO ProjectTeams (TeamName, CountryId) VALUES (?, ?)";
 
-        //String sql = "INSERT INTO ProjectTeams (TeamName, SumOfAnnualSalary, SumOfDailyRate, SumOfHourlyRate, AvgOfAnnualSalary, AvgOfDailyRate, AvgOfHourlyRate, NumberOfProfiles, CountryId) VALUES (?,?,?,?,?,?,?,?,?)";
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, projectTeam.getTeamName());
+            pstmt.setInt(2, projectTeam.getCountry().getCountryId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(); //TODO: Handle exception
         }
+    }
+
+    private void addCountryToTeam(String teamName, Country country) {
     }
 }
 
