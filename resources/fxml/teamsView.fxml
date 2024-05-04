@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 
-<BorderPane prefHeight="457.0" prefWidth="818.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
+<BorderPane prefHeight="457.0" prefWidth="818.0" style="-fx-background-color: #F1F1F1;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
    <center>
       <ScrollPane fitToWidth="true" prefWidth="652.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
