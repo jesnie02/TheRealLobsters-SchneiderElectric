@@ -74,7 +74,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum annual salary:" />
-                              <Label fx:id="lblAnnualSalarySum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="320000">
+                              <Label fx:id="lblAnnualSalarySum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -88,7 +88,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="144.0" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum daily rate:" />
-                              <Label fx:id="lblDailyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="880">
+                              <Label fx:id="lblDailyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -102,7 +102,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="176.0" prefHeight="32.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum hourly rate:" />
-                              <Label fx:id="lblHourlyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="110">
+                              <Label fx:id="lblHourlyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
                                  <padding>
                                     <Insets right="8.0" />
                                  </padding>
@@ -166,11 +166,15 @@
                   </VBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="85.0" text="Create team">
+            <HBox alignment="CENTER_RIGHT" spacing="25.0">
                <VBox.margin>
                   <Insets right="25.0" top="24.0" />
                </VBox.margin>
-            </Button>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="100.0" text="Remove profile" />
+                  <Button mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="100.0" text="Create team" />
+               </children>
+            </HBox>
          </children>
          <BorderPane.margin>
             <Insets />

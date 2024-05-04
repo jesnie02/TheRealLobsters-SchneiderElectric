@@ -1,9 +1,11 @@
 package GUI.Model;
 
+import BE.Profile;
 import BE.ProjectTeam;
 import BLL.ProjectTeamsManager;
 import javafx.collections.ObservableList;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectTeamsModel {
@@ -59,6 +61,39 @@ public class ProjectTeamsModel {
         }
     }
 
+
+    /**
+     * Calculates the total annual salary for a list of profiles.
+     *
+     * @param profiles The list of profiles for which to calculate the total annual salary.
+     * @return The total annual salary for the provided list of profiles.
+     * @throws Exception If an error occurs during the calculation.
+     */
+    public double calculateTotalAnnualSalary(ObservableList<Profile> profiles) throws Exception {
+        return projectTeamsManager.calculateTotalAnnualSalary(profiles);
+    }
+
+    /**
+     * Calculates the total daily rate for a list of profiles.
+     *
+     * @param profiles The list of profiles for which to calculate the total daily rate.
+     * @return The total daily rate for the provided list of profiles.
+     * @throws Exception If an error occurs during the calculation.
+     */
+    public double calculateTotalDailyRate(ObservableList<Profile> profiles) throws Exception {
+        return projectTeamsManager.calculateTotalDailyRate(profiles);
+    }
+
+    /**
+     * Calculates the total hourly rate for a list of profiles.
+     *
+     * @param profiles The list of profiles for which to calculate the total hourly rate.
+     * @return The total hourly rate for the provided list of profiles.
+     * @throws Exception If an error occurs during the calculation.
+     */
+    public double calculateTotalHourlyRate(ObservableList<Profile> profiles) throws Exception {
+        return projectTeamsManager.calculateTotalHourlyRate(profiles);
+    }
 
 
 }

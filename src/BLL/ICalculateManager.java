@@ -1,8 +1,10 @@
 package BLL;
 
 import BE.Profile;
+import javafx.collections.ObservableList;
 
 import java.util.List;
+import java.util.function.Function;
 
 public interface ICalculateManager {
 
@@ -20,4 +22,5 @@ public interface ICalculateManager {
     double avgDailyRate(List<Profile> profiles);
     double sumOfDailyRate(List<Profile> profiles);
 
-    }
+
+}

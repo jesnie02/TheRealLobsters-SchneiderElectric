@@ -6,8 +6,10 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
-import com.sun.security.jgss.GSSUtil;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,12 +63,18 @@ public class CreateProjectTeamController implements Initializable {
     private ProjectTeamsModel projectTeamsModel;
 
 
-
-
     public CreateProjectTeamController() {
 
     }
 
+
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -75,11 +83,16 @@ public class CreateProjectTeamController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Populates the combo boxes with data from the models.
+     */
     private void populateComboBoxes() throws Exception {
         cBoxCountry.getItems().addAll(countryModel.getAllFromCountries());
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
@@ -88,7 +101,9 @@ public class CreateProjectTeamController implements Initializable {
 
     }
 
-
+    /**
+     * Sets the converter for the profile combo box.
+     */
     private void setProfileComboBoxConverter() {
         Map<Integer, Country> countriesMap;
         try {
@@ -96,6 +111,7 @@ public class CreateProjectTeamController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load countries", e); //TODO: Handle this exception
         }
+
 
         cBoxProfiles.setConverter(new StringConverter<Profile>() {
             @Override
@@ -113,8 +129,32 @@ public class CreateProjectTeamController implements Initializable {
                 return null;
             }
         });
+
+        tblProfileToTeam.getItems().addListener((ListChangeListener<Profile>) change -> {
+            updateTotals();
+        });
     }
 
+    /**
+     * Updates the total values for the team.
+     */
+    private void updateTotals() {
+        try {
+            double annualSalarySum = projectTeamsModel.calculateTotalAnnualSalary(tblProfileToTeam.getItems());
+            double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
+            double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
+
+            lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
+            lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
+            lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
+        } catch (Exception e) {
+            e.printStackTrace(); // Replace with proper logging
+        }
+    }
+
+    /**
+     * Sets the converter for the country combo box.
+     */
     private void setCountryComboBoxConverter() {
         cBoxCountry.setConverter(new StringConverter<Country>() {
             @Override
@@ -129,6 +169,9 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
+    /**
+     * Sets up the table view for the team profiles.
+     */
     public void setTblProfileToTeam() {
 
         if (countriesMap == null) {
@@ -153,6 +196,9 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
+    /**
+     * Adds the selected profile to the team table.
+     */
     @FXML
     void selectProfileToTable(ActionEvent event) {
         Profile selectedProfile = cBoxProfiles.getSelectionModel().getSelectedItem();
@@ -163,7 +209,9 @@ public class CreateProjectTeamController implements Initializable {
         }
     }
 
-
+    /**
+     * Creates a new project team and adds it to the database.
+     */
     @FXML
     void createProjectTeamToDatabase(ActionEvent event) {
         ObservableList<Profile> profiles = tblProfileToTeam.getItems();
@@ -189,6 +237,17 @@ public class CreateProjectTeamController implements Initializable {
         System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
     }
 
+    /**
+     * Removes the selected profile from the team table.
+     */
+    @FXML
+    private void removeProfileFromTbl(ActionEvent actionEvent) {
+
+        Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
 
 
+        if (selectedProfile != null) {
+            tblProfileToTeam.getItems().remove(selectedProfile);
+        }
+    }
 }

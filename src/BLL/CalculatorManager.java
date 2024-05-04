@@ -1,8 +1,10 @@
 package BLL;
 
 import BE.Profile;
+import javafx.collections.ObservableList;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class CalculatorManager implements ICalculateManager{
 
@@ -101,4 +103,8 @@ public class CalculatorManager implements ICalculateManager{
         System.out.println(result);
         return result;
     }
+
+
 }
+
+
