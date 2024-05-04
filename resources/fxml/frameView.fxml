@@ -56,7 +56,7 @@
                   <Insets bottom="8.0" />
                </VBox.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="26.0" prefWidth="110.0" text="Regions">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="26.0" prefWidth="110.0" text="Geography">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>

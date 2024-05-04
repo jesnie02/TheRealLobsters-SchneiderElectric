@@ -164,8 +164,10 @@ public class CreateProfileController implements Initializable {
         double hourlyResult = Double.parseDouble(lblHourlyResult.getText());
         double dailyResult = Double.parseDouble(lblDailyResult.getText());
         boolean overheadCost = checkOverhead.isSelected();
+        double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
+        double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText());
 
-        Profile newProfile = new Profile(countryId, projectRole, Profile.ProjectRole.valueOf(projectRole), firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult);
+        Profile newProfile = new Profile(countryId, projectRole, firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours);
 
         profileModel.saveProfile(newProfile);
 

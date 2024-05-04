@@ -47,7 +47,7 @@ public class Profile_DAO implements IProfileDataAccess {
     }
 
     public void saveProfile(Profile newProfile) {
-        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, Country, ProjectRole, HourlySalary, DailyRate, Overheadcost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, Country, ProjectRole, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try ( Connection conn = dbConnector.getConnection();
               PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -60,6 +60,8 @@ public class Profile_DAO implements IProfileDataAccess {
             pstmt.setDouble(6, newProfile.getHourlySalary());
             pstmt.setDouble(7, newProfile.getDailyRate());
             pstmt.setBoolean(8, newProfile.isOverheadCost());
+            pstmt.setDouble(9, newProfile.getFixedAmount());
+            pstmt.setDouble(10, newProfile.getDailyWorkingHours());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

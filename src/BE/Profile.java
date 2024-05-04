@@ -45,6 +45,20 @@ public class Profile {
         this.dailyRate = dailyRate;
     }
 
+    //Create Profile
+    public Profile(int countryId, String projectRole, String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
+        this.countryId = countryId;
+        this.projectRole = ProjectRole.valueOf(projectRole);
+        this.fName = firstName;
+        this.lName = lastName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlyResult;
+        this.dailyRate = dailyResult;
+        this.fixedAmount = fixedAmount;
+        this.dailyWorkingHours = dailyWorkingHours;
+    }
+
     public int getProfileId() {
         return profileId;
     }
