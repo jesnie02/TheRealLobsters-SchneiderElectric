@@ -128,5 +128,15 @@ public class ProjectTeam {
         return country;
     }
 
-
+    public String toDetailedString() {
+        return "ProjectTeam{" +
+                "teamName='" + TeamName + '\'' +
+                ", avgAnnualSalary=" + avgAnnualSalary +
+                ", sumOfAnnualSalary=" + sumOfAnnualSalary +
+                ", avgHourlyRate=" + avgHourlyRate +
+                ", sumOfHourlyRate=" + sumOfHourlyRate +
+                ", avgDailyRate=" + avgDailyRate +
+                ", sumOfDailyRate=" + sumOfDailyRate +
+                '}';
+    }
 }

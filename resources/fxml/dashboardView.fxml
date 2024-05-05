@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane stylesheets="/style/Style.css" prefHeight="486.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
+<BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
    <center>
       <TabPane prefHeight="426.0" prefWidth="818.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
@@ -230,8 +230,7 @@
                      <left>
                         <VBox alignment="CENTER" prefHeight="397.0" prefWidth="444.0" spacing="50.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ComboBox fx:id="cBoxTeamGeo" prefHeight="26.0" prefWidth="236.0" promptText="Select Team" />
-                              <Button mnemonicParsing="false" text="Result" />
+                              <ComboBox fx:id="cBoxTeamDash" prefHeight="26.0" prefWidth="236.0" promptText="Select Team" />
                            </children>
                         </VBox>
                      </left>
@@ -255,7 +254,7 @@
                                                 <Insets left="8.0" />
                                              </padding>
                                           </Label>
-                                          <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="700000000">
+                                          <Label fx:id="lblDailyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0,0">
                                              <padding>
                                                 <Insets right="8.0" />
                                              </padding>
@@ -273,7 +272,7 @@
                                                 <Insets left="8.0" />
                                              </padding>
                                           </Label>
-                                          <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="700000000">
+                                          <Label fx:id="lblHourlyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0,0">
                                              <padding>
                                                 <Insets right="8.0" />
                                              </padding>
@@ -293,7 +292,7 @@
                                                 <Insets left="8.0" />
                                              </padding>
                                           </Label>
-                                          <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="700000000">
+                                          <Label fx:id="lblAvgDailyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0,0">
                                              <padding>
                                                 <Insets right="8.0" />
                                              </padding>
@@ -311,7 +310,7 @@
                                                 <Insets left="8.0" />
                                              </padding>
                                           </Label>
-                                          <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="700000000">
+                                          <Label fx:id="lblAvgHourlyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0,0">
                                              <padding>
                                                 <Insets right="8.0" />
                                              </padding>

@@ -188,4 +188,8 @@ public class FrameController implements Initializable {
         loadView("createProjectTeamView.fxml");
 
     }
+
+    void loadDetailView() {
+        loadView("teamDetailsView.fxml");
+    }
 }

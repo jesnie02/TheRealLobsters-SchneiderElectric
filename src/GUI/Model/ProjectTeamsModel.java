@@ -3,6 +3,7 @@ package GUI.Model;
 import BE.Profile;
 import BE.ProjectTeam;
 import BLL.ProjectTeamsManager;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.List;
@@ -38,6 +39,12 @@ public class ProjectTeamsModel {
                         .collect(Collectors.toList())
         );
         return teamNames;
+    }
+
+    public ObservableList<ProjectTeam> getAllProjectTeamsData() throws Exception {
+        List<ProjectTeam> list = projectTeamsManager.getEveryProjectTeam();
+        ObservableList<ProjectTeam> observableList = FXCollections.observableArrayList(list);
+        return observableList;
     }
 
     public enum ProjectTeamRateType {

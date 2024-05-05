@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 import java.io.IOException;
@@ -24,9 +25,15 @@ public class TeamsController implements Initializable {
         for (int i = 0; i < 10; i++) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
             Node teamsView = loader.load();
+            teamsView.setOnMouseClicked(event -> openTeamDetailView(event));
             tPaneTeamOverview.getChildren().add(teamsView);
         }
     }
+
+    private void openTeamDetailView(MouseEvent event) {
+        frameController.loadDetailView();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
