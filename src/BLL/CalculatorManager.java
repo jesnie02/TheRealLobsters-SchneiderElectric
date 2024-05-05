@@ -1,14 +1,11 @@
 package BLL;
 
+import BE.Country;
 import BE.Profile;
-import javafx.collections.ObservableList;
 
 import java.util.List;
-import java.util.function.Function;
 
-public class CalculatorManager implements ICalculateManager{
-
-
+public class CalculatorManager implements ICalculateManager {
 
 
     @Override
@@ -19,8 +16,8 @@ public class CalculatorManager implements ICalculateManager{
      * only throw exception if dayRate is negative
      * @return
      */
-    public double getDailyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException{
-        if (dayRate < 0 ) {
+    public double getDailyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException {
+        if (dayRate < 0) {
             throw new IllegalArgumentException("Day rate cannot be negative");
         }
         double calculation = dayRate * (1 + percentage / 100); //TODO: Add a test
@@ -40,35 +37,35 @@ public class CalculatorManager implements ICalculateManager{
     @Override
     public double annualSalary(List<Profile> profiles) {
         double annualSalary = 0;
-        for (Profile profile :profiles){
+        for (Profile profile : profiles) {
             annualSalary += (profile.getAnnualSalary() + profile.getFixedAmount());
         }
         return annualSalary;
     }
 
     @Override
-    public double avgAnnualSalary(List<Profile> profiles){
-        return annualSalary(profiles)/profiles.size();
+    public double avgAnnualSalary(List<Profile> profiles) {
+        return annualSalary(profiles) / profiles.size();
     }
 
     @Override
     public double sumOfHourlyRate(List<Profile> profiles) {
         double sumOfHourlyRate = 0;
-        for (Profile profile :profiles){
+        for (Profile profile : profiles) {
             sumOfHourlyRate += profile.getHourlyRate();
         }
         return sumOfHourlyRate;
     }
 
     @Override
-    public double avgHourlyRate(List<Profile> profiles){
-        return sumOfHourlyRate(profiles)/profiles.size();
+    public double avgHourlyRate(List<Profile> profiles) {
+        return sumOfHourlyRate(profiles) / profiles.size();
     }
 
     @Override
     public double sumOfDailyRate(List<Profile> profiles) {
         double sumOfDailyRate = 0;
-        for (Profile profile :profiles){
+        for (Profile profile : profiles) {
             sumOfDailyRate += profile.getDailyRate();
         }
         return sumOfDailyRate;
@@ -76,7 +73,7 @@ public class CalculatorManager implements ICalculateManager{
 
     @Override
     public double avgDailyRate(List<Profile> profiles) {
-        return sumOfDailyRate(profiles)/profiles.size();
+        return sumOfDailyRate(profiles) / profiles.size();
     }
 
 
@@ -86,11 +83,11 @@ public class CalculatorManager implements ICalculateManager{
             double utilizationPercentageProfile) {
 
         double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
-        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100)) / (overheadMultiplierProfile/ 100);
+        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100)) / (overheadMultiplierProfile / 100);
         double result = actualAnnualSalary / actualEffectivehours;
         //TODO: REMOVE SOUTS @JONAS
         System.out.println("actualAnnualSalary:  " + actualAnnualSalary);
-        System.out.println("actualEffectivehours:  " +actualEffectivehours);
+        System.out.println("actualEffectivehours:  " + actualEffectivehours);
         System.out.println("result:  " + result);
         return result;
     }
@@ -103,8 +100,6 @@ public class CalculatorManager implements ICalculateManager{
         System.out.println(result);
         return result;
     }
-
-
 }
 
 

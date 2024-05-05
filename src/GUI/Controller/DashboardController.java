@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
 
     @FXML
+    public Label lblDailyRateSumCountry,lblHourlyRateSumCountry,lblAvgDailyRateCountry,lblAvgHourlyRateCountry;
+    @FXML
     private ComboBox<Country> cBoxCountryGeo;
     @FXML
     private ComboBox<Geography> cBoxRegionGeo;
@@ -45,11 +47,14 @@ public class DashboardController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
 
-            cBoxCountryGeo.setItems(countryModel.getAllFromCountries());
+            cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
+            cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                updateLabelsCountryTab(newValue);
+            });
             cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
             //cBoxRegionGeo.setItems(geographyModel.getAllFromGeographies());
             cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                updateLabels(newValue);
+                updateLabelsTeamTab(newValue);
             });
 
 
@@ -60,7 +65,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void updateLabels(ProjectTeam selectedTeam) {
+    private void updateLabelsTeamTab(ProjectTeam selectedTeam) {
         if (selectedTeam != null) {
             lblHourlyRateSumTeam.setText(String.format("%.2f", selectedTeam.getSumOfHourlyRate()));
             lblDailyRateSumTeam.setText(String.format("%.2f", selectedTeam.getSumOfDailyRate()));
@@ -75,6 +80,24 @@ public class DashboardController implements Initializable {
         }
     }
 
+    private void updateLabelsCountryTab(Country selectedCountry) {
+        if (selectedCountry != null) {
+            lblHourlyRateSumCountry.setText(String.format("%.2f", selectedCountry.getSumOfHourlyRate()));
+            lblDailyRateSumCountry.setText(String.format("%.2f", selectedCountry.getSumOfDailyRate()));
+            lblAvgDailyRateCountry.setText(String.format("%.2f", selectedCountry.getAvgDailyRate()));
+            lblAvgHourlyRateCountry.setText(String.format("%.2f", selectedCountry.getAvgHourlyRate()));
+        } else {
+            // Clear labels if no country is selected
+            lblHourlyRateSumCountry.setText("");
+            lblDailyRateSumCountry.setText("");
+            lblAvgDailyRateCountry.setText("");
+            lblAvgHourlyRateCountry.setText("");
+        }
+    }
 
+    public void calculateAndSetLabelsCountry(ActionEvent actionEvent) {
+        Country selectedCountry = cBoxCountryGeo.getSelectionModel().getSelectedItem();
+        updateLabelsCountryTab(selectedCountry);
+    }
 
 }

@@ -41,4 +41,37 @@ public class Country_DAO implements ICountryDataAccess {
         }
         return allCountries;
     }
+
+    public List<Country> getSumsAndAveragesForCountries() {
+        List<Country> allCountries = new ArrayList<>();
+        try(Connection conn = dbConnector.getConnection();
+            Statement stmt = conn.createStatement()){
+
+            String sql = "SELECT c.CountryId, c.CountryName, " +
+                    "SUM(p.HourlySalary) AS TotalHourlyRate, " +
+                    "AVG(p.HourlySalary) AS AvgHourlyRate, " +
+                    "SUM(p.DailyRate) AS TotalDailyRate, " +
+                    "AVG(p.DailyRate) AS AvgDailyRate, " +
+                    "COUNT(p.ProfileId) AS ProfileCount " +
+                    "FROM Country c JOIN Profile p ON c.CountryId = p.Country " +
+                    "GROUP BY c.CountryId, c.CountryName";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                Country country = new Country(
+                        rs.getInt("CountryId"),
+                        rs.getString("CountryName"),
+                        rs.getDouble("TotalHourlyRate"),
+                        rs.getDouble("AvgHourlyRate"),
+                        rs.getDouble("TotalDailyRate"),
+                        rs.getDouble("AvgDailyRate"),
+                        rs.getInt("ProfileCount")
+                );
+                allCountries.add(country);
+                allCountries.add(country);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return allCountries;
+    }
 }
