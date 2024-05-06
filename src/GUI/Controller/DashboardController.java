@@ -123,10 +123,4 @@ public class DashboardController implements Initializable {
             lblAvgHourlyRateCountry.setText("");
         }
     }
-
-    public void calculateAndSetLabelsCountry(ActionEvent actionEvent) {
-        Country selectedCountry = cBoxCountryGeo.getSelectionModel().getSelectedItem();
-        updateLabelsCountryTab(selectedCountry);
-    }
-
 }

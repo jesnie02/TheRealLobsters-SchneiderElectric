@@ -1,6 +1,5 @@
 package BLL;
 
-import BE.Country;
 import BE.Profile;
 
 import java.util.List;
@@ -76,7 +75,8 @@ public class CalculatorManager implements ICalculateManager {
         return sumOfDailyRate(profiles) / profiles.size();
     }
 
-
+    //TODO: Add a test for this method @THOMAS
+    @Override
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
             double annualFixedAmountProfile, double effectiveHoursProfile,
@@ -96,9 +96,11 @@ public class CalculatorManager implements ICalculateManager {
         return result;
     }
 
+    //TODO: Add a test for this method @THOMAS
+    @Override
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         double result = dailyWorkingHours * hourlyRate;
-        return result;     //Mangler unit test
+        return result;
     }
 }
 

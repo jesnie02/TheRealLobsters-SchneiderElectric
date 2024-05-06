@@ -24,4 +24,11 @@ public interface ICalculateManager {
     double sumOfDailyRate(List<Profile> profiles);
 
 
+    double calculateAndSetHourlyRateCreateProfile(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile,
+            double utilizationPercentageProfile);
+
+    //TODO: Add a test for this method @THOMAS
+    double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate);
 }

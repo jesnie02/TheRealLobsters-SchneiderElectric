@@ -202,6 +202,4 @@ public class Profile {
                 ", dailyRate=" + dailyRate +
                 '}';
     }
-
-
 }

@@ -45,8 +45,10 @@ public class ProfileModel {
         return profileName;
     }
 
-    public List<Profile> getAllProfiles() {
-        return profileManager.getAllProfiles();
+    public ObservableList<Profile> getAllProfiles() {
+        ObservableList<Profile> profiles = FXCollections.observableArrayList();
+        profiles.addAll(profileManager.getAllProfiles());
+        return profiles;
     }
 
     public double calculateAndSetHourlyRateCreateProfile(
