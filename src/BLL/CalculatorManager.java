@@ -19,7 +19,7 @@ public class CalculatorManager implements ICalculateManager {
         if (dayRate < 0) {
             throw new IllegalArgumentException("Day rate cannot be negative");
         }
-        double calculation = dayRate * (1 + percentage / 100); //TODO: Add a test
+        double calculation = dayRate * (1 + percentage / 100);
         return calculation;
     }
 
