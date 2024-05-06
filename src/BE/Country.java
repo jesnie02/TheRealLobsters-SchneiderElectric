@@ -107,15 +107,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" +
-                "CountryId=" + CountryId +
-                ", sumOfHourlyRate=" + sumOfHourlyRate +
-                ", sumOfDailyRate=" + sumOfDailyRate +
-                ", avgDailyRate=" + avgDailyRate +
-                ", avgHourlyRate=" + avgHourlyRate +
-                ", sumOfAnnualSalary=" + sumOfAnnualSalary +
-                ", avgAnnualSalary=" + avgAnnualSalary +
-                ", CountryName='" + CountryName + '\'' +
-                '}';
+        return CountryName;
     }
+
 }

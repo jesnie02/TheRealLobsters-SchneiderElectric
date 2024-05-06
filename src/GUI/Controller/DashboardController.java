@@ -9,6 +9,7 @@ import GUI.Model.ProjectTeamsModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -23,7 +24,7 @@ public class DashboardController implements Initializable {
     @FXML
     private ComboBox<Country> cBoxCountryGeo;
     @FXML
-    private ComboBox<Geography> cBoxRegionGeo;
+    private ComboBox<Geography> cBoxGeographyDash;
     @FXML
     private ComboBox<ProjectTeam> cBoxTeamDash;
 
@@ -39,6 +40,10 @@ public class DashboardController implements Initializable {
     @FXML
     private Label lblDailyRateSumTeam;
 
+    @FXML
+    private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,10 +52,19 @@ public class DashboardController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
 
+            //Geography
+            cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
+            cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                updateLabelsGeographyTab(newValue);
+            });
+
+            //Country
             cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
             cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsCountryTab(newValue);
             });
+
+            //Team
             cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
             //cBoxRegionGeo.setItems(geographyModel.getAllFromGeographies());
             cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -62,6 +76,21 @@ public class DashboardController implements Initializable {
             e.printStackTrace(); //TODO: Handle this exception
         } catch (Exception e) {
             throw new RuntimeException(e); //TODO: Handle this exception
+        }
+    }
+
+    private void updateLabelsGeographyTab(Geography selectedGeography) {
+        if (selectedGeography != null) {
+            lblSumDailyRateGeo.setText(String.format("%.2f", selectedGeography.getSumOfDailyRate()));
+            lblSumHourlyRateGeo.setText(String.format("%.2f", selectedGeography.getSumOfHourlyRate()));
+            lblAvgDailyRateGeo.setText(String.format("%.2f", selectedGeography.getAvgDailyRate()));
+            lblAvgHourlyRateGeo.setText(String.format("%.2f", selectedGeography.getAvgHourlyRate()));
+        } else {
+            // Clear labels if no geography is selected
+            lblSumDailyRateGeo.setText("");
+            lblSumHourlyRateGeo.setText("");
+            lblAvgDailyRateGeo.setText("");
+            lblAvgHourlyRateGeo.setText("");
         }
     }
 

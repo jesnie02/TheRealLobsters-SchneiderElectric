@@ -1,20 +1,28 @@
 package BLL;
 
+import BE.Country;
 import BE.Geography;
 import DAL.Geography_DAO;
+import DAL.IGeographyDataAccess;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class GeographyManager {
 
-    private Geography_DAO geographyDAO;
+    private final IGeographyDataAccess geographyDAO;
 
-    public GeographyManager() {
-        this.geographyDAO = geographyDAO;
+    public GeographyManager() throws Exception {
+        geographyDAO = new Geography_DAO();
     }
 
     public List<Geography> getAllGeographies() throws Exception {
         return geographyDAO.getAllGeographies();
+    }
+
+    public List <Geography> getSumsAndAveragesForGeographies() throws Exception{
+        return geographyDAO.getSumsAndAveragesForGeographies();
     }
 
 }

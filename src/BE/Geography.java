@@ -4,30 +4,72 @@ public class Geography {
 
 
     private int geographyId;
-    private String geography;
+    private String geographyName;
+    private double sumOfDailyRate;
+    private double sumOfHourlyRate;
+    private double avgDailyRate;
+    private double avgHourlyRate;
+    private int profileCount;
 
-    public Geography(int geographyId, String geography) {
+
+
+    public Geography(int geographyId, String geographyName, double sumOfDailyRate, double sumOfHourlyRate, double avgDailyRate, double avgHourlyRate, int profileCount) {
         this.geographyId = geographyId;
-        this.geography = geography;
+        this.geographyName = geographyName;
+        this.sumOfDailyRate = sumOfDailyRate;
+        this.sumOfHourlyRate = sumOfHourlyRate;
+        this.avgDailyRate = avgDailyRate;
+        this.avgHourlyRate = avgHourlyRate;
+        this.profileCount = profileCount;
     }
 
+    public Geography(int geographyId, String geographyName) {
+        this.geographyId = geographyId;
+        this.geographyName = geographyName;
+    }
 
+    public int getProfileCount() {
+        return profileCount;
+    }
 
-    private int getGeographyId() {
+    public void setProfileCount(int profileCount) {
+        this.profileCount = profileCount;
+    }
+
+    public int getGeographyId() {
         return geographyId;
     }
 
-    private void setGeographyId(int geographyId) {
+    public void setGeographyId(int geographyId) {
         this.geographyId = geographyId;
     }
 
-    private String getGeography() {
-        return geography;
+    public String getGeographyName() {
+        return geographyName;
     }
 
-    private void setGeography(String geography) {
-        this.geography = geography;
+    public void setGeographyName(String geographyName) {
+        this.geographyName = geographyName;
     }
 
+    public double getSumOfDailyRate() {
+        return sumOfDailyRate;
+    }
 
+    public double getSumOfHourlyRate() {
+        return sumOfHourlyRate;
+    }
+
+    public double getAvgDailyRate() {
+        return avgDailyRate;
+    }
+
+    public double getAvgHourlyRate() {
+        return avgHourlyRate;
+    }
+
+    @Override
+    public String toString() {
+        return geographyName;
+    }
 }

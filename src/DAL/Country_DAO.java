@@ -67,7 +67,6 @@ public class Country_DAO implements ICountryDataAccess {
                         rs.getInt("ProfileCount")
                 );
                 allCountries.add(country);
-                allCountries.add(country);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
