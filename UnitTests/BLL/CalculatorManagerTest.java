@@ -71,6 +71,208 @@ class CalculatorManagerTest {
         assertThrows(IllegalArgumentException.class, () -> calculatorManager.getDailyRateWithMultiplier(dayRate, percentage));
     }
 
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void sumOfDailyRate_returnsCorrectSumForValidProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(200000, 14124, 1344));
+        profiles.add(new Profile(20000, 4354, 200));
+        profiles.add(new Profile(30000, 2443, 200));
+
+        double expected = 1744;
+
+        // Act
+        double actual = calculatorManager.sumOfDailyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void sumOfDailyRate_returnsZeroForProfilesWithZeroDailyRate() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(100.0, 0.0, 0.0));
+        profiles.add(new Profile(200.0, 0.0, 0.0));
+        profiles.add(new Profile(300.0, 0.0, 0.0));
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.sumOfDailyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void annualsalary_returnsCorrectSumForValidProfiles() {
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(400000, 300, 4000, 402));
+        profiles.add(new Profile(2000, 900, 20, 20));
+        profiles.add(new Profile(2000, 900, 20, 20));
+
+        double expected = 406100;
+
+        double actual = calculatorManager.annualsalary(profiles);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void annualsalary_returnsZeroForEmptyProfiles() {
+        List<Profile> profiles = new ArrayList<>();
+
+        double expected = 0.0;
+
+        double actual = calculatorManager.annualsalary(profiles);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void annualSalary_returnsZeroForProfilesWithZeroAnnualsalary() {
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
+
+        double expected = 0.0;
+
+        double actual = calculatorManager.annualsalary(profiles);
+
+        assertEquals(expected, actual);
+    }
+
+   //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void sumOfHourlyRate_returnsCorrectSumForValidProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(200000, 14124, 1344, 20));
+        profiles.add(new Profile(20000, 4354, 200, 15));
+        profiles.add(new Profile(30000, 2443, 200, 25));
+
+        double expected = 60;
+
+        // Act
+        double actual = calculatorManager.sumOfHourlyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void sumOfHourlyRate_returnsZeroForEmptyProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.sumOfHourlyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void sumOfHourlyRate_returnsZeroForProfilesWithZeroHourlyRate() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(100.0, 0.0, 0.0));
+        profiles.add(new Profile(200.0, 0.0, 0.0));
+        profiles.add(new Profile(300.0, 0.0, 0.0));
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.sumOfHourlyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void avgHourlyRate_returnsCorrectAverageForValidProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(200000, 14124, 1344, 20));
+        profiles.add(new Profile(20000, 4354, 200, 15));
+        profiles.add(new Profile(30000, 2443, 200, 25));
+
+        double expected = 20;
+
+        // Act
+        double actual = calculatorManager.avgHourlyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void avgHourlyRate_returnsZeroForProfilesWithZeroHourlyRate() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(100.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(200.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(300.0, 0.0, 0.0, 0.0));
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.avgHourlyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void avgDailyRate_returnsCorrectAverageForValidProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(200000, 14124, 1344));
+        profiles.add(new Profile(20000, 4354, 200));
+        profiles.add(new Profile(30000, 2443, 200));
+
+        double expected = 581.33;
+
+        // Act
+        double actual = calculatorManager.avgDailyRate(profiles);
+
+        // Assert
+        // Allows the test to pass if the actual value is within 0.01 of the expected value
+        assertEquals(expected, actual, 0.01);
+    }
+
+
+    @Test
+    void avgDailyRate_returnsZeroForProfilesWithZeroDailyRate() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(100.0, 0.0, 0.0));
+        profiles.add(new Profile(200.0, 0.0, 0.0));
+        profiles.add(new Profile(300.0, 0.0, 0.0));
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.avgDailyRate(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
     //--------------------------------------------------------------------------------------------------------
 
 
@@ -97,7 +299,7 @@ class CalculatorManagerTest {
 
 
     @Test
-    void calculateAndSetHourlyRateCreateProfile_returnsZeroForZeroAnnualSalary() {
+    void calculateAndSetHourlyRateCreateProfile_returnsZeroForZeroAnnualsalary() {
         // Arrange
         double annualSalaryProfile = 0;
         double overheadMultiplierProfile = 1.5;
@@ -116,7 +318,7 @@ class CalculatorManagerTest {
     }
 
     @Test
-    void calculateAndSetHourlyRateCreateProfile_throwsExceptionForNegativeAnnualSalary() {
+    void calculateAndSetHourlyRateCreateProfile_throwsExceptionForNegativeAnnualsalary() {
         // Arrange
         double annualSalaryProfile = -50000;
         double overheadMultiplierProfile = 1.5;
@@ -133,6 +335,44 @@ class CalculatorManagerTest {
 
     //--------------------------------------------------------------------------------------------------------
 
+    @Test
+    void calculateAndSetDailyRateCreateProfile_returnsCorrectValueForValidInput() {
+        // Arrange
+        double dailyWorkingHours = 8;
+        double hourlyRate = 20;
+        double expected = 160;
 
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetDailyRateCreateProfile_returnsZeroForZeroHourlyRate() {
+        // Arrange
+        double dailyWorkingHours = 8;
+        double hourlyRate = 0;
+
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(0, actual);
+    }
+
+    @Test
+    void calculateAndSetDailyRateCreateProfile_returnsZeroForZeroWorkingHours() {
+        // Arrange
+        double dailyWorkingHours = 0;
+        double hourlyRate = 20;
+
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(0, actual);
+    }
 
 }

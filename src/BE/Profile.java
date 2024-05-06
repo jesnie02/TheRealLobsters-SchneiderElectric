@@ -59,6 +59,29 @@ public class Profile {
         this.dailyWorkingHours = dailyWorkingHours;
     }
 
+    /**
+     * For unit testing purposes
+     */
+
+    public Profile(double annualSalary, double fixedAmount, double dailyRate) {
+        this.annualSalary = annualSalary;
+        this.fixedAmount = fixedAmount;
+        this.dailyRate = dailyRate;
+    }
+
+    /**
+     * For unit testing purposes
+     */
+
+    public Profile(double annualSalary, double fixedAmount, double dailyRate, double hourlyRate) {
+        this.annualSalary = annualSalary;
+        this.fixedAmount = fixedAmount;
+        this.dailyRate = dailyRate;
+        this.hourlySalary = hourlyRate;
+    }
+
+
+
     public int getProfileId() {
         return profileId;
     }
@@ -197,7 +220,7 @@ public class Profile {
                 ", fName='" + fName + '\'' +
                 ", lName='" + lName + '\'' +
                 ", overheadCost=" + overheadCost +
-                ", annualSalary=" + annualSalary +
+                ", annualsalary=" + annualSalary +
                 ", hourlySalary=" + hourlySalary +
                 ", dailyRate=" + dailyRate +
                 '}';

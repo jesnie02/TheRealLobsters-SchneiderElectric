@@ -1,10 +1,8 @@
 package BLL;
 
 import BE.Profile;
-import javafx.collections.ObservableList;
 
 import java.util.List;
-import java.util.function.Function;
 
 public interface ICalculateManager {
 
@@ -15,7 +13,7 @@ public interface ICalculateManager {
     double getHourlyRateWithMultiplier(double hourlyRate, double percentage);
 
     double avgAnnualSalary(List<Profile> profiles);
-    double annualSalary(List<Profile> profiles);
+    double annualsalary(List<Profile> profiles);
 
 
     double sumOfHourlyRate(List<Profile> profiles);

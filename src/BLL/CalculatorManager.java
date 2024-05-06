@@ -34,7 +34,7 @@ public class CalculatorManager implements ICalculateManager {
     }
 
     @Override
-    public double annualSalary(List<Profile> profiles) {
+    public double annualsalary(List<Profile> profiles) {
         double annualSalary = 0;
         for (Profile profile : profiles) {
             annualSalary += (profile.getAnnualSalary() + profile.getFixedAmount());
@@ -44,7 +44,7 @@ public class CalculatorManager implements ICalculateManager {
 
     @Override
     public double avgAnnualSalary(List<Profile> profiles) {
-        return annualSalary(profiles) / profiles.size();
+        return annualsalary(profiles) / profiles.size();
     }
 
     @Override
@@ -70,12 +70,12 @@ public class CalculatorManager implements ICalculateManager {
         return sumOfDailyRate;
     }
 
+
     @Override
     public double avgDailyRate(List<Profile> profiles) {
         return sumOfDailyRate(profiles) / profiles.size();
     }
 
-    //TODO: Add a test for this method @THOMAS
     @Override
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
@@ -96,7 +96,6 @@ public class CalculatorManager implements ICalculateManager {
         return result;
     }
 
-    //TODO: Add a test for this method @THOMAS
     @Override
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         double result = dailyWorkingHours * hourlyRate;
