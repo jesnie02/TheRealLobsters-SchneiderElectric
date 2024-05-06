@@ -82,23 +82,23 @@ public class CalculatorManager implements ICalculateManager {
             double annualFixedAmountProfile, double effectiveHoursProfile,
             double utilizationPercentageProfile) {
 
+        if (annualSalaryProfile == 0) {
+            return 0; // Return zero if the annual salary is zero
+        }
+
+        if (annualSalaryProfile < 0) {
+            throw new IllegalArgumentException("Annual salary cannot be negative");
+        }
+
         double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
-        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100)) / (overheadMultiplierProfile / 100);
-        double result = actualAnnualSalary / actualEffectivehours;
-        //TODO: REMOVE SOUTS @JONAS
-        System.out.println("actualAnnualSalary:  " + actualAnnualSalary);
-        System.out.println("actualEffectivehours:  " + actualEffectivehours);
-        System.out.println("result:  " + result);
+        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100));
+        double result = (actualAnnualSalary / actualEffectivehours) * (1 + overheadMultiplierProfile / 100);
         return result;
     }
 
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         double result = dailyWorkingHours * hourlyRate;
-        //TODO: REMOVE SOUTS @JONAS
-        System.out.println(dailyWorkingHours);
-        System.out.println(hourlyRate);
-        System.out.println(result);
-        return result;
+        return result;     //Mangler unit test
     }
 }
 

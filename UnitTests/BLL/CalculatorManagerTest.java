@@ -70,4 +70,69 @@ class CalculatorManagerTest {
         //act and assert
         assertThrows(IllegalArgumentException.class, () -> calculatorManager.getDailyRateWithMultiplier(dayRate, percentage));
     }
+
+    //--------------------------------------------------------------------------------------------------------
+
+
+    @Test
+    void calculateAndSetHourlyRateCreateProfile_returnsCorrectValueForValidInput() {
+        // Arrange
+        double annualSalaryProfile = 50000;
+        double overheadMultiplierProfile = 50;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentageProfile = 80;
+
+        double expected = 56.25;
+
+        // Act
+        double actual = calculatorManager.calculateAndSetHourlyRateCreateProfile(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentageProfile);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void calculateAndSetHourlyRateCreateProfile_returnsZeroForZeroAnnualSalary() {
+        // Arrange
+        double annualSalaryProfile = 0;
+        double overheadMultiplierProfile = 1.5;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentageProfile = 80;
+
+        // Act
+        double actual = calculatorManager.calculateAndSetHourlyRateCreateProfile(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentageProfile);
+
+        // Assert
+        assertEquals(0, actual);
+    }
+
+    @Test
+    void calculateAndSetHourlyRateCreateProfile_throwsExceptionForNegativeAnnualSalary() {
+        // Arrange
+        double annualSalaryProfile = -50000;
+        double overheadMultiplierProfile = 1.5;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentageProfile = 80;
+
+        // Act and Assert
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetHourlyRateCreateProfile(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentageProfile));
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+
+
 }
