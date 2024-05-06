@@ -57,7 +57,7 @@ public class ProfileController {
         //colCountryProfile.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         //colRegionProfile.setCellValueFactory(new PropertyValueFactory<>("GeographyId"));
         colProjectTeamProfile.setCellValueFactory(new PropertyValueFactory<>("projectRole"));
-        colAnnualSalaryProfile.setCellValueFactory(new PropertyValueFactory<>("annualsalary"));
+        colAnnualSalaryProfile.setCellValueFactory(new PropertyValueFactory<>("annualSalary"));
         colHourlyRateProfile.setCellValueFactory(new PropertyValueFactory<>("hourlySalary"));
         colDailyRateProfile.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
 
