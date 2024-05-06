@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-radius: 8; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsBox">
+<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-radius: 8; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsContainerController">
    <children>
       <HBox alignment="CENTER" prefHeight="29.0" prefWidth="239.0" style="-fx-background-color: #3DCD58; -fx-background-radius: 8 8 0 0;">
          <children>
-            <Label alignment="CENTER" text="Team 1" />
+            <Label fx:id="lblTeamNameContainer" alignment="CENTER" text="Team 1" />
          </children>
       </HBox>
       <HBox>
@@ -22,7 +22,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblLocation" text="Label">
+            <Label fx:id="lblLocationContainer" text="Label">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -45,7 +45,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblGeography" text="Label">
+            <Label fx:id="lblGeographyContainer" text="Label">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -68,7 +68,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblNumberOfMembers" text="Label">
+            <Label fx:id="lblNumberOfMembersContainer" text="Label">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -88,7 +88,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblAnnualAVGTeamCost" text="Label" />
+            <Label fx:id="lblAnnualAVGTeamCostContainer" text="Label" />
          </children>
          <VBox.margin>
             <Insets />

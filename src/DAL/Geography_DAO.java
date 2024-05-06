@@ -1,6 +1,5 @@
 package DAL;
 
-import BE.Country;
 import BE.Geography;
 import DAL.DBConnector.DBConnector;
 
@@ -18,7 +17,7 @@ public class Geography_DAO implements IGeographyDataAccess {
 
 
     @Override
-    public List<Geography> getAllGeographies() throws Exception {
+    public List<Geography> getAllGeographies(int countryId) throws Exception {
         List<Geography> allGeographies = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
@@ -86,5 +85,31 @@ public class Geography_DAO implements IGeographyDataAccess {
             throw new RuntimeException(e);
         }
         return allGeographies;
+    }
+
+
+    public List<Geography> getCountryGeographyList(int countryId) {
+        List<Geography> countryGeographyList = new ArrayList<>();
+        String sql = """
+                SELECT g.GeographyName
+                FROM Country c
+                JOIN GeographyCountry gc ON c.CountryId = gc.CountryId
+                JOIN Geography g ON gc.GeographyId = g.GeographyId
+                WHERE c.CountryId = ?;
+                """;
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, countryId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String geographyName = rs.getString("GeographyName");
+                    countryGeographyList.add(new Geography(geographyName));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching country geography list", e);
+        }
+        return countryGeographyList;
     }
 }

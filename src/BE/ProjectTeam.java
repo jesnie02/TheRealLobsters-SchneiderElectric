@@ -1,5 +1,6 @@
 package BE;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectTeam {
@@ -8,9 +9,10 @@ public class ProjectTeam {
     private String TeamName;
     private double sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary;
     private int count;
-    private List<Profile> profiles;
+    private List<Profile> profiles = new ArrayList<>();
     private Country country;
-
+    private int numberOfProfiles;
+    private int CountryId;
 
     public ProjectTeam(String name) {
         this.TeamName = name;
@@ -22,7 +24,23 @@ public class ProjectTeam {
         this.TeamName = name;
     }
 
-    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary) {
+    public int getNumberOfProfiles() {
+        return numberOfProfiles;
+    }
+
+    public void setNumberOfProfiles(int numberOfProfiles) {
+        this.numberOfProfiles = numberOfProfiles;
+    }
+
+    public int getCountryId() {
+        return CountryId;
+    }
+
+    public void setCountryId(int countryId) {
+        CountryId = countryId;
+    }
+
+    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int numberOfProfiles, int CountryId) {
         TeamId = teamId;
         TeamName = teamName;
         this.sumOfHourlyRate = sumOfHourlyRate;
@@ -31,16 +49,23 @@ public class ProjectTeam {
         this.avgHourlyRate = avgHourlyRate;
         this.sumOfAnnualSalary = sumOfAnnualSalary;
         this.avgAnnualSalary = avgAnnualSalary;
+        this.numberOfProfiles = numberOfProfiles;
+        this.CountryId = CountryId;
     }
+
+
 
 
 
     public List<Profile> getProfiles() {
-        return profiles;
+        return new ArrayList<>(profiles);
     }
 
     public void setProfiles(List<Profile> profiles) {
-        this.profiles = profiles;
+        if (profiles == null) {
+            throw new IllegalArgumentException("Profiles list cannot be null");
+        }
+        this.profiles = new ArrayList<>(profiles);
     }
 
     public int getTeamId() {

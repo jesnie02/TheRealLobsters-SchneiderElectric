@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface IGeographyDataAccess {
 
-    List<Geography> getAllGeographies() throws Exception;
+    List<Geography> getAllGeographies(int countryId) throws Exception;
 
     List<Geography> getSumsAndAveragesForGeographies();
+
+    List<Geography> getCountryGeographyList(int countryId);
 }

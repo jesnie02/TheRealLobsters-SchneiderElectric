@@ -179,7 +179,7 @@ public class CreateProjectTeamController implements Initializable {
                 countriesMap = countryModel.getCountriesMap();
             } catch (Exception e) {
                 System.err.println("Error loading countries: " + e.getMessage());
-                return; // Handle error gracefully
+                return; // TODO: Handle this error
             }
         }
 

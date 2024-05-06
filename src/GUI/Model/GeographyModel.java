@@ -1,12 +1,13 @@
 package GUI.Model;
 
-import BE.Country;
 import BE.Geography;
 import BLL.GeographyManager;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,29 +20,9 @@ public class GeographyModel {
         geographyManager = new GeographyManager();
     }
 
-    public ObservableList<Geography> getAllGeographies() throws Exception {
-        ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
-                geographyManager.getAllGeographies().stream()
-                        .sorted(Comparator.comparing(Geography::getGeographyName))
-                        .map(geography -> new Geography(geography.getGeographyId(), geography.getGeographyName()) {
-                        })
-                        .collect(Collectors.toList())
-        );
-        return geographies;
-    }
 
-    public ObservableList<Geography> getAllFromGeographies() throws Exception {
-        ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
-                geographyManager.getAllGeographies().stream()
-                        .sorted(Comparator.comparing(Geography::getGeographyName))
-                        .collect(Collectors.toList())
-        );
-        return geographies;
-    }
-
-    public Map<Integer, Geography> getGeographyMap() throws Exception {
-        return geographyManager.getAllGeographies().stream()
-                .collect(Collectors.toMap(Geography::getGeographyId, geography -> geography));
+    public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
+        return geographyManager.getRegionsByCountryId(countryId);
     }
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {

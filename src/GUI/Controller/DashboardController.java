@@ -22,6 +22,9 @@ public class DashboardController implements Initializable {
     @FXML
     public Label lblDailyRateSumCountry,lblHourlyRateSumCountry,lblAvgDailyRateCountry,lblAvgHourlyRateCountry;
     @FXML
+    private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
+
+    @FXML
     private ComboBox<Country> cBoxCountryGeo;
     @FXML
     private ComboBox<Geography> cBoxGeographyDash;
@@ -31,14 +34,8 @@ public class DashboardController implements Initializable {
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
     private GeographyModel geographyModel;
-    @FXML
-    private Label lblAvgHourlyRateTeam;
-    @FXML
-    private Label lblAvgDailyRateTeam;
-    @FXML
-    private Label lblHourlyRateSumTeam;
-    @FXML
-    private Label lblDailyRateSumTeam;
+
+
 
     @FXML
     private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;

@@ -17,12 +17,14 @@ import javafx.scene.image.ImageView;
 public class ProfileController {
 
 
-    public MFXLegacyTableView tblProfiles;
-    public TableColumn colNameProfile, colTeamProfile, colCountryProfile, colRegionProfile, colAnnualSalaryProfile;
-    public TableColumn colHourlyRateProfile, colDailyRateProfile, colUpdateIconProfile, colDeleteIconProfile, colProjectTeamProfile;
+    public MFXLegacyTableView<Profile> tblProfiles;
+    public TableColumn<Profile, String> colNameProfile, colTeamProfile, colCountryProfile, colRegionProfile, colAnnualSalaryProfile;
+    public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile, colProjectTeamProfile;
+    public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
+
 
     // Instance of FrameController to control the main frame of the application
-    private FrameController frameController;
+    private final FrameController frameController;
     private ProfileModel profileModel;
 
     /**
@@ -59,11 +61,11 @@ public class ProfileController {
         colHourlyRateProfile.setCellValueFactory(new PropertyValueFactory<>("hourlySalary"));
         colDailyRateProfile.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
 
-        colUpdateIconProfile.setCellFactory(param -> new TableCell<>() {
+        colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = new Button("Update");
 
             @Override
-            protected void updateItem(Object item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
@@ -73,11 +75,11 @@ public class ProfileController {
             }
         });
 
-        colDeleteIconProfile.setCellFactory(param -> new TableCell<>() {
+        colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile,Void>() {
             private final Button deleteButton = new Button("Delete");
 
             @Override
-            protected void updateItem(Object item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);

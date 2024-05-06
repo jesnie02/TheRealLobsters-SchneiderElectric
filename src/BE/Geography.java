@@ -28,6 +28,10 @@ public class Geography {
         this.geographyName = geographyName;
     }
 
+    public Geography(String geographyName) {
+        this.geographyName = geographyName;
+    }
+
     public int getProfileCount() {
         return profileCount;
     }

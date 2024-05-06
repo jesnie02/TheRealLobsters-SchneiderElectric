@@ -42,7 +42,10 @@
                </padding>
             </Label>
             <Pane prefHeight="28.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="144.0" text="+ Create projectTeam" />
+            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="144.0" text="+ Create projectTeam">
+               <HBox.margin>
+                  <Insets bottom="8.0" top="8.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
    </top>
