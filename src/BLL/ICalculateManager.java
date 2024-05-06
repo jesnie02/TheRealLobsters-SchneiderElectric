@@ -13,7 +13,7 @@ public interface ICalculateManager {
     double getHourlyRateWithMultiplier(double hourlyRate, double percentage);
 
     double avgAnnualSalary(List<Profile> profiles);
-    double annualsalary(List<Profile> profiles);
+    double annualSalaryWithFixedAmount(List<Profile> profiles);
 
 
     double sumOfHourlyRate(List<Profile> profiles);

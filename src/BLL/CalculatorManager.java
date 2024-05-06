@@ -34,7 +34,7 @@ public class CalculatorManager implements ICalculateManager {
     }
 
     @Override
-    public double annualsalary(List<Profile> profiles) {
+    public double annualSalaryWithFixedAmount(List<Profile> profiles) {
         double annualSalary = 0;
         for (Profile profile : profiles) {
             annualSalary += (profile.getAnnualSalary() + profile.getFixedAmount());
@@ -44,7 +44,7 @@ public class CalculatorManager implements ICalculateManager {
 
     @Override
     public double avgAnnualSalary(List<Profile> profiles) {
-        return annualsalary(profiles) / profiles.size();
+        return annualSalaryWithFixedAmount(profiles) / profiles.size();
     }
 
     @Override

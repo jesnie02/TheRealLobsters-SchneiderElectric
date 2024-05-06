@@ -24,7 +24,7 @@ public class ProjectTeamsManager {
 
     public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
         projectTeam.setAvgAnnualSalary(iCalculateManager.avgAnnualSalary(projectTeam.getProfiles()));
-        projectTeam.setSumOfAnnualSalary(iCalculateManager.annualsalary(projectTeam.getProfiles()));
+        projectTeam.setSumOfAnnualSalary(iCalculateManager.annualSalaryWithFixedAmount(projectTeam.getProfiles()));
         projectTeam.setAvgHourlyRate(iCalculateManager.avgHourlyRate(projectTeam.getProfiles()));
         projectTeam.setSumOfHourlyRate(iCalculateManager.sumOfHourlyRate(projectTeam.getProfiles()));
         projectTeam.setAvgDailyRate(iCalculateManager.avgDailyRate(projectTeam.getProfiles()));
@@ -57,7 +57,7 @@ public class ProjectTeamsManager {
      * @return The total annual salary for the provided list of profiles.
      */
     public double calculateTotalAnnualSalary(List<Profile> profiles) {
-        return iCalculateManager.annualsalary(profiles);
+        return iCalculateManager.annualSalaryWithFixedAmount(profiles);
     }
 
     /**
