@@ -111,7 +111,7 @@ class CalculatorManagerTest {
     //--------------------------------------------------------------------------------------------------------
 
     @Test
-    void annualsalary_returnsCorrectSumForValidProfiles() {
+    void annualSalaryWithFixedAmount_returnsCorrectSumForValidProfiles() {
         List<Profile> profiles = new ArrayList<>();
         profiles.add(new Profile(400000, 300, 4000, 402));
         profiles.add(new Profile(2000, 900, 20, 20));
@@ -119,24 +119,24 @@ class CalculatorManagerTest {
 
         double expected = 406100;
 
-        double actual = calculatorManager.annualsalary(profiles);
+        double actual = calculatorManager.annualSalaryWithFixedAmount(profiles);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void annualsalary_returnsZeroForEmptyProfiles() {
+    void annualSalaryWithFixedAmount_returnsZeroForEmptyProfiles() {
         List<Profile> profiles = new ArrayList<>();
 
         double expected = 0.0;
 
-        double actual = calculatorManager.annualsalary(profiles);
+        double actual = calculatorManager.annualSalaryWithFixedAmount(profiles);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void annualSalary_returnsZeroForProfilesWithZeroAnnualsalary() {
+    void annualSalaryWithFixedAmount_returnsZeroForProfilesWithZeroAnnualsalary() {
         List<Profile> profiles = new ArrayList<>();
         profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
         profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
@@ -144,7 +144,7 @@ class CalculatorManagerTest {
 
         double expected = 0.0;
 
-        double actual = calculatorManager.annualsalary(profiles);
+        double actual = calculatorManager.annualSalaryWithFixedAmount(profiles);
 
         assertEquals(expected, actual);
     }
