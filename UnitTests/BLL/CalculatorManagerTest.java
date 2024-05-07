@@ -23,7 +23,7 @@ class CalculatorManagerTest {
     @Test
     /**
      * Test for getDailyRateWithMultiplier method
-     * Test for valid input with multiplication of percentage
+     * Test for valid input with multiplication of percentage of both gross margin and markup
      */
     void getDailyRateWithMultiplier_returnsCorrectValueForValidInput() {
         //arrange
@@ -39,7 +39,7 @@ class CalculatorManagerTest {
     @Test
     /**
      * Test for getDailyRateWithMultiplier method
-     * Test for valid input with multiplication of zero
+     * Test for valid input with multiplication of zero of both gross margin and markup
      */
     void getDailyRateWithMultiplier_returnsZeroForZeroDayRate() {
         //arrange
@@ -381,7 +381,7 @@ class CalculatorManagerTest {
     @Test
     /**
      * Test for getHourlyRateWithMultiplier method
-     * Test for valid input with multiplication of percentage
+     * Test for valid input with multiplication of percentage of both gross margin and markup
      */
     void getHourlyRateWithMultiplier_returnsCorrectValueForValidInput() {
         //arrange
@@ -397,7 +397,7 @@ class CalculatorManagerTest {
     @Test
     /**
      * Test for getHourlyRateWithMultiplier method
-     * Test for valid input with multiplication of zero
+     * Test for valid input with multiplication of zero of both gross margin and markup
      */
     void getHourlyRateWithMultiplier_returnsZeroForZeroHourlyRate() {
         //arrange
@@ -416,6 +416,11 @@ class CalculatorManagerTest {
         assertEquals(0.0, actual);
     }
 
+    @Test
+    /**
+     * Test for getHourlyRateWithMultiplier method
+     * Test for valid input with multiplication of negative percentage
+     */
     void getHourlyRateWithMultiplier_throwsExceptionForNegativeHourlyRate() {
         //arrange
         double hourlyRate = -100;
