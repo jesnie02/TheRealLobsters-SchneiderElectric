@@ -26,6 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Controller class for the Profile view.
+ * Handles the interaction between the Profile view and the model classes.
+ */
 public class ProfileController {
 
 
@@ -36,7 +41,6 @@ public class ProfileController {
 
     private Map<Integer, String> idToNameMap;
 
-    // Instance of FrameController to control the main frame of the application
     private final FrameController frameController;
     private ProfileModel profileModel;
     private CountryModel countryModel;
@@ -84,7 +88,10 @@ public class ProfileController {
     }
 
 
-
+    /**
+     * Sets up the cell value factories for the table columns.
+     * The cell value factories determine how the data for each cell is retrieved from the profile objects.
+     */
     private void setCellValueFactories() {
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(2);
@@ -174,6 +181,11 @@ public class ProfileController {
         });
     }
 
+    /**
+     * Creates a map from team ID to team name.
+     * This map is used for displaying the team name in the table view.
+     * @return a map from team ID to team name
+     */
     public Map<Integer, String> createIdToNameMap() {
         Map<Integer, String> idToNameMap = new HashMap<>();
         try {
@@ -186,6 +198,9 @@ public class ProfileController {
         return idToNameMap;
     }
 
+    /**
+     * Loads the profiles into the table view.
+     */
     private void loadProfiles() {
         tblProfiles.setItems(profileModel.getAllProfiles());
     }

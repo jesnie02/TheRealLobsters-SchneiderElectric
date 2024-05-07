@@ -9,13 +9,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for handling Profile related data operations.
+ * It communicates with the database to perform these operations.
+ */
 public class Profile_DAO implements IProfileDataAccess {
 
     private final DBConnector dbConnector;
 
+    /**
+     * Constructor for the Profile_DAO class.
+     * It initializes the dbConnector variable with an instance of DBConnector.
+     * @throws IOException if an I/O error occurs
+     */
     public Profile_DAO() throws IOException {
         dbConnector = new DBConnector();
     }
+
+    /**
+     * Retrieves all profiles from the database.
+     * @return A list of Profile objects.
+     */
     @Override
     public List<Profile> getAllProfiles() {
         List<Profile> allProfiles = new ArrayList<>();
@@ -47,8 +61,8 @@ public class Profile_DAO implements IProfileDataAccess {
     }
 
     /**
-     * This method saves a new profile to the database. useing the Profile object from the GUI.
-     * SQL statement below is used to save the data in the database table profile.
+     * Saves a new profile to the database.
+     * @param newProfile The new profile to be saved.
      */
     public void saveProfile(Profile newProfile) {
         String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, Country, ProjectRole, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

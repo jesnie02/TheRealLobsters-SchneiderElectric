@@ -4,17 +4,21 @@ import BE.Profile;
 
 import java.util.List;
 
+/**
+ * This class is responsible for performing various calculations related to profiles.
+ * It implements the ICalculateManager interface.
+ */
 public class CalculatorManager implements ICalculateManager {
 
 
-    @Override
     /**
-     * @param dayRate = is loaded from the profile (dayRate) or team (avgDay) selected.
-     * @param percentage = gets the value from the slider in view.
-     * Multiplikation of dayRate with percentage
-     * only throw exception if dayRate is negative
-     * @return
+     * Calculates the daily rate with a multiplier.
+     * @param dayRate The daily rate.
+     * @param percentage The multiplier as a percentage.
+     * @return The daily rate multiplied by the percentage.
+     * @throws IllegalArgumentException if the day rate is negative.
      */
+    @Override
     public double getDailyRateWithMultiplier(double dayRate, double percentage) throws IllegalArgumentException {
         if (dayRate < 0) {
             throw new IllegalArgumentException("Day rate cannot be negative");
@@ -23,16 +27,23 @@ public class CalculatorManager implements ICalculateManager {
         return calculation;
     }
 
-    @Override
     /**
-     * @param hourlyRate = is loaded from the profile (hourlyRate) or team (avgHourly) selected.
-     * @param percentage = gets the value from the slider in view.
+     * Calculates the hourly rate with a multiplier.
+     * @param hourlyRate The hourly rate.
+     * @param percentage The multiplier as a percentage.
+     * @return The hourly rate multiplied by the percentage.
      */
+    @Override
     public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
         double calculation = hourlyRate * (1 + percentage / 100);
         return calculation;
     }
 
+    /**
+     * Calculates the total annual salary with fixed amount for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The total annual salary with fixed amount.
+     */
     @Override
     public double annualSalaryWithFixedAmount(List<Profile> profiles) {
         double annualSalary = 0;
@@ -42,11 +53,21 @@ public class CalculatorManager implements ICalculateManager {
         return annualSalary;
     }
 
+    /**
+     * Calculates the average annual salary for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The average annual salary.
+     */
     @Override
     public double avgAnnualSalary(List<Profile> profiles) {
         return annualSalaryWithFixedAmount(profiles) / profiles.size();
     }
 
+    /**
+     * Calculates the sum of hourly rates for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The sum of hourly rates.
+     */
     @Override
     public double sumOfHourlyRate(List<Profile> profiles) {
         double sumOfHourlyRate = 0;
@@ -56,11 +77,21 @@ public class CalculatorManager implements ICalculateManager {
         return sumOfHourlyRate;
     }
 
+    /**
+     * Calculates the average hourly rate for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The average hourly rate.
+     */
     @Override
     public double avgHourlyRate(List<Profile> profiles) {
         return sumOfHourlyRate(profiles) / profiles.size();
     }
 
+    /**
+     * Calculates the sum of daily rates for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The sum of daily rates.
+     */
     @Override
     public double sumOfDailyRate(List<Profile> profiles) {
         double sumOfDailyRate = 0;
@@ -70,12 +101,25 @@ public class CalculatorManager implements ICalculateManager {
         return sumOfDailyRate;
     }
 
-
+    /**
+     * Calculates the average daily rate for a list of profiles.
+     * @param profiles The list of profiles.
+     * @return The average daily rate.
+     */
     @Override
     public double avgDailyRate(List<Profile> profiles) {
         return sumOfDailyRate(profiles) / profiles.size();
     }
 
+    /**
+     * Calculates and sets the hourly rate for a profile during creation.
+     * @param annualSalaryProfile The annual salary of the profile.
+     * @param overheadMultiplierProfile The overhead multiplier of the profile.
+     * @param annualFixedAmountProfile The annual fixed amount of the profile.
+     * @param effectiveHoursProfile The effective hours of the profile.
+     * @param utilizationPercentageProfile The utilization percentage of the profile.
+     * @return The calculated hourly rate.
+     */
     @Override
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
@@ -96,6 +140,12 @@ public class CalculatorManager implements ICalculateManager {
         return result;
     }
 
+    /**
+     * Calculates and sets the daily rate for a profile during creation.
+     * @param dailyWorkingHours The daily working hours of the profile.
+     * @param hourlyRate The hourly rate of the profile.
+     * @return The calculated daily rate.
+     */
     @Override
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         double result = dailyWorkingHours * hourlyRate;

@@ -6,28 +6,46 @@ import DAL.Profile_DAO;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Manager class for handling Profile related operations.
+ * It communicates with the Profile_DAO to perform these operations and uses CalculatorManager for calculations.
+ */
 public class ProfileManager {
 
     private Profile_DAO profileDAO;
     private CalculatorManager calculatorManager;
 
+    /**
+     * Constructor for the ProfileManager class.
+     * It initializes the profileDAO and calculatorManager variables with instances of Profile_DAO and CalculatorManager.
+     * @throws IOException if an I/O error occurs
+     */
     public ProfileManager() throws IOException {
         calculatorManager = new CalculatorManager();
         profileDAO = new Profile_DAO();
     }
 
-
+    /**
+     * Returns a list of all profiles.
+     * @return A list of Profile objects.
+     */
     public List<Profile> getAllProfiles(){
         return profileDAO.getAllProfiles();
     }
 
     /**
-     * Saves a new profile to the database. from the GUI.
+     * Saves a new profile to the database.
+     * @param newProfile The new profile to be saved.
      */
     public void saveProfile(Profile newProfile) {
         profileDAO.saveProfile(newProfile);
     }
 
+    /**
+     * Returns a profile by its name.
+     * @param name The name of the profile.
+     * @return The Profile object if found, null otherwise.
+     */
     public Profile getProfileByName(String name) {
     for (Profile profile : getAllProfiles()) {
         if ((profile.getfName() + " " + profile.getlName()).equals(name)) {
@@ -37,6 +55,15 @@ public class ProfileManager {
     return null;
     }
 
+    /**
+     * Calculates and sets the hourly rate for a profile during creation.
+     * @param annualSalaryProfile The annual salary of the profile.
+     * @param overheadMultiplierProfile The overhead multiplier of the profile.
+     * @param annualFixedAmountProfile The annual fixed amount of the profile.
+     * @param effectiveHoursProfile The effective hours of the profile.
+     * @param utilizationPercentageProfile The utilization percentage of the profile.
+     * @return The calculated hourly rate.
+     */
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
             double annualFixedAmountProfile, double effectiveHoursProfile,
@@ -48,6 +75,12 @@ public class ProfileManager {
                 utilizationPercentageProfile);
     }
 
+    /**
+     * Calculates and sets the daily rate for a profile during creation.
+     * @param dailyWorkingHours The daily working hours of the profile.
+     * @param hourlyRate The hourly rate of the profile.
+     * @return The calculated daily rate.
+     */
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         return calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
