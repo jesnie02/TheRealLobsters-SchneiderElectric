@@ -13,7 +13,7 @@
    <center>
       <TabPane prefHeight="426.0" prefWidth="818.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
-            <Tab text="OverView" />
+            <Tab text="Overview" />
             <Tab text="Country">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -132,7 +132,7 @@
                      <right>
                         <VBox alignment="CENTER" prefHeight="397.0" prefWidth="439.0" BorderPane.alignment="CENTER">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
                                  <VBox.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </VBox.margin>
@@ -234,7 +234,7 @@
                      <right>
                         <VBox alignment="CENTER" prefHeight="397.0" prefWidth="439.0" BorderPane.alignment="CENTER">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
                                  <VBox.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </VBox.margin>
