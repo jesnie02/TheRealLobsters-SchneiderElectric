@@ -190,7 +190,7 @@ public class CreateProfileController implements Initializable {
                 annualFixedAmountProfile,
                 effectiveHoursProfile,
                 utilizationPercentageProfile);
-        lblHourlyResult.setText(String.valueOf(result));
+        lblHourlyResult.setText(String.format("%.2f", result));
         return result;
     }
 
@@ -202,7 +202,7 @@ public class CreateProfileController implements Initializable {
         double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText().replace(",", "."));
         double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
         double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
-        lblDailyResult.setText(String.valueOf(result));
+        lblDailyResult.setText(String.format("%.2f", result));
         return result;
     }
 

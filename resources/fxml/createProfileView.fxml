@@ -40,14 +40,6 @@
                         <Insets left="16.0" />
                      </HBox.margin>
                      <children>
-                        <Label prefHeight="24.0" prefWidth="246.0" text="Profile details">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="8.0" />
-                           </padding>
-                        </Label>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="324.0" prefHeight="23.0" prefWidth="246.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="174.0" text="Firstname:">
