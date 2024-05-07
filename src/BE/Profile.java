@@ -184,8 +184,6 @@ public class Profile {
         DEVELOPER,
         ENGINEER,
         MANAGER,
-        ROLE3,
-        ROLE2
     }
 
     public void setProjectTeams(List<ProjectTeam> projectTeams) {
