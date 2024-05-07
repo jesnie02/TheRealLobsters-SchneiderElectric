@@ -56,7 +56,7 @@
                   <Image url="@../pictures/prfileLogo.png" />
                </image>
             </ImageView>
-            <Label prefHeight="34.0" prefWidth="110.0" text="Profile overview" />
+            <Label prefHeight="34.0" prefWidth="205.0" text="Profile overview" />
             <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="742.0">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#openCreateProfile" prefHeight="26.0" prefWidth="101.0" text="+ Create profile">
