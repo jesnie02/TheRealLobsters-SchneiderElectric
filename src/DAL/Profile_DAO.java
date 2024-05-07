@@ -46,6 +46,10 @@ public class Profile_DAO implements IProfileDataAccess {
         return allProfiles;
     }
 
+    /**
+     * This method saves a new profile to the database. useing the Profile object from the GUI.
+     * SQL statement below is used to save the data in the database table profile.
+     */
     public void saveProfile(Profile newProfile) {
         String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, Country, ProjectRole, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

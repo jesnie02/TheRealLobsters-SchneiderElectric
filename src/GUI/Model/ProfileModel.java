@@ -22,6 +22,9 @@ public class ProfileModel {
         }
     }
 
+    /**
+     * Saves a new profile to the database. from the GUI.
+     */
     public void saveProfile(Profile newProfile) {
         profileManager.saveProfile(newProfile);
 

@@ -18,6 +18,12 @@ public class CountryModel {
         countryManager = new BLL.CountryManager();
     }
 
+    /**
+     * Gets all countries from the database.
+     *
+     * @return A list of all countries.
+     * @throws Exception
+     */
     public ObservableList<Country> getAllCountries() throws Exception {
         ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getAllCountries().stream()

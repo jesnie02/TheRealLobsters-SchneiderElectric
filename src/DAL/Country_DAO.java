@@ -19,7 +19,12 @@ public class Country_DAO implements ICountryDataAccess {
         dbConnector = new DBConnector();
     }
 
-
+    /**
+     * Gets all countries from the database.
+     *
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Country> getAllCountries() throws Exception {
 

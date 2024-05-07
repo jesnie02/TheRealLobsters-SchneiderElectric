@@ -129,6 +129,10 @@ public class CreateProfileController implements Initializable {
         }
     }
 
+    /**
+     * This method initializes fields, ComboBoxes, and listeners. with the values from the database.
+     * getAllCountries() and getAllProjectTeams() are methods read from the database.
+     */
     @FXML
     public void initialize() {
         try {
@@ -136,7 +140,6 @@ public class CreateProfileController implements Initializable {
             cBoxTeam_CreateProfile.setItems(projectTeamsModel.getAllProjectTeams());
 
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                //calculateHourlyRateWithFixedAmount();
             };
 
             txtFixedAmount.textProperty().addListener(textFieldListener);

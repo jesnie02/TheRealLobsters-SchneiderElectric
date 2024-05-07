@@ -19,6 +19,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     }
 
 
+    /**
+     * Gets all project teams from the database.
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<ProjectTeam> getAllProjectTeams() throws Exception {
 

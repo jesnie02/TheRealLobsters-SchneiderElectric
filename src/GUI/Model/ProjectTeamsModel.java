@@ -17,6 +17,12 @@ public class ProjectTeamsModel {
         projectTeamsManager = new ProjectTeamsManager();
     }
 
+    /**
+     * Gets all project teams from the database.
+     *
+     * @return A list of all project teams.
+     * @throws Exception
+     */
     public ObservableList<String> getAllProjectTeams() throws Exception {
         ObservableList<String> teamNames = javafx.collections.FXCollections.observableArrayList(
                 projectTeamsManager.getAllProjectTeams().stream()

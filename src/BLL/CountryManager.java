@@ -13,6 +13,12 @@ public class CountryManager {
         countryDAO = new DAL.Country_DAO();
     }
 
+    /**
+     * Gets all countries from the database.
+     *
+     * @return A list of all countries.
+     * @throws Exception
+     */
     public List<Country> getAllCountries() throws Exception {
         return countryDAO.getAllCountries();
     }

@@ -18,6 +18,12 @@ public class ProjectTeamsManager {
         iCalculateManager = new CalculatorManager();
     }
 
+    /**
+     * Gets all project teams from the database.
+     *
+     * @return A list of all project teams.
+     * @throws Exception
+     */
     public List<ProjectTeam> getAllProjectTeams() throws Exception {
         return teamsDAO.getAllProjectTeams();
     }

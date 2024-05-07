@@ -21,6 +21,9 @@ public class ProfileManager {
         return profileDAO.getAllProfiles();
     }
 
+    /**
+     * Saves a new profile to the database. from the GUI.
+     */
     public void saveProfile(Profile newProfile) {
         profileDAO.saveProfile(newProfile);
     }
