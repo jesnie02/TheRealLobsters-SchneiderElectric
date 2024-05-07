@@ -25,7 +25,7 @@
             <MFXLegacyTableView fx:id="tblProfiles" prefHeight="493.0" prefWidth="881.0">
                <columns>
                   <TableColumn fx:id="colNameProfile" prefWidth="99.9999942779541" text="Name" />
-                  <TableColumn fx:id="colTeamProfile" prefWidth="57.333351135253906" text="Team" />
+                  <TableColumn fx:id="colRoleProfile" prefWidth="57.333351135253906" text="Role" />
                   <TableColumn fx:id="colCountryProfile" prefWidth="81.33332824707031" text="Country" />
                   <TableColumn fx:id="colRegionProfile" text="Geography" />
                   <TableColumn fx:id="colProjectTeamProfile" prefWidth="81.33334350585938" text="Project Team" />

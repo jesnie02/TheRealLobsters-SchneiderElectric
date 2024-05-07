@@ -7,6 +7,7 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProfileModel;
+import GUI.Model.ProjectTeamsModel;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -21,21 +22,25 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileController {
 
 
     public MFXLegacyTableView<Profile> tblProfiles;
-    public TableColumn<Profile, String> colNameProfile, colTeamProfile, colCountryProfile, colRegionProfile, colAnnualSalaryProfile;
+    public TableColumn<Profile, String> colNameProfile, colRoleProfile, colCountryProfile, colRegionProfile, colAnnualSalaryProfile;
     public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile, colProjectTeamProfile;
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
 
+    private Map<Integer, String> idToNameMap;
 
     // Instance of FrameController to control the main frame of the application
     private final FrameController frameController;
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private GeographyModel geographyModel;
+    private ProjectTeamsModel projectTeamsModel;
 
     /**
      * Constructor for the ProfileController class.
@@ -61,6 +66,7 @@ public class ProfileController {
             profileModel = new ProfileModel();
             countryModel = new CountryModel();
             geographyModel = new GeographyModel();
+            projectTeamsModel = new ProjectTeamsModel();
         } catch (IOException e) {
             throw new RuntimeException(e); //TODO: Handle this exception
         } catch (Exception e) {
@@ -68,6 +74,7 @@ public class ProfileController {
         }
         loadProfiles();
         setCellValueFactories();
+        idToNameMap = createIdToNameMap();
     }
 
     private void setCellValueFactories() {
@@ -76,10 +83,18 @@ public class ProfileController {
         formatter.setMaximumFractionDigits(2);
 
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        //colTeamProfile.setCellValueFactory(new PropertyValueFactory<>("projectTeam"));
-        //colCountryProfile.setCellValueFactory(new PropertyValueFactory<>("countryId"));
-        //colRegionProfile.setCellValueFactory(new PropertyValueFactory<>("GeographyId"));
-        colProjectTeamProfile.setCellValueFactory(new PropertyValueFactory<>("projectRole"));
+
+        colProjectTeamProfile.setCellValueFactory(cellData -> {
+            Profile profile = cellData.getValue();
+            String teamIdStr = profile.getProjectTeam().replaceAll("\\D+","");
+            if (teamIdStr.isEmpty()) {
+                return new SimpleStringProperty("No Team");
+            }
+            int teamId = Integer.parseInt(teamIdStr);
+            String teamName = idToNameMap.get(teamId);
+            return new SimpleStringProperty(teamName != null ? teamName : "No Team");
+        });
+
         colAnnualSalaryProfile.setCellValueFactory(cellData -> {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
@@ -107,11 +122,7 @@ public class ProfileController {
         });
 
 
-        colTeamProfile.setCellValueFactory(cellData -> {
-            Profile profile = cellData.getValue();
-            String team = profile.getProjectTeam();
-            return new SimpleStringProperty(team != null ? team : "No Team");
-        });
+        colRoleProfile.setCellValueFactory(new PropertyValueFactory<>("projectRole"));
 
         colCountryProfile.setCellValueFactory(cellData -> {
             Profile profile = cellData.getValue();
@@ -153,6 +164,18 @@ public class ProfileController {
                 }
             }
         });
+    }
+
+    public Map<Integer, String> createIdToNameMap() {
+        Map<Integer, String> idToNameMap = new HashMap<>();
+        try {
+            for (ProjectTeam team : projectTeamsModel.getAllProjectTeamsData()) {
+                idToNameMap.put(team.getTeamId(), team.getTeamName());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return idToNameMap;
     }
 
     private void loadProfiles() {

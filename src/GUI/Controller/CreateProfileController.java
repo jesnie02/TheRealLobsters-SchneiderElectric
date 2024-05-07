@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Country;
+import BE.ProjectTeam;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -18,9 +19,7 @@ import javafx.scene.control.*;
 import GUI.Model.CountryModel;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CreateProfileController implements Initializable {
 
@@ -149,6 +148,8 @@ public class CreateProfileController implements Initializable {
         }
     }
 
+
+
     /**
      * This method is called when the save button is clicked.
      * It validates the input, creates a new Profile object, and saves it to the database.
@@ -243,5 +244,6 @@ public class CreateProfileController implements Initializable {
 
         return isValid;
     }
+
 }
 
