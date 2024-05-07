@@ -1,6 +1,11 @@
 package GUI.Controller;
 
+import BE.Country;
+import BE.Geography;
 import BE.Profile;
+import BE.ProjectTeam;
+import GUI.Model.CountryModel;
+import GUI.Model.GeographyModel;
 import GUI.Model.ProfileModel;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
+
 public class ProfileController {
 
 
@@ -26,6 +33,8 @@ public class ProfileController {
     // Instance of FrameController to control the main frame of the application
     private final FrameController frameController;
     private ProfileModel profileModel;
+    private CountryModel countryModel;
+    private GeographyModel geographyModel;
 
     /**
      * Constructor for the ProfileController class.
@@ -46,7 +55,16 @@ public class ProfileController {
     }
 
     public void initialize() {
-        profileModel = new ProfileModel();
+
+        try {
+            profileModel = new ProfileModel();
+            countryModel = new CountryModel();
+            geographyModel = new GeographyModel();
+        } catch (IOException e) {
+            throw new RuntimeException(e); //TODO: Handle this exception
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         loadProfiles();
         setCellValueFactories();
     }
@@ -60,6 +78,38 @@ public class ProfileController {
         colAnnualSalaryProfile.setCellValueFactory(new PropertyValueFactory<>("annualSalary"));
         colHourlyRateProfile.setCellValueFactory(new PropertyValueFactory<>("hourlySalary"));
         colDailyRateProfile.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
+
+        colCountryProfile.setCellValueFactory(cellData -> {
+            Profile profile = cellData.getValue();
+            int countryId = profile.getCountryId();
+            Country country = null;
+            try {
+                country = countryModel.getCountriesMap().get(countryId);
+            } catch (Exception e) {
+                throw new RuntimeException(e); // TODO: Handle this exception
+            }
+            return new SimpleStringProperty(country != null ? country.getCountryName() : "No Country");
+        });
+
+
+        colTeamProfile.setCellValueFactory(cellData -> {
+            Profile profile = cellData.getValue();
+            String team = profile.getProjectTeam();
+            return new SimpleStringProperty(team != null ? team : "No Team");
+        });
+
+        colCountryProfile.setCellValueFactory(cellData -> {
+            Profile profile = cellData.getValue();
+            int countryId = profile.getCountryId();
+            Country country = null;
+            try {
+                country = countryModel.getCountriesMap().get(countryId);
+            } catch (Exception e) {
+                throw new RuntimeException(e); // TODO: Handle this exception
+            }
+            return new SimpleStringProperty(country != null ? country.getCountryName() : "No Country");
+        });
+
 
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = new Button("Update");
