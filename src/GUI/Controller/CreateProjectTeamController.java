@@ -13,9 +13,14 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 
@@ -46,7 +51,7 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableColumn<Profile, String> colTeamName;
     @FXML
-    private TableColumn<Profile,Integer> colTeamCountryId;
+    private TableColumn<Profile, Integer> colTeamCountryId;
 
     @FXML
     private TableColumn<Profile, Integer> colTeamProfileId;
@@ -54,7 +59,7 @@ public class CreateProjectTeamController implements Initializable {
     private Map<Integer, Country> countriesMap;
 
     @FXML
-    private Label lblAnnualSalarySum,lblDailyRateSum, lblHourlyRateSum;
+    private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
 
     @FXML
     private TextField txtProjectTeamName;
@@ -62,6 +67,7 @@ public class CreateProjectTeamController implements Initializable {
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
+    private FrameController frameController;
 
 
     public CreateProjectTeamController() {
@@ -82,6 +88,7 @@ public class CreateProjectTeamController implements Initializable {
             countryModel = new CountryModel();
             profileModel = new ProfileModel();
             projectTeamsModel = new ProjectTeamsModel();
+            frameController = new FrameController();
             populateComboBoxes();
             setTblProfileToTeam();
 
@@ -119,7 +126,7 @@ public class CreateProjectTeamController implements Initializable {
             public String toString(Profile profile) {
                 if (profile != null && countriesMap.containsKey(profile.getCountryId())) {
                     String countryName = countriesMap.get(profile.getCountryId()).getCountryName();
-                    return profile.getfName() + " " + profile.getlName()+ "  -  "+ profile.getProjectRole() + "  -  " + countryName;
+                    return profile.getfName() + " " + profile.getlName() + "  -  " + profile.getProjectRole() + "  -  " + countryName;
                 } else {
                     return "Select a Profile";
                 }
@@ -237,30 +244,33 @@ public class CreateProjectTeamController implements Initializable {
 
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
-            System.out.println(projectTeam + "hejsa");
+            // System.out.println(projectTeam + "hejsa");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         txtProjectTeamName.getText();
         cBoxCountry.getSelectionModel().getSelectedItem();
-        System.out.println();colTeamAnnualSalary.getCellData(0);
-        System.out.println("Create Project Team to Database" + txtProjectTeamName.getText());
-        System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
-        System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
+        //System.out.println();colTeamAnnualSalary.getCellData(0);
+        //System.out.println("Create Project Team to Database" + txtProjectTeamName.getText());
+        //System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
+        //System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
     }
 
-    /**
-     * Removes the selected profile from the team table.
-     */
-    @FXML
-    private void removeProfileFromTbl(ActionEvent actionEvent) {
-
-        Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
 
 
-        if (selectedProfile != null) {
-            tblProfileToTeam.getItems().remove(selectedProfile);
+        /**
+         * Removes the selected profile from the team table.
+         */
+        @FXML
+        private void removeProfileFromTbl (ActionEvent actionEvent){
+
+            Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
+
+
+            if (selectedProfile != null) {
+                tblProfileToTeam.getItems().remove(selectedProfile);
+            }
         }
-    }
+
 }

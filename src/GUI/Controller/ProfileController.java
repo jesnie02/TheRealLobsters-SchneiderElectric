@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProfileController {
@@ -67,15 +68,22 @@ public class ProfileController {
             countryModel = new CountryModel();
             geographyModel = new GeographyModel();
             projectTeamsModel = new ProjectTeamsModel();
+
+
+
+            loadProfiles();
+
         } catch (IOException e) {
             throw new RuntimeException(e); //TODO: Handle this exception
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        loadProfiles();
+
         setCellValueFactories();
         idToNameMap = createIdToNameMap();
     }
+
+
 
     private void setCellValueFactories() {
         NumberFormat formatter = NumberFormat.getNumberInstance();
