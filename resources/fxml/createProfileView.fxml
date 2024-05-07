@@ -76,7 +76,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="246.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Anual salary:">
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Annual salary:">
                                  <HBox.margin>
                                     <Insets right="25.0" />
                                  </HBox.margin>
