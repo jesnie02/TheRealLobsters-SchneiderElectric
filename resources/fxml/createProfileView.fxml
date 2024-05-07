@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -94,16 +94,16 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <MFXSlider fx:id="sliderOverhead" prefHeight="6.0" prefWidth="130.0">
+                              <MFXSlider fx:id="sliderOverhead" decimalPrecision="1" minorTicksCount="10" prefHeight="6.0" prefWidth="130.0" showMinorTicks="true">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField fx:id="txtOverheadView" prefHeight="26.0" prefWidth="37.0">
+                              <TextField fx:id="txtOverheadView" prefHeight="25.0" prefWidth="53.0">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin></TextField>
-                              <Label prefHeight="18.0" prefWidth="16.0" text="\%" />
+                              <Label prefHeight="18.0" prefWidth="23.0" text="\%" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -209,7 +209,7 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField fx:id="txtUtilizationView" prefHeight="26.0" prefWidth="30.0" />
+                              <TextField fx:id="txtUtilizationView" prefHeight="25.0" prefWidth="46.0" />
                               <Label text="\%">
                                  <padding>
                                     <Insets left="8.0" />
@@ -237,12 +237,12 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="132.0" prefHeight="26.0" prefWidth="300.0">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="208.0" text="Result:">
+                                    <Label prefHeight="18.0" prefWidth="149.0" text="Result:">
                                        <HBox.margin>
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="48.0">
+                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="117.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -271,12 +271,12 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="139.0" prefHeight="26.0" prefWidth="300.0">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="199.0" text="Result:">
+                                    <Label prefHeight="18.0" prefWidth="150.0" text="Result:">
                                        <HBox.margin>
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="52.0">
+                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>

@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 
 public class ProfileController {
 
@@ -70,14 +71,28 @@ public class ProfileController {
     }
 
     private void setCellValueFactories() {
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(2);
+        formatter.setMaximumFractionDigits(2);
+
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         //colTeamProfile.setCellValueFactory(new PropertyValueFactory<>("projectTeam"));
         //colCountryProfile.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         //colRegionProfile.setCellValueFactory(new PropertyValueFactory<>("GeographyId"));
         colProjectTeamProfile.setCellValueFactory(new PropertyValueFactory<>("projectRole"));
-        colAnnualSalaryProfile.setCellValueFactory(new PropertyValueFactory<>("annualSalary"));
-        colHourlyRateProfile.setCellValueFactory(new PropertyValueFactory<>("hourlySalary"));
-        colDailyRateProfile.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
+        colAnnualSalaryProfile.setCellValueFactory(cellData -> {
+            double annualSalary = cellData.getValue().getAnnualSalary();
+            return new SimpleStringProperty(formatter.format(annualSalary));
+        });
+        colHourlyRateProfile.setCellValueFactory(cellData -> {
+            double hourlySalary = cellData.getValue().getHourlySalary();
+            return new SimpleStringProperty(formatter.format(hourlySalary));
+        });
+
+        colDailyRateProfile.setCellValueFactory(cellData -> {
+            double dailyRate = cellData.getValue().getDailyRate();
+            return new SimpleStringProperty(formatter.format(dailyRate));
+        });
 
         colCountryProfile.setCellValueFactory(cellData -> {
             Profile profile = cellData.getValue();

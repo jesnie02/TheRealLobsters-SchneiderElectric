@@ -20,6 +20,7 @@ import javafx.util.StringConverter;
 
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -37,11 +38,11 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableColumn<Profile, String> colTeamCountry;
     @FXML
-    private TableColumn<Profile, Double> colTeamDailyRate;
+    private TableColumn<Profile, String> colTeamDailyRate;
     @FXML
-    private TableColumn<Profile, Double> colTeamHourlyRate;
+    private TableColumn<Profile, String> colTeamHourlyRate;
     @FXML
-    private TableColumn<Profile, Double> colTeamAnnualSalary;
+    private TableColumn<Profile, String> colTeamAnnualSalary;
     @FXML
     private TableColumn<Profile, String> colTeamName;
     @FXML
@@ -173,6 +174,9 @@ public class CreateProjectTeamController implements Initializable {
      * Sets up the table view for the team profiles.
      */
     public void setTblProfileToTeam() {
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(2);
+        formatter.setMaximumFractionDigits(2);
 
         if (countriesMap == null) {
             try {
@@ -187,9 +191,18 @@ public class CreateProjectTeamController implements Initializable {
         colTeamProfileId.setCellValueFactory(new PropertyValueFactory<>("profileId"));
         colTeamCountryId.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName")); // Assuming 'name' is the correct property
-        colTeamHourlyRate.setCellValueFactory(new PropertyValueFactory<>("hourlySalary"));
-        colTeamDailyRate.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
-        colTeamAnnualSalary.setCellValueFactory(new PropertyValueFactory<>("annualSalary"));
+        colTeamHourlyRate.setCellValueFactory(cellData -> {
+            double hourlySalary = cellData.getValue().getHourlySalary();
+            return new SimpleStringProperty(formatter.format(hourlySalary));
+        });
+        colTeamDailyRate.setCellValueFactory(cellData -> {
+            double dailyRate = cellData.getValue().getDailyRate();
+            return new SimpleStringProperty(formatter.format(dailyRate));
+        });
+        colTeamAnnualSalary.setCellValueFactory(cellData -> {
+            double annualSalary = cellData.getValue().getAnnualSalary();
+            return new SimpleStringProperty(formatter.format(annualSalary));
+        });
         colTeamCountry.setCellValueFactory(cellData -> {
             int countryId = cellData.getValue().getCountryId();
             return new SimpleStringProperty(countriesMap.getOrDefault(countryId, new Country("No Country")).getCountryName());
