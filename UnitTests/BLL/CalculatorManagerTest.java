@@ -375,4 +375,56 @@ class CalculatorManagerTest {
         assertEquals(0, actual);
     }
 
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    /**
+     * Test for getHourlyRateWithMultiplier method
+     * Test for valid input with multiplication of percentage
+     */
+    void getHourlyRateWithMultiplier_returnsCorrectValueForValidInput() {
+        //arrange
+        double hourlyRate = 100;
+        double percentage = 50;
+        double expected = 150;
+        //act
+        double actual = calculatorManager.getHourlyRateWithMultiplier(hourlyRate, percentage);
+        //assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    /**
+     * Test for getHourlyRateWithMultiplier method
+     * Test for valid input with multiplication of zero
+     */
+    void getHourlyRateWithMultiplier_returnsZeroForZeroHourlyRate() {
+        //arrange
+        double hourlyRate = 20;
+        double percentage = 0.0;
+        //act
+        double actual = calculatorManager.getHourlyRateWithMultiplier(hourlyRate, percentage);
+        //assert
+        assertEquals(20, actual);
+
+        hourlyRate = 0;
+        percentage = 50.0;
+
+        actual = calculatorManager.getHourlyRateWithMultiplier(hourlyRate, percentage);
+
+        assertEquals(0.0, actual);
+    }
+
+    void getHourlyRateWithMultiplier_throwsExceptionForNegativeHourlyRate() {
+        //arrange
+        double hourlyRate = -100;
+        double percentage = 20;
+        //act and assert
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.getHourlyRateWithMultiplier(hourlyRate, percentage));
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+
 }
