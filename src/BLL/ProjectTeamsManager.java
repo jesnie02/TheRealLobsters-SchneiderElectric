@@ -53,7 +53,6 @@ public class ProjectTeamsManager {
 
     public double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount){
         return iCalculateManager.getHourlyRateWithMultiplier(annualSalary, fixedAmount);
-
     }
 
     /**

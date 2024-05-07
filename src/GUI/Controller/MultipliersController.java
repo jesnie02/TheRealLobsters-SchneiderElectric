@@ -20,12 +20,11 @@ public class MultipliersController {
     private ComboBox cBoxProfile_Multiplier, cBoxTeam_Multiplier;
     @FXML
     private Label lblMUDailyResult, lblGMDailyResult, lblGMHourlyResult, lblMUHourlyResult;
+    private double grossMargin, markUp;
+
     private ProjectTeamsModel projectTeamsModel;
     private MultiplierModel multiplierModel;
     private ProfileModel profileModel;
-    private double grossMargin, markUp;
-    @FXML
-    private Button btnShowCalculation;
 
 
     @FXML
@@ -45,6 +44,7 @@ public class MultipliersController {
     }
 
     private void setUpTextfields() {
+        // Add a listener to the text property of the txtGM TextField
         txtGM.textProperty().addListener(((observable, oldValue, newValue) -> {
             try {
                 double value = Double.parseDouble(newValue);
@@ -53,6 +53,7 @@ public class MultipliersController {
 
             }
         }));
+        // Add a listener to the text property of the txtMU TextField
         txtMU.textProperty().addListener(((observable, oldValue, newValue) -> {
             try {
                 double value = Double.parseDouble(newValue);

@@ -29,7 +29,7 @@ public class CalculatorManager implements ICalculateManager {
      * @param percentage = gets the value from the slider in view.
      */
     public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
-        double calculation = hourlyRate * (1 + percentage / 100); //TODO: Add a test for this method @Mads
+        double calculation = hourlyRate * (1 + percentage / 100);
         return calculation;
     }
 

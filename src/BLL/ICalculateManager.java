@@ -27,6 +27,5 @@ public interface ICalculateManager {
             double annualFixedAmountProfile, double effectiveHoursProfile,
             double utilizationPercentageProfile);
 
-    //TODO: Add a test for this method @THOMAS
     double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate);
 }
