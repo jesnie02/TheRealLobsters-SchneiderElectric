@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="592.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProfileController">
+<BorderPane prefHeight="592.0" prefWidth="962.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProfileController">
    <padding>
       <Insets bottom="16.0" left="16.0" right="16.0" />
    </padding>
@@ -24,16 +24,16 @@
          <children>
             <MFXLegacyTableView fx:id="tblProfiles" prefHeight="493.0" prefWidth="881.0">
                <columns>
-                  <TableColumn fx:id="colNameProfile" prefWidth="99.9999942779541" text="Name" />
-                  <TableColumn fx:id="colRoleProfile" prefWidth="57.333351135253906" text="Role" />
-                  <TableColumn fx:id="colCountryProfile" prefWidth="81.33332824707031" text="Country" />
-                  <TableColumn fx:id="colRegionProfile" text="Geography" />
-                  <TableColumn fx:id="colProjectTeamProfile" prefWidth="81.33334350585938" text="Project Team" />
-                  <TableColumn fx:id="colAnnualSalaryProfile" prefWidth="82.0" text="Anual salary" />
-                  <TableColumn fx:id="colHourlyRateProfile" prefWidth="97.99996948242188" text="Hourly Rate" />
-                  <TableColumn fx:id="colDailyRateProfile" prefWidth="92.66668701171875" text="Daily rate" />
-                  <TableColumn fx:id="colUpdateIconProfile" prefWidth="89.33331298828125" text="update icon?" />
-                  <TableColumn fx:id="colDeleteIconProfile" prefWidth="74.66668701171875" text="delete icon?" />
+                  <TableColumn fx:id="colNameProfile" prefWidth="114.39996337890625" text="Name" />
+                  <TableColumn fx:id="colRoleProfile" prefWidth="72.800048828125" text="Role" />
+                  <TableColumn fx:id="colCountryProfile" prefWidth="77.5999755859375" text="Country" />
+                  <TableColumn fx:id="colRegionProfile" prefWidth="73.599853515625" text="Geography" />
+                  <TableColumn fx:id="colProjectTeamProfile" prefWidth="101.60009765625" text="Project Team" />
+                  <TableColumn fx:id="colAnnualSalaryProfile" prefWidth="100.0" text="Anual salary" />
+                  <TableColumn fx:id="colHourlyRateProfile" prefWidth="91.199951171875" text="Hourly Rate" />
+                  <TableColumn fx:id="colDailyRateProfile" prefWidth="101.5999755859375" text="Daily rate" />
+                  <TableColumn fx:id="colUpdateIconProfile" prefWidth="57.60009765625" />
+                  <TableColumn fx:id="colDeleteIconProfile" prefWidth="56.800048828125" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

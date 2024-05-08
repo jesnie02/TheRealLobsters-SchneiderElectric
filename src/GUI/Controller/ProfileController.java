@@ -12,6 +12,7 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -41,6 +42,7 @@ public class ProfileController {
 
     private Map<Integer, String> idToNameMap;
 
+    // Instance of FrameController to control the main frame of the application
     private final FrameController frameController;
     private ProfileModel profileModel;
     private CountryModel countryModel;
@@ -72,10 +74,9 @@ public class ProfileController {
             countryModel = new CountryModel();
             geographyModel = new GeographyModel();
             projectTeamsModel = new ProjectTeamsModel();
-
-
-
             loadProfiles();
+            setCellValueFactories();
+            idToNameMap = createIdToNameMap();
 
         } catch (IOException e) {
             throw new RuntimeException(e); //TODO: Handle this exception
@@ -83,8 +84,6 @@ public class ProfileController {
             throw new RuntimeException(e);
         }
 
-        setCellValueFactories();
-        idToNameMap = createIdToNameMap();
     }
 
 
@@ -151,9 +150,8 @@ public class ProfileController {
             return new SimpleStringProperty(country != null ? country.getCountryName() : "No Country");
         });
 
-
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
-            private final Button updateButton = new Button("Update");
+            private final Button updateButton = createImageButton("/pictures/editLogo.png");
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -167,7 +165,7 @@ public class ProfileController {
         });
 
         colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile,Void>() {
-            private final Button deleteButton = new Button("Delete");
+            private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -181,6 +179,30 @@ public class ProfileController {
         });
     }
 
+    private Button createImageButton(String imagePath) {
+        Image image = new Image(getClass().getResourceAsStream(imagePath));
+        ImageView imageView = new ImageView(image);
+
+        // Juster størrelsen på billedet
+        imageView.setFitWidth(20);  // Erstat 20 med den ønskede bredde
+        imageView.setFitHeight(20); // Erstat 20 med den ønskede højde
+        imageView.setPreserveRatio(true);
+
+        Button button = new Button("", imageView);
+        button.setStyle("-fx-background-color: transparent;");
+
+        // Centrer billedet på knappen
+        button.setAlignment(Pos.CENTER);
+
+        return button;
+    }
+
+
+
+    /**
+     * Creates a map from id to name.
+     * @return a map where the key is the id and the value is the name.
+     */
     /**
      * Creates a map from team ID to team name.
      * This map is used for displaying the team name in the table view.
@@ -199,7 +221,7 @@ public class ProfileController {
     }
 
     /**
-     * Loads the profiles into the table view.
+     * Loads the profiles into the table.
      */
     private void loadProfiles() {
         tblProfiles.setItems(profileModel.getAllProfiles());
