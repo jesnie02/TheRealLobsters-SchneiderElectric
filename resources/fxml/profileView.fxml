@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="592.0" prefWidth="962.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProfileController">
@@ -22,7 +23,7 @@
             <Insets bottom="25.0" left="25.0" right="25.0" />
          </BorderPane.margin>
          <children>
-            <MFXLegacyTableView fx:id="tblProfiles" prefHeight="493.0" prefWidth="881.0">
+            <MFXLegacyTableView fx:id="tblProfiles" prefHeight="493.0" prefWidth="881.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="colNameProfile" prefWidth="114.39996337890625" text="Name" />
                   <TableColumn fx:id="colRoleProfile" prefWidth="72.800048828125" text="Role" />
@@ -57,7 +58,8 @@
                </image>
             </ImageView>
             <Label prefHeight="34.0" prefWidth="205.0" text="Profile overview" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="742.0">
+            <Pane prefHeight="36.0" prefWidth="393.0" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="289.0">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#openCreateProfile" prefHeight="26.0" prefWidth="101.0" text="+ Create profile">
                      <HBox.margin>

@@ -6,12 +6,11 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,6 +41,7 @@ public class DashboardController implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -49,30 +49,43 @@ public class DashboardController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
 
-            //Geography
-            cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
-            cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                updateLabelsGeographyTab(newValue);
-            });
-
-            //Country
-            cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
-            cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                updateLabelsCountryTab(newValue);
-            });
-
-            //Team
-            cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
-            //cBoxRegionGeo.setItems(geographyModel.getAllFromGeographies());
-            cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                updateLabelsTeamTab(newValue);
-            });
 
 
         } catch (IOException e) {
             e.printStackTrace(); //TODO: Handle this exception
         } catch (Exception e) {
-            throw new RuntimeException(e); //TODO: Handle this exception
+            e.printStackTrace(); //TODO: Handle this exception
+        }
+
+        setUpComboBoxListeners();
+    }
+
+
+
+
+
+    private void setUpComboBoxListeners()  {
+        try {
+        //Geography
+        cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
+        cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updateLabelsGeographyTab(newValue);
+        });
+
+        //Country
+        cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
+        cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updateLabelsCountryTab(newValue);
+        });
+
+        //Team
+        cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
+        //cBoxRegionGeo.setItems(geographyModel.getAllFromGeographies());
+        cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updateLabelsTeamTab(newValue);
+        });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

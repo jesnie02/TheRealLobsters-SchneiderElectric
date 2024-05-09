@@ -7,13 +7,17 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
    <center>
-      <TabPane prefHeight="426.0" prefWidth="818.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
-            <Tab text="Overview" />
+            <Tab text="Overview">
+               <content>
+
+               </content></Tab>
             <Tab text="Country">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -324,6 +328,9 @@
                </content>
             </Tab>
          </tabs>
+         <BorderPane.margin>
+            <Insets right="25.0" />
+         </BorderPane.margin>
       </TabPane>
    </center>
    <top>
