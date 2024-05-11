@@ -42,7 +42,7 @@ public class Geography_DAO implements IGeographyDataAccess {
 
 
     @Override
-    public List<Geography> getSumsAndAveragesForGeographies() {
+    public List<Geography> getSumsAndAveragesForGeographies() throws SQLException {
         List<Geography> allGeographies = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
@@ -82,7 +82,7 @@ public class Geography_DAO implements IGeographyDataAccess {
                 allGeographies.add(geography);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
         return allGeographies;
     }
