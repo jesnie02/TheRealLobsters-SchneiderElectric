@@ -15,14 +15,15 @@ public class GeographyManager {
     }
 
 
-/*
+
     public List <Geography> getSumsAndAveragesForGeographies() throws Exception{
         return geographyDAO.getSumsAndAveragesForGeographies();
     }
 
+    /*
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyDAO.getCountryGeographyList(countryId);
     }
 
- */
+     */
 }

@@ -15,21 +15,27 @@ public class Geography_DAO implements IGeographyDataAccess {
         dbConnector = new DBConnector();
     }
 
-/*
+
     @Override
     public List<Geography> getAllGeographies(int countryId) throws Exception {
         List<Geography> allGeographies = new ArrayList<>();
-        try(Connection conn = dbConnector.getConnection();
-            Statement stmt = conn.createStatement()){
-
-            String sql = "SELECT * FROM Geography";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
-                Geography geography = new Geography(
-                        rs.getInt("GeographyId"),
-                        rs.getString("GeographyName")
-                );
-                allGeographies.add(geography);
+        String sql = """
+            SELECT g.*
+            FROM Geography g
+            JOIN GeographyCountry gc ON g.GeographyId = gc.GeographyId
+            WHERE gc.CountryId = ?;
+            """;
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, countryId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Geography geography = new Geography(
+                            rs.getInt("GeographyId"),
+                            rs.getString("GeographyName")
+                    );
+                    allGeographies.add(geography);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -44,31 +50,31 @@ public class Geography_DAO implements IGeographyDataAccess {
     @Override
     public List<Geography> getSumsAndAveragesForGeographies() throws SQLException {
         List<Geography> allGeographies = new ArrayList<>();
-        try(Connection conn = dbConnector.getConnection();
-            Statement stmt = conn.createStatement()){
-
-            String sql = """
-                        SELECT
-                                g.GeographyId,
-                                g.GeographyName,
-                                SUM(p.HourlySalary) AS TotalHourlyRate,
-                                AVG(p.HourlySalary) AS AvgHourlyRate,
-                                SUM(p.DailyRate) AS TotalDailyRate,
-                                AVG(p.DailyRate) AS AvgDailyRate,
-                                COUNT(p.ProfileId) AS ProfileCount
-                            FROM
-                                Geography g
-                            JOIN
-                                GeographyCountry gc ON g.GeographyId = gc.GeographyId
-                            JOIN
-                                Country c ON gc.CountryId = c.CountryId
-                            JOIN
-                                Profile p ON c.CountryId = p.Country
-                            GROUP BY
-                                g.GeographyId, g.GeographyName;
-                            
-                    """;
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = """
+            SELECT
+                    g.GeographyId,
+                    g.GeographyName,
+                    SUM(p.AnualSalary) AS TotalHourlyRate,
+                    AVG(p.AnualSalary) AS AvgHourlyRate,
+                    SUM(p.DailyRate) AS TotalDailyRate,
+                    AVG(p.DailyRate) AS AvgDailyRate,
+                    COUNT(p.ProfileId) AS ProfileCount
+                FROM
+                    Geography g
+                JOIN
+                    GeographyCountry gc ON g.GeographyId = gc.GeographyId
+                JOIN
+                    Country c ON gc.CountryId = c.CountryId
+                JOIN
+                    CountryProfile cp ON c.CountryId = cp.CountryId
+                JOIN
+                    Profile p ON cp.ProfileId = p.ProfileId
+                GROUP BY
+                    g.GeographyId, g.GeographyName;
+            """;
+        try (Connection conn = dbConnector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()){
                 Geography geography = new Geography(
                         rs.getInt("GeographyId"),
@@ -87,7 +93,7 @@ public class Geography_DAO implements IGeographyDataAccess {
         return allGeographies;
     }
 
-
+    /*
     public List<Geography> getCountryGeographyList(int countryId) {
         List<Geography> countryGeographyList = new ArrayList<>();
         String sql = """
@@ -113,5 +119,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         return countryGeographyList;
     }
 
- */
+     */
+
 }

@@ -67,7 +67,7 @@ public class DashboardController implements Initializable {
     private void setUpComboBoxListeners()  {
         try {
         //Geography
-        //cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
+        cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
         cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             updateLabelsGeographyTab(newValue);
         });

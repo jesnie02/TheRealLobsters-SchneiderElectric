@@ -24,6 +24,7 @@ public class GeographyModel {
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyManager.getRegionsByCountryId(countryId);
     }
+    */
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {
         ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
@@ -33,8 +34,5 @@ public class GeographyModel {
         );
         return geographies;
     }
-
- */
-
 
 }
