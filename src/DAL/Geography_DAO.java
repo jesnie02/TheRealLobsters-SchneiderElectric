@@ -53,25 +53,21 @@ public class Geography_DAO implements IGeographyDataAccess {
         String sql = """
             
                 SELECT
-                     g.GeographyId,
-                     g.GeographyName,
-                        SUM(p.HourlySalary) AS TotalHourlyRate,
-                     AVG(p.HourlySalary) AS AvgHourlyRate,
-                     SUM(p.DailyRate) AS TotalDailyRate,
-                     AVG(p.DailyRate) AS AvgDailyRate,
-                     COUNT(p.ProfileId) AS ProfileCount
-                 FROM
-                     Geography g
-                 JOIN
-                     GeographyCountry gc ON g.GeographyId = gc.GeographyId
-                 JOIN
-                     Country c ON gc.CountryId = c.CountryId
-                 JOIN
-                     GeographyProfile gp ON g.GeographyId = gp.GeographyId
-                 JOIN
-                     Profile p ON gp.ProfileId = p.ProfileId
-                 GROUP BY
-                     g.GeographyId, g.GeographyName;
+                   g.GeographyId,
+                   g.GeographyName,
+                   SUM(p.HourlySalary) AS TotalHourlyRate,
+                   AVG(p.HourlySalary) AS AvgHourlyRate,
+                   SUM(p.DailyRate) AS TotalDailyRate,
+                   AVG(p.DailyRate) AS AvgDailyRate,
+                   COUNT(p.ProfileId) AS ProfileCount
+               FROM
+                   Geography g
+               JOIN
+                   GeographyProfile gp ON g.GeographyId = gp.GeographyId
+               JOIN
+                   Profile p ON gp.ProfileId = p.ProfileId
+               GROUP BY
+                   g.GeographyId, g.GeographyName;
             """;
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement();
