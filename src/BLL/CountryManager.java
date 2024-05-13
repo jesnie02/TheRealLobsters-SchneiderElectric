@@ -22,11 +22,9 @@ public class CountryManager {
     public List<Country> getAllCountries() throws Exception {
         return countryDAO.getAllCountries();
     }
-/*
+
     public List <Country> getSumsAndAveragesForCountries() throws Exception{
         return countryDAO.getSumsAndAveragesForCountries();
     }
-
- */
 
 }

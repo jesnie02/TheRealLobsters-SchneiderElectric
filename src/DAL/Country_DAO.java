@@ -47,21 +47,30 @@ public class Country_DAO implements ICountryDataAccess {
         }
         return allCountries;
     }
-/*
+
     public List<Country> getSumsAndAveragesForCountries() {
         List<Country> allCountries = new ArrayList<>();
-        try(Connection conn = dbConnector.getConnection();
-            Statement stmt = conn.createStatement()){
-
-            String sql = "SELECT c.CountryId, c.CountryName, " +
-                    "SUM(p.HourlySalary) AS TotalHourlyRate, " +
-                    "AVG(p.HourlySalary) AS AvgHourlyRate, " +
-                    "SUM(p.DailyRate) AS TotalDailyRate, " +
-                    "AVG(p.DailyRate) AS AvgDailyRate, " +
-                    "COUNT(p.ProfileId) AS ProfileCount " +
-                    "FROM Country c JOIN Profile p ON c.CountryId = p.Country " +
-                    "GROUP BY c.CountryId, c.CountryName";
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = """
+            SELECT
+                    c.CountryId,
+                    c.CountryName,
+                    SUM(p.AnualSalary) AS TotalHourlyRate,
+                    AVG(p.AnualSalary) AS AvgHourlyRate,
+                    SUM(p.DailyRate) AS TotalDailyRate,
+                    AVG(p.DailyRate) AS AvgDailyRate,
+                    COUNT(p.ProfileId) AS ProfileCount
+                FROM
+                    Country c
+                JOIN
+                    CountryProfile cp ON c.CountryId = cp.CountryId
+                JOIN
+                    Profile p ON cp.ProfileId = p.ProfileId
+                GROUP BY
+                    c.CountryId, c.CountryName;
+            """;
+        try (Connection conn = dbConnector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()){
                 Country country = new Country(
                         rs.getInt("CountryId"),
@@ -79,6 +88,4 @@ public class Country_DAO implements ICountryDataAccess {
         }
         return allCountries;
     }
-
- */
 }

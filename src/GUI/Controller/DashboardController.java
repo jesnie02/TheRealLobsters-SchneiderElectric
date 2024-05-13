@@ -73,7 +73,7 @@ public class DashboardController implements Initializable {
         });
 
         //Country
-        //cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
+        cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
         cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             updateLabelsCountryTab(newValue);
         });

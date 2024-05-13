@@ -52,7 +52,7 @@ public class CountryModel {
         return countryManager.getAllCountries().stream()
                 .collect(Collectors.toMap(Country::getCountryId, country -> country));
     }
-/*
+
     public ObservableList<Country> getSumsAndAveragesForCountries() throws Exception {
         ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getSumsAndAveragesForCountries().stream()
@@ -62,5 +62,4 @@ public class CountryModel {
         return countries;
     }
 
- */
 }
