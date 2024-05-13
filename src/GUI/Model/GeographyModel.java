@@ -20,7 +20,7 @@ public class GeographyModel {
         geographyManager = new GeographyManager();
     }
 
-
+/*
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyManager.getRegionsByCountryId(countryId);
     }
@@ -33,6 +33,8 @@ public class GeographyModel {
         );
         return geographies;
     }
+
+ */
 
 
 }

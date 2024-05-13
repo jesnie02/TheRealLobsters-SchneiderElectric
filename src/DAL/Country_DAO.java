@@ -47,7 +47,7 @@ public class Country_DAO implements ICountryDataAccess {
         }
         return allCountries;
     }
-
+/*
     public List<Country> getSumsAndAveragesForCountries() {
         List<Country> allCountries = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
@@ -79,4 +79,6 @@ public class Country_DAO implements ICountryDataAccess {
         }
         return allCountries;
     }
+
+ */
 }

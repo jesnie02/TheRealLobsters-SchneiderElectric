@@ -12,7 +12,7 @@ public class ProjectTeam {
     private List<Profile> profiles = new ArrayList<>();
     private Country country;
     private int numberOfProfiles;
-    private int CountryId;
+
 
     public ProjectTeam(String name) {
         this.TeamName = name;
@@ -32,15 +32,9 @@ public class ProjectTeam {
         this.numberOfProfiles = numberOfProfiles;
     }
 
-    public int getCountryId() {
-        return CountryId;
-    }
 
-    public void setCountryId(int countryId) {
-        CountryId = countryId;
-    }
 
-    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int numberOfProfiles, int CountryId) {
+    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int numberOfProfiles) {
         TeamId = teamId;
         TeamName = teamName;
         this.sumOfHourlyRate = sumOfHourlyRate;
@@ -50,7 +44,7 @@ public class ProjectTeam {
         this.sumOfAnnualSalary = sumOfAnnualSalary;
         this.avgAnnualSalary = avgAnnualSalary;
         this.numberOfProfiles = numberOfProfiles;
-        this.CountryId = CountryId;
+
     }
 
 

@@ -61,7 +61,7 @@ public class TeamsContainerController implements Initializable {
     public void updateUI(ProjectTeam team) throws Exception {
         Platform.runLater(() -> {
             updateTeamInformation(team);
-            updateCountryInformation(team);
+            //updateCountryInformation(team);
         });
 
     }
@@ -71,9 +71,9 @@ public class TeamsContainerController implements Initializable {
         lblNumberOfMembersContainer.setText(String.valueOf(team.getNumberOfProfiles()));
         lblAnnualAVGTeamCostContainer.setText(String.format("%.2f", team.getAvgAnnualSalary()));
     }
-
+/*
     private void updateCountryInformation(ProjectTeam team) {
-        int teamCountryId = team.getCountryId();
+       // int teamCountryId = team.getCountryId();
 
         if (countriesMap.isEmpty()) {
             loadCountriesMap();
@@ -92,6 +92,8 @@ public class TeamsContainerController implements Initializable {
         }
     }
 
+ */
+
     private void loadCountriesMap() {
         try {
             countriesMap = countryModel.getCountriesMap();
@@ -102,7 +104,7 @@ public class TeamsContainerController implements Initializable {
 
     private void updateGeographyInformation(int teamCountryId) {
         try {
-            geographies = geographyModel.getRegionsByCountryId(teamCountryId);
+           // geographies = geographyModel.getRegionsByCountryId(teamCountryId);
             String regionsString = geographies.stream()
                     .map(Geography::getGeographyName)
                     .collect(Collectors.joining(", "));

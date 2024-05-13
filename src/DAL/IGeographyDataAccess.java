@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IGeographyDataAccess {
 
-    List<Geography> getAllGeographies(int countryId) throws Exception;
+    //List<Geography> getAllGeographies(int countryId) throws Exception;
 
-    List<Geography> getSumsAndAveragesForGeographies() throws SQLException;
+    //List<Geography> getSumsAndAveragesForGeographies() throws SQLException;
 
-    List<Geography> getCountryGeographyList(int countryId);
+    //List<Geography> getCountryGeographyList(int countryId);
 }

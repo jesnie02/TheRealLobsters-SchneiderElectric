@@ -40,7 +40,6 @@ public class CreateProfileController implements Initializable {
     private Label lblHourlyResult, lblDailyResult, lblShowMassage, lblFixedAmountResult;
 
     // comboBox for country and team
-    public ComboBox<Country> cBoxCountry_CreateProfile;
     public ComboBox<String> cBoxTeam_CreateProfile;
 
 
@@ -126,7 +125,7 @@ public class CreateProfileController implements Initializable {
     @FXML
     public void initialize() {
         try {
-            cBoxCountry_CreateProfile.setItems(countryModel.getAllCountries());
+
             cBoxTeam_CreateProfile.setItems(projectTeamsModel.getAllProjectTeams());
 
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

@@ -18,9 +18,8 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, int countryId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
+    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
         this.profileId = profileId;
-        this.countryId = countryId;
         this.fName = fName;
         this.lName = lName;
         this.overheadCost = overheadCost;
@@ -30,8 +29,8 @@ public class Profile {
         this.dailyWorkingHours = dailyWorkingHours;
     }
 
-    public Profile(int countryId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
-        this.countryId = countryId;
+    public Profile( String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+
         this.fName = fName;
         this.lName = lName;
         this.overheadCost = overheadCost;

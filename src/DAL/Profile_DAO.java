@@ -40,7 +40,6 @@ public class Profile_DAO implements IProfileDataAccess {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 int profileId = rs.getInt("ProfileId");
-                int country = rs.getInt("Country");
                 String fName = rs.getString("FName");
                 String lName = rs.getString("LName");
                 Boolean overheadCost = Boolean.parseBoolean(rs.getString("OverheadCost"));
@@ -48,7 +47,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 double hourlyRate = rs.getDouble("HourlySalary");
                 double dailyRate = rs.getDouble("DailyRate");
                 double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
-                Profile profile = new Profile(profileId, country, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours);
+                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours);
                 allProfiles.add(profile);
                 //System.out.println(allProfiles);
             }

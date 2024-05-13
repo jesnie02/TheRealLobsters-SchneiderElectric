@@ -15,7 +15,7 @@ public class Geography_DAO implements IGeographyDataAccess {
         dbConnector = new DBConnector();
     }
 
-
+/*
     @Override
     public List<Geography> getAllGeographies(int countryId) throws Exception {
         List<Geography> allGeographies = new ArrayList<>();
@@ -112,4 +112,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
         return countryGeographyList;
     }
+
+ */
 }

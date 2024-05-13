@@ -64,8 +64,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 double sumOfAnnualSalary = rs.getDouble("SumOfAnnualSalary");
                 double avgAnnualSalary = rs.getDouble("AvgOfAnnualSalary");
                 int numberOfProfiles = rs.getInt("NumberOfProfiles");
-                int countryId = rs.getInt("CountryId");
-                ProjectTeam projectTeam = new ProjectTeam(id, teamName, sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary, numberOfProfiles, countryId);
+
+                ProjectTeam projectTeam = new ProjectTeam(id, teamName, sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary, numberOfProfiles);
                 everyProjectTeam.add(projectTeam);
             }
         } catch (SQLException e) {

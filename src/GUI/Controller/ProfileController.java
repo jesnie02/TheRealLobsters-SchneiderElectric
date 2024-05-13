@@ -36,8 +36,8 @@ public class ProfileController {
 
 
     public MFXLegacyTableView<Profile> tblProfiles;
-    public TableColumn<Profile, String> colNameProfile, colRoleProfile, colCountryProfile, colRegionProfile, colAnnualSalaryProfile;
-    public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile, colProjectTeamProfile;
+    public TableColumn<Profile, String> colNameProfile, colRoleProfile,  colAnnualSalaryProfile;
+    public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile;
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
 
     private Map<Integer, String> idToNameMap;
@@ -104,6 +104,7 @@ public class ProfileController {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
+
         colHourlyRateProfile.setCellValueFactory(cellData -> {
             double hourlySalary = cellData.getValue().getHourlySalary();
             return new SimpleStringProperty(formatter.format(hourlySalary));
@@ -114,32 +115,12 @@ public class ProfileController {
             return new SimpleStringProperty(formatter.format(dailyRate));
         });
 
-        colCountryProfile.setCellValueFactory(cellData -> {
-            Profile profile = cellData.getValue();
-            int countryId = profile.getCountryId();
-            Country country = null;
-            try {
-                country = countryModel.getCountriesMap().get(countryId);
-            } catch (Exception e) {
-                throw new RuntimeException(e); // TODO: Handle this exception
-            }
-            return new SimpleStringProperty(country != null ? country.getCountryName() : "No Country");
-        });
 
 
-        colRoleProfile.setCellValueFactory(new PropertyValueFactory<>("projectRole"));
 
-        colCountryProfile.setCellValueFactory(cellData -> {
-            Profile profile = cellData.getValue();
-            int countryId = profile.getCountryId();
-            Country country = null;
-            try {
-                country = countryModel.getCountriesMap().get(countryId);
-            } catch (Exception e) {
-                throw new RuntimeException(e); // TODO: Handle this exception
-            }
-            return new SimpleStringProperty(country != null ? country.getCountryName() : "No Country");
-        });
+
+
+
 
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = createImageButton("/pictures/editLogo.png");
