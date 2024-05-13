@@ -38,18 +38,16 @@ public class ProfileRole_DAO implements IProfileRoleDataAccess{
         return allProfileRoles;
     }
 
-    @Override
     public void createProfileRole(ProfileRole profileRole) {
         String sql = "INSERT INTO ProfileRole (ProfileRoleType) VALUES (?)";
-
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, profileRole.getProfileRoleType());
             pstmt.executeUpdate();
-
+        } catch (SQLServerException e) {
+            throw new RuntimeException(e);
         } catch (SQLException e) {
-            e.printStackTrace(); // TODO: Handle this exception
+            throw new RuntimeException(e);
         }
     }
 }

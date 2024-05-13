@@ -6,8 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" spacing="8.0" xmlns="http://javafx.com/javafx/21" fx:controller="GUI.Controller.CreateRoleController" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" spacing="8.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateRoleController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0">
          <children>
@@ -19,7 +18,7 @@
                   <Insets />
                </VBox.margin>
             </VBox>
-            <TextField onAction="#txtProfileRole" />
+            <TextField fx:id="txtProfileRole" />
             <Button mnemonicParsing="false" onAction="#saveProfile" text="Done" />
          </children>
          <VBox.margin>

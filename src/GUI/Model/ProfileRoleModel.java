@@ -38,6 +38,7 @@ public class ProfileRoleModel{
     }
 
 
-
-
+    public void saveRole(String role) throws Exception {
+        profileRoleManager.saveRole(new ProfileRole(role));
+    }
 }

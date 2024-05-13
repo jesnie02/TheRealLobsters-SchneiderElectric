@@ -5,12 +5,14 @@ import BE.ProfileRole;
 import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileRoleModel;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -89,6 +91,7 @@ public class CreateProfileController implements Initializable {
         setupListenersOnTextFields();
         populateCountryCurrencyComboBox();
         setupComboBoxCustomization();
+
         try {
             cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.seeAllProfileRoles());
 

@@ -4,6 +4,7 @@ import BE.ProfileRole;
 import DAL.ProfileRole_DAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProfileRoleManager {
@@ -16,5 +17,9 @@ public class ProfileRoleManager {
 
     public List<ProfileRole> getAllProfileRoles() {
         return profileRoleDAO.getAllProfileRoles();
+    }
+
+    public void saveRole(ProfileRole profileRole) throws SQLException {
+        profileRoleDAO.createProfileRole(profileRole);
     }
 }
