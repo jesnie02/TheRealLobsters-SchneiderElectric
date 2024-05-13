@@ -65,7 +65,7 @@ public class Profile_DAO implements IProfileDataAccess {
      * @param newProfile The new profile to be saved.
      */
     public void saveProfile(Profile newProfile) {
-        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, Country, ProjectRole, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, ProjectRole, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try ( Connection conn = dbConnector.getConnection();
               PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -73,13 +73,12 @@ public class Profile_DAO implements IProfileDataAccess {
             pstmt.setString(1, newProfile.getfName());
             pstmt.setString(2, newProfile.getlName());
             pstmt.setDouble(3, newProfile.getAnnualSalary());
-            pstmt.setInt(4, newProfile.getCountryId());
-            pstmt.setString(5, newProfile.getProjectRole().name());
-            pstmt.setDouble(6, newProfile.getHourlySalary());
-            pstmt.setDouble(7, newProfile.getDailyRate());
-            pstmt.setBoolean(8, newProfile.isOverheadCost());
-            pstmt.setDouble(9, newProfile.getFixedAmount());
-            pstmt.setDouble(10, newProfile.getDailyWorkingHours());
+            pstmt.setString(4, newProfile.getProjectRole().name());
+            pstmt.setDouble(5, newProfile.getHourlySalary());
+            pstmt.setDouble(6, newProfile.getDailyRate());
+            pstmt.setBoolean(7, newProfile.isOverheadCost());
+            pstmt.setDouble(8, newProfile.getFixedAmount());
+            pstmt.setDouble(9, newProfile.getDailyWorkingHours());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

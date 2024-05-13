@@ -150,20 +150,16 @@ public class CreateProfileController implements Initializable {
 
 
 
-    /**
-     * This method is called when the save button is clicked.
-     * It validates the input, creates a new Profile object, and saves it to the database.
-     */
+     //This method is called when the save button is clicked.
+     //It validates the input, creates a new Profile object, and saves it to the database.
     @FXML
     private void saveProfileToDatabase(ActionEvent actionEvent) {
         if (!validateInput()) {
             return;
         }
-
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
         double annualSalary = Double.parseDouble(txtAnnualSalary.getText());
-        int countryId = ( cBoxCountry_CreateProfile.getValue()).getCountryId();
         String projectRole = cBoxTeam_CreateProfile.getValue();
         double hourlyResult = Double.parseDouble(lblHourlyResult.getText());
         double dailyResult = Double.parseDouble(lblDailyResult.getText());
@@ -171,7 +167,8 @@ public class CreateProfileController implements Initializable {
         double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText());
 
-        Profile newProfile = new Profile(countryId, projectRole, firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours);
+        Profile newProfile = new Profile(projectRole, firstName, lastName, overheadCost,
+                annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours);
 
         profileModel.saveProfile(newProfile);
 
@@ -180,7 +177,8 @@ public class CreateProfileController implements Initializable {
     }
 
     public double calculateAndSetHourlyRateCreateProfile() {
-        if (txtAnnualSalary.getText().isEmpty() || txtOverheadView.getText().isEmpty() || txtFixedAmount.getText().isEmpty() || txtEffectiveHours.getText().isEmpty() || txtUtilizationView.getText().isEmpty()) {
+        if (txtAnnualSalary.getText().isEmpty() || txtOverheadView.getText().isEmpty() || txtFixedAmount.getText().isEmpty()
+                || txtEffectiveHours.getText().isEmpty() || txtUtilizationView.getText().isEmpty()) {
             return 0.0;
         }
 
@@ -220,7 +218,7 @@ public class CreateProfileController implements Initializable {
         boolean isValid = true;
 
         // List of all TextFields and ComboBoxes
-        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, cBoxCountry_CreateProfile, cBoxTeam_CreateProfile);
+        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,txtOverheadView,txtFixedAmount,txtDailyWorkingHours,txtEffectiveHours, cBoxTeam_CreateProfile );
 
         for (Control field : fields) {
             if (field instanceof TextField) {

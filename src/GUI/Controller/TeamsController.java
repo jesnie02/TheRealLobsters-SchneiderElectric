@@ -68,7 +68,7 @@ public class TeamsController implements Initializable {
      * It initializes the frameController variable with the instance of FrameController.
      */
     public TeamsController() {
-        this.frameController = FrameController.getInstance();
+       frameController = FrameController.getInstance();
     }
 
     @FXML

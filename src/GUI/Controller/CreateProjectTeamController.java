@@ -6,18 +6,13 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -88,13 +83,11 @@ public class CreateProjectTeamController implements Initializable {
             countryModel = new CountryModel();
             profileModel = new ProfileModel();
             projectTeamsModel = new ProjectTeamsModel();
-            frameController = new FrameController();
             populateComboBoxes();
             setTblProfileToTeam();
 
-
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); //TODO: Handle this exception
         }
     }
 
@@ -156,7 +149,7 @@ public class CreateProjectTeamController implements Initializable {
             lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
             lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
         } catch (Exception e) {
-            e.printStackTrace(); // Replace with proper logging
+            e.printStackTrace(); // //TODO: Handle this exception
         }
     }
 

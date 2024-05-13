@@ -46,8 +46,7 @@ public class Profile {
     }
 
     //Create Profile
-    public Profile(int countryId, String projectRole, String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
-        this.countryId = countryId;
+    public Profile(String projectRole, String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
         this.projectRole = ProjectRole.valueOf(projectRole);
         this.fName = firstName;
         this.lName = lastName;

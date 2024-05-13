@@ -1,3 +1,4 @@
+import GUI.Controller.FrameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,11 +16,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/FrameView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/frameView.fxml"));
+
+            Parent root = loader.load();
 
             primaryStage.setTitle("Schneider Electric");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -7,15 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Stack;
-
+import java.util.*;
 
 
 public class FrameController implements Initializable {
@@ -25,6 +22,8 @@ public class FrameController implements Initializable {
 
     @FXML
     private StackPane stackPaneFrame;
+
+    private final UUID uuid = UUID.randomUUID();
 
     // A map to store the views that have been loaded.
     private Map<String, Node> viewCache = new HashMap<>();
@@ -36,21 +35,23 @@ public class FrameController implements Initializable {
 
 
 
-   public FrameController() {
+    public FrameController() {
         instance = this;
+
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadDashboardOnStart();
+
     }
 
 
 
     private void loadDashboardOnStart() {
         if (stackPaneFrame != null) {
-            loadView("DashboardView.fxml");
+            loadView("dashboardView.fxml");
         } else {
             showErrorAlert("Initialization Error", "UI components are not fully initialized.");
         }
@@ -59,8 +60,10 @@ public class FrameController implements Initializable {
 
     // This method returns the instance of the FrameController class.
     public static synchronized FrameController getInstance() {
+
         if (instance == null) {
             instance = new FrameController();
+
         }
         return instance;
     }
@@ -69,18 +72,32 @@ public class FrameController implements Initializable {
 
     // This method loads the view with the given name.
     private void loadView(String viewName) {
-        Node view = viewCache.get(viewName); // Check if the view is already loaded.
+
+        Node view = viewCache.get(viewName);
+
         if (view == null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + viewName));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(BASE_PATH + viewName));
                 view = loader.load();
                 viewCache.put(viewName, view);
+
             } catch (Exception e) {
-                e.printStackTrace();
+                e.printStackTrace(); //TODO: Handle this exception
                 return;
             }
+
+
         }
-        stackPaneFrame.getChildren().setAll(view);
+
+
+        if (stackPaneFrame != null) {
+            stackPaneFrame.getChildren().setAll(view);
+        } else {
+            showErrorAlert("Initialization Error", "UI components are not fully initialized.");
+        }
+
+
+
     }
 
 

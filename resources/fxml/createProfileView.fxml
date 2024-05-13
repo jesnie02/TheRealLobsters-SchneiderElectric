@@ -73,7 +73,11 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="210.0" />
+                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="146.0">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin></TextField>
+                              <ComboBox prefHeight="26.0" prefWidth="14.0" promptText="€" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -109,19 +113,6 @@
                                  </HBox.margin>
                               </Label>
                               <TextField fx:id="txtFixedAmount" prefHeight="26.0" prefWidth="210.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="101.0" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Country:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <ComboBox fx:id="cBoxCountry_CreateProfile" prefHeight="26.0" prefWidth="210.0" promptText="Select" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -188,26 +179,6 @@
                            <VBox.margin>
                               <Insets bottom="8.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="236.0" prefHeight="54.0" prefWidth="408.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="69.0" text="Utilization : ">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <MFXSlider fx:id="sliderUtilization" decimalPrecision="1" minorTicksCount="10" popupPadding="0.0" prefHeight="0.0" prefWidth="190.0" showMinorTicks="true" showTicksAtEdges="false">
-                                 <HBox.margin>
-                                    <Insets right="8.0" />
-                                 </HBox.margin>
-                              </MFXSlider>
-                              <TextField fx:id="txtUtilizationView" prefHeight="25.0" prefWidth="46.0" />
-                              <Label text="\%">
-                                 <padding>
-                                    <Insets left="8.0" />
-                                 </padding>
-                              </Label>
-                           </children>
                         </HBox>
                      </children>
                   </VBox>
