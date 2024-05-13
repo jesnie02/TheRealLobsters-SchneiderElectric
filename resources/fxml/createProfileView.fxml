@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -120,12 +120,16 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="135.0" prefHeight="23.0" prefWidth="246.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Team:">
+                              <Label prefHeight="18.0" prefWidth="174.0" text="Role:">
                                  <HBox.margin>
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="210.0" promptText="Select" />
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="146.0" promptText="Select">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin></ComboBox>
+                              <Button mnemonicParsing="false" text="+" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
