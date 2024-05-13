@@ -80,7 +80,7 @@ public class DashboardController implements Initializable {
 
         //Team
         cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
-        //cBoxRegionGeo.setItems(geographyModel.getAllFromGeographies());
+
         cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             updateLabelsTeamTab(newValue);
         });

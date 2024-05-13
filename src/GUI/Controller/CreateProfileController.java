@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import GUI.Model.CountryModel;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.*;
@@ -48,12 +49,16 @@ public class CreateProfileController implements Initializable {
     public ComboBox<String> cBoxTeam_CreateProfile;
 
 
+
+
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
     private ProfileModel profileModel;
     private ProfileRoleModel profileRoleModel;
 
 
+    @FXML
+    private ComboBox<String> cBoxValuateProfile;
 
 
     public CreateProfileController(){
@@ -75,11 +80,57 @@ public class CreateProfileController implements Initializable {
         listenersOnSliders();
         setupCheckboxListeners();
         setupListenersOnTextFields();
+        populateCountryCurrencyComboBox();
+        setupComboBoxCustomization();
         try {
             cBoxTeam_CreateProfile.setItems(profileRoleModel.seeAllProfileRoles());
+
+
+
+            //cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void populateCountryCurrencyComboBox() {
+        ObservableList<String> options = profileModel.getCountryAndCurrencyCodes();
+        cBoxValuateProfile.setItems(options);
+    }
+
+    private void setupComboBoxCustomization() {
+        // Configure how the list items are displayed in the dropdown
+        cBoxValuateProfile.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            // Show both country and currency code in the drop-down list
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
+        // Configure how the selected item is displayed in the ComboBox when it is not expanded
+        cBoxValuateProfile.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    // Show only the currency code when an item is selected
+                    setText(item.split(" - ")[1]);
+                }
+            }
+        });
     }
 
     /**

@@ -2,10 +2,15 @@ package GUI.Model;
 
 import BE.Profile;
 import BLL.ProfileManager;
+import GUI.Controller.util.CurrencyReader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +31,22 @@ public class ProfileModel {
         } catch (IOException e) {
             throw new RuntimeException(e); //TODO: Handle this exception
         }
+    }
+
+
+    public ObservableList<String> getCountryAndCurrencyCodes() {
+        URL resourceUrl = getClass().getResource("/Currency");
+        if (resourceUrl == null) {
+            throw new RuntimeException("File not found");
+        }
+        String filePath = resourceUrl.getPath();
+        Map<String, String> currencyMap = CurrencyReader.readCurrencyFromFile(filePath);
+        ArrayList<String> countryAndCurrencyCodes = new ArrayList<>();
+        for (Map.Entry<String, String> entry : currencyMap.entrySet()) {
+            countryAndCurrencyCodes.add(entry.getKey() + " - " + entry.getValue());
+        }
+        Collections.sort(countryAndCurrencyCodes);
+        return FXCollections.observableArrayList(countryAndCurrencyCodes);
     }
 
     /**

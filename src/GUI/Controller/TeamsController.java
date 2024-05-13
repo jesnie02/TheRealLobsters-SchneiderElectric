@@ -25,6 +25,16 @@ public class TeamsController implements Initializable {
     private TilePane tPaneTeamOverview;
     private ProjectTeamsModel projectTeamsModel;
 
+
+    // Instance of FrameController to control the main frame of the application
+    private FrameController frameController;
+
+
+    public TeamsController() {
+        this.frameController = FrameController.getInstance();
+    }
+
+
     public void loadTeamsInTilePane() throws Exception {
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData(); // Assuming this method returns the list of all teams
         for (ProjectTeam team : teams) {
@@ -58,18 +68,11 @@ public class TeamsController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    // Instance of FrameController to control the main frame of the application
-    private FrameController frameController;
 
 
 
-    /**
-     * Constructor for the TeamsController class.
-     * It initializes the frameController variable with the instance of FrameController.
-     */
-    public TeamsController() {
-       frameController = FrameController.getInstance();
-    }
+
+
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {

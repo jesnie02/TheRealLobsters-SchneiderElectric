@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -73,11 +73,11 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="146.0">
+                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="130.0">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin></TextField>
-                              <ComboBox prefHeight="26.0" prefWidth="14.0" promptText="€" />
+                              <ComboBox fx:id="cBoxValuateProfile" prefHeight="26.0" prefWidth="71.0" promptText="EUR" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
@@ -125,7 +125,7 @@
                                     <Insets right="25.0" />
                                  </HBox.margin>
                               </Label>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="146.0" promptText="Select">
+                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="178.0" promptText="Select">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin></ComboBox>
@@ -135,7 +135,7 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="408.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="174.0" text="Daily working hours:">
                                  <HBox.margin>

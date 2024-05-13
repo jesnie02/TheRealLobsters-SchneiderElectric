@@ -77,7 +77,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
         // SQL for inserting a new project team
-        String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, CountryId, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        //TODO tilføje de lande og geografier som er tilknyttet til teamet
 
         // SQL for updating profiles to set the ProjectTeamId
         String updateProfileSQL = "UPDATE Profile SET ProjectTeams = ? WHERE ProfileId = ?";
@@ -95,14 +97,13 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             // Insert the new team
             pstmt = conn.prepareStatement(insertTeamSQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, projectTeam.getTeamName());
-            pstmt.setInt(2, projectTeam.getCountry().getCountryId());
-            pstmt.setInt(3, projectTeam.getProfiles().size());
-            pstmt.setDouble(4, projectTeam.getAvgAnnualSalary());
-            pstmt.setDouble(5, projectTeam.getSumOfAnnualSalary());
-            pstmt.setDouble(6, projectTeam.getAvgHourlyRate());
-            pstmt.setDouble(7, projectTeam.getSumOfHourlyRate());
-            pstmt.setDouble(8, projectTeam.getAvgDailyRate());
-            pstmt.setDouble(9, projectTeam.getSumOfDailyRate());
+            pstmt.setInt(2, projectTeam.getProfiles().size());
+            pstmt.setDouble(3, projectTeam.getAvgAnnualSalary());
+            pstmt.setDouble(4, projectTeam.getSumOfAnnualSalary());
+            pstmt.setDouble(5, projectTeam.getAvgHourlyRate());
+            pstmt.setDouble(6, projectTeam.getSumOfHourlyRate());
+            pstmt.setDouble(7, projectTeam.getAvgDailyRate());
+            pstmt.setDouble(8, projectTeam.getSumOfDailyRate());
             pstmt.executeUpdate();
 
             // Retrieve the generated team ID
@@ -131,6 +132,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 }
             }
             e.printStackTrace(); // TODO: Replace with more robust error handling
+
         } finally {
             // Clean up resources
             try {
