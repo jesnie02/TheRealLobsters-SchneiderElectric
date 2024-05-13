@@ -51,28 +51,34 @@ public class Geography_DAO implements IGeographyDataAccess {
     public List<Geography> getSumsAndAveragesForGeographies() throws SQLException {
         List<Geography> allGeographies = new ArrayList<>();
         String sql = """
-            
-                SELECT
-                   g.GeographyId,
-                   g.GeographyName,
-                   SUM(p.HourlySalary) AS TotalHourlyRate,
-                   AVG(p.HourlySalary) AS AvgHourlyRate,
-                   SUM(p.DailyRate) AS TotalDailyRate,
-                   AVG(p.DailyRate) AS AvgDailyRate,
-                   COUNT(p.ProfileId) AS ProfileCount
-               FROM
-                   Geography g
-               JOIN
-                   GeographyProfile gp ON g.GeographyId = gp.GeographyId
-               JOIN
-                   Profile p ON gp.ProfileId = p.ProfileId
-               GROUP BY
-                   g.GeographyId, g.GeographyName;
-            """;
+        SELECT
+           g.GeographyId,
+           g.GeographyName,
+           SUM(p.HourlySalary) AS TotalHourlyRate,
+           AVG(p.HourlySalary) AS AvgHourlyRate,
+           SUM(p.DailyRate) AS TotalDailyRate,
+           AVG(p.DailyRate) AS AvgDailyRate,
+           COUNT(p.ProfileId) AS ProfileCount
+       FROM
+           Geography g
+       JOIN
+           GeographyProfile gp ON g.GeographyId = gp.GeographyId
+       JOIN
+           Profile p ON gp.ProfileId = p.ProfileId
+       GROUP BY
+           g.GeographyId, g.GeographyName;
+    """;
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()){
+                System.out.println("GeographyId: " + rs.getInt("GeographyId"));
+                System.out.println("GeographyName: " + rs.getString("GeographyName"));
+                System.out.println("TotalHourlyRate: " + rs.getDouble("TotalHourlyRate"));
+                System.out.println("AvgHourlyRate: " + rs.getDouble("AvgHourlyRate"));
+                System.out.println("TotalDailyRate: " + rs.getDouble("TotalDailyRate"));
+                System.out.println("AvgDailyRate: " + rs.getDouble("AvgDailyRate"));
+                System.out.println("ProfileCount: " + rs.getInt("ProfileCount"));
                 Geography geography = new Geography(
                         rs.getInt("GeographyId"),
                         rs.getString("GeographyName"),
