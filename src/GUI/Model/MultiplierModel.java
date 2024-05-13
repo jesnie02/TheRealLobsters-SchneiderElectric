@@ -2,18 +2,19 @@ package GUI.Model;
 
 import BLL.CalculatorManager;
 import BLL.MultiplierManager;
-import GUI.Controller.MultipliersController;
+import GUI.Controller.MultiplierController;
+
 
 public class MultiplierModel {
 
-    private MultipliersController multipliersController;
+    private MultiplierController multiplierController;
     private MultiplierManager multiplierManager;
 
 
 
 
-    public MultiplierModel(MultipliersController multipliersController){
-        this.multipliersController = multipliersController;
+    public MultiplierModel(MultiplierController multiplierController){
+        this.multiplierController = multiplierController;
         this.multiplierManager = new MultiplierManager(new CalculatorManager());
     }
 

@@ -111,6 +111,7 @@ public class CalculatorManager implements ICalculateManager {
         return sumOfDailyRate(profiles) / profiles.size();
     }
 
+
     /**
      * Calculates and sets the hourly rate for a profile during creation.
      * @param annualSalaryProfile The annual salary of the profile.
