@@ -15,8 +15,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox fx:id="vBoxWhiteCreateProfile" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -106,13 +107,16 @@
                         <Label prefHeight="18.0" prefWidth="174.0" text="Role:" GridPane.rowIndex="5" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="178.0" promptText="Select">
+                              <CheckComboBox fx:id="cBoxProfile_ProfileRoles" prefHeight="26.0" prefWidth="178.0" showCheckedCount="true" title="Roles">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
-                              </ComboBox>
-                              <Button mnemonicParsing="false" text="+" />
+                              </CheckComboBox>
+                              <Button mnemonicParsing="false" onAction="#createNewRole" prefHeight="26.0" text="+" />
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                      <padding>

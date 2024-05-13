@@ -3,12 +3,16 @@ package GUI.Controller;
 import BE.Country;
 import BE.ProfileRole;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileRoleModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,7 +26,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import GUI.Model.CountryModel;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.util.*;
@@ -46,8 +52,6 @@ public class CreateProfileController implements Initializable {
     private Label lblHourlyResult, lblDailyResult, lblShowMassage;
 
     // comboBox for country and team
-    public ComboBox<String> cBoxTeam_CreateProfile;
-
 
 
 
@@ -59,9 +63,11 @@ public class CreateProfileController implements Initializable {
 
     @FXML
     private ComboBox<String> cBox_Currency;
+    @FXML
+    private CheckComboBox cBoxProfile_ProfileRoles;
 
 
-    public CreateProfileController(){
+    public CreateProfileController() {
         try {
             countryModel = new CountryModel();
             projectTeamsModel = new ProjectTeamsModel();
@@ -71,6 +77,7 @@ public class CreateProfileController implements Initializable {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called after all @FXML annotated members have been injected.
      * It sets up listeners on sliders and checkboxes, and populates the country and team ComboBoxes.
@@ -83,8 +90,7 @@ public class CreateProfileController implements Initializable {
         populateCountryCurrencyComboBox();
         setupComboBoxCustomization();
         try {
-            cBoxTeam_CreateProfile.setItems(profileRoleModel.seeAllProfileRoles());
-
+            cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.seeAllProfileRoles());
 
 
             //cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
@@ -187,7 +193,6 @@ public class CreateProfileController implements Initializable {
     }
 
 
-
     /**
      * This method initializes fields, ComboBoxes, and listeners. with the values from the database.
      * getAllCountries() and getAllProjectTeams() are methods read from the database.
@@ -195,8 +200,6 @@ public class CreateProfileController implements Initializable {
     @FXML
     public void initialize() {
         try {
-
-            cBoxTeam_CreateProfile.setItems(projectTeamsModel.getAllProjectTeams());
 
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             };
@@ -209,9 +212,8 @@ public class CreateProfileController implements Initializable {
     }
 
 
-
-     //This method is called when the save button is clicked.
-     //It validates the input, creates a new Profile object, and saves it to the database.
+    //This method is called when the save button is clicked.
+    //It validates the input, creates a new Profile object, and saves it to the database.
     @FXML
     private void saveProfileToDatabase(ActionEvent actionEvent) {
         if (!validateInput()) {
@@ -267,8 +269,6 @@ public class CreateProfileController implements Initializable {
     }
 
 
-
-
     /**
      * This method validates the input in the TextFields and ComboBoxes.
      * If a field is empty, it is highlighted in red and the method returns false.
@@ -278,7 +278,7 @@ public class CreateProfileController implements Initializable {
         boolean isValid = true;
 
         // List of all TextFields and ComboBoxes
-        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,txtFixedAmount,txtDailyWorkingHours,txtEffectiveHours, cBoxTeam_CreateProfile );
+        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours);
 
         for (Control field : fields) {
             if (field instanceof TextField) {
@@ -303,5 +303,20 @@ public class CreateProfileController implements Initializable {
         return isValid;
     }
 
+    @FXML
+    private void createNewRole(ActionEvent actionEvent) {
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createRoleView.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Create role");
+        stage.show();
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
 }
 
