@@ -1,9 +1,13 @@
 package GUI.Controller;
 
 import BE.Country;
+import BE.ProfileRole;
 import BE.ProjectTeam;
+import GUI.Model.ProfileRoleModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -20,6 +24,7 @@ import GUI.Model.CountryModel;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CreateProfileController implements Initializable {
 
@@ -46,10 +51,21 @@ public class CreateProfileController implements Initializable {
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
     private ProfileModel profileModel;
+    private ProfileRoleModel profileRoleModel;
 
 
 
 
+    public CreateProfileController(){
+        try {
+            countryModel = new CountryModel();
+            projectTeamsModel = new ProjectTeamsModel();
+            profileModel = new ProfileModel();
+            profileRoleModel = new ProfileRoleModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called after all @FXML annotated members have been injected.
      * It sets up listeners on sliders and checkboxes, and populates the country and team ComboBoxes.
@@ -60,8 +76,7 @@ public class CreateProfileController implements Initializable {
         setupCheckboxListeners();
         setupListenersOnTextFields();
         try {
-
-            //cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
+            cBoxTeam_CreateProfile.setItems(profileRoleModel.seeAllProfileRoles());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,15 +123,7 @@ public class CreateProfileController implements Initializable {
         txtDailyWorkingHours.textProperty().addListener(textFieldListener);
     }
 
-    public CreateProfileController(){
-        try {
-            countryModel = new CountryModel();
-            projectTeamsModel = new ProjectTeamsModel();
-            profileModel = new ProfileModel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * This method initializes fields, ComboBoxes, and listeners. with the values from the database.
