@@ -117,9 +117,8 @@ public class CreateProjectTeamController implements Initializable {
         cBoxProfiles.setConverter(new StringConverter<Profile>() {
             @Override
             public String toString(Profile profile) {
-                if (profile != null && countriesMap.containsKey(profile.getCountryId())) {
-                    String countryName = countriesMap.get(profile.getCountryId()).getCountryName();
-                    return profile.getfName() + " " + profile.getlName() + "  -  " + profile.getProjectRole() + "  -  " + countryName;
+                if (profile != null) {
+                    return profile.getfName() + " " + profile.getlName() + "  -  " /*+ profile.getProjectRole()*/ ;
                 } else {
                     return "Select a Profile";
                 }
@@ -249,8 +248,6 @@ public class CreateProjectTeamController implements Initializable {
         //System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
         //System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
     }
-
-
 
         /**
          * Removes the selected profile from the team table.

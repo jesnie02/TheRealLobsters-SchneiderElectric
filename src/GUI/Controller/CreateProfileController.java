@@ -62,7 +62,7 @@ public class CreateProfileController implements Initializable {
         setupListenersOnTextFields();
         try {
 
-            cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
+            //cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,14 +151,14 @@ public class CreateProfileController implements Initializable {
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
         double annualSalary = Double.parseDouble(txtAnnualSalary.getText());
-        String projectRole = cBoxTeam_CreateProfile.getValue();
+        //String projectRole = cBoxTeam_CreateProfile.getValue();
         double hourlyResult = Double.parseDouble(lblHourlyResult.getText());
         double dailyResult = Double.parseDouble(lblDailyResult.getText());
         boolean overheadCost = checkOverhead.isSelected();
         double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText());
 
-        Profile newProfile = new Profile(projectRole, firstName, lastName, overheadCost,
+        Profile newProfile = new Profile(firstName, lastName, overheadCost,
                 annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours);
 
         profileModel.saveProfile(newProfile);

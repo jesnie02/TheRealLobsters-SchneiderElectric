@@ -37,17 +37,6 @@ public class ProfileModel {
 
     }
 
-    /**
-     * Returns a list of all possible roles for a profile.
-     * @return An ObservableList of role names.
-     */
-    public ObservableList<String> getRoleList() {
-        ObservableList<String> roleList = FXCollections.observableArrayList();
-        for (Profile.ProjectRole role : Profile.ProjectRole.values()) {
-            roleList.add(role.name());
-        }
-        return roleList;
-    }
 
     /**
      * Returns a list of all profile names.

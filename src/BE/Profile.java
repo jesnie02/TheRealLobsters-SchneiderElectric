@@ -5,7 +5,6 @@ import java.util.List;
 public class Profile {
 
     private int profileId, countryId;
-    private ProjectRole projectRole;
     private String fName, lName;
     private boolean overheadCost;
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours;
@@ -19,10 +18,9 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, int countryId, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
+    public Profile(int profileId, int countryId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
         this.profileId = profileId;
         this.countryId = countryId;
-        this.projectRole = projectRole;
         this.fName = fName;
         this.lName = lName;
         this.overheadCost = overheadCost;
@@ -32,9 +30,8 @@ public class Profile {
         this.dailyWorkingHours = dailyWorkingHours;
     }
 
-    public Profile(int countryId, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+    public Profile(int countryId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
         this.countryId = countryId;
-        this.projectRole = projectRole;
         this.fName = fName;
         this.lName = lName;
         this.overheadCost = overheadCost;
@@ -44,8 +41,7 @@ public class Profile {
     }
 
     //Create Profile
-    public Profile(String projectRole, String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
-        this.projectRole = ProjectRole.valueOf(projectRole);
+    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
         this.fName = firstName;
         this.lName = lastName;
         this.overheadCost = overheadCost;
@@ -169,23 +165,8 @@ public class Profile {
         this.hourlySalary = hourlyRate;
     }
 
-    public enum ProjectRole{
-        DESIGN,
-        DEVELOPER,
-        ENGINEER,
-        MANAGER,
-    }
-
     public void setProjectTeams(List<ProjectTeam> projectTeams) {
         this.projectTeams = projectTeams;
-    }
-
-    public ProjectRole getProjectRole() {
-        return projectRole;
-    }
-
-    public void setProjectRole(ProjectRole projectRole) {
-        this.projectRole = projectRole;
     }
 
     public String getFullName() {
