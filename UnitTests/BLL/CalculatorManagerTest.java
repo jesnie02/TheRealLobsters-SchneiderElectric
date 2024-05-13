@@ -283,15 +283,14 @@ class CalculatorManagerTest {
         double overheadMultiplierProfile = 50;
         double annualFixedAmountProfile = 10000;
         double effectiveHoursProfile = 2000;
-        double utilizationPercentageProfile = 80;
 
-        double expected = 56.25;
+
+        double expected = 45;
 
         // Act
         double actual = calculatorManager.calculateAndSetHourlyRateCreateProfile(
                 annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile,
-                utilizationPercentageProfile);
+                annualFixedAmountProfile, effectiveHoursProfile);
 
         // Assert
         assertEquals(expected, actual);
@@ -310,8 +309,7 @@ class CalculatorManagerTest {
         // Act
         double actual = calculatorManager.calculateAndSetHourlyRateCreateProfile(
                 annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile,
-                utilizationPercentageProfile);
+                annualFixedAmountProfile, effectiveHoursProfile);
 
         // Assert
         assertEquals(0, actual);
@@ -324,13 +322,11 @@ class CalculatorManagerTest {
         double overheadMultiplierProfile = 1.5;
         double annualFixedAmountProfile = 10000;
         double effectiveHoursProfile = 2000;
-        double utilizationPercentageProfile = 80;
 
         // Act and Assert
         assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetHourlyRateCreateProfile(
                 annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile,
-                utilizationPercentageProfile));
+                annualFixedAmountProfile, effectiveHoursProfile));
     }
 
     //--------------------------------------------------------------------------------------------------------

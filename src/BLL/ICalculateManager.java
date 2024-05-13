@@ -24,8 +24,7 @@ public interface ICalculateManager {
 
     double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
-            double annualFixedAmountProfile, double effectiveHoursProfile,
-            double utilizationPercentageProfile);
+            double annualFixedAmountProfile, double effectiveHoursProfile);
 
     double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate);
 }

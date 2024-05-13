@@ -31,7 +31,7 @@ public class CreateProfileController implements Initializable {
 
     // textFields for the profile name, annual salary, fixed amount and effective hours
     @FXML
-    private TextField txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, txtFixedAmount, txtEffectiveHours;
+    private TextField txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, txtFixedAmount, txtEffectiveHours, txtOverheadView;
 
     @FXML
     private CheckBox checkOverhead, checkProduction;
@@ -73,10 +73,9 @@ public class CreateProfileController implements Initializable {
      * When the value of a slider changes, the corresponding TextField is updated with the new value.
      */
     public void listenersOnSliders() {
-
-
-
-
+        sliderOverhead.valueProperty().addListener((observable, oldValue, newValue) -> {
+            txtOverheadView.setText(String.format("%.2f", newValue));
+        });
     }
 
     /**
@@ -99,15 +98,14 @@ public class CreateProfileController implements Initializable {
 
     private void setupListenersOnTextFields() {
         ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            //calculateAndSetHourlyRateCreateProfile();
-            //calculateAndSetDailyRateCreateProdifle();
+            calculateAndSetHourlyRateCreateProfile();
+            calculateAndSetDailyRateCreateProdifle();
         };
 
         txtFixedAmount.textProperty().addListener(textFieldListener);
         txtEffectiveHours.textProperty().addListener(textFieldListener);
         txtAnnualSalary.textProperty().addListener(textFieldListener);
-        //txtOverheadView.textProperty().addListener(textFieldListener);
-       // txtUtilizationView.textProperty().addListener(textFieldListener);
+        txtOverheadView.textProperty().addListener(textFieldListener);
         txtDailyWorkingHours.textProperty().addListener(textFieldListener);
     }
 
@@ -168,10 +166,10 @@ public class CreateProfileController implements Initializable {
         lblShowMassage.setText("Profile has been saved");
     }
 
-    /*
+
     public double calculateAndSetHourlyRateCreateProfile() {
         if (txtAnnualSalary.getText().isEmpty() || txtOverheadView.getText().isEmpty() || txtFixedAmount.getText().isEmpty()
-                || txtEffectiveHours.getText().isEmpty() || txtUtilizationView.getText().isEmpty()) {
+                || txtEffectiveHours.getText().isEmpty()) {
             return 0.0;
         }
 
@@ -179,12 +177,10 @@ public class CreateProfileController implements Initializable {
         double overheadMultiplierProfile = Double.parseDouble(txtOverheadView.getText().replace(",", "."));
         double annualFixedAmountProfile = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
         double effectiveHoursProfile = Double.parseDouble(txtEffectiveHours.getText().replace(",", "."));
-        double utilizationPercentageProfile = Double.parseDouble(txtUtilizationView.getText().replace(",", "."));
         double result = profileModel.calculateAndSetHourlyRateCreateProfile(annualSalaryProfile,
                 overheadMultiplierProfile,
                 annualFixedAmountProfile,
-                effectiveHoursProfile,
-                utilizationPercentageProfile);
+                effectiveHoursProfile);
         lblHourlyResult.setText(String.format("%.2f", result));
         return result;
     }
@@ -202,7 +198,7 @@ public class CreateProfileController implements Initializable {
     }
 
 
-     */
+
 
     /**
      * This method validates the input in the TextFields and ComboBoxes.

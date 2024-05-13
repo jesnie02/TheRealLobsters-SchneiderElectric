@@ -6,7 +6,7 @@ public class Profile {
 
     private int profileId, countryId;
     private ProjectRole projectRole;
-    private String projectTeam, fName, lName;
+    private String fName, lName;
     private boolean overheadCost;
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours;
     private List<Country> country;
@@ -19,10 +19,9 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
+    public Profile(int profileId, int countryId, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
         this.profileId = profileId;
         this.countryId = countryId;
-        this.projectTeam = projectTeam;
         this.projectRole = projectRole;
         this.fName = fName;
         this.lName = lName;
@@ -33,9 +32,8 @@ public class Profile {
         this.dailyWorkingHours = dailyWorkingHours;
     }
 
-    public Profile(int countryId, String projectTeam, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+    public Profile(int countryId, ProjectRole projectRole, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
         this.countryId = countryId;
-        this.projectTeam = projectTeam;
         this.projectRole = projectRole;
         this.fName = fName;
         this.lName = lName;
@@ -97,13 +95,6 @@ public class Profile {
         this.countryId = countryId;
     }
 
-    public String getProjectTeam() {
-        return projectTeam;
-    }
-
-    public void setProjectTeam(String projectTeam) {
-        this.projectTeam = projectTeam;
-    }
 
     public void setCountry(List<Country> country) {
         this.country = country;

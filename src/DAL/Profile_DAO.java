@@ -41,7 +41,6 @@ public class Profile_DAO implements IProfileDataAccess {
             while (rs.next()){
                 int profileId = rs.getInt("ProfileId");
                 int country = rs.getInt("Country");
-                String projectTeam = rs.getString("ProjectTeams");
                 String projectRole = rs.getString("ProjectRole");
                 String fName = rs.getString("FName");
                 String lName = rs.getString("LName");
@@ -50,7 +49,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 double hourlyRate = rs.getDouble("HourlySalary");
                 double dailyRate = rs.getDouble("DailyRate");
                 double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
-                Profile profile = new Profile(profileId, country, projectTeam, Profile.ProjectRole.valueOf(projectRole), fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours);
+                Profile profile = new Profile(profileId, country, Profile.ProjectRole.valueOf(projectRole), fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours);
                 allProfiles.add(profile);
                 //System.out.println(allProfiles);
             }

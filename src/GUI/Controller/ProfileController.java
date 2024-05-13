@@ -98,16 +98,7 @@ public class ProfileController {
 
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        colProjectTeamProfile.setCellValueFactory(cellData -> {
-            Profile profile = cellData.getValue();
-            String teamIdStr = profile.getProjectTeam().replaceAll("\\D+","");
-            if (teamIdStr.isEmpty()) {
-                return new SimpleStringProperty("No Team");
-            }
-            int teamId = Integer.parseInt(teamIdStr);
-            String teamName = idToNameMap.get(teamId);
-            return new SimpleStringProperty(teamName != null ? teamName : "No Team");
-        });
+
 
         colAnnualSalaryProfile.setCellValueFactory(cellData -> {
             double annualSalary = cellData.getValue().getAnnualSalary();

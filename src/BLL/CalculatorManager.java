@@ -118,14 +118,12 @@ public class CalculatorManager implements ICalculateManager {
      * @param overheadMultiplierProfile The overhead multiplier of the profile.
      * @param annualFixedAmountProfile The annual fixed amount of the profile.
      * @param effectiveHoursProfile The effective hours of the profile.
-     * @param utilizationPercentageProfile The utilization percentage of the profile.
      * @return The calculated hourly rate.
      */
     @Override
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
-            double annualFixedAmountProfile, double effectiveHoursProfile,
-            double utilizationPercentageProfile) {
+            double annualFixedAmountProfile, double effectiveHoursProfile) {
 
         if (annualSalaryProfile == 0) {
             return 0; // Return zero if the annual salary is zero
@@ -136,8 +134,7 @@ public class CalculatorManager implements ICalculateManager {
         }
 
         double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
-        double actualEffectivehours = (effectiveHoursProfile * (utilizationPercentageProfile / 100));
-        double result = (actualAnnualSalary / actualEffectivehours) * (1 + overheadMultiplierProfile / 100);
+        double result = (actualAnnualSalary / effectiveHoursProfile) * (1 + overheadMultiplierProfile / 100);
         return result;
     }
 

@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -79,13 +78,11 @@ public class ProfileModel {
      */
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
-            double annualFixedAmountProfile, double effectiveHoursProfile,
-            double utilizationPercentageProfile) {
+            double annualFixedAmountProfile, double effectiveHoursProfile) {
 
         return profileManager.calculateAndSetHourlyRateCreateProfile(
                 annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile,
-                utilizationPercentageProfile);
+                annualFixedAmountProfile, effectiveHoursProfile);
     }
 
     /**

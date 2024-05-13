@@ -57,22 +57,20 @@ public class ProfileManager {
 
     /**
      * Calculates and sets the hourly rate for a profile during creation.
-     * @param annualSalaryProfile The annual salary of the profile.
+     *
+     * @param annualSalaryProfile       The annual salary of the profile.
      * @param overheadMultiplierProfile The overhead multiplier of the profile.
-     * @param annualFixedAmountProfile The annual fixed amount of the profile.
-     * @param effectiveHoursProfile The effective hours of the profile.
-     * @param utilizationPercentageProfile The utilization percentage of the profile.
+     * @param annualFixedAmountProfile  The annual fixed amount of the profile.
+     * @param effectiveHoursProfile     The effective hours of the profile.
      * @return The calculated hourly rate.
      */
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
-            double annualFixedAmountProfile, double effectiveHoursProfile,
-            double utilizationPercentageProfile) {
+            double annualFixedAmountProfile, double effectiveHoursProfile) {
 
         return calculatorManager.calculateAndSetHourlyRateCreateProfile(
                 annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile,
-                utilizationPercentageProfile);
+                annualFixedAmountProfile, effectiveHoursProfile);
     }
 
     /**
