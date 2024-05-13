@@ -5,10 +5,7 @@ import DAL.DBConnector.DBConnector;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +40,16 @@ public class ProfileRole_DAO implements IProfileRoleDataAccess{
 
     @Override
     public void createProfileRole(ProfileRole profileRole) {
+        String sql = "INSERT INTO ProfileRole (ProfileRoleType) VALUES (?)";
 
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, profileRole.getProfileRoleType());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: Handle this exception
+        }
     }
 }

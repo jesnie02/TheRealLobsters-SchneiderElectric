@@ -37,3 +37,63 @@
     -fx-background-color: #3DCD58;
     -fx-text-fill: #18191a;
 }
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Background */
+
+#bP_CreateProfile {
+    -fx-background-color: #F4F4F4;
+}
+
+/* WhiteBox */
+
+#vBoxWhiteCreateProfile {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
+}
+
+
+/* Header Box */
+
+#headerHboxCreateProfile {
+    -fx-background-color: #F1F1E8;
+    -fx-border-color: transparent transparent #3DCD58 transparent;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-style: solid;
+}
+
+/* Header Text */
+
+#headerTextCreateProfile {
+    -fx-font-size: 14px;
+   /* -fx-font-weight: bold; */
+    -fx-text-fill: black;
+
+}
+
+/* Result Borders */
+
+#resultVboxCreateProfileHour, #resultVboxCreateProfileDaily {
+    -fx-border-color: #040404;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* border Details */
+
+#gPaneCreateProfile {
+    -fx-border-color: #040404;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* Button */
+
+#btnCreateProfile {
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}

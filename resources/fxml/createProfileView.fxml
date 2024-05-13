@@ -10,17 +10,20 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="557.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
-      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxWhiteCreateProfile" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
          </BorderPane.margin>
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="703.0">
+            <HBox fx:id="headerHboxCreateProfile" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="822.0" VBox.vgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
@@ -30,165 +33,95 @@
                         <Image url="@../pictures/prfileLogo.png" />
                      </image>
                   </ImageView>
-                  <Label text="Create profile" />
+                  <Label fx:id="headerTextCreateProfile" text="Create profile" />
                </children>
             </HBox>
             <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0">
+               <VBox.margin>
+                  <Insets left="25.0" right="25.0" top="16.0" />
+               </VBox.margin>
                <children>
-                  <VBox prefHeight="322.0" prefWidth="507.0">
-                     <HBox.margin>
-                        <Insets left="16.0" />
-                     </HBox.margin>
+                  <GridPane fx:id="gPaneCreateProfile" prefHeight="338.0" prefWidth="424.0" HBox.hgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="324.0" prefHeight="23.0" prefWidth="246.0">
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Annual salary:" GridPane.rowIndex="2" />
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Firstname:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtFirstnameProfile" prefHeight="26.0" prefWidth="210.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="34.0" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Lastname:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtLastnameProfile" prefHeight="26.0" prefWidth="210.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Annual salary:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="130.0">
+                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="142.0">
                                  <HBox.margin>
                                     <Insets right="8.0" />
-                                 </HBox.margin></TextField>
-                              <ComboBox fx:id="cBoxValuateProfile" prefHeight="26.0" prefWidth="71.0" promptText="EUR" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="34.0" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="187.0" text="Overhead Multiplier percentage:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
                                  </HBox.margin>
-                              </Label>
+                              </TextField>
+                              <ComboBox fx:id="cBox_Currency" prefHeight="26.0" prefWidth="90.0" />
+                           </children>
+                        </HBox>
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Overhead Multiplier percentage:" GridPane.rowIndex="3" />
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Configurable fixed amount: " GridPane.rowIndex="4" />
+                        <TextField fx:id="txtFixedAmount" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Annual effective working hours:" GridPane.rowIndex="7" />
+                        <TextField fx:id="txtEffectiveHours" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <HBox alignment="CENTER" spacing="24.0" GridPane.rowIndex="8">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="81.0" text="Overhead cost:" />
+                              <CheckBox fx:id="checkOverhead" mnemonicParsing="false" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="24.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="110.0" text="Production resource:" />
+                              <CheckBox fx:id="checkProduction" mnemonicParsing="false" />
+                           </children>
+                        </HBox>
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Daily working hours:" GridPane.rowIndex="6" />
+                        <TextField fx:id="txtDailyWorkingHours" prefHeight="26.0" prefWidth="210.0" text="7.4" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="txtFirstnameProfile" prefHeight="26.0" prefWidth="210.0" GridPane.columnIndex="1" />
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Firstname:" />
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Lastname:" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtLastnameProfile" prefHeight="26.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
                               <MFXSlider fx:id="sliderOverhead" decimalPrecision="1" minorTicksCount="10" prefHeight="6.0" prefWidth="130.0" showMinorTicks="true">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField fx:id="txtOverheadView" prefHeight="25.0" prefWidth="53.0">
-                                 <HBox.margin>
-                                    <Insets right="8.0" />
-                                 </HBox.margin></TextField>
-                              <Label prefHeight="18.0" prefWidth="23.0" text="\%" />
+                              <TextField fx:id="txtOverheadView" prefHeight="26.0" prefWidth="56.0" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="19.0" text="\%" />
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="68.0" prefHeight="23.0" prefWidth="246.0">
+                        <Label prefHeight="18.0" prefWidth="174.0" text="Role:" GridPane.rowIndex="5" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Configurable fixed amount: ">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtFixedAmount" prefHeight="26.0" prefWidth="210.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="135.0" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Role:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
                               <ComboBox fx:id="cBoxTeam_CreateProfile" prefHeight="26.0" prefWidth="178.0" promptText="Select">
                                  <HBox.margin>
                                     <Insets right="8.0" />
-                                 </HBox.margin></ComboBox>
+                                 </HBox.margin>
+                              </ComboBox>
                               <Button mnemonicParsing="false" text="+" />
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="408.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Daily working hours:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtDailyWorkingHours" prefHeight="26.0" prefWidth="210.0" text="7.4" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="168.0" prefHeight="23.0" prefWidth="246.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="174.0" text="Annual effective working hours:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtEffectiveHours" prefHeight="26.0" prefWidth="210.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="202.0" prefHeight="30.0" prefWidth="408.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="81.0" text="Overhead cost:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <CheckBox fx:id="checkOverhead" mnemonicParsing="false">
-                                 <HBox.margin>
-                                    <Insets right="40.0" />
-                                 </HBox.margin>
-                              </CheckBox>
-                              <Label layoutX="10.0" layoutY="14.0" prefHeight="18.0" prefWidth="110.0" text="Production resource:">
-                                 <HBox.margin>
-                                    <Insets right="25.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <CheckBox fx:id="checkProduction" mnemonicParsing="false" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
                         </HBox>
                      </children>
-                  </VBox>
-                  <VBox prefHeight="322.0" prefWidth="400.0" spacing="32.0">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </GridPane>
+                  <VBox prefHeight="338.0" prefWidth="298.0" spacing="24.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox prefHeight="168.0" prefWidth="241.0">
+                        <VBox fx:id="resultVboxCreateProfileHour" alignment="CENTER" prefHeight="168.0" prefWidth="241.0" VBox.vgrow="ALWAYS">
                            <children>
                               <HBox alignment="BOTTOM_LEFT" prefHeight="18.0" prefWidth="216.0">
                                  <VBox.margin>
@@ -222,7 +155,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox prefHeight="173.0" prefWidth="241.0">
+                        <VBox fx:id="resultVboxCreateProfileDaily" alignment="CENTER" prefHeight="173.0" prefWidth="241.0" VBox.vgrow="ALWAYS">
                            <children>
                               <HBox alignment="BOTTOM_LEFT" prefHeight="18.0" prefWidth="216.0">
                                  <children>
@@ -257,26 +190,23 @@
                            </children>
                         </VBox>
                      </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
                   </VBox>
                </children>
-               <VBox.margin>
-                  <Insets left="25.0" right="25.0" top="16.0" />
-               </VBox.margin>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
             </HBox>
-            <HBox alignment="CENTER_RIGHT">
+            <HBox alignment="CENTER_RIGHT" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblShowMassage" prefHeight="18.0" prefWidth="318.0">
+                  <Label fx:id="lblShowMassage" prefHeight="18.0" prefWidth="339.0">
                      <HBox.margin>
                         <Insets right="16.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#saveProfileToDatabase" prefHeight="41.0" prefWidth="127.0" text="Save" />
+                  <Button fx:id="btnCreateProfile" mnemonicParsing="false" onAction="#saveProfileToDatabase" prefHeight="41.0" prefWidth="127.0" text="Save" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
-                  <Insets right="25.0" top="25.0" />
+                  <Insets bottom="8.0" right="25.0" top="25.0" />
                </VBox.margin>
             </HBox>
          </children>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -117,7 +118,7 @@
                   </VBox>
                   <VBox prefHeight="292.0" prefWidth="616.0">
                      <HBox.margin>
-                        <Insets right="25.0" top="25.0" />
+                        <Insets right="25.0" top="16.0" />
                      </HBox.margin>
                      <children>
                         <Label prefHeight="25.0" prefWidth="299.0" text="Team members">
@@ -133,12 +134,31 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <ComboBox fx:id="cBoxProfiles" prefHeight="26.0" prefWidth="284.0">
+                        <ComboBox fx:id="cBoxProfiles" prefHeight="26.0" prefWidth="290.0">
                            <VBox.margin>
-                              <Insets bottom="16.0" left="25.0" right="25.0" />
+                              <Insets bottom="8.0" left="25.0" right="25.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="25.0" prefWidth="285.0" text="Select Profile">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="25.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="67.0" text="Utilization:">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <MFXSlider decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </MFXSlider>
+                              <TextField prefHeight="26.0" prefWidth="39.0" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="290.0" text="Select Profile">
                            <VBox.margin>
                               <Insets bottom="16.0" left="25.0" right="25.0" />
                            </VBox.margin>

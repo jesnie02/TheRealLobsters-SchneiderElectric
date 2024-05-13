@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import GUI.Model.CountryModel;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -30,10 +31,9 @@ import java.util.stream.Collectors;
 public class CreateProfileController implements Initializable {
 
     public TextField txtDailyWorkingHours;
-    // slider for overhead and utilization and textField to show the value of the slider
+    // slider for overhead  and textField to show the value of the slider
     @FXML
-    private MFXSlider sliderOverhead, sliderUtilization;
-
+    private MFXSlider sliderOverhead;
 
     // textFields for the profile name, annual salary, fixed amount and effective hours
     @FXML
@@ -43,7 +43,7 @@ public class CreateProfileController implements Initializable {
     private CheckBox checkOverhead, checkProduction;
 
     @FXML
-    private Label lblHourlyResult, lblDailyResult, lblShowMassage, lblFixedAmountResult;
+    private Label lblHourlyResult, lblDailyResult, lblShowMassage;
 
     // comboBox for country and team
     public ComboBox<String> cBoxTeam_CreateProfile;
@@ -58,7 +58,7 @@ public class CreateProfileController implements Initializable {
 
 
     @FXML
-    private ComboBox<String> cBoxValuateProfile;
+    private ComboBox<String> cBox_Currency;
 
 
     public CreateProfileController(){
@@ -95,12 +95,24 @@ public class CreateProfileController implements Initializable {
 
     private void populateCountryCurrencyComboBox() {
         ObservableList<String> options = profileModel.getCountryAndCurrencyCodes();
-        cBoxValuateProfile.setItems(options);
+        cBox_Currency.setItems(options);
+
+        setDefaultCurrency("EUR");
     }
 
+    private void setDefaultCurrency(String currencyCode) {
+        for (String item : cBox_Currency.getItems()) {
+            if (item.endsWith(currencyCode)) {
+                cBox_Currency.getSelectionModel().select(item);
+                break;
+            }
+        }
+    }
+
+
+
     private void setupComboBoxCustomization() {
-        // Configure how the list items are displayed in the dropdown
-        cBoxValuateProfile.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        cBox_Currency.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
                 return new ListCell<String>() {
@@ -110,7 +122,7 @@ public class CreateProfileController implements Initializable {
                         if (item == null || empty) {
                             setText(null);
                         } else {
-                            // Show both country and currency code in the drop-down list
+
                             setText(item);
                         }
                     }
@@ -118,8 +130,8 @@ public class CreateProfileController implements Initializable {
             }
         });
 
-        // Configure how the selected item is displayed in the ComboBox when it is not expanded
-        cBoxValuateProfile.setButtonCell(new ListCell<String>() {
+
+        cBox_Currency.setButtonCell(new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
