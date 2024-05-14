@@ -28,12 +28,6 @@ public class CountryModel {
         ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
                 countryManager.getAllCountries().stream()
                         .sorted(Comparator.comparing(Country::getCountryName))
-                        .map(country -> new Country(country.getCountryId(), country.getCountryName()) {
-                            @Override
-                            public String toString() {
-                                return getCountryName();
-                            }
-                        })
                         .collect(Collectors.toList())
         );
         return countries;

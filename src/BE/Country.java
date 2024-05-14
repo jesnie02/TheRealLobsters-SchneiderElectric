@@ -78,7 +78,7 @@ public class Country {
         this.avgAnnualSalary = avgAnnualSalary;
     }
 
-    private double avgAnnualSalary;
+    public double avgAnnualSalary;
 
     public Country(int id, String name) {
         this.CountryId = id;
@@ -106,8 +106,8 @@ public class Country {
     }
 
     @Override
-    public String toString() {
+   public String toString() {
         return CountryName;
-    }
+   }
 
 }
