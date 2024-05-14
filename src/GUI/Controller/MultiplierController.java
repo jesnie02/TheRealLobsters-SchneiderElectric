@@ -66,8 +66,8 @@ public class MultiplierController {
             setupSlidersForProfile();
             setupSlidersForTeams();
             setValueInFieldProfile();
-            setValueInFieldTeams();
             setupListViewProfiles();
+            setValueInFieldTeams();
             setupListViewTeams();
         } catch (Exception e) {
             e.printStackTrace();
