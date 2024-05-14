@@ -101,3 +101,41 @@
     -fx-background-radius: 20;
     -fx-border-radius: 20;
 }
+
+ /* Button Hover */
+
+.button:hover {
+    -fx-background-color: #3DCD58;
+
+}
+
+/* Buttons/Background/separator/HeaderText TapBar  */
+
+#btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 10px;
+}
+
+#vboxTapBar {
+    -fx-background-color: #FFFFFF;
+}
+
+#separatorFrame  {
+    -fx-background-color: #3DCD58;
+
+}
+
+#lblFrameHeader {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3DCD58;
+}
+
+
+/* vBox/hBox colors */
+
+#hboxFrameLogo {
+    -fx-background-color: #3DCD58;
+}

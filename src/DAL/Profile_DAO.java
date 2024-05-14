@@ -62,7 +62,8 @@ public class Profile_DAO implements IProfileDataAccess {
      * @param newProfile The new profile to be saved.
      */
     public void saveProfile(Profile newProfile) {
-        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
+                "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try ( Connection conn = dbConnector.getConnection();
               PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -1,19 +1,13 @@
 package GUI.Controller;
 
-import BE.Country;
-import BE.ProfileRole;
-import BE.ProjectTeam;
-import CustomExceptions.ApplicationWideException;
+
 import GUI.Model.ProfileRoleModel;
-import javafx.application.Platform;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,14 +21,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import GUI.Model.CountryModel;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CreateProfileController implements Initializable {
 
@@ -287,16 +279,16 @@ public class CreateProfileController implements Initializable {
     }
 
 
-    /**
-     * This method validates the input in the TextFields and ComboBoxes.
-     * If a field is empty, it is highlighted in red and the method returns false.
-     * If all fields are filled, the method returns true.
+    /*
+     This method validates the input in the TextFields and ComboBoxes.
+     If a field is empty,it is highlighted in red and the method returns false.
+     If all fields are filled, the method returns true.
      */
     private boolean validateInput() {
         boolean isValid = true;
-
         // List of all TextFields and ComboBoxes
-        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours);
+        List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,
+                txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours);
 
         for (Control field : fields) {
             if (field instanceof TextField) {
@@ -317,9 +309,9 @@ public class CreateProfileController implements Initializable {
                 }
             }
         }
-
         return isValid;
     }
+
 
     @FXML
     private void createNewRole(ActionEvent actionEvent) {
