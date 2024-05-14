@@ -16,8 +16,8 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.controlsfx.control.CheckComboBox;
 
 
 import java.net.URL;
@@ -28,11 +28,7 @@ import java.util.ResourceBundle;
 
 public class CreateProjectTeamController implements Initializable {
 
-    @FXML
-    private ComboBox<Country> cBoxCountry;
 
-    @FXML
-    private ComboBox<Profile> cBoxProfiles;
 
     @FXML
     private TableView<Profile> tblProfileToTeam;
@@ -68,6 +64,11 @@ public class CreateProjectTeamController implements Initializable {
     private MFXSlider sliderUtilization;
     @FXML
     private TextField txtUtilization;
+    private double utilization;
+    @FXML
+    private CheckComboBox cBoxCountries;
+    @FXML
+    private CheckComboBox cBoxProfiles;
 
 
     public CreateProjectTeamController() {
@@ -90,6 +91,8 @@ public class CreateProjectTeamController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
+            setupSlider();
+            setTextinField();
             setupRegex();
 
         } catch (Exception e) {
@@ -101,7 +104,7 @@ public class CreateProjectTeamController implements Initializable {
      * Populates the combo boxes with data from the models.
      */
     private void populateComboBoxes() throws Exception {
-        cBoxCountry.getItems().addAll(countryModel.getAllFromCountries());
+        cBoxCountries.getItems().addAll(countryModel.getAllFromCountries());
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
@@ -162,7 +165,7 @@ public class CreateProjectTeamController implements Initializable {
      * Sets the converter for the country combo box.
      */
     private void setCountryComboBoxConverter() {
-        cBoxCountry.setConverter(new StringConverter<Country>() {
+        cBoxCountries.setConverter(new StringConverter<Country>() {
             @Override
             public String toString(Country country) {
                 return country.getCountryName();
@@ -218,12 +221,12 @@ public class CreateProjectTeamController implements Initializable {
      * Adds the selected profile to the team table.
      */
     @FXML
-    void selectProfileToTable(ActionEvent event) {
-        Profile selectedProfile = cBoxProfiles.getSelectionModel().getSelectedItem();
+    public void selectProfileToTable(ActionEvent event) {
+        ObservableList<Profile> selectedProfile = cBoxProfiles.getCheckModel().getCheckedItems();
 
         if (selectedProfile != null) {
-            tblProfileToTeam.getItems().add(selectedProfile);
-            cBoxProfiles.getSelectionModel().clearSelection();
+            tblProfileToTeam.getItems().addAll(selectedProfile);
+            cBoxProfiles.getCheckModel().clearChecks();
         }
     }
 
@@ -231,14 +234,16 @@ public class CreateProjectTeamController implements Initializable {
      * Creates a new project team and adds it to the database.
      */
     @FXML
-    void createProjectTeamToDatabase(ActionEvent event) {
+    public void createProjectTeamToDatabase(ActionEvent event) {
         ObservableList<Profile> profiles = tblProfileToTeam.getItems();
 
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
 
-        Country selectedCountry = cBoxCountry.getSelectionModel().getSelectedItem();
-        projectTeam.setCountry(selectedCountry);
+        ObservableList<Country> selectedCountries = cBoxCountries.getCheckModel().getCheckedItems();
+        if(!selectedCountries.isEmpty()){
+            projectTeam.setCountry(selectedCountries.get(0));
+        }
 
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
@@ -248,11 +253,18 @@ public class CreateProjectTeamController implements Initializable {
         }
 
         txtProjectTeamName.getText();
-        cBoxCountry.getSelectionModel().getSelectedItem();
-        //System.out.println();colTeamAnnualSalary.getCellData(0);
-        //System.out.println("Create Project Team to Database" + txtProjectTeamName.getText());
-        //System.out.println("Profiles in team: " + tblProfileToTeam.getItems());
-        //System.out.println("Country: " + cBoxCountry.getSelectionModel().getSelectedItem());
+        cBoxCountries.getCheckModel().clearChecks();
+    }
+
+    private void setupSlider(){
+        sliderUtilization.valueProperty().addListener((observable, oldValue, newValue) -> {
+            utilization = newValue.doubleValue();
+            setTextinField();
+        });
+    }
+
+    private void setTextinField(){
+        txtUtilization.setText(String.valueOf(utilization));
     }
 
         /**
