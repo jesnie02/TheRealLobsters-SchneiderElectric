@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
    <center>
       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
@@ -149,12 +149,12 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </Label>
-                              <MFXSlider decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
+                              <MFXSlider fx:id="sliderUtilization" decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField prefHeight="26.0" prefWidth="39.0" />
+                              <TextField fx:id="txtUtilization" prefHeight="26.0" prefWidth="39.0" />
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>

@@ -91,6 +91,7 @@ public class CreateProfileController implements Initializable {
         setupListenersOnTextFields();
         populateCountryCurrencyComboBox();
         setupComboBoxCustomization();
+        setupRegex();
 
         try {
             cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.seeAllProfileRoles());
@@ -138,8 +139,6 @@ public class CreateProfileController implements Initializable {
                 };
             }
         });
-
-
         cBox_Currency.setButtonCell(new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -203,7 +202,7 @@ public class CreateProfileController implements Initializable {
     @FXML
     public void initialize() {
         try {
-
+           ;
             ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             };
 
@@ -269,6 +268,22 @@ public class CreateProfileController implements Initializable {
         double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
         lblDailyResult.setText(String.format("%.2f", result));
         return result;
+    }
+
+    private void setRegexValidationForTextFields(TextField textField){
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    private void setupRegex(){
+        setRegexValidationForTextFields(txtAnnualSalary);
+        setRegexValidationForTextFields(txtFixedAmount);
+        setRegexValidationForTextFields(txtEffectiveHours);
+        setRegexValidationForTextFields(txtOverheadView);
+        setRegexValidationForTextFields(txtDailyWorkingHours);
     }
 
 

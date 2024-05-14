@@ -6,6 +6,7 @@ import BE.ProjectTeam;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -63,6 +64,10 @@ public class CreateProjectTeamController implements Initializable {
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
     private FrameController frameController;
+    @FXML
+    private MFXSlider sliderUtilization;
+    @FXML
+    private TextField txtUtilization;
 
 
     public CreateProjectTeamController() {
@@ -85,6 +90,7 @@ public class CreateProjectTeamController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
+            setupRegex();
 
         } catch (Exception e) {
             throw new RuntimeException(e); //TODO: Handle this exception
@@ -262,5 +268,17 @@ public class CreateProjectTeamController implements Initializable {
                 tblProfileToTeam.getItems().remove(selectedProfile);
             }
         }
+
+    private void setRegexValidationForTextFields(TextField textField){
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+
+    private void setupRegex(){
+        setRegexValidationForTextFields(txtUtilization);
+    }
 
 }
