@@ -54,10 +54,10 @@ public class Geography_DAO implements IGeographyDataAccess {
         SELECT
            g.GeographyId,
            g.GeographyName,
-           SUM(p.HourlySalary) AS TotalHourlyRate,
-           AVG(p.HourlySalary) AS AvgHourlyRate,
            SUM(p.DailyRate) AS TotalDailyRate,
            AVG(p.DailyRate) AS AvgDailyRate,
+           SUM(p.HourlySalary) AS TotalHourlyRate,
+           AVG(p.HourlySalary) AS AvgHourlyRate,
            COUNT(p.ProfileId) AS ProfileCount
        FROM
            Geography g
@@ -72,20 +72,13 @@ public class Geography_DAO implements IGeographyDataAccess {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()){
-                /*System.out.println("GeographyId: " + rs.getInt("GeographyId"));
-                System.out.println("GeographyName: " + rs.getString("GeographyName"));
-                System.out.println("TotalHourlyRate: " + rs.getDouble("TotalHourlyRate"));
-                System.out.println("AvgHourlyRate: " + rs.getDouble("AvgHourlyRate"));
-                System.out.println("TotalDailyRate: " + rs.getDouble("TotalDailyRate"));
-                System.out.println("AvgDailyRate: " + rs.getDouble("AvgDailyRate"));
-                System.out.println("ProfileCount: " + rs.getInt("ProfileCount"));*/
                 Geography geography = new Geography(
                         rs.getInt("GeographyId"),
                         rs.getString("GeographyName"),
-                        rs.getDouble("TotalHourlyRate"),
-                        rs.getDouble("AvgHourlyRate"),
                         rs.getDouble("TotalDailyRate"),
+                        rs.getDouble("TotalHourlyRate"),
                         rs.getDouble("AvgDailyRate"),
+                        rs.getDouble("AvgHourlyRate"),
                         rs.getInt("ProfileCount")
                 );
                 allGeographies.add(geography);
