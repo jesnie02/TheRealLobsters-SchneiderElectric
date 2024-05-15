@@ -1,10 +1,12 @@
 package BE;
 
+import java.util.List;
+
 public class ProfileRole {
 
     private int profileRoleId;
     private String profileRoleType;
-
+    private List<ProfileRole> roles;
 
     public ProfileRole(int profileRoleId, String profileRoleType) {
         this.profileRoleId = profileRoleId;
@@ -31,5 +33,12 @@ public class ProfileRole {
         this.profileRoleType = profileRoleType;
     }
 
+    @Override
+    public String toString() {
+        return profileRoleType;
+    }
 
+    public List<ProfileRole> getRoles() {
+        return roles;
+    }
 }

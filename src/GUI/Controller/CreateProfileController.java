@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 
+import BE.ProfileRole;
 import GUI.Model.ProfileRoleModel;
 
 import javafx.beans.value.ChangeListener;
@@ -84,15 +85,11 @@ public class CreateProfileController implements Initializable {
         populateCountryCurrencyComboBox();
         setupComboBoxCustomization();
         setupRegex();
+        populateProfileRolesComboBox();
+    }
 
-        try {
-            cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.seeAllProfileRoles());
-
-
-            //cBoxTeam_CreateProfile.setItems(profileModel.getRoleList());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void populateProfileRolesComboBox() {
+        cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.getProfileRoles());
     }
 
     private void populateCountryCurrencyComboBox() {
@@ -215,16 +212,17 @@ public class CreateProfileController implements Initializable {
         }
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
-        double annualSalary = Double.parseDouble(txtAnnualSalary.getText());
-        //String projectRole = cBoxTeam_CreateProfile.getValue();
-        double hourlyResult = Double.parseDouble(lblHourlyResult.getText());
-        double dailyResult = Double.parseDouble(lblDailyResult.getText());
+        double annualSalary = parseDouble(txtAnnualSalary.getText());
+        double hourlyResult = parseDouble(lblHourlyResult.getText());
+        double dailyResult = parseDouble(lblDailyResult.getText());
         boolean overheadCost = checkOverhead.isSelected();
-        double fixedAmount = Double.parseDouble(txtFixedAmount.getText());
-        double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText());
+        double fixedAmount = parseDouble(txtFixedAmount.getText());
+        double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
+        List<ProfileRole> selectedRoles = new ArrayList<>(cBoxProfile_ProfileRoles.getCheckModel().getCheckedItems());
+
 
         Profile newProfile = new Profile(firstName, lastName, overheadCost,
-                annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours);
+                annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles);
 
         profileModel.saveProfile(newProfile);
 
@@ -260,6 +258,10 @@ public class CreateProfileController implements Initializable {
         double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
         lblDailyResult.setText(String.format("%.2f", result));
         return result;
+    }
+
+    private double parseDouble(String value) {
+        return Double.parseDouble(value.replace(",", "."));
     }
 
     private void setRegexValidationForTextFields(TextField textField){

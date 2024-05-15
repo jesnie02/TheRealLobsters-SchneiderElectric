@@ -10,6 +10,7 @@ public class Profile {
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
+    private List<ProfileRole> profileRoles;
 
 
     // For testing purposes
@@ -40,7 +41,7 @@ public class Profile {
     }
 
     //Create Profile
-    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours) {
+    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, List<ProfileRole> profileRoles) {
         this.fName = firstName;
         this.lName = lastName;
         this.overheadCost = overheadCost;
@@ -49,6 +50,7 @@ public class Profile {
         this.dailyRate = dailyResult;
         this.fixedAmount = fixedAmount;
         this.dailyWorkingHours = dailyWorkingHours;
+        this.profileRoles = profileRoles;
     }
 
     /**
@@ -179,6 +181,15 @@ public class Profile {
     public void setDailyWorkingHours(double dailyWorkingHours) {
         this.dailyWorkingHours = dailyWorkingHours;
     }
+
+    public List<ProfileRole> getProfileRoles() {
+        return profileRoles;
+    }
+
+    public void setProfileRoles(List<ProfileRole> profileRoles) {
+        this.profileRoles = profileRoles;
+    }
+
 
     @Override
     public String toString() {

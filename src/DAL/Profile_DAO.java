@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Profile;
+import BE.ProfileRole;
 import DAL.DBConnector.DBConnector;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -62,25 +63,58 @@ public class Profile_DAO implements IProfileDataAccess {
      * @param newProfile The new profile to be saved.
      */
     public void saveProfile(Profile newProfile) {
-        String sql = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
+        String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
                 "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try ( Connection conn = dbConnector.getConnection();
-              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        String sqlProfileRole = "INSERT INTO dbo.ProfileProfileRole (ProfileId, ProfileRoleId) VALUES (?, ?)";
 
-            pstmt.setString(1, newProfile.getfName());
-            pstmt.setString(2, newProfile.getlName());
-            pstmt.setDouble(3, newProfile.getAnnualSalary());
-            pstmt.setDouble(4, newProfile.getHourlySalary());
-            pstmt.setDouble(5, newProfile.getDailyRate());
-            pstmt.setBoolean(6, newProfile.isOverheadCost());
-            pstmt.setDouble(7, newProfile.getFixedAmount());
-            pstmt.setDouble(8, newProfile.getDailyWorkingHours());
+        try (Connection conn = dbConnector.getConnection()) {
+            // Start transaction
+            conn.setAutoCommit(false);
 
-            pstmt.executeUpdate();
+            try (PreparedStatement pstmtProfile = conn.prepareStatement(sqlProfile, Statement.RETURN_GENERATED_KEYS)) {
+                // Save Profile
+                pstmtProfile.setString(1, newProfile.getfName());
+                pstmtProfile.setString(2, newProfile.getlName());
+                pstmtProfile.setDouble(3, newProfile.getAnnualSalary());
+                pstmtProfile.setDouble(4, newProfile.getHourlySalary());
+                pstmtProfile.setDouble(5, newProfile.getDailyRate());
+                pstmtProfile.setBoolean(6, newProfile.isOverheadCost());
+                pstmtProfile.setDouble(7, newProfile.getFixedAmount());
+                pstmtProfile.setDouble(8, newProfile.getDailyWorkingHours());
+                pstmtProfile.executeUpdate();
+
+                // Retrieve generated Profile ID
+                try (ResultSet generatedKeys = pstmtProfile.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int profileId = generatedKeys.getInt(1);
+
+                        // Save ProfileRole entries
+                        try (PreparedStatement pstmtProfileRole = conn.prepareStatement(sqlProfileRole)) {
+                            for (ProfileRole role : newProfile.getProfileRoles()) {
+                                pstmtProfileRole.setInt(1, profileId);
+                                pstmtProfileRole.setInt(2, role.getProfileRoleId());
+                                pstmtProfileRole.addBatch();
+                            }
+                            pstmtProfileRole.executeBatch();
+                        }
+                    } else {
+                        throw new SQLException("Creating profile failed, no ID obtained.");
+                    }
+                }
+
+                // Commit transaction
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            } finally {
+                conn.setAutoCommit(true);
+            }
         } catch (SQLException e) {
             e.printStackTrace(); //TODO: Handle exception
         }
     }
+
 }
 

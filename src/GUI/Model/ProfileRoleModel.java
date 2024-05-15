@@ -37,6 +37,13 @@ public class ProfileRoleModel{
         return profileRoles;
     }
 
+    public ObservableList<String> getProfileRolesId() {
+        ObservableList<String> profileRoles = FXCollections.observableArrayList();
+        for (ProfileRole profileRole : profileRoleManager.getAllProfileRoles()) {
+            profileRoles.add(profileRole.getProfileRoleId() + " " + profileRole.getProfileRoleType());
+        }
+        return profileRoles;
+    }
 
     public void saveRole(String role) throws Exception {
         profileRoleManager.saveRole(new ProfileRole(role));
