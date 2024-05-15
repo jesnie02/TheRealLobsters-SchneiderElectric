@@ -316,14 +316,14 @@ public class CreateProjectTeamController implements Initializable {
             cBoxGeographies.setStyle("");
         }
 
-        if (cBoxProfiles.getCheckModel().getCheckedItems().isEmpty()) {
-            cBoxProfiles.setStyle("-fx-border-color: red");
+        if (tblProfileToTeam.getItems().isEmpty()) {
+            tblProfileToTeam.setStyle("-fx-border-color: red");
             isValid = false;
         } else {
-            cBoxProfiles.setStyle("");
+            tblProfileToTeam.setStyle("");
         }
-
         return isValid;
     }
 }
+
 
