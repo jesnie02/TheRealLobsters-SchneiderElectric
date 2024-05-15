@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Country;
 import BE.Geography;
 import BLL.GeographyManager;
 import javafx.collections.ObservableList;
@@ -20,11 +21,11 @@ public class GeographyModel {
         geographyManager = new GeographyManager();
     }
 
-/*
+
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyManager.getRegionsByCountryId(countryId);
     }
-    */
+
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {
         ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
@@ -33,6 +34,11 @@ public class GeographyModel {
                         .collect(Collectors.toList())
         );
         return geographies;
+    }
+
+    public Map<Integer, Geography> getGeographyMap() throws Exception {
+        return geographyManager.getAllGeographies().stream()
+                .collect(Collectors.toMap(Geography::getGeographyId, geography -> geography));
     }
 
 }

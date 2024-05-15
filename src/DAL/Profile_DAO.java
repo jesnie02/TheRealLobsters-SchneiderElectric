@@ -62,7 +62,7 @@ public class Profile_DAO implements IProfileDataAccess {
      * Saves a new profile to the database.
      * @param newProfile The new profile to be saved.
      */
-    public void saveProfile(Profile newProfile) {
+    public void saveProfile(Profile newProfile) { //TODO: Skal nok hedde createProfile i stedet for saveProfile
         String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
                 "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 

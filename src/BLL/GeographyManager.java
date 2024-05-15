@@ -26,10 +26,9 @@ public class GeographyManager {
         return geographyDAO.getAllGeographie();
     }
 
-    /*
+
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyDAO.getCountryGeographyList(countryId);
     }
 
-     */
 }

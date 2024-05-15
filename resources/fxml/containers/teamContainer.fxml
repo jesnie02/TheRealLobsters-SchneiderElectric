@@ -5,35 +5,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-radius: 8; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsContainerController">
+<VBox alignment="TOP_CENTER" prefHeight="214.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-radius: 8; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.util.TeamsContainerController">
    <children>
       <HBox alignment="CENTER" prefHeight="29.0" prefWidth="239.0" style="-fx-background-color: #3DCD58; -fx-background-radius: 8 8 0 0;">
          <children>
             <Label fx:id="lblTeamNameContainer" alignment="CENTER" text="Team 1" />
          </children>
-      </HBox>
-      <HBox>
-         <children>
-            <Label text="Location:">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <HBox.margin>
-                  <Insets right="16.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="lblLocationContainer" text="Label">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="16.0" left="16.0" top="8.0" />
-         </padding>
       </HBox>
       <HBox layoutX="10.0" layoutY="27.0" prefWidth="224.0">
          <children>

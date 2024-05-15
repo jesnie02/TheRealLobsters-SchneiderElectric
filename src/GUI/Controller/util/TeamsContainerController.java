@@ -3,6 +3,7 @@ package GUI.Controller.util;
 import BE.Country;
 import BE.Geography;
 import BE.ProjectTeam;
+import GUI.Controller.TeamsController;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
@@ -22,11 +23,12 @@ import java.util.stream.Collectors;
 
 public class TeamsContainerController implements Initializable {
 
+    private ProjectTeam selectedTeam;
     ProjectTeamsModel projectTeamsModel;
     CountryModel countryModel;
     GeographyModel geographyModel;
 
-    private Map<Integer, Country> countriesMap = new HashMap<>();
+    private Map<Integer, Geography> geographyMap = new HashMap<>();
     private List<Geography> geographies;
 
 
@@ -44,7 +46,7 @@ public class TeamsContainerController implements Initializable {
 
             new Thread(() -> {
                 try {
-                    countriesMap = countryModel.getCountriesMap();
+                    geographyMap = geographyModel.getGeographyMap();
                 } catch (Exception e) {
                     handleException(e);//TODO: Handle this exception
                 }
@@ -59,10 +61,12 @@ public class TeamsContainerController implements Initializable {
 
 
     public void updateUI(ProjectTeam team) throws Exception {
+        this.selectedTeam = team;
         Platform.runLater(() -> {
             updateTeamInformation(team);
-            //updateCountryInformation(team);
+            updateCountryInformation(team);
         });
+        lblTeamNameContainer.getParent().setOnMouseClicked(event -> openTeamDetailView());
 
     }
 
@@ -70,20 +74,27 @@ public class TeamsContainerController implements Initializable {
         lblTeamNameContainer.setText(team.getTeamName());
         lblNumberOfMembersContainer.setText(String.valueOf(team.getNumberOfProfiles()));
         lblAnnualAVGTeamCostContainer.setText(String.format("%.2f", team.getAvgAnnualSalary()));
-    }
-/*
-    private void updateCountryInformation(ProjectTeam team) {
-       // int teamCountryId = team.getCountryId();
 
-        if (countriesMap.isEmpty()) {
-            loadCountriesMap();
+    }
+
+    private void openTeamDetailView() {
+        TeamsController teamsController = TeamsController.getInstance();
+        Geography teamGeography = geographyMap.get(selectedTeam.getGeographyId());
+        teamsController.showTeamDetails(selectedTeam, teamGeography);
+    }
+
+    private void updateCountryInformation(ProjectTeam team) {
+       int teamGeographyId = team.getGeographyId();
+
+        if (geographyMap.isEmpty()) {
+            loadGeographyMap();
         }
 
-        Country teamCountry = countriesMap.get(teamCountryId);
-        if (teamCountry != null) {
-            lblLocationContainer.setText(teamCountry.getCountryName());
+        Geography teamGeography = geographyMap.get(teamGeographyId);
+        if (teamGeography != null) {
+            lblGeographyContainer.setText(teamGeography.getGeographyName());
             try {
-                updateGeographyInformation(teamCountryId);
+                updateGeographyInformation(teamGeographyId);
             } catch (Exception e) {
                 handleException(e);
             }
@@ -92,11 +103,11 @@ public class TeamsContainerController implements Initializable {
         }
     }
 
- */
 
-    private void loadCountriesMap() {
+
+    private void loadGeographyMap() {
         try {
-            countriesMap = countryModel.getCountriesMap();
+            geographyMap = geographyModel.getGeographyMap();
         } catch (Exception e) {
             handleException(e);
         }
@@ -104,11 +115,10 @@ public class TeamsContainerController implements Initializable {
 
     private void updateGeographyInformation(int teamCountryId) {
         try {
-           // geographies = geographyModel.getRegionsByCountryId(teamCountryId);
-            String regionsString = geographies.stream()
-                    .map(Geography::getGeographyName)
-                    .collect(Collectors.joining(", "));
-            lblGeographyContainer.setText(regionsString);
+           geographies = geographyModel.getGeographyMap().values().stream()
+                    .filter(geography -> geography.getGeographyId() == teamCountryId)
+                    .collect(Collectors.toList());
+            lblGeographyContainer.setText(geographies.get(0).getGeographyName());
         } catch (Exception e) {
             handleException(e);
         }
@@ -118,4 +128,7 @@ public class TeamsContainerController implements Initializable {
         e.printStackTrace(); // TODO: Handle this exception appropriately
     }
 
+    public ProjectTeamsModel getTeam(){
+        return this.projectTeamsModel;
+    }
 }

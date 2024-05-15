@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Geography;
 import BE.ProjectTeam;
 import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
@@ -24,6 +25,7 @@ public class TeamsController implements Initializable {
     @FXML
     private TilePane tPaneTeamOverview;
     private ProjectTeamsModel projectTeamsModel;
+    private static TeamsController instance;
 
 
     // Instance of FrameController to control the main frame of the application
@@ -32,6 +34,11 @@ public class TeamsController implements Initializable {
 
     public TeamsController() {
         this.frameController = FrameController.getInstance();
+        instance = this;
+    }
+
+    public static TeamsController getInstance() {
+        return instance;
     }
 
 
@@ -42,15 +49,21 @@ public class TeamsController implements Initializable {
             Node teamNode = loader.load();
             TeamsContainerController controller = loader.getController();  // Your controller for the team container
             controller.updateUI(team);  // Assuming you have a method to set the team in the controller
-            teamNode.setOnMouseClicked(this::openTeamDetailView);
             tPaneTeamOverview.getChildren().add(teamNode);
         }
     }
 
-    private void openTeamDetailView(MouseEvent event) {
-        frameController.loadDetailView();
+    public void showTeamDetails(ProjectTeam team, Geography geography) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teamDetailsView.fxml"));
+            Node teamNode = loader.load();
+            TeamDetailsController controller = loader.getController();
+            controller.updateUI(team, geography);
+            frameController.setMainView(teamNode);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,15 +82,11 @@ public class TeamsController implements Initializable {
         }
     }
 
-
-
-
-
-
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
-        frameController.loadCreateTeamView();
+        frameController.loadDetailView();
     }
+
 
 
 }

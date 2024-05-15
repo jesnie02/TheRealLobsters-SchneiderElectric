@@ -111,7 +111,7 @@ public class Geography_DAO implements IGeographyDataAccess {
         return allGeographies;
     }
 
-    /*
+
     public List<Geography> getCountryGeographyList(int countryId) {
         List<Geography> countryGeographyList = new ArrayList<>();
         String sql = """
@@ -137,6 +137,5 @@ public class Geography_DAO implements IGeographyDataAccess {
         return countryGeographyList;
     }
 
-     */
 
 }

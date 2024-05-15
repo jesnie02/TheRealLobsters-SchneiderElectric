@@ -162,6 +162,11 @@ public class FrameController implements Initializable {
     }
 
 
-
-
+    public void setMainView(Node node) {
+        if (stackPaneFrame != null){
+            stackPaneFrame.getChildren().setAll(node);
+        } else {
+            showErrorAlert("Initialization Error", "UI components are not fully initialized.");
+        }
+    }
 }
