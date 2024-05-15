@@ -3,7 +3,6 @@ package DAL;
 import BE.Profile;
 import BE.ProfileRole;
 import DAL.DBConnector.DBConnector;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -74,8 +73,8 @@ public class Profile_DAO implements IProfileDataAccess {
 
             try (PreparedStatement pstmtProfile = conn.prepareStatement(sqlProfile, Statement.RETURN_GENERATED_KEYS)) {
                 // Save Profile
-                pstmtProfile.setString(1, newProfile.getfName());
-                pstmtProfile.setString(2, newProfile.getlName());
+                pstmtProfile.setString(1, newProfile.getFName());
+                pstmtProfile.setString(2, newProfile.getLName());
                 pstmtProfile.setDouble(3, newProfile.getAnnualSalary());
                 pstmtProfile.setDouble(4, newProfile.getHourlySalary());
                 pstmtProfile.setDouble(5, newProfile.getDailyRate());

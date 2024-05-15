@@ -112,5 +112,10 @@ public class ProjectTeamsModel {
         return projectTeamsManager.calculateTotalHourlyRate(profiles);
     }
 
+    public ObservableList<Profile> getProfileForTeam(int teamId) {
+        List<Profile> profiles = projectTeamsManager.getProcessedProfilesForTeam(teamId);
+        return FXCollections.observableArrayList(profiles);
+    }
+
 
 }

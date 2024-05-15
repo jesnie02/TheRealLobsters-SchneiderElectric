@@ -23,8 +23,6 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -131,7 +129,7 @@ public class CreateProjectTeamController implements Initializable {
             @Override
             public String toString(Profile profile) {
                 if (profile != null) {
-                    return profile.getfName() + " " + profile.getlName() + "  -  " /*+ profile.getProjectRole()*/ ;
+                    return profile.getFName() + " " + profile.getLName() + "  -  " /*+ profile.getProjectRole()*/ ;
                 } else {
                     return "Select a Profile";
                 }

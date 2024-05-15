@@ -84,7 +84,7 @@ public class TeamsController implements Initializable {
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
-        frameController.loadDetailView();
+        frameController.loadCreateTeamView();
     }
 
 

@@ -48,7 +48,7 @@ public class ProfileManager {
      */
     public Profile getProfileByName(String name) {
     for (Profile profile : getAllProfiles()) {
-        if ((profile.getfName() + " " + profile.getlName()).equals(name)) {
+        if ((profile.getFName() + " " + profile.getLName()).equals(name)) {
             return profile;
         }
     }

@@ -63,22 +63,22 @@
                         <Label text="Avg of annual salary:" GridPane.rowIndex="5" />
                         <Label text="Avg of daily rate:" GridPane.rowIndex="6" />
                         <Label text="Avg of hourly rate:" GridPane.rowIndex="7" />
-                        <TextField fx:id="txtTDGeography" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtSumAnnual" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtSumDaily" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField fx:id="txtSumHourly" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="txtAvgAnnual" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="txtAvgDaily" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="txtAvgHourly" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="txtTDGeography" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtSumAnnual" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtSumDaily" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtSumHourly" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtAvgAnnual" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="txtAvgDaily" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="txtAvgHourly" alignment="CENTER_RIGHT" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Label fx:id="lblTeamInTeamDetail" text="xxx" />
                      </children>
                   </GridPane>
-                  <TableView prefHeight="338.0" prefWidth="340.0">
+                  <TableView fx:id="tableViewProfile" prefHeight="333.0" prefWidth="439.0">
                     <columns>
                       <TableColumn fx:id="colFirstNameTD" prefWidth="75.0" text="First name" />
                       <TableColumn fx:id="colLastNameTD" prefWidth="75.0" text="Last name" />
                         <TableColumn fx:id="colUtilizationTD" prefWidth="75.0" text="Utilization" />
-                        <TableColumn fx:id="colProfileRoleTD" prefWidth="75.0" text="Role" />
+                        <TableColumn fx:id="colProfileRoleTD" prefWidth="124.0" text="Role" />
                     </columns>
                   </TableView>
                </children>
@@ -91,8 +91,8 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
-                  <Button mnemonicParsing="false" text="Update Profile" />
-                  <Button mnemonicParsing="false" text="Remove" />
+                  <Button mnemonicParsing="false" onAction="#updateProjectTeam" text="Update Team" />
+                  <Button mnemonicParsing="false" onAction="#deleteProjectTeam" text="Delete Team" />
                </children>
                <padding>
                   <Insets right="8.0" />

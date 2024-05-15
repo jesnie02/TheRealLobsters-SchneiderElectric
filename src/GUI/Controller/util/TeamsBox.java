@@ -8,8 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TeamsBox {
-    @FXML
-    private Label lblLocation;
+
     @FXML
     private Label lblGeography;
     @FXML
@@ -20,9 +19,7 @@ public class TeamsBox {
 
 
 
-    private void setLblLocation(Label lblLocation) {
 
-    }
 
 
     private void setLblGeography(Label lblGeography) {
@@ -42,7 +39,6 @@ public class TeamsBox {
 
     @FXML
     public void initialize() {
-        setLblLocation(lblLocation);
         setLblGeography(lblGeography);
         setLblNumberOfMembers(lblNumberOfMembers);
         setLblAnnualAVGTeamCost(lblAnnualAVGTeamCost);

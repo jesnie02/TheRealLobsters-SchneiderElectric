@@ -22,4 +22,6 @@ public class ProfileRoleManager {
     public void saveRole(ProfileRole profileRole) throws SQLException {
         profileRoleDAO.createProfileRole(profileRole);
     }
+
+
 }

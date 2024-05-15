@@ -1,14 +1,13 @@
 package GUI.Controller.util;
 
-import BE.Country;
 import BE.Geography;
+import BE.Profile;
 import BE.ProjectTeam;
 import GUI.Controller.TeamsController;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -64,7 +63,7 @@ public class TeamsContainerController implements Initializable {
         this.selectedTeam = team;
         Platform.runLater(() -> {
             updateTeamInformation(team);
-            updateCountryInformation(team);
+            updateGeographyInformation(team);
         });
         lblTeamNameContainer.getParent().setOnMouseClicked(event -> openTeamDetailView());
 
@@ -77,13 +76,15 @@ public class TeamsContainerController implements Initializable {
 
     }
 
+
+
     private void openTeamDetailView() {
         TeamsController teamsController = TeamsController.getInstance();
         Geography teamGeography = geographyMap.get(selectedTeam.getGeographyId());
         teamsController.showTeamDetails(selectedTeam, teamGeography);
     }
 
-    private void updateCountryInformation(ProjectTeam team) {
+    private void updateGeographyInformation(ProjectTeam team) {
        int teamGeographyId = team.getGeographyId();
 
         if (geographyMap.isEmpty()) {

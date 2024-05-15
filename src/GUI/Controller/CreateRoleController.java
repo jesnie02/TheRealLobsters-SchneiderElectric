@@ -49,6 +49,7 @@ public class CreateRoleController implements Initializable {
         }
     }
 
+
     private void displayInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");

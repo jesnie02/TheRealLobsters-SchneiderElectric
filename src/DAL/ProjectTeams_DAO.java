@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Country;
 import BE.Profile;
+import BE.ProfileRole;
 import BE.ProjectTeam;
 import DAL.DBConnector.DBConnector;
 import GUI.Utility.AlertBox;
@@ -172,5 +173,52 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
         return false;
     }
+
+    public List<Profile> getProfileFromProjectTeam(int projectTeamID){
+        List<Profile> profiles = new ArrayList<>();
+        String sql = "SELECT p.*, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
+                "FROM Profile p " +
+                "JOIN ProfileProjectTeams ppt ON p.ProfileId = ppt.ProfileId_PPT " +
+                "JOIN ProfileProfileRole ppr ON p.ProfileId = ppr.ProfileId " +
+                "JOIN ProfileRole pr ON ppr.ProfileRoleId = pr.ProfileRoleId " +
+                "WHERE ppt.TeamsId = ? " +
+                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectTeamID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                List<ProfileRole> profileRoles = parseRoles(rs.getString("Roles"));
+                        int id = rs.getInt("ProfileId");
+                        String fName = rs.getString("Fname");
+                        String lName = rs.getString("Lname");
+                        boolean overhead = rs.getBoolean("Overheadcost");
+                        double annual =rs.getDouble("AnualSalary");
+                        double hourly = rs.getDouble("HourlySalary");
+                        double daily = rs.getDouble("DailyRate");
+                        double workingHR = rs.getDouble("DailyWorkingHours");
+
+                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, profileRoles);
+                profiles.add(profile);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return profiles;
+    }
+
+    private List<ProfileRole> parseRoles(String rolesString) {
+        List<ProfileRole> roles = new ArrayList<>();
+        if (rolesString != null && !rolesString.isEmpty()) {
+            String[] roleDescriptions = rolesString.split(", ");
+            for (String desc : roleDescriptions) {
+                roles.add(new ProfileRole(desc));
+            }
+        }
+        return roles;
+    }
+
 }
 

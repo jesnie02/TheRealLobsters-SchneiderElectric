@@ -44,7 +44,6 @@ public class FrameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadDashboardOnStart();
-
     }
 
 
@@ -63,7 +62,6 @@ public class FrameController implements Initializable {
 
         if (instance == null) {
             instance = new FrameController();
-
         }
         return instance;
     }
@@ -85,19 +83,12 @@ public class FrameController implements Initializable {
                 e.printStackTrace(); //TODO: Handle this exception
                 return;
             }
-
-
         }
-
-
         if (stackPaneFrame != null) {
             stackPaneFrame.getChildren().setAll(view);
         } else {
             showErrorAlert("Initialization Error", "UI components are not fully initialized.");
         }
-
-
-
     }
 
 
@@ -144,16 +135,13 @@ public class FrameController implements Initializable {
         loadView("createProfileView.fxml");
     }
 
-    void loadCreateTeamView() {
+    public void loadCreateTeamView() {
         loadView("createProjectTeamView.fxml");
-
     }
 
-    void loadDetailView() {
-            loadView("teamDetailsView.fxml");
+    public void loadUpdateProjectTeamView() {
+        loadView("updateProjectTeamView.fxml");
     }
-
-
 
     // This method is called when the shutdown button is clicked.
     @FXML

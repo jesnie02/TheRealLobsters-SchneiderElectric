@@ -1,11 +1,14 @@
 package BLL;
 
 import BE.Profile;
+import BE.ProfileRole;
 import BE.ProjectTeam;
 import DAL.ProjectTeams_DAO;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectTeamsManager {
@@ -83,5 +86,29 @@ public class ProjectTeamsManager {
      */
     public double calculateTotalHourlyRate(List<Profile> profiles) {
         return iCalculateManager.sumOfHourlyRate(profiles);
+    }
+
+    public List<Profile> getProcessedProfilesForTeam(int teamId) {
+        List<Profile> rawProfiles = teamsDAO.getProfileFromProjectTeam(teamId);
+        return processProfiles(rawProfiles);
+    }
+
+    private List<Profile> processProfiles(List<Profile> rawProfiles) {
+        for (Profile profile : rawProfiles) {
+            List<ProfileRole> roles = parseRoles(profile.getRolesString());  // Assume getter for roles string
+            profile.setProfileRoles(roles);
+        }
+        return rawProfiles;
+    }
+
+    private List<ProfileRole> parseRoles(String rolesString) {
+        List<ProfileRole> roles = new ArrayList<>();
+        if (rolesString != null && !rolesString.isEmpty()) {
+            String[] roleDescriptions = rolesString.split(", ");
+            for (String desc : roleDescriptions) {
+                roles.add(new ProfileRole(desc));
+            }
+        }
+        return roles;
     }
 }

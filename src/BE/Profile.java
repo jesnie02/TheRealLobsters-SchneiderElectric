@@ -1,13 +1,14 @@
 package BE;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profile {
 
     private int profileId, countryId;
-    private String fName, lName;
+    private String fName, lName, roles;
     private boolean overheadCost;
-    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours;
+    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
     private List<ProfileRole> profileRoles;
@@ -38,6 +39,7 @@ public class Profile {
         this.annualSalary = annualSalary;
         this.hourlySalary = hourlySalary;
         this.dailyRate = dailyRate;
+        this.profileRoles = new ArrayList<>();
     }
 
     //Create Profile
@@ -61,6 +63,7 @@ public class Profile {
         this.annualSalary = annualSalary;
         this.fixedAmount = fixedAmount;
         this.dailyRate = dailyRate;
+        this.profileRoles = new ArrayList<>();
     }
 
     /**
@@ -72,8 +75,33 @@ public class Profile {
         this.fixedAmount = fixedAmount;
         this.dailyRate = dailyRate;
         this.hourlySalary = hourlyRate;
+        this.profileRoles = new ArrayList<>();
     }
 
+    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, List<ProfileRole> profileRoles) {
+        this.profileId = id;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overhead;
+        this.annualSalary = annual;
+        this.hourlySalary = hourly;
+        this.dailyRate = daily;
+        this.dailyWorkingHours = workingHR;
+        this.profileRoles = profileRoles;
+    }
+
+    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, String roles) {
+        this.profileId = id;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overhead;
+        this.annualSalary = annual;
+        this.hourlySalary = hourly;
+        this.dailyRate = daily;
+        this.dailyWorkingHours = workingHR;
+        this.roles = roles;
+        this.profileRoles = new ArrayList<>();
+    }
 
 
     public int getProfileId() {
@@ -97,19 +125,19 @@ public class Profile {
         this.country = country;
     }
 
-    public String getfName() {
+    public String getFName() {
         return fName;
     }
 
-    public void setfName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 
-    public String getlName() {
+    public String getLName() {
         return lName;
     }
 
-    public void setlName(String lName) {
+    public void setLName(String lName) {
         this.lName = lName;
     }
 
@@ -190,6 +218,13 @@ public class Profile {
         this.profileRoles = profileRoles;
     }
 
+    public double getTotalUtilization() {
+        return totalUtilization;
+    }
+
+    public void setTotalUtilization(double totalUtilization) {
+        this.totalUtilization = totalUtilization;
+    }
 
     @Override
     public String toString() {
@@ -203,5 +238,13 @@ public class Profile {
                 ", hourlySalary=" + hourlySalary +
                 ", dailyRate=" + dailyRate +
                 '}';
+    }
+
+    public String getRolesString() {
+        StringBuilder rolesString = new StringBuilder();
+        for (ProfileRole role : profileRoles) {
+            rolesString.append(role.getProfileRoleType()).append(", ");
+        }
+        return rolesString.toString();
     }
 }

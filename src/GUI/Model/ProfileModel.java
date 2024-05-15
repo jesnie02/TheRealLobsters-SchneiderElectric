@@ -66,7 +66,7 @@ public class ProfileModel {
     public ObservableList<String> showAllProfilesNames(){
         ObservableList<String> profileName = javafx.collections.FXCollections.observableArrayList(
                 profileManager.getAllProfiles().stream()
-                        .map(profile -> profile.getfName() + " " + profile.getlName())
+                        .map(profile -> profile.getFName() + " " + profile.getLName())
                         .collect(Collectors.toList())
         );
         return profileName;
