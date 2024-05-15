@@ -4,11 +4,15 @@ import BE.Country;
 import BE.Profile;
 import BE.ProjectTeam;
 import DAL.DBConnector.DBConnector;
+import GUI.Utility.AlertBox;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import GUI.Utility.AlertBox;
+import CustomExceptions.ApplicationWideException;
 
 public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
@@ -75,6 +79,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return everyProjectTeam;
     }
 
+
+
+
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) {
         // SQL for inserting a new project team
@@ -87,6 +94,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         Connection conn = null;
 
         try {
+            if (doesTeamNameExist(projectTeam.getTeamName())) {
+                AlertBox.displayInfo("Team Creation", "The team name already exists. Please choose a different name.");
+                return;
+            }
+
             conn = dbConnector.getConnection();
 
             try (PreparedStatement pstmt = conn.prepareStatement(insertTeamSQL, Statement.RETURN_GENERATED_KEYS);
@@ -121,17 +133,15 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                         pstmtInsertProfileProjectTeams.executeBatch();
                     }
                 }
-
-                // Commit the transaction
                 conn.commit();
             }
         } catch (SQLException e) {
             e.printStackTrace(); // TODO: Replace with more robust error handling
             if (conn != null) {
                 try {
-                    conn.rollback(); // Rollback transaction on error
+                    conn.rollback();
                 } catch (SQLException ex) {
-                    throw new RuntimeException("skal ændres"); // TODO Handle exception
+                    System.err.println("Transaction rollback failed: " + ex.getMessage());
                 }
             }
         } finally {
@@ -140,11 +150,29 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                     conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException ex) {
-                    throw new RuntimeException("skal ændres"); // TODO Handle exception
+                    System.err.println("Resource cleanup failed: " + ex.getMessage());
                 }
             }
         }
     }
+
+
+    public boolean doesTeamNameExist(String teamName) throws SQLException {
+        String checkTeamSQL = "SELECT COUNT(*) FROM ProjectTeams WHERE TeamName = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(checkTeamSQL)) {
+
+            pstmt.setString(1, teamName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
 
 
 
