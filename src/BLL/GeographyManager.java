@@ -22,13 +22,19 @@ public class GeographyManager {
         return geographyDAO.getSumsAndAveragesForGeographies();
     }
 
+    public List<Geography> getAllGeographiesGeographyOverview() throws Exception {
+        return geographyDAO.getAllGeographiesGeographyOverview();
+    }
+
     public List<Geography> getAllGeographies() throws Exception {
         return geographyDAO.getAllGeographie();
     }
 
-
+    /*
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyDAO.getCountryGeographyList(countryId);
     }
+
+     */
 
 }

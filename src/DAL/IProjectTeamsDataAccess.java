@@ -1,6 +1,5 @@
 package DAL;
 
-import BE.Profile;
 import BE.ProjectTeam;
 
 import java.util.List;

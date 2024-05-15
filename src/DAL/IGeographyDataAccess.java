@@ -14,9 +14,12 @@ public interface IGeographyDataAccess {
 
     List<Geography> getAllGeographie();
 
+    List<Geography> getAllGeographiesGeographyOverview() throws Exception;
+
     //List<Geography> getAllGeographies(int countryId) throws Exception;
 
     //List<Geography> getSumsAndAveragesForGeographies() throws SQLException;
 
-    List<Geography> getCountryGeographyList(int countryId);
+    //List<Geography> getCountryGeographyList(int countryId);
+
 }

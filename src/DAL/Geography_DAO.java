@@ -1,11 +1,14 @@
 package DAL;
 
+import BE.Country;
 import BE.Geography;
 import DAL.DBConnector.DBConnector;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Geography_DAO implements IGeographyDataAccess {
 
@@ -111,7 +114,44 @@ public class Geography_DAO implements IGeographyDataAccess {
         return allGeographies;
     }
 
+    @Override
+    public List<Geography> getAllGeographiesGeographyOverview() throws Exception {
+        Map<Integer, Geography> allGeographies = new HashMap<>();
+        String sql = """
+    SELECT g.GeographyId, g.GeographyName, c.CountryName, COUNT(DISTINCT gp.ProfileId) AS ProfileCount, COUNT(DISTINCT ppt.TeamsId) AS TeamCount
+    FROM Geography g
+    LEFT JOIN GeographyCountry gc ON g.GeographyId = gc.GeographyId
+    LEFT JOIN Country c ON gc.CountryId = c.CountryId
+    LEFT JOIN GeographyProfile gp ON g.GeographyId = gp.GeographyId
+    LEFT JOIN Profile p ON gp.ProfileId = p.ProfileId
+    LEFT JOIN ProfileProjectTeams ppt ON p.ProfileId = ppt.ProfileId_PPT
+    GROUP BY g.GeographyId, g.GeographyName, c.CountryName;
+    """;
+        try (Connection conn = dbConnector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int geographyId = rs.getInt("GeographyId");
+                Geography geography = allGeographies.get(geographyId);
+                if (geography == null) {
+                    geography = new Geography(
+                            geographyId,
+                            rs.getString("GeographyName"),
+                            rs.getInt("ProfileCount"),
+                            rs.getInt("TeamCount")
+                    );
+                    allGeographies.put(geographyId, geography);
+                }
+                Country country = new Country(rs.getString("CountryName"));
+                geography.getCountries().add(country);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>(allGeographies.values());
+    }
 
+    /*@Override
     public List<Geography> getCountryGeographyList(int countryId) {
         List<Geography> countryGeographyList = new ArrayList<>();
         String sql = """
@@ -137,5 +177,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         return countryGeographyList;
     }
 
+     */
 
 }

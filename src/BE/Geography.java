@@ -1,5 +1,8 @@
 package BE;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Geography {
 
 
@@ -10,6 +13,8 @@ public class Geography {
     private double avgDailyRate;
     private double avgHourlyRate;
     private int profileCount;
+    private int teamCount;
+    private List<Country> countries;
 
 
 
@@ -26,6 +31,31 @@ public class Geography {
     public Geography(int geographyId, String geographyName) {
         this.geographyId = geographyId;
         this.geographyName = geographyName;
+    }
+
+    public Geography(int geographyId, String geographyName, int profileCount, int teamCount) {
+        this.geographyId = geographyId;
+        this.geographyName = geographyName;
+        this.profileCount = profileCount;
+        this.teamCount = teamCount;
+        this.countries = new ArrayList<>();
+    }
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
+
+
+    public int getTeamCount() {
+        return teamCount;
+    }
+
+    public void setTeamCount(int teamCount) {
+        this.teamCount = teamCount;
     }
 
     public Geography(String geographyName) {
@@ -72,8 +102,25 @@ public class Geography {
         return avgHourlyRate;
     }
 
+    /*
     @Override
     public String toString() {
         return geographyName;
     }
+    */
+
+    @Override
+    public String toString() {
+        return "Geography{" +
+                "geographyId=" + geographyId +
+                ", geographyName='" + geographyName + '\'' +
+                ", sumOfDailyRate=" + sumOfDailyRate +
+                ", sumOfHourlyRate=" + sumOfHourlyRate +
+                ", avgDailyRate=" + avgDailyRate +
+                ", avgHourlyRate=" + avgHourlyRate +
+                ", profileCount=" + profileCount +
+                ", teamCount=" + teamCount +
+                '}';
+    }
+
 }
