@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
    <center>
       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
@@ -57,8 +57,8 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="89.0" text="Country:" />
-                              <CheckComboBox fx:id="cBoxCountries" prefHeight="18.0" prefWidth="186.0" showCheckedCount="true" title="Countries" />
+                              <Label prefHeight="18.0" prefWidth="89.0" text="Geography:" />
+                              <CheckComboBox fx:id="cBoxGeographies" prefHeight="18.0" prefWidth="186.0" showCheckedCount="true" title="Geography" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="24.0" />
@@ -154,7 +154,7 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField fx:id="txtUtilization" prefHeight="26.0" prefWidth="39.0" />
+                              <TextField fx:id="txtUtilization" prefHeight="26.0" prefWidth="46.0" />
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>
@@ -171,8 +171,8 @@
                         <TableView fx:id="tblProfileToTeam" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                               <TableColumn fx:id="colTeamProfileId" minWidth="0.0" prefWidth="42.4000244140625" text="ProfileId" visible="false" />
-                            <TableColumn fx:id="colTeamName" prefWidth="104.00000250339508" text="Name" />
-                            <TableColumn fx:id="colTeamCountry" minWidth="0.0" prefWidth="54.666709899902344" text="Country" />
+                            <TableColumn fx:id="colTeamName" prefWidth="107.0" text="Name" />
+                            <TableColumn fx:id="colTeamGeography" minWidth="0.0" prefWidth="71.5" text="Geography" />
                               <TableColumn fx:id="colTeamDailyRate" minWidth="0.0" prefWidth="53.999969482421875" text="Daily " />
                               <TableColumn fx:id="colTeamHourlyRate" minWidth="0.0" prefWidth="48.66668701171875" text="Hourly" />
                               <TableColumn fx:id="colTeamCountryId" prefWidth="63.2000732421875" text="CountryId" visible="false" />

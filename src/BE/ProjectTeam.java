@@ -1,5 +1,7 @@
 package BE;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,8 @@ public class ProjectTeam {
     private int count;
     private List<Profile> profiles = new ArrayList<>();
     private Country country;
+    private Geography geography;
+    private int geographyId;
     private int numberOfProfiles;
 
 
@@ -34,7 +38,7 @@ public class ProjectTeam {
 
 
 
-    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int numberOfProfiles) {
+    public ProjectTeam(int teamId, String teamName, double sumOfHourlyRate, double sumOfDailyRate, double avgDailyRate, double avgHourlyRate, double sumOfAnnualSalary, double avgAnnualSalary, int numberOfProfiles, int geographyId) {
         TeamId = teamId;
         TeamName = teamName;
         this.sumOfHourlyRate = sumOfHourlyRate;
@@ -44,12 +48,17 @@ public class ProjectTeam {
         this.sumOfAnnualSalary = sumOfAnnualSalary;
         this.avgAnnualSalary = avgAnnualSalary;
         this.numberOfProfiles = numberOfProfiles;
-
+        this.geographyId = geographyId;
     }
 
 
+    public int getGeographyId() {
+        return geographyId;
+    }
 
-
+    public void setGeographyId(int geographyId) {
+        this.geographyId = geographyId;
+    }
 
     public List<Profile> getProfiles() {
         return new ArrayList<>(profiles);
@@ -102,11 +111,6 @@ public class ProjectTeam {
         this.avgHourlyRate = avgHourlyRate;
     }
 
-    @Override
-    public String toString() {
-        return TeamName;
-    }
-
     public double getSumOfAnnualSalary() {
         return sumOfAnnualSalary;
     }
@@ -157,5 +161,19 @@ public class ProjectTeam {
                 ", avgDailyRate=" + avgDailyRate +
                 ", sumOfDailyRate=" + sumOfDailyRate +
                 '}';
+    }
+
+    @Override
+    public String toString() {
+        return TeamName;
+    }
+
+
+    public void setGeography(Geography geography) {
+            this.geography = geography;
+    }
+
+    public Geography getGeography() {
+        return geography;
     }
 }

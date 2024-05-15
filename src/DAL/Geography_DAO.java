@@ -44,6 +44,28 @@ public class Geography_DAO implements IGeographyDataAccess {
     }
 
 
+    @Override
+    public List<Geography> getAllGeographie() {
+        List<Geography> allGeographies = new ArrayList<>();
+        String sql = "SELECT * FROM Geography;";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Geography geography = new Geography(
+                            rs.getInt("GeographyId"),
+                            rs.getString("GeographyName")
+                    );
+                    allGeographies.add(geography);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return allGeographies;
+    }
+
+
 
 
 

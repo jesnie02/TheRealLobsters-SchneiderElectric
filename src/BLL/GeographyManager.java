@@ -1,9 +1,11 @@
 package BLL;
 
+import BE.Country;
 import BE.Geography;
 import DAL.Geography_DAO;
 import DAL.IGeographyDataAccess;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GeographyManager {
@@ -18,6 +20,10 @@ public class GeographyManager {
 
     public List <Geography> getSumsAndAveragesForGeographies() throws Exception{
         return geographyDAO.getSumsAndAveragesForGeographies();
+    }
+
+    public List<Geography> getAllGeographies() throws Exception {
+        return geographyDAO.getAllGeographie();
     }
 
     /*

@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.Country;
+import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
 import GUI.Model.CountryModel;
@@ -33,7 +34,7 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamCountry;
+    private TableColumn<Profile, String> colTeamGeography;
     @FXML
     private TableColumn<Profile, String> colTeamDailyRate;
     @FXML
@@ -66,9 +67,10 @@ public class CreateProjectTeamController implements Initializable {
     private TextField txtUtilization;
     private double utilization;
     @FXML
-    private CheckComboBox cBoxCountries;
+    private CheckComboBox cBoxGeographies;
     @FXML
     private CheckComboBox cBoxProfiles;
+
 
 
     public CreateProjectTeamController() {
@@ -104,7 +106,7 @@ public class CreateProjectTeamController implements Initializable {
      * Populates the combo boxes with data from the models.
      */
     private void populateComboBoxes() throws Exception {
-        cBoxCountries.getItems().addAll(countryModel.getAllFromCountries());
+        cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
@@ -165,14 +167,14 @@ public class CreateProjectTeamController implements Initializable {
      * Sets the converter for the country combo box.
      */
     private void setCountryComboBoxConverter() {
-        cBoxCountries.setConverter(new StringConverter<Country>() {
+        cBoxGeographies.setConverter(new StringConverter<Geography>() {
             @Override
-            public String toString(Country country) {
-                return country.getCountryName();
+            public String toString(Geography geography) {
+                return geography.getGeographyName();
             }
 
             @Override
-            public Country fromString(String string) {
+            public Geography fromString(String string) {
                 return null;
             }
         });
@@ -211,7 +213,7 @@ public class CreateProjectTeamController implements Initializable {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
-        colTeamCountry.setCellValueFactory(cellData -> {
+        colTeamGeography.setCellValueFactory(cellData -> {
             int countryId = cellData.getValue().getCountryId();
             return new SimpleStringProperty(countriesMap.getOrDefault(countryId, new Country("No Country")).getCountryName());
         });
@@ -240,20 +242,18 @@ public class CreateProjectTeamController implements Initializable {
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
 
-        ObservableList<Country> selectedCountries = cBoxCountries.getCheckModel().getCheckedItems();
-        if(!selectedCountries.isEmpty()){
-            projectTeam.setCountry(selectedCountries.get(0));
+        ObservableList<Geography> selectedGeographies = cBoxGeographies.getCheckModel().getCheckedItems();
+        if(!selectedGeographies.isEmpty()){
+            projectTeam.setGeographyId(selectedGeographies.get(0).getGeographyId());
         }
-
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
-            // System.out.println(projectTeam + "hejsa");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         txtProjectTeamName.getText();
-        cBoxCountries.getCheckModel().clearChecks();
+        cBoxGeographies.getCheckModel().clearChecks();
     }
 
     private void setupSlider(){
