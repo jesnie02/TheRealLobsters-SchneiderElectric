@@ -23,6 +23,8 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -237,6 +239,9 @@ public class CreateProjectTeamController implements Initializable {
      */
     @FXML
     public void createProjectTeamToDatabase(ActionEvent event) {
+            if (!validateInput()) {
+                return;
+            }
         ObservableList<Profile> profiles = tblProfileToTeam.getItems();
 
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
@@ -293,4 +298,32 @@ public class CreateProjectTeamController implements Initializable {
         setRegexValidationForTextFields(txtUtilization);
     }
 
+
+    private boolean validateInput() {
+        boolean isValid = true;
+
+        if (txtProjectTeamName.getText().isEmpty()) {
+            txtProjectTeamName.setStyle("-fx-border-color: red");
+            isValid = false;
+        } else {
+            txtProjectTeamName.setStyle("");
+        }
+
+        if (cBoxGeographies.getCheckModel().getCheckedItems().isEmpty()) {
+            cBoxGeographies.setStyle("-fx-border-color: red");
+            isValid = false;
+        } else {
+            cBoxGeographies.setStyle("");
+        }
+
+        if (cBoxProfiles.getCheckModel().getCheckedItems().isEmpty()) {
+            cBoxProfiles.setStyle("-fx-border-color: red");
+            isValid = false;
+        } else {
+            cBoxProfiles.setStyle("");
+        }
+
+        return isValid;
+    }
 }
+
