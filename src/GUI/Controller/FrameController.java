@@ -157,4 +157,9 @@ public class FrameController implements Initializable {
             showErrorAlert("Initialization Error", "UI components are not fully initialized.");
         }
     }
+
+    @FXML
+    private void openCurrency(ActionEvent actionEvent) {
+        loadView("currencyView.fxml");
+    }
 }

@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -29,7 +30,7 @@
       </VBox>
    </top>
    <left>
-      <VBox fx:id="vboxTapBar" alignment="CENTER_LEFT" prefHeight="338.0" prefWidth="110.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vboxTapBar" alignment="CENTER_LEFT" prefHeight="338.0" prefWidth="120.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lblFrameHeader" prefHeight="18.0" prefWidth="100.0" text="Overview">
                <VBox.margin>
@@ -46,19 +47,19 @@
                   <Insets bottom="8.0" />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/iconDashboard.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnProfiles" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openProfiles" prefHeight="26.0" prefWidth="120.0" text="Profiles">
+            <Button fx:id="btnProfiles" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openProfiles" prefHeight="33.0" prefWidth="120.0" text="Profiles">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/prfileLogo.png" />
                      </image>
@@ -70,7 +71,7 @@
                   <Insets bottom="8.0" />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="28.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/teamLogo.png" />
                      </image>
@@ -82,7 +83,7 @@
                   <Insets bottom="8.0" />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../pictures/iconGeography.png" />
                      </image>
@@ -91,19 +92,26 @@
             </Button>
             <Button fx:id="btnMultiplier" layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#openMultiplier" prefHeight="26.0" prefWidth="120.0" text="Multiplier">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic></Button>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="240.0" prefWidth="100.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#buttonLogOut" text="Log out" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
                <VBox.margin>
-                  <Insets bottom="25.0" />
+                  <Insets bottom="8.0" />
+               </VBox.margin></Button>
+            <Button fx:id="btnCurrency" mnemonicParsing="false" onAction="#openCurrency" prefHeight="33.0" prefWidth="120.0" text="Currency">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/curency.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Pane prefHeight="114.0" prefWidth="110.0" />
+            <Button mnemonicParsing="false" onAction="#buttonLogOut" text="Log out">
+               <VBox.margin>
+                  <Insets bottom="16.0" left="26.0" />
                </VBox.margin>
-            </VBox>
+            </Button>
          </children>
       </VBox>
    </left>

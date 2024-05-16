@@ -1,0 +1,61 @@
+package DAL;
+
+import BE.Currency;
+import BE.Geography;
+import DAL.DBConnector.DBConnector;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Currency_DAO implements ICurrencyDataAccess {
+
+    private final DBConnector dbConnector;
+
+    public Currency_DAO() throws IOException {
+       dbConnector = new DBConnector();
+    }
+
+
+    @Override
+    public List<Currency> getAllCurrencies() {
+        List<Currency> allCurrencies = new ArrayList<>();
+        String sql = "SELECT * FROM Currency;";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Currency currency = new Currency(
+                            rs.getInt("CurrencyId"),
+                            rs.getString("CurrencyCode"),
+                            rs.getDouble("CurrencyRate")
+
+                    );
+                    allCurrencies.add(currency);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return allCurrencies;
+    }
+
+    @Override
+    public void setCurrency(Currency selectedCurrency) {
+        String sql = "UPDATE Currency SET CurrencyRate = ? WHERE CurrencyId = ?;";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDouble(1, selectedCurrency.getCurrencyRate());
+            pstmt.setInt(2, selectedCurrency.getCurrencyId());
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+}

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="bPaneCurrency" prefHeight="489.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CurrencyController">
+   <right>
+      <VBox prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+   </left>
+   <top>
+      <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <VBox fx:id="vboxCenterCurrency" alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="hBoxHeaderCurrency" alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="825.0">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/curency.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lblHeaderCurrency" prefHeight="18.0" prefWidth="150.0" text="Currency">
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+                  <Pane prefHeight="30.0" prefWidth="485.0" />
+                  <TextField fx:id="txtSearchCurrency" prefHeight="26.0" prefWidth="174.0" text="Search currency" />
+               </children>
+            </HBox>
+            <HBox prefHeight="456.0" prefWidth="825.0">
+               <children>
+                  <MFXLegacyTableView fx:id="tblCurrency" prefHeight="408.0" prefWidth="354.0" HBox.hgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="colCurrencyCodes" prefWidth="155.20001411437988" text="Curreny codes" />
+                        <TableColumn fx:id="colCurrencyRate" prefWidth="163.199951171875" text="Currency rate" />
+                        <TableColumn fx:id="colCurrencyId" minWidth="0.0" prefWidth="0.0" text="Currency id" visible="false" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" top="8.0" />
+                     </HBox.margin>
+                  </MFXLegacyTableView>
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="408.0" prefWidth="532.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="50.0" right="50.0" />
+                     </padding>
+                     <children>
+                        <HBox prefHeight="18.0" prefWidth="186.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label fx:id="lblChangeCurrency" prefHeight="18.0" prefWidth="405.0" text="Change currency:" />
+                              <Pane prefHeight="18.0" prefWidth="487.0" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtCurrency" prefHeight="32.0" prefWidth="426.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="200.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="lblMessageCurrency" prefHeight="18.0" prefWidth="415.0">
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Button fx:id="btnCurrencySave" mnemonicParsing="false" onAction="#saveCurrencyToDatabase" prefHeight="40.0" prefWidth="107.0" text="Save" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="40.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

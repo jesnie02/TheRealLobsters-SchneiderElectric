@@ -79,13 +79,13 @@
 
 /* Background */
 
-#bP_CreateProfile {
+#bP_CreateProfile, #bP_Currency {
     -fx-background-color: #F4F4F4;
 }
 
 /* WhiteBox */
 
-#vBoxWhiteCreateProfile {
+#vBoxWhiteCreateProfile, #vboxCenterCurrency {
     -fx-background-color: #FFFFFF;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
 }
@@ -93,7 +93,7 @@
 
 /* Header Box */
 
-#headerHboxCreateProfile {
+#headerHboxCreateProfile, #hBoxHeaderCurrency {
     -fx-background-color: #F1F1E8;
     -fx-border-color: transparent transparent #3DCD58 transparent;
     -fx-border-width: 0 0 2px 0;
@@ -102,7 +102,7 @@
 
 /* Header Text */
 
-#headerTextCreateProfile {
+#headerTextCreateProfile, #headerTextCurrency {
     -fx-font-size: 14px;
    /* -fx-font-weight: bold; */
     -fx-text-fill: black;
@@ -127,7 +127,7 @@
 
 /* Button */
 
-#btnCreateProfile {
+#btnCreateProfile, #btnCurrencySave {
     -fx-background-color: #3DCD58;
     -fx-text-fill: #18191a;
     -fx-font-size: 14px;
@@ -137,15 +137,15 @@
 
 /* FrameView */
 /*--------------------------------------------------------------------------------------------------------------------*/
-#btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover {
+#btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover, #btnCurrency:hover, #btnCurrency:hover {
     -fx-background-color: #F2F2F2;
-    -fx-border-color: #3DCD58 transparent transparent transparent;
-    -fx-border-width: 2px 0 0 0;
+    -fx-border-color:  transparent transparent transparent #3DCD58;
+    -fx-border-width: 0 0 0 2px ;
 }
 
 /* Buttons/Background/separator/HeaderText TapBar  */
 
-#btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier {
+#btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier, #btnCurrency, #btnCurrency {
     -fx-background-color: transparent;
     -fx-font-weight: bold;
     -fx-alignment: CENTER_LEFT;
