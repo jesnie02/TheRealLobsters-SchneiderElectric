@@ -1,7 +1,31 @@
+/* General CSS
+/*--------------------------------------------------------------------------------------------------------------------*/
 
+/* Buttons */
+.button:hover {
+    -fx-background-color: #3DCD58;
+}
 
+/* ComboBox */
+.combo-box:hover {
+    -fx-background-color: #3DCD58;
+}
 
+.combo-box{
+    -fx-border-color: #3DCD58;
+}
 
+.combo-box-popup .cell:hover {
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
+}
+
+/* TextField */
+.text-field {
+    -fx-border-color: #3DCD58;
+}
+
+/* TabPane */
 .tab-pane {
     -fx-tab-min-width: 90px;
 }
@@ -17,7 +41,11 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-shape: "M 10,10 C 0,10 0,0 10,0 L 100,0 C 110,0 110,10 100,10 L 0,10 Z";
+}
 
+.tab:hover {
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
 }
 
 .tab .tab-label {
@@ -27,8 +55,7 @@
     -fx-font-weight: bold;
 }
 
-
-/* profile TableView */
+/* TableView */
 .table-row-cell {
     -fx-cell-size: 50px;
 }
@@ -37,13 +64,19 @@
     -fx-alignment: CENTER_LEFT;
 }
 
+.table-view .column-header:hover {
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
+}
+
 .table-view .table-row-cell:selected {
     -fx-background-color: #3DCD58;
     -fx-text-fill: #18191a;
 }
 
-
+/* CreateProfileView */
 /*--------------------------------------------------------------------------------------------------------------------*/
+
 /* Background */
 
 #bP_CreateProfile {
@@ -102,11 +135,12 @@
     -fx-border-radius: 20;
 }
 
- /* Button Hover */
-
-.button:hover {
-    -fx-background-color: #3DCD58;
-
+/* FrameView */
+/*--------------------------------------------------------------------------------------------------------------------*/
+#btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover {
+    -fx-background-color: #F2F2F2;
+    -fx-border-color: #3DCD58 transparent transparent transparent;
+    -fx-border-width: 2px 0 0 0;
 }
 
 /* Buttons/Background/separator/HeaderText TapBar  */
@@ -139,3 +173,5 @@
 #hboxFrameLogo {
     -fx-background-color: #3DCD58;
 }
+
+

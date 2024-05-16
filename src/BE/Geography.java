@@ -107,13 +107,14 @@ public class Geography {
         return avgHourlyRate;
     }
 
-    /*
+
     @Override
     public String toString() {
         return geographyName;
     }
-    */
 
+
+    /*
     @Override
     public String toString() {
         return "Geography{" +
@@ -127,5 +128,7 @@ public class Geography {
                 ", teamCount=" + teamCount +
                 '}';
     }
+
+     */
 
 }

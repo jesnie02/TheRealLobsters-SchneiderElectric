@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="486.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.GeographyController">
+<BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.GeographyController">
    <top>
       <HBox alignment="CENTER" prefHeight="35.0" prefWidth="880.0" BorderPane.alignment="CENTER">
          <opaqueInsets>
