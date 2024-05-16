@@ -2,6 +2,7 @@ package BE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Profile {
 
@@ -103,6 +104,7 @@ public class Profile {
         this.roles = roles;
         this.profileRoles = new ArrayList<>();
     }
+
 
 
     public int getProfileId() {
@@ -247,5 +249,20 @@ public class Profile {
             rolesString.append(role.getProfileRoleType()).append(", ");
         }
         return rolesString.toString();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Profile profile = (Profile) o;
+        return profileId == profile.profileId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(profileId);
     }
 }

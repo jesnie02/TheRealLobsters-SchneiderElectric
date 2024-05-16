@@ -149,6 +149,40 @@ public class CalculatorManager implements ICalculateManager {
         double result = dailyWorkingHours * hourlyRate;
         return result;
     }
+
+
+    @Override
+    public double calculateAndSetHourlyRateWithUtilization(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile,
+            double utilizationPercentage) {
+
+        if (annualSalaryProfile == 0) {
+            return 0; // Return zero if the annual salary is zero
+        }
+
+        if (annualSalaryProfile < 0) {
+            throw new IllegalArgumentException("Annual salary cannot be negative");
+        }
+
+        double actualAnnualSalary = (annualSalaryProfile + annualFixedAmountProfile);
+        double result = (actualAnnualSalary / effectiveHoursProfile) * (1 + overheadMultiplierProfile / 100);
+        return result*(utilizationPercentage/100);
+    }
+
+    /**
+     * Calculates and sets the daily rate for a profile during creation.
+     * @param dailyWorkingHours The daily working hours of the profile.
+     * @param hourlyRate The hourly rate of the profile.
+     * @return The calculated daily rate.
+     */
+    @Override
+    public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
+        double result = dailyWorkingHours * hourlyRate;
+        return result;
+    }
+
+
 }
 
 

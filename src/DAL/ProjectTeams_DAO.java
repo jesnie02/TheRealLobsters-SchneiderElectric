@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import GUI.Utility.AlertBox;
 import CustomExceptions.ApplicationWideException;
 
@@ -91,8 +93,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate, Geography) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // SQL for inserting into ProfileProjectTeams
-        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId) VALUES (?, ?)";
+        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
 
+        String updateProfileUtilization = "UPDATE Profile SET TotalUtilization = ? WHERE ProfileId = ?";
         // Declare connection outside of try block to handle rollback
         Connection conn = null;
 
@@ -128,9 +131,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                         int teamId = generatedKeys.getInt(1);
 
                         // Insert each profile into ProfileProjectTeams
-                        for (Profile profile : projectTeam.getProfiles()) {
-                            pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
+                        for (Map.Entry<Profile, Double> entry : projectTeam.getUtilizationsMap().entrySet()) {
+                            pstmtInsertProfileProjectTeams.setInt(1, entry.getKey().getProfileId());
                             pstmtInsertProfileProjectTeams.setInt(2, teamId);
+                            pstmtInsertProfileProjectTeams.setDouble(3, entry.getValue());
+                            adjustUtilization(entry.getKey(), entry.getValue());
                             pstmtInsertProfileProjectTeams.addBatch();
                         }
                         pstmtInsertProfileProjectTeams.executeBatch();
@@ -159,6 +164,20 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
     }
 
+    private void adjustUtilization(Profile profile, double utilization) {
+        String updateUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization - ? WHERE ProfileId = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateUtilizationSQL)) {
+
+            pstmt.setDouble(1, utilization);
+            pstmt.setInt(2, profile.getProfileId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO: Replace with more robust error handling
+        }
+
+    }
 
     public boolean doesTeamNameExist(String teamName) throws SQLException {
         String checkTeamSQL = "SELECT COUNT(*) FROM ProjectTeams WHERE TeamName = ?";

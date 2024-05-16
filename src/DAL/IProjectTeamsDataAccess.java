@@ -8,4 +8,5 @@ public interface IProjectTeamsDataAccess {
 
     List<ProjectTeam> getAllProjectTeams() throws Exception;
     void addProfileToTeam(ProjectTeam projectTeam);
+
 }

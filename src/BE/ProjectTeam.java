@@ -3,7 +3,9 @@ package BE;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectTeam {
 
@@ -12,10 +14,12 @@ public class ProjectTeam {
     private double sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary;
     private int count;
     private List<Profile> profiles = new ArrayList<>();
+    private Map<Profile, Double> utilizationsMap = new HashMap<>();
     private Country country;
     private Geography geography;
     private int geographyId;
     private int numberOfProfiles;
+
 
 
     public ProjectTeam(String name) {
@@ -69,6 +73,15 @@ public class ProjectTeam {
             throw new IllegalArgumentException("Profiles list cannot be null");
         }
         this.profiles = new ArrayList<>(profiles);
+    }
+
+    public Map<Profile, Double> getUtilizationsMap(){
+        return utilizationsMap;
+    }
+
+    public void setUtilizationsMap(Map<Profile, Double> utilizationsMap){
+        System.out.println("utilizationsMap = " + utilizationsMap);
+        this.utilizationsMap = utilizationsMap;
     }
 
     public int getTeamId() {

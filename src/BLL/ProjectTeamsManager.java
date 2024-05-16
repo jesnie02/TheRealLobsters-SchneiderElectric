@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectTeamsManager {
 
@@ -112,4 +113,12 @@ public class ProjectTeamsManager {
         return roles;
     }
 
+
+    public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
+        return iCalculateManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
+    }
+
+    public double calculateAndSetHourlyRateWithUtilization(double annualSalaryProfile, double overheadMultiplierProfile, double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {
+        return iCalculateManager.calculateAndSetHourlyRateWithUtilization(annualSalaryProfile, overheadMultiplierProfile, annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
+    }
 }

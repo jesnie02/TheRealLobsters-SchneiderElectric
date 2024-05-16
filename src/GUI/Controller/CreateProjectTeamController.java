@@ -25,6 +25,7 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class CreateProjectTeamController implements Initializable {
@@ -34,7 +35,7 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamGeography;
+    private TableColumn<Profile, String> colTeamUtilization;
     @FXML
     private TableColumn<Profile, String> colTeamDailyRate;
     @FXML
@@ -50,6 +51,8 @@ public class CreateProjectTeamController implements Initializable {
     private TableColumn<Profile, Integer> colTeamProfileId;
 
     private Map<Integer, Country> countriesMap;
+
+    private Map<Profile, Double> utilizationsMap = new HashMap<>();
 
     @FXML
     private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
@@ -164,6 +167,8 @@ public class CreateProjectTeamController implements Initializable {
             double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
             double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
 
+            // the lbl are adjusted with utilization in method selectProfileToTable()
+
             lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
             lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
             lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
@@ -209,7 +214,7 @@ public class CreateProjectTeamController implements Initializable {
         // Define cell value factories with correct type parameters
         colTeamProfileId.setCellValueFactory(new PropertyValueFactory<>("profileId"));
         colTeamCountryId.setCellValueFactory(new PropertyValueFactory<>("countryId"));
-        colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName")); // Assuming 'name' is the correct property
+        colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colTeamHourlyRate.setCellValueFactory(cellData -> {
             double hourlySalary = cellData.getValue().getHourlySalary();
             return new SimpleStringProperty(formatter.format(hourlySalary));
@@ -222,9 +227,9 @@ public class CreateProjectTeamController implements Initializable {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
-        colTeamGeography.setCellValueFactory(cellData -> {
-            int countryId = cellData.getValue().getCountryId();
-            return new SimpleStringProperty(countriesMap.getOrDefault(countryId, new Country("No Country")).getCountryName());
+        colTeamUtilization.setCellValueFactory(cellData -> {
+            double utilization = utilizationsMap.get(cellData.getValue());
+            return new SimpleStringProperty(formatter.format(utilization*100) + " %");
         });
     }
 
@@ -236,8 +241,12 @@ public class CreateProjectTeamController implements Initializable {
         Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
+            utilizationsMap.put(selectedProfile, sliderUtilization.getValue()/100);
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
             tblProfileToTeam.getItems().add(selectedProfile);
-            cBoxProfiles.setValue(null); // Clear the selection after adding
+            cBoxProfiles.setValue(null);
         }
     }
 
@@ -253,6 +262,7 @@ public class CreateProjectTeamController implements Initializable {
 
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
+        projectTeam.setUtilizationsMap(utilizationsMap);
 
         Geography selectedGeography = (Geography) cBoxGeographies.getValue();
         if(selectedGeography != null){

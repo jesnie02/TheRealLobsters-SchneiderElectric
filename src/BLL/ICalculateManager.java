@@ -3,6 +3,7 @@ package BLL;
 import BE.Profile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICalculateManager {
 
@@ -27,4 +28,14 @@ public interface ICalculateManager {
             double annualFixedAmountProfile, double effectiveHoursProfile);
 
     double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate);
+
+
+
+    double calculateAndSetHourlyRateWithUtilization(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage);
+
+
+    double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate);
+
 }

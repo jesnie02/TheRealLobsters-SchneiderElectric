@@ -90,6 +90,7 @@ public class ProjectTeamsModel {
         return projectTeamsManager.calculateTotalAnnualSalary(profiles);
     }
 
+
     /**
      * Calculates the total daily rate for a list of profiles.
      *
@@ -116,6 +117,26 @@ public class ProjectTeamsModel {
         List<Profile> profiles = projectTeamsManager.getProcessedProfilesForTeam(teamId);
         return FXCollections.observableArrayList(profiles);
     }
+
+
+    public double calculateAndSetHourlyRateWithUtilization(
+            double annualSalaryProfile, double overheadMultiplierProfile,
+            double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {
+
+        return projectTeamsManager.calculateAndSetHourlyRateWithUtilization(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
+    }
+
+    /**
+     * Calculates and sets the daily rate for a profile during creation.
+     * @return The calculated daily rate.
+     */
+    public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
+        return projectTeamsManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
+    }
+
+
 
 
 }

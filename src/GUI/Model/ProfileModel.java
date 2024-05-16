@@ -95,6 +95,9 @@ public class ProfileModel {
                 annualFixedAmountProfile, effectiveHoursProfile);
     }
 
+
+
+
     /**
      * Calculates and sets the daily rate for a profile during creation.
      * @return The calculated daily rate.
