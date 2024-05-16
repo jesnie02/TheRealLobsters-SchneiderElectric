@@ -4,6 +4,8 @@ import BE.Currency;
 import GUI.Model.CountryModel;
 import GUI.Model.CurrencyModel;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -97,6 +100,10 @@ public class CurrencyController implements Initializable {
     private void displayMessage(String message, boolean isError) {
         lblMessageCurrency.setText(message);
         lblMessageCurrency.setStyle(isError ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
+
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> lblMessageCurrency.setText("")));
+        timeline.play();
     }
 
 }
