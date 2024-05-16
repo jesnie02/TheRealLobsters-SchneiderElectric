@@ -22,14 +22,21 @@
                <content>
                   <BorderPane>
                      <top>
-                        <AreaChart fx:id="areaChart" prefHeight="500.0" prefWidth="1000.0">
-                           <xAxis>
-                              <CategoryAxis fx:id="xAxis" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis fx:id="yAxis" />
-                           </yAxis>
-                        </AreaChart>
+                        <VBox alignment="CENTER">
+                           <Label text="Top 10 Most Expensive Projects Based on Annual Salary" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER">
+                              <padding>
+                                 <Insets top="10.0" bottom="10.0" />
+                              </padding>
+                           </Label>
+                           <AreaChart fx:id="areaChart" prefHeight="500.0" prefWidth="1000.0">
+                              <xAxis>
+                                 <CategoryAxis fx:id="xAxis" />
+                              </xAxis>
+                              <yAxis>
+                                 <NumberAxis fx:id="yAxis" />
+                              </yAxis>
+                           </AreaChart>
+                        </VBox>
                      </top>
                      <center>
                         <PieChart fx:id="pieChart" prefHeight="200.0" prefWidth="200.0" />
