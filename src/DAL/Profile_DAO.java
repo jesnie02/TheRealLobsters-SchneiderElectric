@@ -69,11 +69,11 @@ public class Profile_DAO implements IProfileDataAccess {
         String sqlProfileRole = "INSERT INTO dbo.ProfileProfileRole (ProfileId, ProfileRoleId) VALUES (?, ?)";
 
         try (Connection conn = dbConnector.getConnection()) {
-            // Start transaction
+
             conn.setAutoCommit(false);
 
             try (PreparedStatement pstmtProfile = conn.prepareStatement(sqlProfile, Statement.RETURN_GENERATED_KEYS)) {
-                // Save Profile
+
                 pstmtProfile.setString(1, newProfile.getFName());
                 pstmtProfile.setString(2, newProfile.getLName());
                 pstmtProfile.setDouble(3, newProfile.getAnnualSalary());
@@ -84,12 +84,12 @@ public class Profile_DAO implements IProfileDataAccess {
                 pstmtProfile.setDouble(8, newProfile.getDailyWorkingHours());
                 pstmtProfile.executeUpdate();
 
-                // Retrieve generated Profile ID
+
                 try (ResultSet generatedKeys = pstmtProfile.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int profileId = generatedKeys.getInt(1);
 
-                        // Save ProfileRole entries
+
                         try (PreparedStatement pstmtProfileRole = conn.prepareStatement(sqlProfileRole)) {
                             for (ProfileRole role : newProfile.getProfileRoles()) {
                                 pstmtProfileRole.setInt(1, profileId);
@@ -103,7 +103,6 @@ public class Profile_DAO implements IProfileDataAccess {
                     }
                 }
 
-                // Commit transaction
                 conn.commit();
             } catch (SQLException e) {
                 conn.rollback();

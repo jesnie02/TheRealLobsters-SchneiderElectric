@@ -41,6 +41,11 @@ public class Geography {
         this.countries = new ArrayList<>();
     }
 
+    public Geography(String geographyName, List<Country> selectedCountries) {
+        this.geographyName = geographyName;
+        this.countries = selectedCountries;
+    }
+
     public List<Country> getCountries() {
         return countries;
     }

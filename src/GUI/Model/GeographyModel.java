@@ -3,6 +3,7 @@ package GUI.Model;
 import BE.Country;
 import BE.Geography;
 import BLL.GeographyManager;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
 import java.util.Comparator;
@@ -12,10 +13,14 @@ import java.util.Map;
 
 public class GeographyModel {
 
-    private GeographyManager geographyManager;
+    private final GeographyManager geographyManager;
+
+    private final ObservableList<Geography> geographies;
 
     public GeographyModel() throws Exception {
         geographyManager = new GeographyManager();
+        geographies = FXCollections.observableArrayList();
+        loadInitialGeographies();
     }
 
     /*
@@ -24,6 +29,7 @@ public class GeographyModel {
     }
 
      */
+
 
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {
@@ -35,12 +41,15 @@ public class GeographyModel {
         return geographies;
     }
 
-    public ObservableList<Geography> getAllGeographiesGeographyOverview() throws Exception {
-        ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
-                geographyManager.getAllGeographiesGeographyOverview().stream()
-                        .sorted(Comparator.comparing(Geography::getGeographyName))
-                        .collect(Collectors.toList())
-        );
+
+    private void loadInitialGeographies() throws Exception {
+        List<Geography> geographyList = geographyManager.getAllGeographiesGeographyOverview();
+        geographies.setAll(geographyList.stream()
+                .sorted(Comparator.comparing(Geography::getGeographyName))
+                .collect(Collectors.toList()));
+    }
+
+    public ObservableList<Geography> getAllGeographiesGeographyOverview() {
         return geographies;
     }
 
@@ -49,4 +58,9 @@ public class GeographyModel {
                 .collect(Collectors.toMap(Geography::getGeographyId, geography -> geography));
     }
 
+    public void saveGeography(Geography geography) {
+        geographyManager.saveGeography(geography);
+        geographies.add(geography);
+
+    }
 }

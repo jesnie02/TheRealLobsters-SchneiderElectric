@@ -16,6 +16,9 @@ public interface IGeographyDataAccess {
 
     List<Geography> getAllGeographiesGeographyOverview() throws Exception;
 
+    void saveGeography(Geography geography);
+
+
     //List<Geography> getAllGeographies(int countryId) throws Exception;
 
     //List<Geography> getSumsAndAveragesForGeographies() throws SQLException;

@@ -126,7 +126,7 @@ public class GeographyController  {
     public void createNewGeography(ActionEvent actionEvent) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/createGeographyView.fxml"));
-
+            loader.setControllerFactory(param -> new CreateGeographyController(geographyModel));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setScene(scene);

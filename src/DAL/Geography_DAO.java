@@ -202,4 +202,68 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
     }*/
 
+
+    @Override
+    public void saveGeography(Geography geography) {
+        String insertGeographySql = "INSERT INTO Geography (GeographyName) VALUES (?);";
+
+        String insertGeographyCountrySql = "INSERT INTO GeographyCountry (GeographyId, CountryId) VALUES (?, ?);";
+
+        Connection conn = null;
+        try {
+            conn = dbConnector.getConnection();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmtGeography = conn.prepareStatement(insertGeographySql, Statement.RETURN_GENERATED_KEYS);
+                 PreparedStatement pstmtGeographyCountry = conn.prepareStatement(insertGeographyCountrySql)) {
+
+                // Insert to Geography table
+                pstmtGeography.setString(1, geography.getGeographyName());
+                pstmtGeography.executeUpdate();
+
+                // Retrieve GeographyId
+                int geographyId;
+                try (ResultSet generatedKeys = pstmtGeography.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        geographyId = generatedKeys.getInt(1);
+                    } else {
+                        throw new SQLException("Creating geography failed, no ID obtained.");
+                    }
+                }
+
+                // Insert to GeographyCountry for each selected country
+                for (Country country : geography.getCountries()) {
+                    pstmtGeographyCountry.setInt(1, geographyId);
+                    pstmtGeographyCountry.setInt(2, country.getCountryId());
+                    pstmtGeographyCountry.addBatch();
+                }
+
+                pstmtGeographyCountry.executeBatch();
+
+
+                conn.commit();
+            } catch (SQLException e) {
+
+                if (conn != null) {
+                    try {
+                        conn.rollback();
+                    } catch (SQLException rollbackEx) {
+                        throw new RuntimeException("Rollback failed", rollbackEx);
+                    }
+                }
+                throw new RuntimeException(e);  //TODO: Handle exception
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e); //TODO: Handle exception
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e); //TODO: Handle exception
+                }
+            }
+        }
+    }
 }
