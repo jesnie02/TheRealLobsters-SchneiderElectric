@@ -39,8 +39,11 @@ public class CreateGeographyController implements Initializable {
     }
     @FXML
     private void saveGeography(ActionEvent actionEvent) {
-
     }
 
+
+    private void getSelectedCountries() {
+        cBoxCountries.getCheckModel().getCheckedItems();
+    }
 
 }

@@ -22,4 +22,6 @@ public interface IGeographyDataAccess {
 
     //List<Geography> getCountryGeographyList(int countryId);
 
+    //void createGeography(String geographyName, List<Integer> countryIds) throws Exception;
+
 }

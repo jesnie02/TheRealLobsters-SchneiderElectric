@@ -4,6 +4,7 @@ import BE.Country;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
+import BLL.ProjectTeamsManager;
 import DAL.DBConnector.DBConnector;
 import GUI.Utility.AlertBox;
 import javafx.scene.control.Alert;
@@ -18,6 +19,7 @@ import CustomExceptions.ApplicationWideException;
 public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     private final DBConnector dbConnector;
+    private ProjectTeamsManager projectTeamsManager;
 
     public ProjectTeams_DAO() throws IOException {
         dbConnector = new DBConnector();

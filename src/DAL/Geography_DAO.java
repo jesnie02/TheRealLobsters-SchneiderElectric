@@ -179,4 +179,27 @@ public class Geography_DAO implements IGeographyDataAccess {
 
      */
 
+    /*public void createGeography(String geographyName, List<Integer> countryIds) throws Exception {
+        String sql = "INSERT INTO Geography (GeographyName) VALUES (?);";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, geographyName);
+            pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int geographyId = generated;
+                    String sql2 = "INSERT INTO GeographyCountry (GeographyId, CountryId) VALUES (?, ?);";
+                    try (PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
+                        for (int countryId : countryIds) {
+                            pstmt2.setInt(1, geographyId);
+                            pstmt2.setInt(2, countryId);
+                            pstmt2.addBatch();
+                        }
+                        pstmt2.executeBatch();
+                    }
+                }
+            }
+        }
+    }*/
+
 }
