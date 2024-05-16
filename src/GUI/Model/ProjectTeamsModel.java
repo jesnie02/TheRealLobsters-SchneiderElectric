@@ -57,6 +57,11 @@ public class ProjectTeamsModel {
         return observableList;
     }
 
+    public ObservableList<ProjectTeam> getTop10ProjectTeamsByAnnualSalary() throws Exception {
+        List<ProjectTeam> list = projectTeamsManager.getTop10ProjectTeamsByAnnualSalary();
+        ObservableList<ProjectTeam> observableList = FXCollections.observableArrayList(list);
+        return observableList;
+    }
     public enum ProjectTeamRateType {
         AVGHOURLY,
         AVGDAILY
@@ -135,6 +140,7 @@ public class ProjectTeamsModel {
     public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
         return projectTeamsManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
     }
+
 
 
 

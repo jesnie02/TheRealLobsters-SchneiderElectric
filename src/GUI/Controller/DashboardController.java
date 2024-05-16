@@ -8,18 +8,23 @@ import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML
-    public Label lblDailyRateSumCountry,lblHourlyRateSumCountry,lblAvgDailyRateCountry,lblAvgHourlyRateCountry;
+    public Label lblDailyRateSumCountry, lblHourlyRateSumCountry, lblAvgDailyRateCountry, lblAvgHourlyRateCountry;
     @FXML
     private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
 
@@ -34,13 +39,17 @@ public class DashboardController implements Initializable {
     private ProjectTeamsModel projectTeamsModel;
     private GeographyModel geographyModel;
 
-
-
     @FXML
     private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;
+    @FXML
+    private AreaChart<String, Number> areaChart;
+    @FXML
+    private PieChart pieChart;
 
-
-
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,43 +58,68 @@ public class DashboardController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
 
-
+            // Populate the AreaChart with team expenses
+            populateAreaChartWithTeamExpenses();
 
         } catch (IOException e) {
-            e.printStackTrace(); //TODO: Handle this exception
+            e.printStackTrace(); // TODO: Handle this exception
         } catch (Exception e) {
-            e.printStackTrace(); //TODO: Handle this exception
+            e.printStackTrace(); // TODO: Handle this exception
         }
 
         setUpComboBoxListeners();
     }
 
-
-
-
-
-    private void setUpComboBoxListeners()  {
+    private void setUpComboBoxListeners() {
         try {
-        //Geography
-        cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
-        cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            updateLabelsGeographyTab(newValue);
-        });
+            // Geography
+            cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
+            cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                updateLabelsGeographyTab(newValue);
+            });
 
-        //Country
-        cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
-        cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            updateLabelsCountryTab(newValue);
-        });
+            // Country
+            cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
+            cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                updateLabelsCountryTab(newValue);
+            });
 
-        //Team
-        cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
-
-        cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            updateLabelsTeamTab(newValue);
-        });
+            // Team
+            cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
+            cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                updateLabelsTeamTab(newValue);
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void populateAreaChartWithTeamExpenses() {
+        try {
+            // Fetch top 10 project teams by annual salary from the model
+            List<ProjectTeam> top10ProjectTeams = projectTeamsModel.getTop10ProjectTeamsByAnnualSalary();
+
+            // Clear any existing data
+            areaChart.getData().clear();
+            xAxis.getCategories().clear();
+
+            // Add team names to the xAxis categories
+            for (ProjectTeam team : top10ProjectTeams) {
+                xAxis.getCategories().add(team.getTeamName());
+            }
+
+            // Create a data series for SumOfAnnualSalary
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Sum of Annual Salary");
+
+            for (ProjectTeam team : top10ProjectTeams) {
+                series.getData().add(new XYChart.Data<>(team.getTeamName(), team.getSumOfAnnualSalary()));
+            }
+
+            // Add the series to the chart
+            areaChart.getData().add(series);
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO: Handle this exception properly
         }
     }
 

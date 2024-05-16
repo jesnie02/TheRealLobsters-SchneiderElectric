@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -16,8 +20,23 @@
          <tabs>
             <Tab text="Overview">
                <content>
-
-               </content></Tab>
+                  <BorderPane>
+                     <top>
+                        <AreaChart fx:id="areaChart" prefHeight="500.0" prefWidth="1000.0">
+                           <xAxis>
+                              <CategoryAxis fx:id="xAxis" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis" />
+                           </yAxis>
+                        </AreaChart>
+                     </top>
+                     <center>
+                        <PieChart fx:id="pieChart" prefHeight="200.0" prefWidth="200.0" />
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
             <Tab text="Country">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">

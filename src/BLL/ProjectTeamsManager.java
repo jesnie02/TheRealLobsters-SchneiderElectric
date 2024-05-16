@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProjectTeamsManager {
 
@@ -120,5 +122,13 @@ public class ProjectTeamsManager {
 
     public double calculateAndSetHourlyRateWithUtilization(double annualSalaryProfile, double overheadMultiplierProfile, double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {
         return iCalculateManager.calculateAndSetHourlyRateWithUtilization(annualSalaryProfile, overheadMultiplierProfile, annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
+    }
+
+    public List<ProjectTeam> getTop10ProjectTeamsByAnnualSalary() throws Exception {
+        List<ProjectTeam> projectTeams = teamsDAO.getEveryProjectTeam();
+        return projectTeams.stream()
+                .sorted(Comparator.comparingDouble(ProjectTeam::getSumOfAnnualSalary).reversed())
+                .limit(10)
+                .collect(Collectors.toList());
     }
 }

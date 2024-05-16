@@ -174,4 +174,11 @@
     -fx-background-color: #3DCD58;
 }
 
+/* DashboardView  - AreaChart*/
+.chart-series-area-fill {
+    -fx-fill: #3DCD58;
+}
 
+.chart-series-area-line {
+    -fx-stroke: BLACK;
+}

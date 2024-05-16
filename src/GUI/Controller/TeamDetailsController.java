@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
