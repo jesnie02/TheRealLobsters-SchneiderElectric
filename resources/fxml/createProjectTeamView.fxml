@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,9 +12,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
    <center>
       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
@@ -58,7 +58,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="89.0" text="Geography:" />
-                              <CheckComboBox fx:id="cBoxGeographies" prefHeight="18.0" prefWidth="186.0" showCheckedCount="true" title="Geography" />
+                              <ComboBox fx:id="cBoxGeographies" prefWidth="186.0" promptText="Geography" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="24.0" />
@@ -134,11 +134,11 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <CheckComboBox fx:id="cBoxProfiles" prefHeight="26.0" prefWidth="290.0" showCheckedCount="true" title="Profiles">
+                        <ComboBox fx:id="cBoxProfiles" prefWidth="290.0" promptText="Profiles">
                            <VBox.margin>
-                              <Insets bottom="8.0" left="25.0" right="25.0" />
+                              <Insets left="25.0" right="25.0" />
                            </VBox.margin>
-                        </CheckComboBox>
+                        </ComboBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets bottom="8.0" left="25.0" />

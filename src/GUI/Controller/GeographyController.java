@@ -46,9 +46,6 @@ public class GeographyController  {
         colGeoOverviewName.setCellValueFactory(new PropertyValueFactory<>("geographyName"));
         colGeoOverviewCountry.setCellValueFactory(new PropertyValueFactory<>("countryName"));
 
-
-        // Rest of your table column initializations...
-
         colGeoOverviewEmployeeNumber.setCellValueFactory((TableColumn.CellDataFeatures<Geography, String> cellData) -> {
             int employeeCount = cellData.getValue().getProfileCount();
             return new SimpleStringProperty(String.valueOf(employeeCount));

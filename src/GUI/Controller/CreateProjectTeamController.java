@@ -67,9 +67,9 @@ public class CreateProjectTeamController implements Initializable {
     private TextField txtUtilization;
     private double utilization;
     @FXML
-    private CheckComboBox cBoxGeographies;
+    private ComboBox cBoxGeographies;
     @FXML
-    private CheckComboBox cBoxProfiles;
+    private ComboBox cBoxProfiles;
 
 
 
@@ -96,7 +96,6 @@ public class CreateProjectTeamController implements Initializable {
             setupSlider();
             setTextinField();
             setupRegex();
-
         } catch (Exception e) {
             throw new RuntimeException(e); //TODO: Handle this exception
         }
@@ -110,7 +109,6 @@ public class CreateProjectTeamController implements Initializable {
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
-
     }
 
     /**
@@ -224,11 +222,11 @@ public class CreateProjectTeamController implements Initializable {
      */
     @FXML
     public void selectProfileToTable(ActionEvent event) {
-        ObservableList<Profile> selectedProfile = cBoxProfiles.getCheckModel().getCheckedItems();
+        Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            tblProfileToTeam.getItems().addAll(selectedProfile);
-            cBoxProfiles.getCheckModel().clearChecks();
+            tblProfileToTeam.getItems().add(selectedProfile);
+            cBoxProfiles.setValue(null); // Clear the selection after adding
         }
     }
 
@@ -237,17 +235,17 @@ public class CreateProjectTeamController implements Initializable {
      */
     @FXML
     public void createProjectTeamToDatabase(ActionEvent event) {
-            if (!validateInput()) {
-                return;
-            }
+        if (!validateInput()) {
+            return;
+        }
         ObservableList<Profile> profiles = tblProfileToTeam.getItems();
 
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
 
-        ObservableList<Geography> selectedGeographies = cBoxGeographies.getCheckModel().getCheckedItems();
-        if(!selectedGeographies.isEmpty()){
-            projectTeam.setGeographyId(selectedGeographies.get(0).getGeographyId());
+        Geography selectedGeography = (Geography) cBoxGeographies.getValue();
+        if(selectedGeography != null){
+            projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
@@ -255,8 +253,8 @@ public class CreateProjectTeamController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        txtProjectTeamName.getText();
-        cBoxGeographies.getCheckModel().clearChecks();
+        txtProjectTeamName.clear();
+        cBoxGeographies.setValue(null); // Clear the selection
     }
 
     private void setupSlider(){
@@ -307,7 +305,7 @@ public class CreateProjectTeamController implements Initializable {
             txtProjectTeamName.setStyle("");
         }
 
-        if (cBoxGeographies.getCheckModel().getCheckedItems().isEmpty()) {
+        if (cBoxGeographies.getValue() == null) {
             cBoxGeographies.setStyle("-fx-border-color: red");
             isValid = false;
         } else {

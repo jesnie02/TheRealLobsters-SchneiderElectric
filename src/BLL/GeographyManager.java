@@ -16,8 +16,6 @@ public class GeographyManager {
         geographyDAO = new Geography_DAO();
     }
 
-
-
     public List <Geography> getSumsAndAveragesForGeographies() throws Exception{
         return geographyDAO.getSumsAndAveragesForGeographies();
     }
