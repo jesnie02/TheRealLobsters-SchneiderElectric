@@ -1,10 +1,13 @@
 package GUI.Controller;
 
+import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
+import GUI.Model.*;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.SearchableComboBox;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateProjectTeamController implements Initializable {
@@ -40,29 +46,80 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private MFXSlider sliderUtilization;
     @FXML
-    private CheckComboBox cBoxProfiles;
-    @FXML
     private Label lblHourlyRateSum;
     @FXML
     private Label lblDailyRateSum;
     @FXML
     private Label lblAnnualSalarySum;
     @FXML
-    private CheckComboBox cBoxGeographies;
-    @FXML
     private TextField txtProjectTeamName;
+    @FXML
+    private SearchableComboBox cBoxProfiles, cBoxGeographies;
+
+    ProfileModel profileModel;
+    CountryModel countryModel;
+    ProfileRoleModel profileRoleModel;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            profileModel = new ProfileModel();
+            countryModel = new CountryModel();
+            profileRoleModel = new ProfileRoleModel();
+            setupSearchBox();
+            initDataFromTeam();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void initDataFromTeam(ProjectTeam team, Geography geography) {
-        txtProjectTeamName.setText(team.getTeamName());
-        lblAnnualSalarySum.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
-        lblDailyRateSum.setText(String.format("%.2f", team.getSumOfDailyRate()));
-        lblHourlyRateSum.setText(String.format("%.2f", team.getSumOfHourlyRate()));
+    private void setupSearchBox() throws Exception {
+        cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
+        cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
+        setCountryComboBoxConverter();
+        setProfileComboBoxConverter();
+    }
+
+    private void setCountryComboBoxConverter() {
+        cBoxGeographies.setConverter(new StringConverter<Geography>() {
+            @Override
+            public String toString(Geography geography) {
+                return geography.getGeographyName();
+            }
+
+            @Override
+            public Geography fromString(String string) {
+                return null;
+            }
+        });
+    }
+
+    private void setProfileComboBoxConverter() {
+         cBoxProfiles.setConverter(new StringConverter<Profile>() {
+            @Override
+            public String toString(Profile profile) {
+                if (profile != null) {
+                    return profile.getFName() + " " + profile.getLName() ;
+                } else {
+                    return "Select a Profile";
+                }
+            }
+            @Override
+            public Profile fromString(String string) {
+                return null;
+            }
+        });
+    }
+
+    public void initDataFromTeam() throws Exception {
+        ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
+        if (currentTeam != null) {
+            txtProjectTeamName.setText(currentTeam.getTeamName());
+            lblAnnualSalarySum.setText(String.format("%.2f", currentTeam.getSumOfAnnualSalary()));
+            lblDailyRateSum.setText(String.format("%.2f", currentTeam.getSumOfDailyRate()));
+            lblHourlyRateSum.setText(String.format("%.2f", currentTeam.getSumOfHourlyRate()));
+        }
     }
 
     @FXML

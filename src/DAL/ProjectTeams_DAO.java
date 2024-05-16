@@ -197,13 +197,13 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     public List<Profile> getProfileFromProjectTeam(int projectTeamID){
         List<Profile> profiles = new ArrayList<>();
-        String sql = "SELECT p.*, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
+        String sql = "SELECT p.*, ppt.Utilization, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
                 "FROM Profile p " +
                 "JOIN ProfileProjectTeams ppt ON p.ProfileId = ppt.ProfileId_PPT " +
                 "JOIN ProfileProfileRole ppr ON p.ProfileId = ppr.ProfileId " +
                 "JOIN ProfileRole pr ON ppr.ProfileRoleId = pr.ProfileRoleId " +
                 "WHERE ppt.TeamsId = ? " +
-                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization";
+                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization";
 
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -220,8 +220,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                         double hourly = rs.getDouble("HourlySalary");
                         double daily = rs.getDouble("DailyRate");
                         double workingHR = rs.getDouble("DailyWorkingHours");
+                        float utilization = rs.getFloat("Utilization");
 
-                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, profileRoles);
+                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilization, profileRoles);
                 profiles.add(profile);
             }
         } catch (SQLException e) {

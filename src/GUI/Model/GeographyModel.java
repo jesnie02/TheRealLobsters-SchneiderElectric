@@ -30,8 +30,6 @@ public class GeographyModel {
 
      */
 
-
-
     public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {
         ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
                 geographyManager.getSumsAndAveragesForGeographies().stream()
@@ -40,7 +38,6 @@ public class GeographyModel {
         );
         return geographies;
     }
-
 
     private void loadInitialGeographies() throws Exception {
         List<Geography> geographyList = geographyManager.getAllGeographiesGeographyOverview();

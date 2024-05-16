@@ -10,6 +10,7 @@ public class Profile {
     private String fName, lName, roles;
     private boolean overheadCost;
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization;
+    private float utilization;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
     private List<ProfileRole> profileRoles;
@@ -57,6 +58,19 @@ public class Profile {
         this.profileRoles = profileRoles;
     }
 
+    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, float utilization, List<ProfileRole> profileRoles) {
+        this.fName = firstName;
+        this.lName = lastName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlyResult;
+        this.dailyRate = dailyResult;
+        this.fixedAmount = fixedAmount;
+        this.dailyWorkingHours = dailyWorkingHours;
+        this.utilization = utilization;
+        this.profileRoles = profileRoles;
+    }
+
     /**
      * For unit testing purposes
      */
@@ -80,7 +94,7 @@ public class Profile {
         this.profileRoles = new ArrayList<>();
     }
 
-    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, List<ProfileRole> profileRoles) {
+    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, float utilization, List<ProfileRole> profileRoles) {
         this.profileId = id;
         this.fName = fName;
         this.lName = lName;
@@ -89,22 +103,9 @@ public class Profile {
         this.hourlySalary = hourly;
         this.dailyRate = daily;
         this.dailyWorkingHours = workingHR;
+        this.utilization = utilization;
         this.profileRoles = profileRoles;
     }
-
-    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, String roles) {
-        this.profileId = id;
-        this.fName = fName;
-        this.lName = lName;
-        this.overheadCost = overhead;
-        this.annualSalary = annual;
-        this.hourlySalary = hourly;
-        this.dailyRate = daily;
-        this.dailyWorkingHours = workingHR;
-        this.roles = roles;
-        this.profileRoles = new ArrayList<>();
-    }
-
 
 
     public int getProfileId() {
@@ -130,6 +131,14 @@ public class Profile {
 
     public String getFName() {
         return fName;
+    }
+
+    public float getUtilization() {
+        return utilization;
+    }
+
+    public void setUtilization(float utilization) {
+        this.utilization = utilization;
     }
 
     public void setFName(String fName) {

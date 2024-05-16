@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProjectTeamController">
    <center>
       <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
@@ -58,7 +58,7 @@
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="89.0" text="Geography:" />
-                              <CheckComboBox fx:id="cBoxGeographies" prefHeight="18.0" prefWidth="186.0" showCheckedCount="true" title="Geography" />
+                              <SearchableComboBox fx:id="cBoxGeographies" prefHeight="18.0" prefWidth="186.0" promptText="Geographies" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="24.0" />
@@ -134,11 +134,11 @@
                               <Insets left="8.0" />
                            </padding>
                         </Label>
-                        <CheckComboBox fx:id="cBoxProfiles" prefHeight="26.0" prefWidth="290.0" showCheckedCount="true" title="Profiles">
+                        <SearchableComboBox fx:id="cBoxProfiles" prefHeight="25.0" prefWidth="285.0" promptText="Profiles">
                            <VBox.margin>
-                              <Insets bottom="8.0" left="25.0" right="25.0" />
+                              <Insets bottom="8.0" left="25.0" right="50.0" />
                            </VBox.margin>
-                        </CheckComboBox>
+                        </SearchableComboBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets bottom="8.0" left="25.0" />

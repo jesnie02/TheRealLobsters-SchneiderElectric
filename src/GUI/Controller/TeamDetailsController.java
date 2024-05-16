@@ -4,6 +4,7 @@ import BE.Geography;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
+import GUI.Model.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import javafx.beans.property.SimpleSetProperty;
@@ -59,7 +60,7 @@ public class TeamDetailsController implements Initializable {
     private void setupTable() {
         colFirstNameTD.setCellValueFactory(new PropertyValueFactory<>("FName"));
         colLastNameTD.setCellValueFactory(new PropertyValueFactory<>("LName"));
-        colUtilizationTD.setCellValueFactory(new PropertyValueFactory<>("totalUtilization"));
+        colUtilizationTD.setCellValueFactory(new PropertyValueFactory<>("Utilization"));
         colProfileRoleTD.setCellValueFactory(cellData -> new SimpleStringProperty(
                 cellData.getValue().getProfileRoles().stream()
                         .map(ProfileRole::toString)
@@ -69,6 +70,7 @@ public class TeamDetailsController implements Initializable {
 
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {
+        DataModelSingleton.getInstance().setCurrentTeam(team);
         lblTeamInTeamDetail.setText(team.getTeamName());
         if (geography != null){
             txtTDGeography.setText(geography.getGeographyName());
@@ -78,6 +80,7 @@ public class TeamDetailsController implements Initializable {
         updateSalaryInfo(team);
         ObservableList<Profile> profiles = projectTeam.getProfileForTeam(team.getTeamId());
         tableViewProfile.setItems(profiles);
+
     }
 
     private void updateSalaryInfo(ProjectTeam team){
