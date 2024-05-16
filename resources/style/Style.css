@@ -174,11 +174,11 @@
     -fx-background-color: #3DCD58;
 }
 
-/* DashboardView  - AreaChart*/
-.chart-series-area-fill {
-    -fx-fill: #3DCD58;
+/* Bar Chart */
+.default-color0.chart-bar {
+    -fx-bar-fill: #3DCD58; /* Green fill for bars */
 }
 
-.chart-series-area-line {
-    -fx-stroke: BLACK;
+.default-color0.chart-bar:hover {
+    -fx-bar-fill: #34b04c; /* Slightly darker green on hover */
 }

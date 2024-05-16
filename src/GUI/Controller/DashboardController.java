@@ -8,11 +8,7 @@ import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -42,7 +38,7 @@ public class DashboardController implements Initializable {
     @FXML
     private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;
     @FXML
-    private AreaChart<String, Number> areaChart;
+    private BarChart<String, Number> barChart;
     @FXML
     private PieChart pieChart;
 
@@ -100,7 +96,7 @@ public class DashboardController implements Initializable {
             List<ProjectTeam> top10ProjectTeams = projectTeamsModel.getTop10ProjectTeamsByAnnualSalary();
 
             // Clear any existing data
-            areaChart.getData().clear();
+            barChart.getData().clear();
             xAxis.getCategories().clear();
 
             // Add team names to the xAxis categories
@@ -117,7 +113,7 @@ public class DashboardController implements Initializable {
             }
 
             // Add the series to the chart
-            areaChart.getData().add(series);
+            barChart.getData().add(series);
         } catch (Exception e) {
             e.printStackTrace(); // TODO: Handle this exception properly
         }

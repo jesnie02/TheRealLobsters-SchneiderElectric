@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.chart.BarChart?>
 <BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
    <center>
       <TabPane prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -28,14 +29,14 @@
                                  <Insets top="10.0" bottom="10.0" />
                               </padding>
                            </Label>
-                           <AreaChart fx:id="areaChart" prefHeight="500.0" prefWidth="1000.0">
+                           <BarChart fx:id="barChart" prefHeight="500.0" prefWidth="1000.0">
                               <xAxis>
                                  <CategoryAxis fx:id="xAxis" />
                               </xAxis>
                               <yAxis>
                                  <NumberAxis fx:id="yAxis" />
                               </yAxis>
-                           </AreaChart>
+                           </BarChart>
                         </VBox>
                      </top>
                      <center>
