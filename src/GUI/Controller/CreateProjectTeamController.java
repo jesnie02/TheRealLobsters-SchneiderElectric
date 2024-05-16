@@ -229,7 +229,7 @@ public class CreateProjectTeamController implements Initializable {
         });
         colTeamUtilization.setCellValueFactory(cellData -> {
             double utilization = utilizationsMap.get(cellData.getValue());
-            return new SimpleStringProperty(formatter.format(utilization*100) + " %");
+            return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
     }
 
@@ -241,7 +241,7 @@ public class CreateProjectTeamController implements Initializable {
         Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationsMap.put(selectedProfile, sliderUtilization.getValue()/100);
+            utilizationsMap.put(selectedProfile, sliderUtilization.getValue());
             selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
             selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
             selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
