@@ -45,7 +45,7 @@ public class CreateProfileController implements Initializable {
 
     @FXML
     private Label lblHourlyResult, lblDailyResult, lblShowMassage;
-
+    private double overheadMultiplierProfile;
     // comboBox for country and team
 
 
@@ -69,7 +69,7 @@ public class CreateProfileController implements Initializable {
             profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO: Handle this exception
         }
     }
 
@@ -86,6 +86,8 @@ public class CreateProfileController implements Initializable {
         setupComboBoxCustomization();
         setupRegex();
         populateProfileRolesComboBox();
+
+
     }
 
     private void populateProfileRolesComboBox() {
@@ -148,8 +150,13 @@ public class CreateProfileController implements Initializable {
      */
     public void listenersOnSliders() {
         sliderOverhead.valueProperty().addListener((observable, oldValue, newValue) -> {
-            txtOverheadView.setText(String.format("%.2f", newValue));
+            overheadMultiplierProfile = newValue.doubleValue();
+            setTextInField();
         });
+
+    }
+    private void setTextInField(){
+        txtOverheadView.setText(String.valueOf(overheadMultiplierProfile));
     }
 
     /**
