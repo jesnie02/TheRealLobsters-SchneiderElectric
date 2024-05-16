@@ -109,6 +109,17 @@ public class CreateProjectTeamController implements Initializable {
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
+
+        // Add a listener to the profile ComboBox's value property for utilization percentage
+        cBoxProfiles.valueProperty().addListener((obs, oldProfile, newProfile) -> {
+            if (newProfile != null) {
+                Profile selectedProfile = (Profile) newProfile;
+                double profileUtilization = selectedProfile.getTotalUtilization();
+                sliderUtilization.setValue(profileUtilization);
+                utilization = profileUtilization;
+                setTextinField();
+            }
+        });
     }
 
     /**

@@ -20,7 +20,7 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours) {
+    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization) {
         this.profileId = profileId;
         this.fName = fName;
         this.lName = lName;
@@ -29,6 +29,7 @@ public class Profile {
         this.hourlySalary = hourlySalary;
         this.dailyRate = dailyRate;
         this.dailyWorkingHours = dailyWorkingHours;
+        this.totalUtilization = totalUtilization;
     }
 
     public Profile( String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
