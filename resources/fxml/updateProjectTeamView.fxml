@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.SearchableComboBox?>
 
 <BorderPane prefHeight="463.0" prefWidth="795.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProjectTeamController">
    <center>

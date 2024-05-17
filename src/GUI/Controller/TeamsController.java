@@ -4,6 +4,7 @@ import BE.Geography;
 import BE.ProjectTeam;
 import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.DataModelSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -41,6 +42,22 @@ public class TeamsController implements Initializable {
         return instance;
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            projectTeamsModel = new ProjectTeamsModel();
+            tPaneTeamOverview.setHgap(36);
+            tPaneTeamOverview.setVgap(50);
+            tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
+            tPaneTeamOverview.setAlignment(Pos.CENTER);
+            loadTeamsInTilePane();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void loadTeamsInTilePane() throws Exception {
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
@@ -49,6 +66,14 @@ public class TeamsController implements Initializable {
             Node teamNode = loader.load();
             TeamsContainerController controller = loader.getController();
             controller.updateUI(team);
+
+            teamNode.setOnMouseClicked(event -> {
+                try {
+                    handleTeamSelection(team);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
             tPaneTeamOverview.getChildren().add(teamNode);
         }
     }
@@ -65,22 +90,23 @@ public class TeamsController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void handleTeamSelection(ProjectTeam selectedTeam) throws Exception {
+         DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
+         System.out.println("Selected Team: " + selectedTeam.getTeamName());
+         refreshView();
+    }
 
-        try {
-            projectTeamsModel = new ProjectTeamsModel();
-            tPaneTeamOverview.setHgap(36);
-            tPaneTeamOverview.setVgap(50);
-            tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
-            tPaneTeamOverview.setAlignment(Pos.CENTER);
-            loadTeamsInTilePane();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    private void refreshView() throws Exception {
+        ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
+        System.out.println("Current Team in Singleton: " + currentTeam.getTeamName());
+        UpdateProjectTeamController controller = frameController.getUpdateProjectTeamController();
+        if (controller != null) {
+            controller.initDataFromTeam();
+        } else {
+            System.err.println("UpdateProjectTeamController is null");
         }
     }
+
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {

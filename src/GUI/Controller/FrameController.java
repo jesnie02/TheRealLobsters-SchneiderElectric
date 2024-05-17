@@ -19,6 +19,7 @@ public class FrameController implements Initializable {
 
 
     private static FrameController instance;
+    private UpdateProjectTeamController updateProjectTeamController;
 
     @FXML
     private StackPane stackPaneFrame;
@@ -32,8 +33,6 @@ public class FrameController implements Initializable {
     private Stack<Node> pageHistory = new Stack<>();
 
     private final String BASE_PATH = "/fxml/";
-
-
 
     public FrameController() {
         instance = this;
@@ -77,6 +76,10 @@ public class FrameController implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(BASE_PATH + viewName));
                 view = loader.load();
+
+                if (viewName.equals("updateProjectTeamView.fxml")){
+                    updateProjectTeamController = loader.getController();
+                }
                 viewCache.put(viewName, view);
 
             } catch (Exception e) {
@@ -91,10 +94,12 @@ public class FrameController implements Initializable {
         }
     }
 
-
-
-
-
+    public UpdateProjectTeamController getUpdateProjectTeamController() {
+        if (updateProjectTeamController == null) {
+            loadView("updateProjectTeamView.fxml");
+        }
+        return updateProjectTeamController;
+    }
 
     private void showErrorAlert(String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -103,8 +108,6 @@ public class FrameController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-
 
     @FXML
     private void openDashboard(ActionEvent actionEvent) {
@@ -139,9 +142,13 @@ public class FrameController implements Initializable {
         loadView("createProjectTeamView.fxml");
     }
 
+
+
     public void loadUpdateProjectTeamView() {
         loadView("updateProjectTeamView.fxml");
     }
+
+
 
     // This method is called when the shutdown button is clicked.
     @FXML

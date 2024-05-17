@@ -77,7 +77,7 @@
                     <columns>
                       <TableColumn fx:id="colFirstNameTD" prefWidth="75.0" text="First name" />
                       <TableColumn fx:id="colLastNameTD" prefWidth="75.0" text="Last name" />
-                        <TableColumn fx:id="colUtilizationTD" prefWidth="75.0" text="Utilization" />
+                        <TableColumn fx:id="colUtilizationTD" prefWidth="75.0" text="Utilization %" />
                         <TableColumn fx:id="colProfileRoleTD" prefWidth="124.0" text="Role" />
                     </columns>
                   </TableView>

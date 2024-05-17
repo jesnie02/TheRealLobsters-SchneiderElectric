@@ -7,6 +7,7 @@ import GUI.Controller.TeamsController;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.DataModelSingleton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class TeamsContainerController implements Initializable {
 
+    private static TeamsContainerController instance;
     private ProjectTeam selectedTeam;
     ProjectTeamsModel projectTeamsModel;
     CountryModel countryModel;
@@ -33,40 +35,37 @@ public class TeamsContainerController implements Initializable {
 
 
     @FXML
-    private Label lblAnnualAVGTeamCostContainer,lblGeographyContainer, lblLocationContainer, lblNumberOfMembersContainer, lblTeamNameContainer;
+    private Label lblAnnualAVGTeamCostContainer,lblGeographyContainer, lblNumberOfMembersContainer, lblTeamNameContainer, lblLocationContainer;
+
+
+    public TeamsContainerController() {
+        instance = this;
+    }
+
+    public static TeamsContainerController getInstance() {
+        return instance;
+    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             projectTeamsModel = new ProjectTeamsModel();
-            countryModel = new CountryModel();
             geographyModel = new GeographyModel();
-
-            new Thread(() -> {
-                try {
-                    geographyMap = geographyModel.getGeographyMap();
-                } catch (Exception e) {
-                    handleException(e);//TODO: Handle this exception
-                }
-            }).start();
-
+            loadGeographyMap();
         } catch (Exception e) {
-            handleException(e);//TODO: Handle this exception
+                    handleException(e);//TODO: Handle this exception
         }
-
     }
-
-
 
     public void updateUI(ProjectTeam team) throws Exception {
         this.selectedTeam = team;
+
         Platform.runLater(() -> {
             updateTeamInformation(team);
             updateGeographyInformation(team);
         });
         lblTeamNameContainer.getParent().setOnMouseClicked(event -> openTeamDetailView());
-
     }
 
     private void updateTeamInformation(ProjectTeam team) {
@@ -76,8 +75,6 @@ public class TeamsContainerController implements Initializable {
 
     }
 
-
-
     private void openTeamDetailView() {
         TeamsController teamsController = TeamsController.getInstance();
         Geography teamGeography = geographyMap.get(selectedTeam.getGeographyId());
@@ -86,40 +83,17 @@ public class TeamsContainerController implements Initializable {
 
     private void updateGeographyInformation(ProjectTeam team) {
        int teamGeographyId = team.getGeographyId();
-
-        if (geographyMap.isEmpty()) {
-            loadGeographyMap();
-        }
-
-        Geography teamGeography = geographyMap.get(teamGeographyId);
+       Geography teamGeography = geographyMap.get(teamGeographyId);
         if (teamGeography != null) {
             lblGeographyContainer.setText(teamGeography.getGeographyName());
-            try {
-                updateGeographyInformation(teamGeographyId);
-            } catch (Exception e) {
-                handleException(e);
-            }
         } else {
-            lblLocationContainer.setText("No Country");
+            lblLocationContainer.setText("No Geography");
         }
     }
-
-
 
     private void loadGeographyMap() {
         try {
             geographyMap = geographyModel.getGeographyMap();
-        } catch (Exception e) {
-            handleException(e);
-        }
-    }
-
-    private void updateGeographyInformation(int teamCountryId) {
-        try {
-           geographies = geographyModel.getGeographyMap().values().stream()
-                    .filter(geography -> geography.getGeographyId() == teamCountryId)
-                    .collect(Collectors.toList());
-            lblGeographyContainer.setText(geographies.get(0).getGeographyName());
         } catch (Exception e) {
             handleException(e);
         }

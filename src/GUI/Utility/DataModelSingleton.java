@@ -1,4 +1,4 @@
-package GUI.Model;
+package GUI.Utility;
 
 import BE.ProjectTeam;
 
@@ -10,7 +10,10 @@ public class DataModelSingleton {
     private DataModelSingleton() {
     }
 
-    public static DataModelSingleton getInstance() {
+    public static synchronized DataModelSingleton getInstance() {
+        if (instance == null){
+            instance = new DataModelSingleton();
+        }
         return instance;
     }
 

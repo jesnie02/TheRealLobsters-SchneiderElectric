@@ -1,14 +1,11 @@
 package GUI.Controller;
 
-import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
 import GUI.Model.*;
+import GUI.Utility.DataModelSingleton;
 import io.github.palexdev.materialfx.controls.MFXSlider;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,11 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.SearchableComboBox;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateProjectTeamController implements Initializable {
@@ -120,6 +115,10 @@ public class UpdateProjectTeamController implements Initializable {
             lblDailyRateSum.setText(String.format("%.2f", currentTeam.getSumOfDailyRate()));
             lblHourlyRateSum.setText(String.format("%.2f", currentTeam.getSumOfHourlyRate()));
         }
+    }
+
+    public void refreshTeamData() throws Exception {
+        initDataFromTeam();
     }
 
     @FXML

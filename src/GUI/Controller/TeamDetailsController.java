@@ -4,18 +4,14 @@ import BE.Geography;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
-import GUI.Model.DataModelSingleton;
+import GUI.Utility.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
-import javafx.beans.property.SimpleSetProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -32,6 +27,7 @@ public class TeamDetailsController implements Initializable {
     private ProjectTeamsModel projectTeam;
     private FrameController frameController;
     private GeographyModel geographyModel;
+
 
     @FXML
     private TextField txtTDGeography, txtSumAnnual, txtSumDaily, txtSumHourly, txtAvgAnnual, txtAvgDaily, txtAvgHourly;
