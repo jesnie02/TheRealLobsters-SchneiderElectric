@@ -3,8 +3,11 @@ package GUI.Model;
 import BE.Profile;
 import BE.ProjectTeam;
 import BLL.ProjectTeamsManager;
+import CustomExceptions.ApplicationWideException;
+import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -141,8 +144,11 @@ public class ProjectTeamsModel {
         return projectTeamsManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
     }
 
-
-
-
-
+    public void deleteTeam(ProjectTeam projectTeam) {
+        try {
+            projectTeamsManager.deleteTeam(projectTeam);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
+    }
 }

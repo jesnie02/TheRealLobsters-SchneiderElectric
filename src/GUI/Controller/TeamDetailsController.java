@@ -4,6 +4,8 @@ import BE.Geography;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
+import GUI.Utility.ExceptionHandler;
 import GUI.Utility.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
@@ -12,18 +14,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class TeamDetailsController implements Initializable {
 
+    public Button btnDeleteTeamTeamDetails;
     private ProjectTeamsModel projectTeam;
     private FrameController frameController;
     private GeographyModel geographyModel;
@@ -92,6 +93,22 @@ public class TeamDetailsController implements Initializable {
 
     @FXML
     private void deleteProjectTeam(ActionEvent actionEvent) {
+        ProjectTeam currentTeam = (ProjectTeam) DataModelSingleton.getInstance().getCurrentTeam();
+        String teamName = currentTeam.getTeamName(); // Assuming getTeamName() method exists
+
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the team: " + teamName + "?", ButtonType.YES, ButtonType.NO);
+        confirmAlert.setHeaderText("Confirm Deletion");
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+                projectTeam.deleteTeam(currentTeam);
+                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+                infoAlert.setTitle("Deletion Successful");
+                infoAlert.setHeaderText(null);
+                infoAlert.setContentText("The team " + teamName + " has been successfully deleted.");
+                infoAlert.showAndWait();
+                frameController.loadTeamsView();
+        }
     }
 
     @FXML

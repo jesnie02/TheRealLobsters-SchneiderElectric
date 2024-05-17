@@ -164,6 +164,56 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
     }
 
+    @Override
+    public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
+        String deleteTeamSQL = "DELETE FROM ProjectTeams WHERE TeamsId = ?";
+        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
+        String deleteCountryProjectTeamsSQL = "DELETE FROM CountryProjectTeams WHERE TeamsId = ?";
+
+        Connection conn = null;
+        try {
+            conn = dbConnector.getConnection();
+
+            try (PreparedStatement pstmtDeleteTeam = conn.prepareStatement(deleteTeamSQL);
+                 PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+                 PreparedStatement pstmtDeleteCountryProjectTeams = conn.prepareStatement(deleteCountryProjectTeamsSQL)) {
+
+                conn.setAutoCommit(false);
+
+                pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
+                pstmtDeleteProfileProjectTeams.executeUpdate();
+
+                pstmtDeleteCountryProjectTeams.setInt(1, projectTeam.getTeamId());
+                pstmtDeleteCountryProjectTeams.executeUpdate();
+
+                pstmtDeleteTeam.setInt(1, projectTeam.getTeamId());
+                pstmtDeleteTeam.executeUpdate();
+
+                conn.commit();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Consider replacing with more robust error handling
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    System.out.println("Transaction rolled back");
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
+                }
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                    System.out.println("Connection closed");
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Resource cleanup failed: " + ex.getMessage(), ex);
+                }
+            }
+        }
+    }
+
     private void adjustUtilization(Profile profile, double utilization) {
         String updateUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization - ? WHERE ProfileId = ?";
 

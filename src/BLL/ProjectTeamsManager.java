@@ -3,6 +3,7 @@ package BLL;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import DAL.ProjectTeams_DAO;
 import javafx.collections.ObservableList;
 
@@ -130,5 +131,9 @@ public class ProjectTeamsManager {
                 .sorted(Comparator.comparingDouble(ProjectTeam::getSumOfAnnualSalary).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
+    }
+
+    public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
+        teamsDAO.deleteTeam(projectTeam);
     }
 }

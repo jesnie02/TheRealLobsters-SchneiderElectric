@@ -134,21 +134,30 @@ public class FrameController implements Initializable {
         loadView("multipliersView.fxml");
     }
 
+    @FXML
     public void loadCreateProfileView() {
         loadView("createProfileView.fxml");
     }
 
+    @FXML
     public void loadCreateTeamView() {
         loadView("createProjectTeamView.fxml");
     }
 
+    @FXML
+    public void loadTeamsView() {
+        loadView("TeamsView.fxml");
+    }
 
-
+    @FXML
     public void loadUpdateProjectTeamView() {
         loadView("updateProjectTeamView.fxml");
     }
 
-
+    @FXML
+    private void openCurrency(ActionEvent actionEvent) {
+        loadView("currencyView.fxml");
+    }
 
     // This method is called when the shutdown button is clicked.
     @FXML
@@ -163,10 +172,5 @@ public class FrameController implements Initializable {
         } else {
             showErrorAlert("Initialization Error", "UI components are not fully initialized.");
         }
-    }
-
-    @FXML
-    private void openCurrency(ActionEvent actionEvent) {
-        loadView("currencyView.fxml");
     }
 }
