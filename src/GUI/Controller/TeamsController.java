@@ -43,12 +43,12 @@ public class TeamsController implements Initializable {
 
 
     public void loadTeamsInTilePane() throws Exception {
-        List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData(); // Assuming this method returns the list of all teams
+        List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
             Node teamNode = loader.load();
-            TeamsContainerController controller = loader.getController();  // Your controller for the team container
-            controller.updateUI(team);  // Assuming you have a method to set the team in the controller
+            TeamsContainerController controller = loader.getController();
+            controller.updateUI(team);
             tPaneTeamOverview.getChildren().add(teamNode);
         }
     }

@@ -90,7 +90,7 @@ public class CreateGeographyController implements Initializable {
 
         // Validate the CheckComboBox for selected countries
         if (cBoxCountries.getCheckModel().getCheckedItems().isEmpty()) {
-            cBoxCountries.setStyle("-fx-border-color: red;"); // Assuming CheckComboBox supports setStyle
+            cBoxCountries.setStyle("-fx-border-color: red;");
             isValid = false;
         } else {
             cBoxCountries.setStyle("");
