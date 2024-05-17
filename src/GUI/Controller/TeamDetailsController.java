@@ -94,13 +94,14 @@ public class TeamDetailsController implements Initializable {
     @FXML
     private void deleteProjectTeam(ActionEvent actionEvent) throws ApplicationWideException {
         ProjectTeam currentTeam = (ProjectTeam) DataModelSingleton.getInstance().getCurrentTeam();
-        String teamName = currentTeam.getTeamName(); // Assuming getTeamName() method exists
+        String teamName = currentTeam.getTeamName();
 
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the team: " + teamName + "?", ButtonType.YES, ButtonType.NO);
         confirmAlert.setHeaderText("Confirm Deletion");
         Optional<ButtonType> result = confirmAlert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.YES) {
+            try {
                 projectTeam.deleteTeam(currentTeam);
                 Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
                 infoAlert.setTitle("Deletion Successful");
@@ -108,10 +109,9 @@ public class TeamDetailsController implements Initializable {
                 infoAlert.setContentText("The team " + teamName + " has been successfully deleted.");
                 infoAlert.showAndWait();
                 frameController.loadTeamsView();
-            try {
                 TeamsController.getInstance().loadTeamsInTilePane();
             } catch (Exception e) {
-                throw new ApplicationWideException("Error loading teams in tile pane");
+                throw new ApplicationWideException("Error during team deletion: " + e.getMessage(), e);
             }
         }
     }

@@ -192,7 +192,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 conn.commit();
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider replacing with more robust error handling
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -201,6 +200,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                     throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
                 }
             }
+            throw new ApplicationWideException("SQL operation failed: " + e.getMessage(), e);
         } finally {
             if (conn != null) {
                 try {
