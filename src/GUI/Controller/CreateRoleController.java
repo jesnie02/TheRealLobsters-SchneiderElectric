@@ -27,7 +27,7 @@ public class CreateRoleController implements Initializable {
     }
 
     @FXML
-    private void saveProfile(ActionEvent actionEvent) {
+    private void saveRole(ActionEvent actionEvent) {
         String role = txtProfileRole.getText().trim();
 
         if (role.isEmpty()) {

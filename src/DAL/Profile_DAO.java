@@ -55,11 +55,10 @@ public class Profile_DAO implements IProfileDataAccess {
         return allProfiles;
     }
 
-    /**
-     * Saves a new profile to the database.
-     * @param newProfile The new profile to be saved.
-     */
-    public void saveProfile(Profile newProfile) throws ApplicationWideException {
+
+    //Saves a new profile to the database.
+    @Override
+    public void createProfile(Profile newProfile) throws ApplicationWideException {
         String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
                 "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 

@@ -8,8 +8,10 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.SliderDecimalFilter;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,10 +22,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -66,7 +71,7 @@ public class CreateProjectTeamController implements Initializable {
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
-    private FrameController frameController;
+
     @FXML
     private MFXSlider sliderUtilization;
     @FXML
@@ -101,6 +106,7 @@ public class CreateProjectTeamController implements Initializable {
             setTblProfileToTeam();
             setupSlider();
             setTextinField();
+
             setupRegex();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
@@ -275,16 +281,24 @@ public class CreateProjectTeamController implements Initializable {
         cBoxGeographies.setValue(null); // Clear the selection
     }
 
+
+
     private void setupSlider(){
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtUtilization.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtUtilization.textProperty(),sliderUtilization.valueProperty(),  converter);
+
         sliderUtilization.valueProperty().addListener((observable, oldValue, newValue) -> {
             utilization = newValue.doubleValue();
-            setTextinField();
         });
     }
 
     private void setTextinField(){
         txtUtilization.setText(String.valueOf(utilization));
     }
+
+
 
         /**
          * Removes the selected profile from the team table.

@@ -8,4 +8,8 @@ import java.util.List;
 public interface IProfileDataAccess {
 
     List<Profile> getAllProfiles() throws ApplicationWideException;
+
+    void createProfile(Profile newProfile) throws ApplicationWideException;
+
+
 }

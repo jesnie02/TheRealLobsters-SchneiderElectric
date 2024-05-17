@@ -211,7 +211,7 @@
                         <Insets right="16.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="btnCreateProfile" mnemonicParsing="false" onAction="#saveProfileToDatabase" prefHeight="41.0" prefWidth="127.0" text="Save" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnCreateProfile" mnemonicParsing="false" onAction="#createProfile" prefHeight="41.0" prefWidth="127.0" text="Save" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets bottom="8.0" right="25.0" top="25.0" />

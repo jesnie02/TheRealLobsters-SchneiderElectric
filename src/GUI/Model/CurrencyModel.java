@@ -39,12 +39,7 @@ public class CurrencyModel {
 
 
     public void setCurrency(Currency selectedCurrency) {
-        for (Currency currency : getCurrencies()) {
-            if (currency.getCurrencyId() == selectedCurrency.getCurrencyId()) {
-                currency.setCurrencyRate(selectedCurrency.getCurrencyRate());
-                break;
-            }
-        }
+
         try {
             currencyManager.setCurrency(selectedCurrency);
         } catch (ApplicationWideException e) {

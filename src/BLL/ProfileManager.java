@@ -38,8 +38,8 @@ public class ProfileManager {
      * Saves a new profile to the database.
      * @param newProfile The new profile to be saved.
      */
-    public void saveProfile(Profile newProfile) throws ApplicationWideException {
-        profileDAO.saveProfile(newProfile);
+    public void createProfile(Profile newProfile) throws ApplicationWideException {
+        profileDAO.createProfile(newProfile);
     }
 
     /**

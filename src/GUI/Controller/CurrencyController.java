@@ -92,6 +92,7 @@ public class CurrencyController implements Initializable {
             selectedCurrency.setCurrencyRate(newRate);
             currencyModel.setCurrency(selectedCurrency);
             displayMessage("Currency rate updated successfully.", false);
+            tblCurrency.refresh();
         } catch (NumberFormatException e) {
             displayMessage("Invalid currency rate entered.", true);
         }

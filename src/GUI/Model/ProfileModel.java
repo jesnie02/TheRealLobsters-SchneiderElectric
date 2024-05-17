@@ -37,9 +37,11 @@ public class ProfileModel {
     }
 
 
-    public void saveProfile(Profile newProfile) {
+
+     // Create a new profile to the database.
+    public void createProfile(Profile newProfile) {
         try {
-            profileManager.saveProfile(newProfile);
+            profileManager.createProfile(newProfile);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }

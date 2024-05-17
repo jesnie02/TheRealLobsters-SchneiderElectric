@@ -1,11 +1,14 @@
 package GUI.Controller;
 
 
+import BE.Currency;
 import BE.ProfileRole;
 import CustomExceptions.ApplicationWideException;
-import GUI.Model.ProfileRoleModel;
+import GUI.Model.*;
 
 import GUI.Utility.ExceptionHandler;
+import GUI.Utility.SliderDecimalFilter;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -17,18 +20,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import BE.Profile;
-import GUI.Model.ProfileModel;
-import GUI.Model.ProjectTeamsModel;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import GUI.Model.CountryModel;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class CreateProfileController implements Initializable {
@@ -56,10 +59,11 @@ public class CreateProfileController implements Initializable {
     private ProjectTeamsModel projectTeamsModel;
     private ProfileModel profileModel;
     private ProfileRoleModel profileRoleModel;
+    private CurrencyModel currencyModel;
 
 
     @FXML
-    private ComboBox<String> cBox_Currency;
+    private ComboBox<Currency> cBox_Currency;
     @FXML
     private CheckComboBox cBoxProfile_ProfileRoles;
 
@@ -70,6 +74,7 @@ public class CreateProfileController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
+            currencyModel = new CurrencyModel();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -81,13 +86,12 @@ public class CreateProfileController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listenersOnSliders();
         setupCheckboxListeners();
         setupListenersOnTextFields();
         populateCountryCurrencyComboBox();
-        setupComboBoxCustomization();
         setupRegex();
         populateProfileRolesComboBox();
+        bindSliderAndTextField();
     }
 
     private void populateProfileRolesComboBox() {
@@ -95,78 +99,22 @@ public class CreateProfileController implements Initializable {
     }
 
     private void populateCountryCurrencyComboBox() {
-        ObservableList<String> options = null;
-
-            options = profileModel.getCountryAndCurrencyCodes();
-
-        cBox_Currency.setItems(options);
-
-        setDefaultCurrency("EUR");
+        ObservableList<Currency> currencies = currencyModel.getCurrencies();
+        cBox_Currency.setItems(currencies);
     }
 
-    private void setDefaultCurrency(String currencyCode) {
-        for (String item : cBox_Currency.getItems()) {
-            if (item.endsWith(currencyCode)) {
-                cBox_Currency.getSelectionModel().select(item);
-                break;
-            }
-        }
+    //This method binds the slider and the textfield so that the value of the slider is shown in the textfield.
+    public void bindSliderAndTextField() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtOverheadView.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtOverheadView.textProperty(),sliderOverhead.valueProperty(),  converter);
+
     }
 
 
-
-    private void setupComboBoxCustomization() {
-        cBox_Currency.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item == null || empty) {
-                            setText(null);
-                        } else {
-
-                            setText(item);
-                        }
-                    }
-                };
-            }
-        });
-        cBox_Currency.setButtonCell(new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    // Show only the currency code when an item is selected
-                    setText(item.split(" - ")[1]);
-                }
-            }
-        });
-    }
-
-    /**
-     * This method sets up listeners on the overhead and utilization sliders.
-     * When the value of a slider changes, the corresponding TextField is updated with the new value.
-     */
-    public void listenersOnSliders() {
-        sliderOverhead.valueProperty().addListener((observable, oldValue, newValue) -> {
-            overheadMultiplierProfile = newValue.doubleValue();
-            setTextInField();
-        });
-
-    }
-    private void setTextInField(){
-        txtOverheadView.setText(String.valueOf(overheadMultiplierProfile));
-    }
-
-    /**
-     * This method sets up listeners on the overhead and production checkboxes.
-     * When one checkbox is selected, the other one is deselected.
-     */
-    private void setupCheckboxListeners() {
+     //This method sets up listeners on the overhead and production checkboxes.
+     private void setupCheckboxListeners() {
         checkOverhead.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 checkProduction.setSelected(false);
@@ -211,7 +159,7 @@ public class CreateProfileController implements Initializable {
     //This method is called when the save button is clicked.
     //It validates the input, creates a new Profile object, and saves it to the database.
     @FXML
-    private void saveProfileToDatabase(ActionEvent actionEvent) {
+    private void createProfile(ActionEvent actionEvent) {
         if (!validateInput()) {
             return;
         }
@@ -229,7 +177,7 @@ public class CreateProfileController implements Initializable {
         Profile newProfile = new Profile(firstName, lastName, overheadCost,
                 annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles);
 
-            profileModel.saveProfile(newProfile);
+            profileModel.createProfile(newProfile);
             lblShowMassage.setText("Profile has been saved");
 
 
@@ -282,7 +230,7 @@ public class CreateProfileController implements Initializable {
         setRegexValidationForTextFields(txtAnnualSalary);
         setRegexValidationForTextFields(txtFixedAmount);
         setRegexValidationForTextFields(txtEffectiveHours);
-        setRegexValidationForTextFields(txtOverheadView);
+        //setRegexValidationForTextFields(txtOverheadView);
         setRegexValidationForTextFields(txtDailyWorkingHours);
     }
 
