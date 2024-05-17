@@ -6,7 +6,7 @@ public class ExceptionHandler {
     public static void handleException(Exception e) {
         if (e instanceof ApplicationWideException) {
             AlertBox.displayError((ApplicationWideException) e);
-        }else {
+        } else {
             e.printStackTrace();
         }
     }

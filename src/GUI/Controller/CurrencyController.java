@@ -1,8 +1,10 @@
 package GUI.Controller;
 
 import BE.Currency;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.CurrencyModel;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -91,12 +93,15 @@ public class CurrencyController implements Initializable {
             String txtCurrencyValue = txtCurrency.getText().replace(',', '.');
             double newRate = Double.parseDouble(txtCurrencyValue);
             selectedCurrency.setCurrencyRate(newRate);
-            currencyModel.setCurrencyDatabase(selectedCurrency);
+            currencyModel.setCurrency(selectedCurrency);
             displayMessage("Currency rate updated successfully.", false);
         } catch (NumberFormatException e) {
             displayMessage("Invalid currency rate entered.", true);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
+
 
     /**
      * Displays a message on the lblMessageCurrency label and sets the text color based on the message type.
@@ -111,5 +116,6 @@ public class CurrencyController implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> lblMessageCurrency.setText("")));
         timeline.play();
     }
+
 
 }

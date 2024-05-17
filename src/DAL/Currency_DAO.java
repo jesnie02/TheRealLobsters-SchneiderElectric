@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Currency;
 import BE.Geography;
+import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
@@ -20,42 +21,39 @@ public class Currency_DAO implements ICurrencyDataAccess {
        dbConnector = new DBConnector();
     }
 
-
     @Override
-    public List<Currency> getAllCurrencies() {
+    public List<Currency> getAllCurrencies() throws ApplicationWideException {
         List<Currency> allCurrencies = new ArrayList<>();
         String sql = "SELECT * FROM Currency;";
         try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Currency currency = new Currency(
-                            rs.getInt("CurrencyId"),
-                            rs.getString("CurrencyCode"),
-                            rs.getDouble("CurrencyRate")
-
-                    );
-                    allCurrencies.add(currency);
-                }
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Currency currency = new Currency(
+                        rs.getInt("CurrencyId"),
+                        rs.getString("CurrencyCode"),
+                        rs.getDouble("CurrencyRate")
+                );
+                allCurrencies.add(currency);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to retrieve currencies from the database.", e);
         }
         return allCurrencies;
     }
 
-    @Override
-    public void setCurrency(Currency selectedCurrency) {
-        String sql = "UPDATE Currency SET CurrencyRate = ? WHERE CurrencyId = ?;";
+    public void setCurrency(Currency selectedCurrency) throws ApplicationWideException {
+        String sql = "UPDATE Currency SET CurrencyRate = ? WHERE CurrencyId = ?";
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setDouble(1, selectedCurrency.getCurrencyRate());
             pstmt.setInt(2, selectedCurrency.getCurrencyId());
-            pstmt.execute();
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to update currency in the database.", e);
         }
     }
+
 
 
 }

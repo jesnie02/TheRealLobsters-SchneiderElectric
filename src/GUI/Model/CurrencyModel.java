@@ -2,6 +2,8 @@ package GUI.Model;
 
 import BE.Currency;
 import BLL.CurrencyManager;
+import CustomExceptions.ApplicationWideException;
+import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,9 +27,8 @@ public class CurrencyModel {
         try {
             List<Currency> currencyList = currencyManager.getAllCurrencies();
             this.currencies = FXCollections.observableArrayList(currencyList);
-        } catch (Exception e) {
-            // Handle errors more appropriately, possibly logging them or notifying the user
-            System.err.println("Error loading currencies: " + e.getMessage());
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
             this.currencies = FXCollections.observableArrayList();
         }
     }
@@ -37,16 +38,13 @@ public class CurrencyModel {
     }
 
 
-    public void setCurrencyDatabase(Currency selectedCurrency) {
+    public void setCurrency(Currency selectedCurrency) throws ApplicationWideException {
         for (Currency currency : getCurrencies()) {
             if (currency.getCurrencyId() == selectedCurrency.getCurrencyId()) {
-                // Update the rate of the existing currency
                 currency.setCurrencyRate(selectedCurrency.getCurrencyRate());
                 break;
             }
         }
-
-        // Update the currency in the database
         currencyManager.setCurrency(selectedCurrency);
     }
 

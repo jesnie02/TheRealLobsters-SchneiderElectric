@@ -2,6 +2,7 @@ package BLL;
 
 import BE.Country;
 import BE.Currency;
+import CustomExceptions.ApplicationWideException;
 import DAL.ICurrencyDataAccess;
 
 import java.io.IOException;
@@ -16,11 +17,12 @@ public class CurrencyManager {
     }
 
 
-    public List<Currency> getAllCurrencies() throws Exception {
+    public List<Currency> getAllCurrencies() throws ApplicationWideException {
         return currencyDAO.getAllCurrencies();
     }
 
-    public void setCurrency(Currency selectedCurrency) {
+    public void setCurrency(Currency selectedCurrency) throws ApplicationWideException {
         currencyDAO.setCurrency(selectedCurrency);
     }
+
 }
