@@ -26,14 +26,9 @@ public class Country_DAO implements ICountryDataAccess {
 
     }
 
-    /**
-     * Gets all countries from the database.
-     *
-     * @return
-     * @throws Exception
-     */
+
     @Override
-    public List<Country> getAllCountries() throws Exception {
+    public List<Country> getAllCountries() throws ApplicationWideException {
 
         List<Country> allCountries = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
@@ -49,12 +44,12 @@ public class Country_DAO implements ICountryDataAccess {
                 allCountries.add(country);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to read all countries",e);
         }
         return allCountries;
     }
 
-    public List<Country> getSumsAndAveragesForCountries() {
+    public List<Country> getSumsAndAveragesForCountries() throws ApplicationWideException{
         List<Country> allCountries = new ArrayList<>();
         String sql = """
         SELECT
@@ -96,7 +91,7 @@ public class Country_DAO implements ICountryDataAccess {
                 allCountries.add(country);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to get sum and average",e);
         }
         return allCountries;
     }

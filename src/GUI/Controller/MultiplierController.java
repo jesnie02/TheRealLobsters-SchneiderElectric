@@ -71,8 +71,8 @@ public class MultiplierController {
             setupListViewProfiles();
             setValueInFieldTeams();
             setupListViewTeams();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
@@ -113,18 +113,16 @@ public class MultiplierController {
     }
 
     private void setupListViewProfiles(){
-        try {
-            lstVProfile.setItems(profileModel.showAllProfilesNames());
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
+
+        lstVProfile.setItems(profileModel.showAllProfilesNames());
+
     }
 
-    private void setupListViewTeams() throws Exception {
+    private void setupListViewTeams() {
         lstVTeams.setItems(projectTeamsModel.getEveryProjectTeam());
     }
 
-    private void calculateAndSetResultForProfile() throws Exception {
+    private void calculateAndSetResultForProfile()  {
         double percentageGMP = parseTextField(txtGMP);
         double percentageMUP = parseTextField(txtMUP);
 
@@ -142,7 +140,7 @@ public class MultiplierController {
         }
     }
 
-    private void calculateAndSetResultForTeam() throws Exception {
+    private void calculateAndSetResultForTeam() {
         double percentageGMT = parseTextField(txtGMT);
         double percentageMUT = parseTextField(txtMUT);
         if (lstVTeams.getSelectionModel().getSelectedItem() != null) {
@@ -199,12 +197,9 @@ public class MultiplierController {
 
     private double getRate(ProfileModel.RateType rateType) {
         String selectedProfile = lstVProfile.getSelectionModel().getSelectedItem().toString();
-        try {
+
             return profileModel.getRateForProfile(selectedProfile, rateType);
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-            return 0.0; // return a default value when an exception is caught
-        }
+
     }
 
     private double getDailyRate() {
@@ -215,17 +210,21 @@ public class MultiplierController {
         return getRate(ProfileModel.RateType.HOURLY);
     }
 
-    public double getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType rateType) throws Exception {
+    public double getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType rateType){
         String selectedTeam = lstVTeams.getSelectionModel().getSelectedItem().toString();
-        return projectTeamsModel.getRateForProjectTeam(selectedTeam, rateType);
+
+            return projectTeamsModel.getRateForProjectTeam(selectedTeam, rateType);
+
     }
 
-    private double getAvgDailyRate() throws Exception{
+    private double getAvgDailyRate() {
         return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGDAILY);
     }
 
-    private double getAvgHourlyRate() throws Exception{
-        return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGHOURLY);
+    private double getAvgHourlyRate() {
+
+            return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGHOURLY);
+
     }
 
     @FXML

@@ -3,8 +3,10 @@ package GUI.Controller;
 import BE.Country;
 import BE.Geography;
 import BE.Profile;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -22,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GeographyController  {
@@ -103,21 +106,18 @@ public class GeographyController  {
         return button;
     }
 
-    public void loadGeographies() throws Exception {
+    public void loadGeographies()  {
         ObservableList<Geography> geographies = geographyModel.getAllGeographiesGeographyOverview();
         tblGeographyOverview.setItems(geographies);
         tblGeographyOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                try {
-                    loadCountriesForGeography(newSelection);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                loadCountriesForGeography(newSelection);
             }
         });
     }
 
-    private void loadCountriesForGeography(Geography newSelection) throws Exception {
+    private void loadCountriesForGeography(Geography newSelection) {
         List<Country> countries = newSelection.getCountries();
         ObservableList<Country> countryObservableList = FXCollections.observableArrayList(countries);
         tblGeographyOverviewCountry.setItems(countryObservableList);
@@ -133,8 +133,8 @@ public class GeographyController  {
             stage.setTitle("Create geography");
             stage.show();
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (IOException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 }

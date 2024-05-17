@@ -20,11 +20,11 @@ public class CountryManager {
      * @return A list of all countries.
      * @throws Exception
      */
-    public List<Country> getAllCountries() throws Exception {
+    public List<Country> getAllCountries() throws ApplicationWideException {
         return countryDAO.getAllCountries();
     }
 
-    public List <Country> getSumsAndAveragesForCountries() throws Exception{
+    public List <Country> getSumsAndAveragesForCountries() throws ApplicationWideException{
         return countryDAO.getSumsAndAveragesForCountries();
     }
 

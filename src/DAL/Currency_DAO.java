@@ -21,7 +21,7 @@ public class Currency_DAO implements ICurrencyDataAccess {
         try {
             dbConnector = new DBConnector();
         } catch (IOException e) {
-            throw new ApplicationWideException("baslavl", e);
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
         }
     }
 
@@ -41,7 +41,7 @@ public class Currency_DAO implements ICurrencyDataAccess {
                 allCurrencies.add(currency);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to retrieve currencies from the database.", e);
+            throw new ApplicationWideException("Failed to get currencies", e);
         }
         return allCurrencies;
     }
@@ -54,7 +54,7 @@ public class Currency_DAO implements ICurrencyDataAccess {
             pstmt.setInt(2, selectedCurrency.getCurrencyId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to update currency in the database.", e);
+            throw new ApplicationWideException("Failed to update currency", e);
         }
     }
 }

@@ -2,9 +2,11 @@ package GUI.Controller;
 
 import BE.Geography;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.DataModelSingleton;
+import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -51,28 +53,27 @@ public class TeamsController implements Initializable {
             tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
             tPaneTeamOverview.setAlignment(Pos.CENTER);
             loadTeamsInTilePane();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
 
-    public void loadTeamsInTilePane() throws Exception {
+    public void loadTeamsInTilePane() {
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
-            Node teamNode = loader.load();
+            Node teamNode = null;
+            try {
+                teamNode = loader.load();
+            } catch (IOException e) {
+                ExceptionHandler.handleException(e);
+            }
             TeamsContainerController controller = loader.getController();
-            controller.updateUI(team);
+                controller.updateUI(team);
 
             teamNode.setOnMouseClicked(event -> {
-                try {
                     handleTeamSelection(team);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             });
             tPaneTeamOverview.getChildren().add(teamNode);
         }
@@ -86,22 +87,20 @@ public class TeamsController implements Initializable {
             controller.updateUI(team, geography);
             frameController.setMainView(teamNode);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            ExceptionHandler.handleException(e);
         }
     }
 
-    private void handleTeamSelection(ProjectTeam selectedTeam) throws Exception {
+    private void handleTeamSelection(ProjectTeam selectedTeam) {
          DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
          refreshView();
     }
 
-    private void refreshView() throws Exception {
+    private void refreshView() {
         ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
         UpdateProjectTeamController controller = frameController.getUpdateProjectTeamController();
         if (controller != null) {
             controller.initDataFromTeam();
-        } else {
-            System.err.println("UpdateProjectTeamController is null");
         }
     }
 
@@ -110,7 +109,5 @@ public class TeamsController implements Initializable {
     private void openProjectTeamView(ActionEvent actionEvent) {
         frameController.loadCreateTeamView();
     }
-
-
 
 }

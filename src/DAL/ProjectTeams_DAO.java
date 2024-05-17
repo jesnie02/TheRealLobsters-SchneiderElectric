@@ -1,13 +1,11 @@
 package DAL;
 
-import BE.Country;
 import BE.Profile;
 import BE.ProfileRole;
 import BE.ProjectTeam;
 import BLL.ProjectTeamsManager;
 import DAL.DBConnector.DBConnector;
 import GUI.Utility.AlertBox;
-import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.sql.*;
@@ -15,27 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import GUI.Utility.AlertBox;
 import CustomExceptions.ApplicationWideException;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     private final DBConnector dbConnector;
     private ProjectTeamsManager projectTeamsManager;
 
-    public ProjectTeams_DAO() throws IOException {
-        dbConnector = new DBConnector();
+    public ProjectTeams_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
+        }
     }
 
 
-    /**
-     * Gets all project teams from the database.
-     *
-     * @return
-     * @throws Exception
-     */
+
     @Override
-    public List<ProjectTeam> getAllProjectTeams() throws Exception {
+    public List<ProjectTeam> getAllProjectTeams() throws ApplicationWideException {
 
         List<ProjectTeam> allProjectTeams = new ArrayList<>();
         try (Connection conn = dbConnector.getConnection();
@@ -51,12 +48,12 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 allProjectTeams.add(projectTeam);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to read all project teams",e);
         }
         return allProjectTeams;
     }
 
-    public List<ProjectTeam> getEveryProjectTeam() {
+    public List<ProjectTeam> getEveryProjectTeam() throws ApplicationWideException {
         List<ProjectTeam> everyProjectTeam = new ArrayList<>();
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement()) {
@@ -79,7 +76,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 everyProjectTeam.add(projectTeam);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO: Handle exception
+            throw new ApplicationWideException("Failed to get all project teams",e);
         }
         return everyProjectTeam;
     }
@@ -88,14 +85,13 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
 
     @Override
-    public void addProfileToTeam(ProjectTeam projectTeam) {
+    public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         // SQL for inserting a new project team
         String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate, Geography) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // SQL for inserting into ProfileProjectTeams
         String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
 
-        String updateProfileUtilization = "UPDATE Profile SET TotalUtilization = ? WHERE ProfileId = ?";
         // Declare connection outside of try block to handle rollback
         Connection conn = null;
 
@@ -139,26 +135,30 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                             pstmtInsertProfileProjectTeams.addBatch();
                         }
                         pstmtInsertProfileProjectTeams.executeBatch();
+                    } else {
+                        throw new ApplicationWideException("Failed to retrieve the generated team ID.");
                     }
                 }
                 conn.commit();
+            } catch (SQLException e) {
+                if (conn != null) {
+                    try {
+                        conn.rollback();
+                    } catch (SQLException rollbackEx) {
+                        throw new ApplicationWideException("Transaction rollback failed", rollbackEx);
+                    }
+                }
+                throw new ApplicationWideException("Failed to add profile to team", e);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // TODO: Replace with more robust error handling
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.err.println("Transaction rollback failed: " + ex.getMessage());
-                }
-            }
+            throw new ApplicationWideException("Failed to add profile to team", e);
         } finally {
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
                     conn.close();
-                } catch (SQLException ex) {
-                    System.err.println("Resource cleanup failed: " + ex.getMessage());
+                } catch (SQLException e) {
+                    throw new ApplicationWideException("Failed to reset connection settings and close the connection", e);
                 }
             }
         }
@@ -214,7 +214,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
     }
 
-    private void adjustUtilization(Profile profile, double utilization) {
+
+    private void adjustUtilization(Profile profile, double utilization) throws ApplicationWideException{
         String updateUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization - ? WHERE ProfileId = ?";
 
         try (Connection conn = dbConnector.getConnection();
@@ -224,12 +225,12 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmt.setInt(2, profile.getProfileId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // TODO: Replace with more robust error handling
+            throw new ApplicationWideException("Failed to adjust utilization", e);
         }
 
     }
 
-    public boolean doesTeamNameExist(String teamName) throws SQLException {
+    public boolean doesTeamNameExist(String teamName) throws ApplicationWideException {
         String checkTeamSQL = "SELECT COUNT(*) FROM ProjectTeams WHERE TeamName = ?";
 
         try (Connection conn = dbConnector.getConnection();
@@ -242,10 +243,13 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 }
             }
         }
+         catch (SQLException e) {
+            throw new ApplicationWideException("Failed to check if team name exists",e);
+        }
         return false;
     }
 
-    public List<Profile> getProfileFromProjectTeam(int projectTeamID){
+    public List<Profile> getProfileFromProjectTeam(int projectTeamID) throws ApplicationWideException {
         List<Profile> profiles = new ArrayList<>();
         String sql = "SELECT p.*, ppt.Utilization, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
                 "FROM Profile p " +
@@ -276,7 +280,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 profiles.add(profile);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to get profiles from project team",e);
         }
         return profiles;
     }

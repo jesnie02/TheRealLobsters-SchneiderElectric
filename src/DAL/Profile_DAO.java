@@ -50,7 +50,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 allProfiles.add(profile);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to read all profiles from database",e);
+            throw new ApplicationWideException("Failed to read all profiles",e);
         }
         return allProfiles;
     }
@@ -108,7 +108,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to create profile to database", e);
+            throw new ApplicationWideException("Failed to create profile", e);
         }
     }
 

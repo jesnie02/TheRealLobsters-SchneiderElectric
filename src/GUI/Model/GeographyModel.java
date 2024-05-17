@@ -3,6 +3,8 @@ package GUI.Model;
 import BE.Country;
 import BE.Geography;
 import BLL.GeographyManager;
+import CustomExceptions.ApplicationWideException;
+import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
@@ -17,30 +19,33 @@ public class GeographyModel {
 
     private final ObservableList<Geography> geographies;
 
-    public GeographyModel() throws Exception {
+    public GeographyModel() throws ApplicationWideException {
         geographyManager = new GeographyManager();
         geographies = FXCollections.observableArrayList();
         loadInitialGeographies();
     }
 
-    /*
-    public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
-        return geographyManager.getRegionsByCountryId(countryId);
-    }
-
-     */
-
-    public ObservableList<Geography> getSumsAndAveragesForGeographies() throws Exception {
-        ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
-                geographyManager.getSumsAndAveragesForGeographies().stream()
-                        .sorted(Comparator.comparing(Geography::getGeographyName))
-                        .collect(Collectors.toList())
-        );
+    public ObservableList<Geography> getSumsAndAveragesForGeographies()  {
+        ObservableList<Geography> geographies = null;
+        try {
+            geographies = FXCollections.observableArrayList(
+                    geographyManager.getSumsAndAveragesForGeographies().stream()
+                            .sorted(Comparator.comparing(Geography::getGeographyName))
+                            .collect(Collectors.toList())
+            );
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         return geographies;
     }
 
-    private void loadInitialGeographies() throws Exception {
-        List<Geography> geographyList = geographyManager.getAllGeographiesGeographyOverview();
+    private void loadInitialGeographies() {
+        List<Geography> geographyList = null;
+        try {
+            geographyList = geographyManager.getAllGeographiesGeographyOverview();
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         geographies.setAll(geographyList.stream()
                 .sorted(Comparator.comparing(Geography::getGeographyName))
                 .collect(Collectors.toList()));
@@ -50,13 +55,17 @@ public class GeographyModel {
         return geographies;
     }
 
-    public Map<Integer, Geography> getGeographyMap() throws Exception {
+    public Map<Integer, Geography> getGeographyMap() throws ApplicationWideException {
         return geographyManager.getAllGeographies().stream()
                 .collect(Collectors.toMap(Geography::getGeographyId, geography -> geography));
     }
 
-    public void saveGeography(Geography geography) {
-        geographyManager.saveGeography(geography);
+    public void saveGeography(Geography geography)  {
+        try {
+            geographyManager.saveGeography(geography);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         geographies.add(geography);
 
     }

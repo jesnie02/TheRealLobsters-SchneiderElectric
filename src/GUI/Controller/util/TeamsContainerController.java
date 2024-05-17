@@ -3,11 +3,13 @@ package GUI.Controller.util;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Controller.TeamsController;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.DataModelSingleton;
+import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,12 +55,12 @@ public class TeamsContainerController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
             loadGeographyMap();
-        } catch (Exception e) {
-                    handleException(e);//TODO: Handle this exception
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
-    public void updateUI(ProjectTeam team) throws Exception {
+    public void updateUI(ProjectTeam team) {
         this.selectedTeam = team;
 
         Platform.runLater(() -> {
@@ -94,14 +96,12 @@ public class TeamsContainerController implements Initializable {
     private void loadGeographyMap() {
         try {
             geographyMap = geographyModel.getGeographyMap();
-        } catch (Exception e) {
-            handleException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
-    private void handleException(Exception e) {
-        e.printStackTrace(); // TODO: Handle this exception appropriately
-    }
+
 
     public ProjectTeamsModel getTeam(){
         return this.projectTeamsModel;

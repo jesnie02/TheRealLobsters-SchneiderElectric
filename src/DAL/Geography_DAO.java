@@ -25,36 +25,9 @@ public class Geography_DAO implements IGeographyDataAccess {
     }
 
 
-    @Override
-    public List<Geography> getAllGeographies(int countryId) throws Exception {
-        List<Geography> allGeographies = new ArrayList<>();
-        String sql = """
-            SELECT g.*
-            FROM Geography g
-            JOIN GeographyCountry gc ON g.GeographyId = gc.GeographyId
-            WHERE gc.CountryId = ?;
-            """;
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, countryId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Geography geography = new Geography(
-                            rs.getInt("GeographyId"),
-                            rs.getString("GeographyName")
-                    );
-                    allGeographies.add(geography);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return allGeographies;
-    }
-
 
     @Override
-    public List<Geography> getAllGeographie() {
+    public List<Geography> getAllGeographie() throws ApplicationWideException{
         List<Geography> allGeographies = new ArrayList<>();
         String sql = "SELECT * FROM Geography;";
         try (Connection conn = dbConnector.getConnection();
@@ -69,7 +42,7 @@ public class Geography_DAO implements IGeographyDataAccess {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to read all geographies",e);
         }
         return allGeographies;
     }
@@ -79,7 +52,7 @@ public class Geography_DAO implements IGeographyDataAccess {
 
 
     @Override
-    public List<Geography> getSumsAndAveragesForGeographies() throws SQLException {
+    public List<Geography> getSumsAndAveragesForGeographies() throws ApplicationWideException {
         List<Geography> allGeographies = new ArrayList<>();
         String sql = """
         SELECT
@@ -115,13 +88,13 @@ public class Geography_DAO implements IGeographyDataAccess {
                 allGeographies.add(geography);
             }
         } catch (SQLException e) {
-            throw new SQLException(e);
+            throw new ApplicationWideException("Failed to get sum and average",e);
         }
         return allGeographies;
     }
 
     @Override
-    public List<Geography> getAllGeographiesGeographyOverview() throws Exception {
+    public List<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException {
         Map<Integer, Geography> allGeographies = new HashMap<>();
         String sql = """
     SELECT g.GeographyId, g.GeographyName, c.CountryName, COUNT(DISTINCT gp.ProfileId) AS ProfileCount, COUNT(DISTINCT ppt.TeamsId) AS TeamCount
@@ -152,7 +125,7 @@ public class Geography_DAO implements IGeographyDataAccess {
                 geography.getCountries().add(country);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException("Failed to get all geographies",e);
         }
         return new ArrayList<>(allGeographies.values());
     }
@@ -210,9 +183,8 @@ public class Geography_DAO implements IGeographyDataAccess {
 
 
     @Override
-    public void saveGeography(Geography geography) {
+    public void saveGeography(Geography geography) throws ApplicationWideException {
         String insertGeographySql = "INSERT INTO Geography (GeographyName) VALUES (?);";
-
         String insertGeographyCountrySql = "INSERT INTO GeographyCountry (GeographyId, CountryId) VALUES (?, ?);";
 
         Connection conn = null;
@@ -233,7 +205,7 @@ public class Geography_DAO implements IGeographyDataAccess {
                     if (generatedKeys.next()) {
                         geographyId = generatedKeys.getInt(1);
                     } else {
-                        throw new SQLException("Creating geography failed, no ID obtained.");
+                        throw new ApplicationWideException("Creating geography failed, no ID obtained.");
                     }
                 }
 
@@ -243,33 +215,30 @@ public class Geography_DAO implements IGeographyDataAccess {
                     pstmtGeographyCountry.setInt(2, country.getCountryId());
                     pstmtGeographyCountry.addBatch();
                 }
-
                 pstmtGeographyCountry.executeBatch();
-
-
                 conn.commit();
             } catch (SQLException e) {
-
                 if (conn != null) {
                     try {
                         conn.rollback();
                     } catch (SQLException rollbackEx) {
-                        throw new RuntimeException("Rollback failed", rollbackEx);
+                        throw new ApplicationWideException("Rollback failed", rollbackEx);
                     }
                 }
-                throw new RuntimeException(e);  //TODO: Handle exception
+                throw new ApplicationWideException("Failed to create Geography", e);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO: Handle exception
+            throw new ApplicationWideException("Failed to create Geography", e);
         } finally {
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
                     conn.close();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e); //TODO: Handle exception
+                    throw new ApplicationWideException("Failed to reset connection settings and close the connection", e);
                 }
             }
         }
     }
+
 }

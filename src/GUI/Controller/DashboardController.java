@@ -3,16 +3,17 @@ package GUI.Controller;
 import BE.Country;
 import BE.Geography;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.ExceptionHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,19 +56,16 @@ public class DashboardController implements Initializable {
             geographyModel = new GeographyModel();
 
             // Populate the AreaChart with team expenses
-            populateAreaChartWithTeamExpenses();
+            populateBarChartWithTeamExpenses();
 
-        } catch (IOException e) {
-            e.printStackTrace(); // TODO: Handle this exception
-        } catch (Exception e) {
-            e.printStackTrace(); // TODO: Handle this exception
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
-
         setUpComboBoxListeners();
     }
 
     private void setUpComboBoxListeners() {
-        try {
+
             // Geography
             cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
             cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -85,13 +83,10 @@ public class DashboardController implements Initializable {
             cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsTeamTab(newValue);
             });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    private void populateAreaChartWithTeamExpenses() {
-        try {
+    private void populateBarChartWithTeamExpenses() {
+
             // Fetch top 10 project teams by annual salary from the model
             List<ProjectTeam> top10ProjectTeams = projectTeamsModel.getTop10ProjectTeamsByAnnualSalary();
 
@@ -114,9 +109,7 @@ public class DashboardController implements Initializable {
 
             // Add the series to the chart
             barChart.getData().add(series);
-        } catch (Exception e) {
-            e.printStackTrace(); // TODO: Handle this exception properly
-        }
+
     }
 
     private void updateLabelsGeographyTab(Geography selectedGeography) {

@@ -14,20 +14,13 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        try {
+    public void start(Stage primaryStage) throws Exception {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/frameView.fxml"));
-
             Parent root = loader.load();
-
             primaryStage.setTitle("Schneider Electric");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
 
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
-
 }

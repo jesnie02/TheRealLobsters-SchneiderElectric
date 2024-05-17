@@ -6,6 +6,7 @@ import BE.Geography;
 import BLL.CountryManager;
 import BLL.GeographyManager;
 import CustomExceptions.ApplicationWideException;
+import GUI.Utility.ExceptionHandler;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -23,41 +24,51 @@ public class CountryModel {
         geographyManager = new BLL.GeographyManager();
     }
 
-    /**
-     * Gets all countries from the database.
-     *
-     * @return A list of all countries.
-     * @throws Exception
-     */
-    public ObservableList<Country> getAllCountries() throws Exception {
-        ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
-                countryManager.getAllCountries().stream()
-                        .sorted(Comparator.comparing(Country::getCountryName))
-                        .collect(Collectors.toList())
-        );
+
+    public ObservableList<Country> getAllCountries()  {
+        ObservableList<Country> countries = null;
+        try {
+            countries = javafx.collections.FXCollections.observableArrayList(
+                    countryManager.getAllCountries().stream()
+                            .sorted(Comparator.comparing(Country::getCountryName))
+                            .collect(Collectors.toList())
+            );
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         return countries;
     }
 
-    public ObservableList<Geography> getAllFromGeographies() throws Exception {
-        ObservableList<Geography> geographies = javafx.collections.FXCollections.observableArrayList(
-                geographyManager.getAllGeographies().stream()
-                        .sorted(Comparator.comparing(Geography::getGeographyName))
-                        .collect(Collectors.toList())
-        );
+    public ObservableList<Geography> getAllFromGeographies() {
+        ObservableList<Geography> geographies = null;
+        try {
+            geographies = javafx.collections.FXCollections.observableArrayList(
+                    geographyManager.getAllGeographies().stream()
+                            .sorted(Comparator.comparing(Geography::getGeographyName))
+                            .collect(Collectors.toList())
+            );
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         return geographies;
     }
 
-    public Map<Integer, Country> getCountriesMap() throws Exception {
+    public Map<Integer, Country> getCountriesMap() throws ApplicationWideException{
         return countryManager.getAllCountries().stream()
                 .collect(Collectors.toMap(Country::getCountryId, country -> country));
     }
 
-    public ObservableList<Country> getSumsAndAveragesForCountries() throws Exception {
-        ObservableList<Country> countries = javafx.collections.FXCollections.observableArrayList(
-                countryManager.getSumsAndAveragesForCountries().stream()
-                        .sorted(Comparator.comparing(Country::getCountryName))
-                        .collect(Collectors.toList())
-        );
+    public ObservableList<Country> getSumsAndAveragesForCountries() {
+        ObservableList<Country> countries = null;
+        try {
+            countries = javafx.collections.FXCollections.observableArrayList(
+                    countryManager.getSumsAndAveragesForCountries().stream()
+                            .sorted(Comparator.comparing(Country::getCountryName))
+                            .collect(Collectors.toList())
+            );
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         return countries;
     }
 

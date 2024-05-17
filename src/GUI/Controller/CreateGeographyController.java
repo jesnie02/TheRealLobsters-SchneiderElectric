@@ -2,9 +2,11 @@ package GUI.Controller;
 
 import BE.Country;
 import BE.Geography;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 
 import GUI.Model.GeographyModel;
+import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -38,12 +40,12 @@ public class CreateGeographyController implements Initializable {
             countryModel = new CountryModel();
 
             setupComboBox();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
-    private void setupComboBox() throws Exception {
+    private void setupComboBox() {
         cBoxCountries.getItems().addAll(countryModel.getAllCountries());
     }
 
@@ -54,18 +56,14 @@ public class CreateGeographyController implements Initializable {
         }
         String geographyName = txtGeography.getText();
         List<Country> selectedCountries = getSelectedCountries();
-
         Geography geography = new Geography(geographyName, selectedCountries);
 
-        try {
-            geographyModel.saveGeography(geography);
 
-            Node source = (Node) actionEvent.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        geographyModel.saveGeography(geography);
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+
     }
 
 

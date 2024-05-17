@@ -20,22 +20,17 @@ public class ProjectTeamsManager {
     private final ProjectTeams_DAO teamsDAO;
     private ICalculateManager iCalculateManager;
 
-    public ProjectTeamsManager() throws IOException {
+    public ProjectTeamsManager() throws ApplicationWideException {
         teamsDAO = new ProjectTeams_DAO();
         iCalculateManager = new CalculatorManager();
     }
 
-    /**
-     * Gets all project teams from the database.
-     *
-     * @return A list of all project teams.
-     * @throws Exception
-     */
-    public List<ProjectTeam> getAllProjectTeams() throws Exception {
+
+    public List<ProjectTeam> getAllProjectTeams() throws ApplicationWideException {
         return teamsDAO.getAllProjectTeams();
     }
 
-    public void addProfileToTeam(ProjectTeam projectTeam) throws Exception {
+    public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeam.setAvgAnnualSalary(iCalculateManager.avgAnnualSalary(projectTeam.getProfiles()));
         projectTeam.setSumOfAnnualSalary(iCalculateManager.annualSalaryWithFixedAmount(projectTeam.getProfiles()));
         projectTeam.setAvgHourlyRate(iCalculateManager.avgHourlyRate(projectTeam.getProfiles()));
@@ -45,11 +40,11 @@ public class ProjectTeamsManager {
         teamsDAO.addProfileToTeam(projectTeam);
     }
 
-    public List<ProjectTeam>getEveryProjectTeam() throws Exception{
+    public List<ProjectTeam>getEveryProjectTeam() throws ApplicationWideException{
         return teamsDAO.getEveryProjectTeam();
     }
 
-    public ProjectTeam getProjectTeamByName(String team) throws Exception {
+    public ProjectTeam getProjectTeamByName(String team) throws ApplicationWideException {
         for (ProjectTeam projectTeam : getEveryProjectTeam()) {
             if (projectTeam.getTeamName().equals(team)) {
                 return projectTeam;
@@ -58,9 +53,6 @@ public class ProjectTeamsManager {
         return null;
     }
 
-    public double getSumOfAnnualSalaryForTeam(double annualSalary, double fixedAmount){
-        return iCalculateManager.getHourlyRateWithMultiplier(annualSalary, fixedAmount);
-    }
 
     /**
      * Calculates the total annual salary for a list of profiles.
@@ -92,7 +84,7 @@ public class ProjectTeamsManager {
         return iCalculateManager.sumOfHourlyRate(profiles);
     }
 
-    public List<Profile> getProcessedProfilesForTeam(int teamId) {
+    public List<Profile> getProcessedProfilesForTeam(int teamId) throws ApplicationWideException {
         List<Profile> rawProfiles = teamsDAO.getProfileFromProjectTeam(teamId);
         return processProfiles(rawProfiles);
     }
@@ -125,7 +117,7 @@ public class ProjectTeamsManager {
         return iCalculateManager.calculateAndSetHourlyRateWithUtilization(annualSalaryProfile, overheadMultiplierProfile, annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
     }
 
-    public List<ProjectTeam> getTop10ProjectTeamsByAnnualSalary() throws Exception {
+    public List<ProjectTeam> getTop10ProjectTeamsByAnnualSalary() throws ApplicationWideException {
         List<ProjectTeam> projectTeams = teamsDAO.getEveryProjectTeam();
         return projectTeams.stream()
                 .sorted(Comparator.comparingDouble(ProjectTeam::getSumOfAnnualSalary).reversed())

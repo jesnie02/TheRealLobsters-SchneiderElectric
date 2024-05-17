@@ -16,11 +16,11 @@ public class ProfileRoleManager {
         profileRoleDAO = new ProfileRole_DAO();
     }
 
-    public List<ProfileRole> getAllProfileRoles() {
+    public List<ProfileRole> getAllProfileRoles() throws ApplicationWideException {
         return profileRoleDAO.getAllProfileRoles();
     }
 
-    public void saveRole(ProfileRole profileRole) throws SQLException {
+    public void saveRole(ProfileRole profileRole) throws ApplicationWideException {
         profileRoleDAO.createProfileRole(profileRole);
     }
 

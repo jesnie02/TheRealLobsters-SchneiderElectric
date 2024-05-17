@@ -80,7 +80,6 @@ public class ProjectTeam {
     }
 
     public void setUtilizationsMap(Map<Profile, Double> utilizationsMap){
-        System.out.println("utilizationsMap = " + utilizationsMap);
         this.utilizationsMap = utilizationsMap;
     }
 

@@ -51,19 +51,12 @@ public class ProfileController {
     private GeographyModel geographyModel;
     private ProjectTeamsModel projectTeamsModel;
 
-    /**
-     * Constructor for the ProfileController class.
-     * It initializes the frameController variable with the instance of FrameController.
-     */
+
     public ProfileController() {
 
         this.frameController = FrameController.getInstance();
     }
 
-    /**
-     * This method is called when the create profile button is clicked.
-     * It loads the create profile view.
-     */
     @FXML
     private void openCreateProfile(ActionEvent actionEvent) {
         frameController.loadCreateProfileView();
@@ -80,10 +73,8 @@ public class ProfileController {
             setCellValueFactories();
             idToNameMap = createIdToNameMap();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e); //TODO: Handle this exception
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
 
     }
@@ -183,14 +174,11 @@ public class ProfileController {
      * @return a map from team ID to team name
      */
     public Map<Integer, String> createIdToNameMap() {
+
         Map<Integer, String> idToNameMap = new HashMap<>();
-        try {
             for (ProjectTeam team : projectTeamsModel.getAllProjectTeamsData()) {
                 idToNameMap.put(team.getTeamId(), team.getTeamName());
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         return idToNameMap;
     }
 
@@ -198,10 +186,8 @@ public class ProfileController {
      * Loads the profiles into the table.
      */
     private void loadProfiles() {
-        try {
+
             tblProfiles.setItems(profileModel.getAllProfiles());
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
+
     }
 }

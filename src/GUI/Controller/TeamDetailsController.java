@@ -9,6 +9,7 @@ import GUI.Utility.ExceptionHandler;
 import GUI.Utility.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.ExceptionHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,8 +51,8 @@ public class TeamDetailsController implements Initializable {
             geographyModel = new GeographyModel();
             frameController = FrameController.getInstance();
             setupTable();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 

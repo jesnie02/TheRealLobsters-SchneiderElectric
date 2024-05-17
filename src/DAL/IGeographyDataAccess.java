@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Geography;
+import CustomExceptions.ApplicationWideException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -8,23 +9,14 @@ import java.util.List;
 public interface IGeographyDataAccess {
 
 
-    List<Geography> getAllGeographies(int countryId) throws Exception;
 
-    List<Geography> getSumsAndAveragesForGeographies() throws SQLException;
+    List<Geography> getSumsAndAveragesForGeographies() throws ApplicationWideException;
 
-    List<Geography> getAllGeographie();
+    List<Geography> getAllGeographie() throws ApplicationWideException;
 
-    List<Geography> getAllGeographiesGeographyOverview() throws Exception;
+    List<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException;
 
-    void saveGeography(Geography geography);
+    void saveGeography(Geography geography) throws ApplicationWideException;
 
-
-    //List<Geography> getAllGeographies(int countryId) throws Exception;
-
-    //List<Geography> getSumsAndAveragesForGeographies() throws SQLException;
-
-    //List<Geography> getCountryGeographyList(int countryId);
-
-    //void createGeography(String geographyName, List<Integer> countryIds) throws Exception;
 
 }

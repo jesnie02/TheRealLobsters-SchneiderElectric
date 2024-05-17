@@ -17,19 +17,19 @@ public class GeographyManager {
         geographyDAO = new Geography_DAO();
     }
 
-    public List <Geography> getSumsAndAveragesForGeographies() throws Exception{
+    public List <Geography> getSumsAndAveragesForGeographies() throws ApplicationWideException{
         return geographyDAO.getSumsAndAveragesForGeographies();
     }
 
-    public List<Geography> getAllGeographiesGeographyOverview() throws Exception {
+    public List<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException {
         return geographyDAO.getAllGeographiesGeographyOverview();
     }
 
-    public List<Geography> getAllGeographies() throws Exception {
+    public List<Geography> getAllGeographies() throws ApplicationWideException {
         return geographyDAO.getAllGeographie();
     }
 
-    public void saveGeography(Geography geography) {
+    public void saveGeography(Geography geography) throws ApplicationWideException {
         geographyDAO.saveGeography(geography);
     }
 

@@ -70,7 +70,7 @@ public class CreateProfileController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
-        } catch (Exception e) {
+        } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
@@ -88,8 +88,6 @@ public class CreateProfileController implements Initializable {
         setupComboBoxCustomization();
         setupRegex();
         populateProfileRolesComboBox();
-
-
     }
 
     private void populateProfileRolesComboBox() {
@@ -97,7 +95,10 @@ public class CreateProfileController implements Initializable {
     }
 
     private void populateCountryCurrencyComboBox() {
-        ObservableList<String> options = profileModel.getCountryAndCurrencyCodes();
+        ObservableList<String> options = null;
+
+            options = profileModel.getCountryAndCurrencyCodes();
+
         cBox_Currency.setItems(options);
 
         setDefaultCurrency("EUR");
@@ -199,16 +200,11 @@ public class CreateProfileController implements Initializable {
      */
     @FXML
     public void initialize() {
-        try {
-           ;
-            ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            };
+        ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        };
+        txtFixedAmount.textProperty().addListener(textFieldListener);
+        lblHourlyResult.textProperty().addListener(textFieldListener);
 
-            txtFixedAmount.textProperty().addListener(textFieldListener);
-            lblHourlyResult.textProperty().addListener(textFieldListener);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -233,12 +229,9 @@ public class CreateProfileController implements Initializable {
         Profile newProfile = new Profile(firstName, lastName, overheadCost,
                 annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles);
 
-        try {
             profileModel.saveProfile(newProfile);
             lblShowMassage.setText("Profile has been saved");
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
+
 
     }
 
@@ -339,9 +332,8 @@ public class CreateProfileController implements Initializable {
         stage.setTitle("Create role");
         stage.show();
     }
-    catch (Exception e) {
-        e.printStackTrace();
+        catch (Exception e) {
+        ExceptionHandler.handleException(e);
     }
-    }
-}
+}}
 

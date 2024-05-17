@@ -1,8 +1,6 @@
 package GUI.Controller;
 
-import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileRoleModel;
-import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,11 +23,7 @@ public class CreateRoleController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            profileRoleModel = new ProfileRoleModel();
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
+        profileRoleModel = new ProfileRoleModel();
     }
 
     @FXML
@@ -42,13 +35,10 @@ public class CreateRoleController implements Initializable {
             return;
         }
 
-        try {
             profileRoleModel.saveRole(role);
             displayInfo("Role saved successfully");
             closeWindow(actionEvent);
-        } catch (Exception e) {
-            displayInfo("Failed to save role: " + e.getMessage());
-        }
+
     }
 
 

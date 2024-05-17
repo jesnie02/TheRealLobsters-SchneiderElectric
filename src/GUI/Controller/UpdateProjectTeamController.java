@@ -4,8 +4,10 @@ import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.*;
 import GUI.Utility.DataModelSingleton;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -78,12 +80,12 @@ public class UpdateProjectTeamController implements Initializable {
             setupSearchBox();
             setupTableView();
             initDataFromTeam();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
-    private void setupSearchBox() throws Exception {
+    private void setupSearchBox() {
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
         cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
         setCountryComboBoxConverter();
@@ -121,7 +123,7 @@ public class UpdateProjectTeamController implements Initializable {
         });
     }
 
-    public void initDataFromTeam() throws Exception {
+    public void initDataFromTeam(){
         ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
         if (currentTeam != null) {
             txtProjectTeamName.setText(currentTeam.getTeamName());
@@ -135,9 +137,6 @@ public class UpdateProjectTeamController implements Initializable {
         }
     }
 
-    public void refreshTeamData() throws Exception {
-        initDataFromTeam();
-    }
 
     private void setupTableView(){
         NumberFormat formatter = NumberFormat.getNumberInstance();

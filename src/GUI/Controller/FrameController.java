@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -82,8 +84,8 @@ public class FrameController implements Initializable {
                 }
                 viewCache.put(viewName, view);
 
-            } catch (Exception e) {
-                e.printStackTrace(); //TODO: Handle this exception
+            } catch (IOException e) {
+                ExceptionHandler.handleException(e);
                 return;
             }
         }

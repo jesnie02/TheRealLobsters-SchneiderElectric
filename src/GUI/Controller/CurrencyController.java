@@ -2,13 +2,10 @@ package GUI.Controller;
 
 import BE.Currency;
 import CustomExceptions.ApplicationWideException;
-import GUI.Model.CountryModel;
 import GUI.Model.CurrencyModel;
-import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,7 +45,7 @@ public class CurrencyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             currencyModel = new CurrencyModel();
-        } catch (Exception e) {
+        } catch (ApplicationWideException e) {
             displayMessage("Failed to load currencies: " + e.getMessage(), true);
         }
 
@@ -97,17 +94,10 @@ public class CurrencyController implements Initializable {
             displayMessage("Currency rate updated successfully.", false);
         } catch (NumberFormatException e) {
             displayMessage("Invalid currency rate entered.", true);
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
         }
     }
 
 
-    /**
-     * Displays a message on the lblMessageCurrency label and sets the text color based on the message type.
-     * @param message The message to display.
-     * @param isError True if the message is an error message, false if it is a success message.
-     */
     private void displayMessage(String message, boolean isError) {
         lblMessageCurrency.setText(message);
         lblMessageCurrency.setStyle(isError ? "-fx-text-fill: red;" : "-fx-text-fill: green;");

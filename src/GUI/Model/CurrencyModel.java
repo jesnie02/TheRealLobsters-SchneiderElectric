@@ -38,14 +38,18 @@ public class CurrencyModel {
     }
 
 
-    public void setCurrency(Currency selectedCurrency) throws ApplicationWideException {
+    public void setCurrency(Currency selectedCurrency) {
         for (Currency currency : getCurrencies()) {
             if (currency.getCurrencyId() == selectedCurrency.getCurrencyId()) {
                 currency.setCurrencyRate(selectedCurrency.getCurrencyRate());
                 break;
             }
         }
-        currencyManager.setCurrency(selectedCurrency);
+        try {
+            currencyManager.setCurrency(selectedCurrency);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
     }
 
 

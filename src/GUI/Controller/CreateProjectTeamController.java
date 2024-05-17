@@ -4,9 +4,11 @@ import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
@@ -26,6 +28,7 @@ import java.text.NumberFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.*;
+import java.util.logging.Handler;
 
 
 public class CreateProjectTeamController implements Initializable {
@@ -99,17 +102,19 @@ public class CreateProjectTeamController implements Initializable {
             setupSlider();
             setTextinField();
             setupRegex();
-        } catch (Exception e) {
-            throw new RuntimeException(e); //TODO: Handle this exception
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 
     /**
      * Populates the combo boxes with data from the models.
      */
-    private void populateComboBoxes() throws Exception {
+    private void populateComboBoxes() {
         cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
+
         cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
+
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
 
@@ -125,15 +130,13 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    /**
-     * Sets the converter for the profile combo box.
-     */
+
     private void setProfileComboBoxConverter() {
         Map<Integer, Country> countriesMap;
         try {
             countriesMap = countryModel.getCountriesMap();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load countries", e); //TODO: Handle this exception
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
 
 
@@ -162,7 +165,7 @@ public class CreateProjectTeamController implements Initializable {
      * Updates the total values for the team.
      */
     private void updateTotals() {
-        try {
+
             double annualSalarySum = projectTeamsModel.calculateTotalAnnualSalary(tblProfileToTeam.getItems());
             double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
             double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
@@ -172,9 +175,6 @@ public class CreateProjectTeamController implements Initializable {
             lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
             lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
             lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
-        } catch (Exception e) {
-            e.printStackTrace(); // //TODO: Handle this exception
-        }
     }
 
     /**
@@ -205,9 +205,8 @@ public class CreateProjectTeamController implements Initializable {
         if (countriesMap == null) {
             try {
                 countriesMap = countryModel.getCountriesMap();
-            } catch (Exception e) {
-                System.err.println("Error loading countries: " + e.getMessage());
-                return; // TODO: Handle this error
+            } catch (ApplicationWideException e) {
+                ExceptionHandler.handleException(e);
             }
         }
 
@@ -268,11 +267,9 @@ public class CreateProjectTeamController implements Initializable {
         if(selectedGeography != null){
             projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
-        try {
+
             projectTeamsModel.addProfileToTeam(projectTeam);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
 
         txtProjectTeamName.clear();
         cBoxGeographies.setValue(null); // Clear the selection

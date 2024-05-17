@@ -1,5 +1,7 @@
 package GUI.Controller.util;
 
+import GUI.Utility.ExceptionHandler;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class CurrencyReader {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ExceptionHandler.handleException(e);
         }
         return currencyMap;
     }
