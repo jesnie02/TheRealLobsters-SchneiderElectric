@@ -128,4 +128,8 @@ public class ProjectTeamsManager {
     public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         teamsDAO.deleteTeam(projectTeam);
     }
+
+    public void updateTeam(ProjectTeam projectTeam) throws Exception {
+        teamsDAO.updateTeam(projectTeam);
+    }
 }

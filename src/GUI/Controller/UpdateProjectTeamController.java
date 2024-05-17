@@ -15,10 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import org.controlsfx.control.SearchableComboBox;
@@ -177,15 +174,55 @@ public class UpdateProjectTeamController implements Initializable {
 
     @FXML
     private void updateProjectTeam(ActionEvent actionEvent) {
+        try {
+            String teamName = txtProjectTeamName.getText();
+            ObservableList<Profile> profilesInTeam = tblProfileToTeam.getItems();
+            if (teamName == null || teamName.isEmpty() || profilesInTeam.isEmpty()) {
+                return; // TODO: Handle this error
+            }
+            ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
+            currentTeam.setTeamName(teamName);
+            currentTeam.setProfiles(profilesInTeam);
+            currentTeam.setUtilizationsMap(utilizationsMap);
+
+            projectTeamsModel.updateTeam(currentTeam);
+            showAlert("Succes", "The team " + teamName + " is updated", Alert.AlertType.INFORMATION);
+        } catch (Exception e){
+            e.printStackTrace();
+            showAlert("Error", "Error updating team: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
     private void removeProfileFromTbl(ActionEvent actionEvent) {
+        Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
+
+
+        if (selectedProfile != null) {
+            tblProfileToTeam.getItems().remove(selectedProfile);
+        }
     }
 
     @FXML
     private void selectProfileToTable(ActionEvent actionEvent) {
+        Profile selectedProfile = (Profile) cBoxProfiles.getValue();
+
+        if (selectedProfile != null) {
+            utilizationsMap.put(selectedProfile, sliderUtilization.getValue()/100);
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
+            tblProfileToTeam.getItems().add(selectedProfile);
+            cBoxProfiles.setValue(null);
+        }
     }
 
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }

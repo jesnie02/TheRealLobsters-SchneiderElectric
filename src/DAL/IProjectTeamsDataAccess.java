@@ -12,4 +12,6 @@ public interface IProjectTeamsDataAccess {
 
     void deleteTeam(ProjectTeam projectTeam) throws Exception;
 
+    void updateTeam(ProjectTeam projectTeam) throws Exception;
+
 }

@@ -151,4 +151,8 @@ public class ProjectTeamsModel {
             ExceptionHandler.handleException(e);
         }
     }
+
+    public void updateTeam(ProjectTeam projectTeam) throws Exception {
+        projectTeamsManager.updateTeam(projectTeam);
+    }
 }

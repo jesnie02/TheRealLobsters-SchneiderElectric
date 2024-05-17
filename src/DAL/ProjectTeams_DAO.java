@@ -296,5 +296,27 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return roles;
     }
 
+    public void updateTeam(ProjectTeam projectTeam) {
+        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, NumberOfProfiles = ?, AvgOfAnnualSalary = ?, SumOfAnnualSalary = ?, AvgOfHourlyRate = ?, SumOfHourlyRate = ?, AvgOfDailyRate = ?, SumOfDailyRate = ?, Geography = ? WHERE TeamsId = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateTeamSQL)) {
+
+            pstmt.setString(1, projectTeam.getTeamName());
+            pstmt.setInt(2, projectTeam.getProfiles().size());
+            pstmt.setDouble(3, projectTeam.getAvgAnnualSalary());
+            pstmt.setDouble(4, projectTeam.getSumOfAnnualSalary());
+            pstmt.setDouble(5, projectTeam.getAvgHourlyRate());
+            pstmt.setDouble(6, projectTeam.getSumOfHourlyRate());
+            pstmt.setDouble(7, projectTeam.getAvgDailyRate());
+            pstmt.setDouble(8, projectTeam.getSumOfDailyRate());
+            pstmt.setInt(9, projectTeam.getGeographyId());
+            pstmt.setInt(10, projectTeam.getTeamId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
