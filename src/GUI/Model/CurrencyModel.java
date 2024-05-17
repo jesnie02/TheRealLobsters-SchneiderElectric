@@ -17,7 +17,7 @@ public class CurrencyModel {
     private ObservableList<Currency> currencies;
 
 
-    public CurrencyModel() throws IOException {
+    public CurrencyModel() throws ApplicationWideException {
         currencyManager = new CurrencyManager();
         loadCurrencies();
 

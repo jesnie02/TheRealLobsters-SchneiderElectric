@@ -12,10 +12,9 @@ public class CurrencyManager {
 
     private final ICurrencyDataAccess currencyDAO;
 
-    public CurrencyManager() throws IOException {
+    public CurrencyManager() throws ApplicationWideException {
         currencyDAO = new DAL.Currency_DAO();
     }
-
 
     public List<Currency> getAllCurrencies() throws ApplicationWideException {
         return currencyDAO.getAllCurrencies();

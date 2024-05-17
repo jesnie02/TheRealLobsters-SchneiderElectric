@@ -94,7 +94,7 @@
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </Label>
-                        <Button fx:id="btnCurrencySave" mnemonicParsing="false" onAction="#saveCurrencyToDatabase" prefHeight="40.0" prefWidth="107.0" text="Save" VBox.vgrow="ALWAYS">
+                        <Button fx:id="btnCurrencySave" mnemonicParsing="false" onAction="#saveCurrency" prefHeight="40.0" prefWidth="107.0" text="Save" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="40.0" />
                            </VBox.margin>

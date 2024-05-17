@@ -11,7 +11,6 @@ public class AlertBox {
         alert.setHeaderText(ex.getMessage());
         alert.showAndWait();
 
-        // optionally print stack trace
         ex.printStackTrace();
     }
 

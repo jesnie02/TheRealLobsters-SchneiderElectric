@@ -17,8 +17,12 @@ public class Currency_DAO implements ICurrencyDataAccess {
 
     private final DBConnector dbConnector;
 
-    public Currency_DAO() throws IOException {
-       dbConnector = new DBConnector();
+    public Currency_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("baslavl", e);
+        }
     }
 
     @Override
@@ -53,7 +57,4 @@ public class Currency_DAO implements ICurrencyDataAccess {
             throw new ApplicationWideException("Failed to update currency in the database.", e);
         }
     }
-
-
-
 }

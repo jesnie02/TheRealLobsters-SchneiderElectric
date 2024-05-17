@@ -83,7 +83,7 @@ public class CurrencyController implements Initializable {
     }
 
     @FXML
-    private void saveCurrencyToDatabase(ActionEvent actionEvent) {
+    private void saveCurrency(ActionEvent actionEvent) {
         Currency selectedCurrency = tblCurrency.getSelectionModel().getSelectedItem();
         if (selectedCurrency == null) {
             displayMessage("No currency selected.", true);
