@@ -170,13 +170,13 @@
                         </Label>
                         <TableView fx:id="tblProfileToTeam" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                              <TableColumn fx:id="colTeamProfileId" minWidth="0.0" prefWidth="42.4000244140625" text="ProfileId" visible="false" />
-                            <TableColumn fx:id="colTeamName" prefWidth="107.0" text="Name" />
-                            <TableColumn fx:id="colTeamGeography" minWidth="0.0" prefWidth="71.5" text="Geography" />
-                              <TableColumn fx:id="colTeamDailyRate" minWidth="0.0" prefWidth="53.999969482421875" text="Daily " />
-                              <TableColumn fx:id="colTeamHourlyRate" minWidth="0.0" prefWidth="48.66668701171875" text="Hourly" />
-                              <TableColumn fx:id="colTeamCountryId" prefWidth="63.2000732421875" text="CountryId" visible="false" />
-                              <TableColumn fx:id="colTeamAnnualSalary" minWidth="6.13323974609375" prefWidth="63.199920654296875" text="Annual " />
+                             <TableColumn fx:id="colTeamProfileId" minWidth="0.0" prefWidth="42.4000244140625" text="ProfileId" visible="false" />
+                             <TableColumn fx:id="colTeamName" prefWidth="107.0" text="Name" />
+                             <TableColumn fx:id="colTeamUtilization" minWidth="0.0" prefWidth="71.5" text="Utilization" />
+                             <TableColumn fx:id="colTeamAnnualSalary" minWidth="6.13323974609375" prefWidth="63.199920654296875" text="Annual " />
+                             <TableColumn fx:id="colTeamDailyRate" minWidth="0.0" prefWidth="53.999969482421875" text="Daily " />
+                             <TableColumn fx:id="colTeamHourlyRate" minWidth="0.0" prefWidth="48.66668701171875" text="Hourly" />
+                             <TableColumn fx:id="colTeamCountryId" prefWidth="63.2000732421875" text="CountryId" visible="false" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

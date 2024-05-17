@@ -92,13 +92,11 @@ public class TeamsController implements Initializable {
 
     private void handleTeamSelection(ProjectTeam selectedTeam) throws Exception {
          DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
-         System.out.println("Selected Team: " + selectedTeam.getTeamName());
          refreshView();
     }
 
     private void refreshView() throws Exception {
         ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
-        System.out.println("Current Team in Singleton: " + currentTeam.getTeamName());
         UpdateProjectTeamController controller = frameController.getUpdateProjectTeamController();
         if (controller != null) {
             controller.initDataFromTeam();
