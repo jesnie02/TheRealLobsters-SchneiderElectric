@@ -10,6 +10,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -31,6 +32,8 @@ public class CurrencyController implements Initializable {
     private TableColumn<Currency, Integer> colCurrencyId;
     @FXML
     private TextField txtCurrency;
+    @FXML
+    private Button btnCurrencySave;
 
     private CurrencyModel currencyModel;
     @FXML
@@ -50,7 +53,10 @@ public class CurrencyController implements Initializable {
         setupTable();
         bindSelectionToTextField();
 
-
+        btnCurrencySave.setDisable(true);
+        tblCurrency.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            btnCurrencySave.setDisable(newSelection == null);
+        });
     }
 
 

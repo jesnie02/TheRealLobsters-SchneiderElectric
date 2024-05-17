@@ -32,9 +32,9 @@
          <children>
             <HBox fx:id="hBoxHeaderCurrency" alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="825.0">
                <children>
-                  <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../pictures/curency.png" />
+                        <Image url="@../pictures/mdi_hand-coin.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lblHeaderCurrency" prefHeight="18.0" prefWidth="150.0" text="Currency">
@@ -45,6 +45,12 @@
                   <Pane prefHeight="30.0" prefWidth="485.0" />
                   <TextField fx:id="txtSearchCurrency" prefHeight="26.0" prefWidth="174.0" text="Search currency" />
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
             </HBox>
             <HBox prefHeight="456.0" prefWidth="825.0">
                <children>
