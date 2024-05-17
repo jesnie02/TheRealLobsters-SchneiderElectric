@@ -1,6 +1,7 @@
 package BLL;
 
 import BE.Profile;
+import CustomExceptions.ApplicationWideException;
 import DAL.Profile_DAO;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ProfileManager {
      * It initializes the profileDAO and calculatorManager variables with instances of Profile_DAO and CalculatorManager.
      * @throws IOException if an I/O error occurs
      */
-    public ProfileManager() throws IOException {
+    public ProfileManager() throws ApplicationWideException {
         calculatorManager = new CalculatorManager();
         profileDAO = new Profile_DAO();
     }
@@ -29,7 +30,7 @@ public class ProfileManager {
      * Returns a list of all profiles.
      * @return A list of Profile objects.
      */
-    public List<Profile> getAllProfiles(){
+    public List<Profile> getAllProfiles() throws ApplicationWideException {
         return profileDAO.getAllProfiles();
     }
 
@@ -37,7 +38,7 @@ public class ProfileManager {
      * Saves a new profile to the database.
      * @param newProfile The new profile to be saved.
      */
-    public void saveProfile(Profile newProfile) {
+    public void saveProfile(Profile newProfile) throws ApplicationWideException {
         profileDAO.saveProfile(newProfile);
     }
 
@@ -46,7 +47,7 @@ public class ProfileManager {
      * @param name The name of the profile.
      * @return The Profile object if found, null otherwise.
      */
-    public Profile getProfileByName(String name) {
+    public Profile getProfileByName(String name) throws ApplicationWideException {
     for (Profile profile : getAllProfiles()) {
         if ((profile.getFName() + " " + profile.getLName()).equals(name)) {
             return profile;

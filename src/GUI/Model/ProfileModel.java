@@ -2,6 +2,7 @@ package GUI.Model;
 
 import BE.Profile;
 import BLL.ProfileManager;
+import CustomExceptions.ApplicationWideException;
 import GUI.Controller.util.CurrencyReader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,12 +26,8 @@ public class ProfileModel {
      * Constructor for the ProfileModel class.
      * It initializes the profileManager variable with an instance of ProfileManager.
      */
-    public ProfileModel()  {
-        try {
+    public ProfileModel() throws ApplicationWideException {
             profileManager = new ProfileManager();
-        } catch (IOException e) {
-            throw new RuntimeException(e); //TODO: Handle this exception
-        }
     }
 
 
@@ -49,21 +46,14 @@ public class ProfileModel {
         return FXCollections.observableArrayList(countryAndCurrencyCodes);
     }
 
-    /**
-     * Saves a new profile to the database.
-     * @param newProfile The new profile to be saved.
-     */
-    public void saveProfile(Profile newProfile) {
+
+    public void saveProfile(Profile newProfile) throws ApplicationWideException {
         profileManager.saveProfile(newProfile);
 
     }
 
 
-    /**
-     * Returns a list of all profile names.
-     * @return An ObservableList of profile names.
-     */
-    public ObservableList<String> showAllProfilesNames(){
+    public ObservableList<String> showAllProfilesNames() throws ApplicationWideException{
         ObservableList<String> profileName = javafx.collections.FXCollections.observableArrayList(
                 profileManager.getAllProfiles().stream()
                         .map(profile -> profile.getFName() + " " + profile.getLName())
@@ -76,7 +66,7 @@ public class ProfileModel {
      * Returns a list of all profiles.
      * @return An ObservableList of Profile objects.
      */
-    public ObservableList<Profile> getAllProfiles() {
+    public ObservableList<Profile> getAllProfiles() throws ApplicationWideException{
         ObservableList<Profile> profiles = FXCollections.observableArrayList();
         profiles.addAll(profileManager.getAllProfiles());
         return profiles;
@@ -120,10 +110,10 @@ public class ProfileModel {
      * @param rateType The type of rate (HOURLY or DAILY).
      * @return The rate for the profile.
      */
-    public double getRateForProfile(String profileName, RateType rateType) {
+    public double getRateForProfile(String profileName, RateType rateType) throws ApplicationWideException {
         Profile profile = profileManager.getProfileByName(profileName);
         if (profile == null) {
-            throw new RuntimeException("Profile not found");//TODO: Handle this exception
+            throw new ApplicationWideException("Profile not found");
         } else {
             switch (rateType) {
                 case HOURLY:
@@ -131,7 +121,7 @@ public class ProfileModel {
                 case DAILY:
                     return profile.getDailyRate();
                 default:
-                    throw new RuntimeException("Rate type not found");//TODO: Handle this exception
+                    throw new ApplicationWideException("Rate type not found");
             }
 
         }

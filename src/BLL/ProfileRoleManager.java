@@ -1,6 +1,7 @@
 package BLL;
 
 import BE.ProfileRole;
+import CustomExceptions.ApplicationWideException;
 import DAL.ProfileRole_DAO;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ public class ProfileRoleManager {
 
     private ProfileRole_DAO profileRoleDAO;
 
-    public ProfileRoleManager() throws IOException {
+    public ProfileRoleManager() throws ApplicationWideException {
         profileRoleDAO = new ProfileRole_DAO();
     }
 

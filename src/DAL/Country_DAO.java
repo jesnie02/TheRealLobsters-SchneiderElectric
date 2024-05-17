@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Country;
+import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 
 import java.io.FileReader;
@@ -16,8 +17,13 @@ public class Country_DAO implements ICountryDataAccess {
 
     private final DBConnector dbConnector;
 
-    public Country_DAO() throws IOException {
-        dbConnector = new DBConnector();
+    public Country_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
+        }
+
     }
 
     /**

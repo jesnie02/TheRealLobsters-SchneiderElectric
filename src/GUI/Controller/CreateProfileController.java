@@ -2,8 +2,10 @@ package GUI.Controller;
 
 
 import BE.ProfileRole;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileRoleModel;
 
+import GUI.Utility.ExceptionHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -69,7 +71,7 @@ public class CreateProfileController implements Initializable {
             profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
         } catch (Exception e) {
-            e.printStackTrace(); //TODO: Handle this exception
+            ExceptionHandler.handleException(e);
         }
     }
 
@@ -231,9 +233,13 @@ public class CreateProfileController implements Initializable {
         Profile newProfile = new Profile(firstName, lastName, overheadCost,
                 annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles);
 
-        profileModel.saveProfile(newProfile);
+        try {
+            profileModel.saveProfile(newProfile);
+            lblShowMassage.setText("Profile has been saved");
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
 
-        lblShowMassage.setText("Profile has been saved");
     }
 
 

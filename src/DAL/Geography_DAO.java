@@ -2,8 +2,10 @@ package DAL;
 
 import BE.Country;
 import BE.Geography;
+import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +16,12 @@ public class Geography_DAO implements IGeographyDataAccess {
 
     private final DBConnector dbConnector;
 
-    public Geography_DAO() throws Exception{
-        dbConnector = new DBConnector();
+    public Geography_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
+        }
     }
 
 

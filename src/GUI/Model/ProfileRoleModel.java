@@ -3,6 +3,7 @@ package GUI.Model;
 import BE.ProfileRole;
 
 import BLL.ProfileRoleManager;
+import CustomExceptions.ApplicationWideException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ public class ProfileRoleModel{
 
 
 
-    public ProfileRoleModel() throws IOException {
+    public ProfileRoleModel() throws ApplicationWideException {
         profileRoleManager = new ProfileRoleManager();
     }
 

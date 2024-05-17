@@ -2,6 +2,7 @@ package BLL;
 
 import BE.Country;
 import BE.Geography;
+import CustomExceptions.ApplicationWideException;
 import DAL.Geography_DAO;
 import DAL.IGeographyDataAccess;
 
@@ -12,7 +13,7 @@ public class GeographyManager {
 
     private final IGeographyDataAccess geographyDAO;
 
-    public GeographyManager() throws Exception {
+    public GeographyManager() throws ApplicationWideException {
         geographyDAO = new Geography_DAO();
     }
 

@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.ProfileRole;
+import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -13,8 +14,12 @@ public class ProfileRole_DAO implements IProfileRoleDataAccess{
 
     private final DBConnector dbConnector;
 
-    public ProfileRole_DAO() throws IOException {
-        dbConnector = new DBConnector();
+    public ProfileRole_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
+        }
     }
 
     @Override

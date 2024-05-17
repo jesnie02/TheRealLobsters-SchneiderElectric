@@ -5,6 +5,7 @@ import BE.Country;
 import BE.Geography;
 import BLL.CountryManager;
 import BLL.GeographyManager;
+import CustomExceptions.ApplicationWideException;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class CountryModel {
     private final CountryManager countryManager;
     private final GeographyManager geographyManager;
 
-    public CountryModel() throws Exception {
+    public CountryModel() throws ApplicationWideException {
         countryManager = new BLL.CountryManager();
         geographyManager = new BLL.GeographyManager();
     }

@@ -4,10 +4,12 @@ import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -196,6 +198,10 @@ public class ProfileController {
      * Loads the profiles into the table.
      */
     private void loadProfiles() {
-        tblProfiles.setItems(profileModel.getAllProfiles());
+        try {
+            tblProfiles.setItems(profileModel.getAllProfiles());
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package BLL;
 
 import BE.Country;
+import CustomExceptions.ApplicationWideException;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +10,7 @@ public class CountryManager {
 
     private final DAL.Country_DAO countryDAO;
 
-    public CountryManager() throws IOException {
+    public CountryManager() throws ApplicationWideException {
         countryDAO = new DAL.Country_DAO();
     }
 

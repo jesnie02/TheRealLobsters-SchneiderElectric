@@ -1,6 +1,8 @@
 package GUI.Controller;
 
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileRoleModel;
+import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,8 +28,8 @@ public class CreateRoleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             profileRoleModel = new ProfileRoleModel();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
         }
     }
 

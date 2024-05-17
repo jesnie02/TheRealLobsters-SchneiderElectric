@@ -2,6 +2,7 @@ package DAL;
 
 import BE.Profile;
 import BE.ProfileRole;
+import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 
 import java.io.IOException;
@@ -9,21 +10,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object (DAO) class for handling Profile related data operations.
- * It communicates with the database to perform these operations.
- */
+
 public class Profile_DAO implements IProfileDataAccess {
 
     private final DBConnector dbConnector;
 
-    /**
-     * Constructor for the Profile_DAO class.
-     * It initializes the dbConnector variable with an instance of DBConnector.
-     * @throws IOException if an I/O error occurs
-     */
-    public Profile_DAO() throws IOException {
-        dbConnector = new DBConnector();
+
+    public Profile_DAO() throws ApplicationWideException {
+        try {
+            dbConnector = new DBConnector();
+        } catch (IOException e) {
+            throw new ApplicationWideException("Failed to initialize the database connector",e);
+        }
     }
 
     /**
@@ -31,7 +29,7 @@ public class Profile_DAO implements IProfileDataAccess {
      * @return A list of Profile objects.
      */
     @Override
-    public List<Profile> getAllProfiles() {
+    public List<Profile> getAllProfiles() throws ApplicationWideException{
         List<Profile> allProfiles = new ArrayList<>();
         try(Connection conn = dbConnector.getConnection();
             Statement stmt = conn.createStatement()){
@@ -50,10 +48,9 @@ public class Profile_DAO implements IProfileDataAccess {
                 double totalUtilization = rs.getDouble("TotalUtilization");
                 Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization);
                 allProfiles.add(profile);
-                //System.out.println(allProfiles);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e); //TODO: Handle exception
+            throw new ApplicationWideException("Failed to read all profiles from database",e);
         }
         return allProfiles;
     }
@@ -62,7 +59,7 @@ public class Profile_DAO implements IProfileDataAccess {
      * Saves a new profile to the database.
      * @param newProfile The new profile to be saved.
      */
-    public void saveProfile(Profile newProfile) { //TODO: Skal nok hedde createProfile i stedet for saveProfile
+    public void saveProfile(Profile newProfile) throws ApplicationWideException {
         String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
                 "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -99,7 +96,7 @@ public class Profile_DAO implements IProfileDataAccess {
                             pstmtProfileRole.executeBatch();
                         }
                     } else {
-                        throw new SQLException("Creating profile failed, no ID obtained.");
+                        throw new ApplicationWideException("Creating profile failed, no ID obtained.");
                     }
                 }
 
@@ -111,7 +108,7 @@ public class Profile_DAO implements IProfileDataAccess {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); //TODO: Handle exception
+            throw new ApplicationWideException("Failed to create profile to database", e);
         }
     }
 

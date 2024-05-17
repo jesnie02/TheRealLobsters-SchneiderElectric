@@ -1,8 +1,10 @@
 package GUI.Controller;
 
+import CustomExceptions.ApplicationWideException;
 import GUI.Model.MultiplierModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,7 +113,11 @@ public class MultiplierController {
     }
 
     private void setupListViewProfiles(){
-        lstVProfile.setItems(profileModel.showAllProfilesNames());
+        try {
+            lstVProfile.setItems(profileModel.showAllProfilesNames());
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
     }
 
     private void setupListViewTeams() throws Exception {
@@ -193,7 +199,12 @@ public class MultiplierController {
 
     private double getRate(ProfileModel.RateType rateType) {
         String selectedProfile = lstVProfile.getSelectionModel().getSelectedItem().toString();
-        return profileModel.getRateForProfile(selectedProfile, rateType);
+        try {
+            return profileModel.getRateForProfile(selectedProfile, rateType);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+            return 0.0; // return a default value when an exception is caught
+        }
     }
 
     private double getDailyRate() {
