@@ -79,11 +79,8 @@ public class FrameController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(BASE_PATH + viewName));
                 view = loader.load();
 
-                if (viewName.equals("updateProjectTeamView.fxml")){
-                    updateProjectTeamController = loader.getController();
-                }
                 viewCache.put(viewName, view);
-
+                System.out.println("View loaded: " + viewName);
             } catch (IOException e) {
                 ExceptionHandler.handleException(e);
                 return;

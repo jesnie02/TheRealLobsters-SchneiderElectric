@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 public class TeamsController implements Initializable {
 
     @FXML
@@ -30,10 +29,8 @@ public class TeamsController implements Initializable {
     private ProjectTeamsModel projectTeamsModel;
     private static TeamsController instance;
 
-
     // Instance of FrameController to control the main frame of the application
     private FrameController frameController;
-
 
     public TeamsController() {
         this.frameController = FrameController.getInstance();
@@ -58,7 +55,6 @@ public class TeamsController implements Initializable {
         }
     }
 
-
     public void loadTeamsInTilePane() {
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
@@ -70,11 +66,9 @@ public class TeamsController implements Initializable {
                 ExceptionHandler.handleException(e);
             }
             TeamsContainerController controller = loader.getController();
-                controller.updateUI(team);
+            controller.updateUI(team);
 
-            teamNode.setOnMouseClicked(event -> {
-                    handleTeamSelection(team);
-            });
+            teamNode.setOnMouseClicked(event -> handleTeamSelection(team));
             tPaneTeamOverview.getChildren().add(teamNode);
         }
     }
@@ -92,8 +86,8 @@ public class TeamsController implements Initializable {
     }
 
     private void handleTeamSelection(ProjectTeam selectedTeam) {
-         DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
-         refreshView();
+        DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
+        showTeamDetails(selectedTeam, selectedTeam.getGeography());
     }
 
     private void refreshView() {
@@ -104,10 +98,8 @@ public class TeamsController implements Initializable {
         }
     }
 
-
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
         frameController.loadCreateTeamView();
     }
-
 }
