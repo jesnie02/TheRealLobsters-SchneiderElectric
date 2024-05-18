@@ -13,8 +13,10 @@ import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,8 +25,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.controlsfx.control.CheckComboBox;
-
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -35,10 +35,7 @@ import java.util.ResourceBundle;
 import java.util.*;
 import java.util.logging.Handler;
 
-
 public class CreateProjectTeamController implements Initializable {
-
-
 
     @FXML
     private TableView<Profile> tblProfileToTeam;
@@ -54,17 +51,14 @@ public class CreateProjectTeamController implements Initializable {
     private TableColumn<Profile, String> colTeamName;
     @FXML
     private TableColumn<Profile, Integer> colTeamCountryId;
-
     @FXML
     private TableColumn<Profile, Integer> colTeamProfileId;
 
     private Map<Integer, Country> countriesMap;
-
     private Map<Profile, Double> utilizationsMap = new HashMap<>();
 
     @FXML
     private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
-
     @FXML
     private TextField txtProjectTeamName;
 
@@ -78,24 +72,15 @@ public class CreateProjectTeamController implements Initializable {
     private TextField txtUtilization;
     private double utilization;
     @FXML
-    private ComboBox cBoxGeographies;
+    private ComboBox<Geography> cBoxGeographies;
     @FXML
-    private ComboBox cBoxProfiles;
+    private ComboBox<Profile> cBoxProfiles;
 
-
+    private FilteredList<Profile> filteredProfiles;
 
     public CreateProjectTeamController() {
-
     }
 
-
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
-     * @param resources The resources used to localize the root object, or null if the root object was not localized.
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -106,20 +91,18 @@ public class CreateProjectTeamController implements Initializable {
             setTblProfileToTeam();
             setupSlider();
             setTextinField();
-
             setupRegex();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
 
-    /**
-     * Populates the combo boxes with data from the models.
-     */
     private void populateComboBoxes() {
         cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
 
-        cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
+        ObservableList<Profile> profiles = FXCollections.observableArrayList(profileModel.getAllProfiles());
+        filteredProfiles = new FilteredList<>(profiles, p -> true);
+        cBoxProfiles.setItems(filteredProfiles);
 
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
@@ -134,23 +117,19 @@ public class CreateProjectTeamController implements Initializable {
                 setTextinField();
             }
         });
+
+        // Add a listener to the TableView to update the ComboBox options
+        tblProfileToTeam.getItems().addListener((ListChangeListener<Profile>) change -> {
+            filteredProfiles.setPredicate(profile -> !tblProfileToTeam.getItems().contains(profile));
+        });
     }
 
-
     private void setProfileComboBoxConverter() {
-        Map<Integer, Country> countriesMap;
-        try {
-            countriesMap = countryModel.getCountriesMap();
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-
-
         cBoxProfiles.setConverter(new StringConverter<Profile>() {
             @Override
             public String toString(Profile profile) {
                 if (profile != null) {
-                    return profile.getFName() + " " + profile.getLName() + "  -  " /*+ profile.getProjectRole()*/ ;
+                    return profile.getFName() + " " + profile.getLName() + "  -  ";
                 } else {
                     return "Select a Profile";
                 }
@@ -167,25 +146,16 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    /**
-     * Updates the total values for the team.
-     */
     private void updateTotals() {
+        double annualSalarySum = projectTeamsModel.calculateTotalAnnualSalary(tblProfileToTeam.getItems());
+        double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
+        double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
 
-            double annualSalarySum = projectTeamsModel.calculateTotalAnnualSalary(tblProfileToTeam.getItems());
-            double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
-            double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
-
-            // the lbl are adjusted with utilization in method selectProfileToTable()
-
-            lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
-            lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
-            lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
+        lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
+        lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
+        lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
     }
 
-    /**
-     * Sets the converter for the country combo box.
-     */
     private void setCountryComboBoxConverter() {
         cBoxGeographies.setConverter(new StringConverter<Geography>() {
             @Override
@@ -200,9 +170,6 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    /**
-     * Sets up the table view for the team profiles.
-     */
     public void setTblProfileToTeam() {
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(2);
@@ -216,7 +183,6 @@ public class CreateProjectTeamController implements Initializable {
             }
         }
 
-        // Define cell value factories with correct type parameters
         colTeamProfileId.setCellValueFactory(new PropertyValueFactory<>("profileId"));
         colTeamCountryId.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -238,26 +204,20 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    /**
-     * Adds the selected profile to the team table.
-     */
     @FXML
     public void selectProfileToTable(ActionEvent event) {
         Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationsMap.put(selectedProfile, sliderUtilization.getValue()/100);
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
+            utilizationsMap.put(selectedProfile, sliderUtilization.getValue() / 100);
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() * (utilizationsMap.get(selectedProfile)));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate() * (utilizationsMap.get(selectedProfile)));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() * (utilizationsMap.get(selectedProfile)));
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
         }
     }
 
-    /**
-     * Creates a new project team and adds it to the database.
-     */
     @FXML
     public void createProjectTeamToDatabase(ActionEvent event) {
         if (!validateInput()) {
@@ -270,51 +230,41 @@ public class CreateProjectTeamController implements Initializable {
         projectTeam.setUtilizationsMap(utilizationsMap);
 
         Geography selectedGeography = (Geography) cBoxGeographies.getValue();
-        if(selectedGeography != null){
+        if (selectedGeography != null) {
             projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
 
-            projectTeamsModel.addProfileToTeam(projectTeam);
-
+        projectTeamsModel.addProfileToTeam(projectTeam);
 
         txtProjectTeamName.clear();
-        cBoxGeographies.setValue(null); // Clear the selection
+        cBoxGeographies.setValue(null);
     }
 
-
-
-    private void setupSlider(){
+    private void setupSlider() {
         SliderDecimalFilter filter = new SliderDecimalFilter();
         txtUtilization.setTextFormatter(new TextFormatter<>(filter));
         StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
-        Bindings.bindBidirectional(txtUtilization.textProperty(),sliderUtilization.valueProperty(),  converter);
+        Bindings.bindBidirectional(txtUtilization.textProperty(), sliderUtilization.valueProperty(), converter);
 
         sliderUtilization.valueProperty().addListener((observable, oldValue, newValue) -> {
             utilization = newValue.doubleValue();
         });
     }
 
-    private void setTextinField(){
+    private void setTextinField() {
         txtUtilization.setText(String.valueOf(utilization));
     }
 
+    @FXML
+    private void removeProfileFromTbl(ActionEvent actionEvent) {
+        Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
 
-
-        /**
-         * Removes the selected profile from the team table.
-         */
-        @FXML
-        private void removeProfileFromTbl (ActionEvent actionEvent){
-
-            Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
-
-
-            if (selectedProfile != null) {
-                tblProfileToTeam.getItems().remove(selectedProfile);
-            }
+        if (selectedProfile != null) {
+            tblProfileToTeam.getItems().remove(selectedProfile);
         }
+    }
 
-    private void setRegexValidationForTextFields(TextField textField){
+    private void setRegexValidationForTextFields(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 textField.setText(oldValue);
@@ -322,10 +272,9 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    private void setupRegex(){
+    private void setupRegex() {
         setRegexValidationForTextFields(txtUtilization);
     }
-
 
     private boolean validateInput() {
         boolean isValid = true;
@@ -353,5 +302,3 @@ public class CreateProjectTeamController implements Initializable {
         return isValid;
     }
 }
-
-
