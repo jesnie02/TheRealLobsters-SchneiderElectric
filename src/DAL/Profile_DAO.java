@@ -111,5 +111,30 @@ public class Profile_DAO implements IProfileDataAccess {
         }
     }
 
+    public void deleteProfile(int profileId) throws ApplicationWideException {
+        String[] sqlQueries = {
+                "DELETE FROM dbo.ProfileProfileRole WHERE ProfileId = ?",
+                "DELETE FROM dbo.GeographyProfile WHERE ProfileId = ?",
+                "DELETE FROM dbo.ProfileProjectTeams WHERE ProfileId_PPT = ?",
+                "DELETE FROM dbo.Profile WHERE ProfileId = ?"
+        };
+
+        try (Connection conn = dbConnector.getConnection()) {
+            conn.setAutoCommit(false);
+
+            for (String sql : sqlQueries) {
+                try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    pstmt.setInt(1, profileId);
+                    pstmt.executeUpdate();
+                }
+            }
+
+            conn.commit();
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to delete profile", e);
+        }
+    }
+
 }
 

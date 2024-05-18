@@ -9,6 +9,7 @@ import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
@@ -132,6 +133,14 @@ public class ProfileController {
         colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile,Void>() {
             private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
 
+            {
+                // Add an action event to the delete button
+                deleteButton.setOnAction(event -> {
+                    Profile profile = getTableView().getItems().get(getIndex());
+                    deleteProfile(profile);
+                });
+            }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -186,8 +195,16 @@ public class ProfileController {
      * Loads the profiles into the table.
      */
     private void loadProfiles() {
-
             tblProfiles.setItems(profileModel.getAllProfiles());
+    }
 
+    private void deleteProfile(Profile profile) {
+        boolean success = profileModel.deleteProfile(profile);
+        if (success) {
+            tblProfiles.getItems().remove(profile);
+            AlertBox.displayInfo("Profile Deleted", "Profile has been successfully deleted.");
+        } else {
+            AlertBox.displayInfo("Deletion Failed", "Failed to delete the profile.");
+        }
     }
 }

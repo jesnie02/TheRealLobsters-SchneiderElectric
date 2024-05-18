@@ -29,8 +29,8 @@
                   <TableColumn fx:id="colAnnualSalaryProfile" prefWidth="100.0" text="Anual salary" />
                   <TableColumn fx:id="colHourlyRateProfile" prefWidth="91.199951171875" text="Hourly Rate" />
                   <TableColumn fx:id="colDailyRateProfile" prefWidth="101.5999755859375" text="Daily rate" />
-                  <TableColumn fx:id="colUpdateIconProfile" prefWidth="57.60009765625" />
-                  <TableColumn fx:id="colDeleteIconProfile" prefWidth="56.800048828125" />
+                  <TableColumn fx:id="colUpdateIconProfile" prefWidth="57.60009765625" text="Update" />
+                  <TableColumn fx:id="colDeleteIconProfile" prefWidth="56.800048828125" text="Delete" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -115,4 +115,16 @@ public class ProfileModel {
         }
     }
 
+    public boolean deleteProfile(Profile profile) {
+        try {
+            profileManager.deleteProfile(profile);
+            return true;
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+            return false;
+        }
+    }
+
+
+
 }

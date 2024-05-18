@@ -83,4 +83,9 @@ public class ProfileManager {
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         return calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
+
+    public void deleteProfile(Profile profile) throws ApplicationWideException {
+        profileDAO.deleteProfile(profile.getProfileId());
+    }
+
 }
