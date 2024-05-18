@@ -66,6 +66,7 @@ public class TeamsController implements Initializable {
                 ExceptionHandler.handleException(e);
             }
             TeamsContainerController controller = loader.getController();
+            System.out.println("Skal fixes!");
             controller.updateUI(team);
 
             teamNode.setOnMouseClicked(event -> handleTeamSelection(team));
@@ -87,7 +88,6 @@ public class TeamsController implements Initializable {
 
     private void handleTeamSelection(ProjectTeam selectedTeam) {
         DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
-        showTeamDetails(selectedTeam, selectedTeam.getGeography());
     }
 
     private void refreshView() {
