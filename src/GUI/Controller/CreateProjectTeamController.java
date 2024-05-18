@@ -112,7 +112,9 @@ public class CreateProjectTeamController implements Initializable {
             if (newProfile != null) {
                 Profile selectedProfile = (Profile) newProfile;
                 double profileUtilization = selectedProfile.getTotalUtilization();
+                sliderUtilization.setMax(100); // Set the maximum value of the slider to 100%
                 sliderUtilization.setValue(profileUtilization);
+                sliderUtilization.setUserData(profileUtilization); // Store the initial utilization value in userData
                 utilization = profileUtilization;
                 setTextinField();
             }
@@ -123,6 +125,9 @@ public class CreateProjectTeamController implements Initializable {
             filteredProfiles.setPredicate(profile -> !tblProfileToTeam.getItems().contains(profile));
         });
     }
+
+
+
 
     private void setProfileComboBoxConverter() {
         cBoxProfiles.setConverter(new StringConverter<Profile>() {
@@ -246,10 +251,21 @@ public class CreateProjectTeamController implements Initializable {
         StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
         Bindings.bindBidirectional(txtUtilization.textProperty(), sliderUtilization.valueProperty(), converter);
 
+        // Ensure the slider cannot exceed the initial utilization value stored in userData
         sliderUtilization.valueProperty().addListener((observable, oldValue, newValue) -> {
-            utilization = newValue.doubleValue();
+            if (sliderUtilization.getUserData() != null) {
+                double initialUtilization = (double) sliderUtilization.getUserData();
+                if (newValue.doubleValue() > initialUtilization) {
+                    sliderUtilization.setValue(initialUtilization);
+                } else {
+                    utilization = newValue.doubleValue();
+                }
+            }
         });
     }
+
+
+
 
     private void setTextinField() {
         txtUtilization.setText(String.valueOf(utilization));
