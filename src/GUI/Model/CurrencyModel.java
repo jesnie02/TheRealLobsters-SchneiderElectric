@@ -46,6 +46,4 @@ public class CurrencyModel {
             ExceptionHandler.handleException(e);
         }
     }
-
-
 }

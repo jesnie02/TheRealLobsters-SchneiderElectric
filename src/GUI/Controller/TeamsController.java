@@ -56,6 +56,7 @@ public class TeamsController implements Initializable {
     }
 
     public void loadTeamsInTilePane() {
+        tPaneTeamOverview.getChildren().clear(); // Clear existing content before loading teams
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
@@ -66,7 +67,6 @@ public class TeamsController implements Initializable {
                 ExceptionHandler.handleException(e);
             }
             TeamsContainerController controller = loader.getController();
-            System.out.println("Skal fixes!");
             controller.updateUI(team);
 
             teamNode.setOnMouseClicked(event -> handleTeamSelection(team));

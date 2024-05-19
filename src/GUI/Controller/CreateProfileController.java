@@ -37,6 +37,7 @@ import java.util.*;
 public class CreateProfileController implements Initializable {
 
     public TextField txtDailyWorkingHours;
+    public Label employeeHourlyRateCurrency, employeeDailyRateCurrency;
     // slider for overhead  and textField to show the value of the slider
     @FXML
     private MFXSlider sliderOverhead;
@@ -101,6 +102,13 @@ public class CreateProfileController implements Initializable {
     private void populateCountryCurrencyComboBox() {
         ObservableList<Currency> currencies = currencyModel.getCurrencies();
         cBox_Currency.setItems(currencies);
+        cBox_Currency.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String currencyString = newValue.toString();
+                employeeHourlyRateCurrency.setText(currencyString);
+                employeeDailyRateCurrency.setText(currencyString);
+            }
+        });
     }
 
     //This method binds the slider and the textfield so that the value of the slider is shown in the textfield.
@@ -173,14 +181,11 @@ public class CreateProfileController implements Initializable {
         double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
         List<ProfileRole> selectedRoles = new ArrayList<>(cBoxProfile_ProfileRoles.getCheckModel().getCheckedItems());
 
-
         Profile newProfile = new Profile(firstName, lastName, overheadCost,
                 annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles);
 
-            profileModel.createProfile(newProfile);
-            lblShowMassage.setText("Profile has been saved");
-
-
+        profileModel.createProfile(newProfile);
+        lblShowMassage.setText("Profile has been saved");
     }
 
 

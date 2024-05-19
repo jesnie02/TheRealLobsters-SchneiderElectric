@@ -111,7 +111,7 @@ public class TeamDetailsController implements Initializable {
                 infoAlert.setHeaderText(null);
                 infoAlert.setContentText("The team " + teamName + " has been successfully deleted.");
                 infoAlert.showAndWait();
-                frameController.loadTeamsView();
+                frameController.loadTeamsView(); //TODO initialize the view with the updated data, it does that but it duplicates the teams in the view, which it should not
                 TeamsController.getInstance().loadTeamsInTilePane();
             } catch (Exception e) {
                 throw new ApplicationWideException("Error during team deletion: " + e.getMessage(), e);

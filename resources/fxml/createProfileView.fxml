@@ -17,7 +17,7 @@
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox fx:id="vBoxWhiteCreateProfile" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -67,7 +67,7 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </TextField>
-                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="27.0" prefWidth="98.0">
+                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="26.0" prefWidth="100.0">
                                  <HBox.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </HBox.margin>
@@ -127,7 +127,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                   </GridPane>
-                  <VBox prefHeight="338.0" prefWidth="298.0" spacing="24.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="338.0" prefWidth="352.0" spacing="24.0" HBox.hgrow="ALWAYS">
                      <children>
                         <VBox fx:id="resultVboxCreateProfileHour" alignment="CENTER" prefHeight="168.0" prefWidth="241.0" VBox.vgrow="ALWAYS">
                            <children>
@@ -158,7 +158,10 @@
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="24.0" text="€" />
+                                    <Label fx:id="employeeHourlyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="24.0">
+                                       <HBox.margin>
+                                          <Insets right="16.0" />
+                                       </HBox.margin></Label>
                                  </children>
                               </HBox>
                            </children>
@@ -192,7 +195,10 @@
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="27.0" text="€" />
+                                    <Label fx:id="employeeDailyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="27.0">
+                                       <HBox.margin>
+                                          <Insets right="16.0" />
+                                       </HBox.margin></Label>
                                  </children>
                               </HBox>
                            </children>
