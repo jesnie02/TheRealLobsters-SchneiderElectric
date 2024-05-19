@@ -193,9 +193,9 @@ public class CreateProfileController implements Initializable {
         }
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
-        double annualSalary = parseDouble(txtAnnualSalary.getText());
-        double hourlyResult = parseDouble(lblHourlyResult.getText());
-        double dailyResult = parseDouble(lblDailyResult.getText());
+        double annualSalary = parseDouble(lblAnnualResultEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
+        double hourlyResult = parseDouble(lblHourlyResultEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
+        double dailyResult = parseDouble(lblDailyResultInEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
         boolean overheadCost = checkOverhead.isSelected();
         double fixedAmount = parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
@@ -206,6 +206,7 @@ public class CreateProfileController implements Initializable {
 
         profileModel.createProfile(newProfile);
         lblShowMassage.setText("Profile has been saved");
+        System.out.println(newProfile);
     }
 
 
