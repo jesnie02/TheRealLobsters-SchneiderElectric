@@ -184,9 +184,17 @@ public class CalculatorManager implements ICalculateManager {
         return result;
     }
 
-
+    /**
+     * Calculates and sets the profile rates in EUR.
+     * @param annualSalary The annual salary of the profile.
+     * @param fixedAmount The fixed amount of the profile.
+     * @param hourlyRate The hourly rate of the profile.
+     * @param dailyRate The daily rate of the profile.
+     * @param conversionRate The conversion rate from the selected currency to EUR.
+     * @return A map containing the calculated rates in EUR.
+     */
+    @Override
     public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, double conversionRate) {
-        // Convert the annual salary and fixed amount from the selected currency to EUR
         double annualSalaryEUR = (annualSalary + fixedAmount) / conversionRate;
         double hourlyRateEUR = hourlyRate / conversionRate;
         double dailyRateEUR = dailyRate / conversionRate;

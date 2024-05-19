@@ -139,6 +139,16 @@ public class CreateProfileController implements Initializable {
                 checkOverhead.setSelected(false);
             }
         });
+
+         cBox_Currency.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+             if (newValue != null) {
+                 try {
+                     calculateAndSetProfileRatesInEUR();
+                 } catch (ApplicationWideException e) {
+                     throw new RuntimeException(e);
+                 }
+             }
+         });
     }
 
     private void setupListenersOnTextFields() {

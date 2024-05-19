@@ -38,4 +38,5 @@ public interface ICalculateManager {
 
     double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate);
 
+    Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, double conversionRate);
 }
