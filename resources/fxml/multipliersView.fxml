@@ -37,7 +37,10 @@
                            <children>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <ListView fx:id="lstVProfile" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="lstVProfile" prefHeight="200.0" prefWidth="200.0">
+                                       <HBox.margin>
+                                          <Insets top="16.0" />
+                                       </HBox.margin></ListView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -202,7 +205,10 @@
                            <children>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <ListView fx:id="lstVTeams" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="lstVTeams" prefHeight="200.0" prefWidth="200.0">
+                                       <HBox.margin>
+                                          <Insets top="16.0" />
+                                       </HBox.margin></ListView>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

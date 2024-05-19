@@ -74,114 +74,214 @@
     -fx-text-fill: #18191a;
 }
 
-/* CreateProfileView */
-/*--------------------------------------------------------------------------------------------------------------------*/
+/*ListView */
 
-/* Background */
-
-#bP_CreateProfile, #bP_Currency {
-    -fx-background-color: #F4F4F4;
-}
-
-/* WhiteBox */
-
-#vBoxWhiteCreateProfile, #vboxCenterCurrency {
-    -fx-background-color: #FFFFFF;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
-}
-
-
-/* Header Box */
-
-#headerHboxCreateProfile, #hBoxHeaderCurrency {
-    -fx-background-color: #F1F1E8;
-    -fx-border-color: transparent transparent #3DCD58 transparent;
-    -fx-border-width: 0 0 2px 0;
-    -fx-border-style: solid;
-}
-
-/* Header Text */
-
-#headerTextCreateProfile, #headerTextCurrency {
-    -fx-font-size: 14px;
-   /* -fx-font-weight: bold; */
-    -fx-text-fill: black;
-
-}
-
-/* Result Borders */
-
-#resultVboxCreateProfileHour, #resultVboxCreateProfileDaily {
-    -fx-border-color: #040404;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-}
-
-/* border Details */
-
-#gPaneCreateProfile {
-    -fx-border-color: #040404;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-}
-
-/* Button */
-
-#btnCreateProfile, #btnCurrencySave {
+.list-cell:hover {
     -fx-background-color: #3DCD58;
     -fx-text-fill: #18191a;
-    -fx-font-size: 14px;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
 }
 
-/* FrameView */
-/*--------------------------------------------------------------------------------------------------------------------*/
-#btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover, #btnCurrency:hover, #btnCurrency:hover {
-    -fx-background-color: #F2F2F2;
-    -fx-border-color:  transparent transparent transparent #3DCD58;
-    -fx-border-width: 0 0 0 2px ;
+.list-cell:selected{
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
 }
 
-/* Buttons/Background/separator/HeaderText TapBar  */
-
-#btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier, #btnCurrency, #btnCurrency {
-    -fx-background-color: transparent;
-    -fx-font-weight: bold;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 0 10px;
-}
-
-#vboxTapBar {
+.list-view {
     -fx-background-color: #FFFFFF;
+    -fx-border-color: #3DCD58;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
 }
 
-#separatorFrame  {
+/* Style the ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent; /* Make the background transparent */
+    -fx-border-color: #3DCD58; /* Set the border color to green */
+    -fx-border-width: 2; /* Adjust the border width as needed */
+}
+
+/* Style the ScrollBar */
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+}
+
+/* Style the ScrollBar track */
+.scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-background-insets: 5;
+}
+
+.scroll-bar .thumb {
     -fx-background-color: #3DCD58;
-
+    -fx-background-radius: 5;
+    -fx-padding: 5;
 }
 
-#lblFrameHeader {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #3DCD58;
-}
-
-
-/* vBox/hBox colors */
-
-#hboxFrameLogo {
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
     -fx-background-color: #3DCD58;
+    -fx-text-fill: black;
+    -fx-background-radius: 5;
 }
 
-/* Bar Chart */
-.default-color0.chart-bar {
-    -fx-bar-fill: #3DCD58; /* Green fill for bars */
+/* MFX Slider*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.mfx-slider {
+    -mfx-main-color: #3DCD58;
+    -mfx-main-color-hover: #00BF87;
+    -mfx-main-color-pressed:#00ADB1;
+    -mfx-disabled-color: rgb(158, 158, 158);
 }
 
-.default-color0.chart-bar:hover {
-    -fx-bar-fill: #34b04c; /* Slightly darker green on hover */
+.mfx-slider .track,
+.mfx-slider .bar {
+    -fx-arc-height: 6;
+    -fx-arc-width: 6;
 }
+
+.mfx-slider .track {
+    -fx-fill: derive(-mfx-main-color, 140%);
+}
+
+.mfx-slider .bar {
+    -fx-fill: -mfx-main-color;
+}
+
+.mfx-slider .thumb-container .thumb {
+    -mfx-color: -mfx-main-color;
+}
+
+.mfx-slider .thumb-container .thumb-radius {
+    -mfx-color: transparent;
+}
+
+.mfx-slider .thumb-container:hover .thumb-radius {
+    -mfx-color: -mfx-main-color-hover;
+}
+
+.mfx-slider .thumb-container:pressed .thumb-radius {
+    -mfx-color: -mfx-main-color-pressed;
+}
+
+.mfx-slider .thumb-container .mfx-ripple-generator {
+    -mfx-ripple-color: -mfx-main-color;
+}
+
+
+
+
+    /* CreateProfileView */
+    /*--------------------------------------------------------------------------------------------------------------------*/
+
+    /* Background */
+
+    #bP_CreateProfile, #bP_Currency {
+        -fx-background-color: #F4F4F4;
+    }
+
+    /* WhiteBox */
+
+    #vBoxWhiteCreateProfile, #vboxCenterCurrency {
+        -fx-background-color: #FFFFFF;
+        -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
+    }
+
+
+    /* Header Box */
+
+    #headerHboxCreateProfile, #hBoxHeaderCurrency {
+        -fx-background-color: #F1F1E8;
+        -fx-border-color: transparent transparent #3DCD58 transparent;
+        -fx-border-width: 0 0 2px 0;
+        -fx-border-style: solid;
+    }
+
+    /* Header Text */
+
+    #headerTextCreateProfile, #headerTextCurrency {
+        -fx-font-size: 14px;
+        /* -fx-font-weight: bold; */
+        -fx-text-fill: black;
+
+    }
+
+    /* Result Borders */
+
+    #resultVboxCreateProfileHour, #resultVboxCreateProfileDaily {
+        -fx-border-color: #040404;
+        -fx-border-width: 1;
+        -fx-border-radius: 5;
+    }
+
+    /* border Details */
+
+    #gPaneCreateProfile {
+        -fx-border-color: #040404;
+        -fx-border-width: 1;
+        -fx-border-radius: 5;
+    }
+
+    /* Button */
+
+    #btnCreateProfile, #btnCurrencySave {
+        -fx-background-color: #3DCD58;
+        -fx-text-fill: #18191a;
+        -fx-font-size: 14px;
+        -fx-background-radius: 20;
+        -fx-border-radius: 20;
+    }
+
+    /* FrameView */
+    /*--------------------------------------------------------------------------------------------------------------------*/
+
+    #btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover, #btnCurrency:hover, #btnCurrency:hover {
+        -fx-background-color: #F2F2F2;
+        -fx-border-color: transparent transparent transparent #3DCD58;
+        -fx-border-width: 0 0 0 2px;
+    }
+
+    /* Buttons/Background/separator/HeaderText TapBar  */
+
+    #btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier, #btnCurrency, #btnCurrency {
+        -fx-background-color: transparent;
+        -fx-font-weight: bold;
+        -fx-alignment: CENTER_LEFT;
+        -fx-padding: 0 10px;
+    }
+
+    #vboxTapBar {
+        -fx-background-color: #FFFFFF;
+    }
+
+    #separatorFrame {
+        -fx-background-color: #3DCD58;
+
+    }
+
+    #lblFrameHeader {
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #3DCD58;
+    }
+
+
+    /* vBox/hBox colors */
+
+    #hboxFrameLogo {
+        -fx-background-color: #3DCD58;
+    }
+
+    /* Bar Chart */
+
+    .default-color0.chart-bar {
+        -fx-bar-fill: #3DCD58; /* Green fill for bars */
+    }
+
+    .default-color0.chart-bar:hover {
+        -fx-bar-fill: #34b04c; /* Slightly darker green on hover */
+    }
+
 
 
 
