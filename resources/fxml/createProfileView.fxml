@@ -203,6 +203,88 @@
                               </HBox>
                            </children>
                         </VBox>
+                        <VBox fx:id="resultVboxCreateProfileDaily1" alignment="CENTER" prefHeight="173.0" prefWidth="241.0">
+                           <children>
+                              <HBox alignment="BOTTOM_LEFT" prefHeight="18.0" prefWidth="216.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="187.0" text="Employee rates in EUR">
+                                       <padding>
+                                          <Insets left="8.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="139.0" prefHeight="26.0" prefWidth="300.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="150.0" text="Result Hourly:">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblHourlyResultEUR" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="27.0" text="EUR">
+                                       <HBox.margin>
+                                          <Insets right="16.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="150.0" text="Result Daily:">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblDailyResultInEUR" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="27.0" text="EUR">
+                                       <HBox.margin>
+                                          <Insets right="16.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="300.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="150.0" text="Result Annual:">
+                                       <HBox.margin>
+                                          <Insets left="8.0" right="8.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="lblAnnualResultEUR" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="27.0" text="EUR">
+                                       <HBox.margin>
+                                          <Insets right="16.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>

@@ -24,4 +24,13 @@ public class CurrencyManager {
         currencyDAO.setCurrency(selectedCurrency);
     }
 
+    public Currency getCurrencyByCode(String currencyCode) throws ApplicationWideException {
+        for (Currency currency : currencyDAO.getAllCurrencies()) {
+            if (currency.getCurrencyCode().equals(currencyCode)) {
+                return currency;
+            }
+        }
+        return null;
+    }
+
 }

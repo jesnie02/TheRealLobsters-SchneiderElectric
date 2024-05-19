@@ -2,7 +2,9 @@ package BLL;
 
 import BE.Profile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is responsible for performing various calculations related to profiles.
@@ -183,6 +185,19 @@ public class CalculatorManager implements ICalculateManager {
     }
 
 
+    public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, double conversionRate) {
+        // Convert the annual salary and fixed amount from the selected currency to EUR
+        double annualSalaryEUR = (annualSalary + fixedAmount) / conversionRate;
+        double hourlyRateEUR = hourlyRate / conversionRate;
+        double dailyRateEUR = dailyRate / conversionRate;
+
+        Map<String, Double> result = new HashMap<>();
+        result.put("annualSalaryEUR", annualSalaryEUR);
+        result.put("hourlyRateEUR", hourlyRateEUR);
+        result.put("dailyRateEUR", dailyRateEUR);
+
+        return result;
+    }
 }
 
 

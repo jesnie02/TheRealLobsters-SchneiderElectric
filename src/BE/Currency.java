@@ -50,6 +50,8 @@ public class Currency {
         this.currencyRate = currencyRate;
     }
 
+    public double getConversionRate() { return getCurrencyRate();}
+
     @Override
     public String toString() {
         return currencyCode;

@@ -92,6 +92,9 @@ public class ProfileModel {
         return profileManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
 
+    public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, String currency) throws ApplicationWideException {
+        return profileManager.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, currency);
+    }
 
 
     // Enum for the types of rates a profile can have.

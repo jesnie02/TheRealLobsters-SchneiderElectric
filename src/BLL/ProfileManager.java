@@ -1,11 +1,13 @@
 package BLL;
 
+import BE.Currency;
 import BE.Profile;
 import CustomExceptions.ApplicationWideException;
 import DAL.Profile_DAO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manager class for handling Profile related operations.
@@ -15,6 +17,7 @@ public class ProfileManager {
 
     private Profile_DAO profileDAO;
     private CalculatorManager calculatorManager;
+    private CurrencyManager currencyManager;
 
     /**
      * Constructor for the ProfileManager class.
@@ -24,6 +27,7 @@ public class ProfileManager {
     public ProfileManager() throws ApplicationWideException {
         calculatorManager = new CalculatorManager();
         profileDAO = new Profile_DAO();
+        currencyManager = new CurrencyManager();
     }
 
     /**
@@ -90,5 +94,15 @@ public class ProfileManager {
 
     public boolean updateProfile(Profile profile) throws ApplicationWideException {
         return profileDAO.updateProfile(profile);
+    }
+
+
+    public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, String currencyCode) throws ApplicationWideException {
+        Currency selectedCurrency = currencyManager.getCurrencyByCode(currencyCode);
+        if (selectedCurrency == null) {
+            throw new ApplicationWideException("Currency not found");
+        }
+        double conversionRate = selectedCurrency.getConversionRate();
+        return calculatorManager.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, conversionRate);
     }
 }

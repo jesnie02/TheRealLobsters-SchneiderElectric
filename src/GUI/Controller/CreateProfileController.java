@@ -37,7 +37,7 @@ import java.util.*;
 public class CreateProfileController implements Initializable {
 
     public TextField txtDailyWorkingHours;
-    public Label employeeHourlyRateCurrency, employeeDailyRateCurrency;
+
     // slider for overhead  and textField to show the value of the slider
     @FXML
     private MFXSlider sliderOverhead;
@@ -51,7 +51,12 @@ public class CreateProfileController implements Initializable {
 
     @FXML
     private Label lblHourlyResult, lblDailyResult, lblShowMassage;
+    @FXML
+    public Label employeeHourlyRateCurrency, employeeDailyRateCurrency;
+    @FXML
+    public Label lblDailyResultInEUR, lblAnnualResultEUR, lblHourlyResultEUR;
     private double overheadMultiplierProfile;
+
     // comboBox for country and team
 
 
@@ -140,6 +145,11 @@ public class CreateProfileController implements Initializable {
         ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             calculateAndSetHourlyRateCreateProfile();
             calculateAndSetDailyRateCreateProdifle();
+            try {
+                calculateAndSetProfileRatesInEUR();
+            } catch (ApplicationWideException e) {
+                throw new RuntimeException(e);
+            }
         };
 
         txtFixedAmount.textProperty().addListener(textFieldListener);
@@ -217,6 +227,28 @@ public class CreateProfileController implements Initializable {
         double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
         lblDailyResult.setText(String.format("%.2f", result));
         return result;
+    }
+
+    public void calculateAndSetProfileRatesInEUR() throws ApplicationWideException {
+        if (txtAnnualSalary.getText().isEmpty() || lblHourlyResult.getText().isEmpty() || lblDailyResult.getText().isEmpty()) {
+            return;
+        }
+
+        Currency selectedCurrency = cBox_Currency.getSelectionModel().getSelectedItem();
+        if (selectedCurrency == null) {
+            return;
+        }
+
+        String currency = selectedCurrency.toString();
+        double annualSalary = Double.parseDouble(txtAnnualSalary.getText().replace(",", "."));
+        double fixedAmount = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
+        double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
+        double dailyRate = Double.parseDouble(lblDailyResult.getText().replace(",", "."));
+        Map<String, Double> result = profileModel.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, currency);
+        lblAnnualResultEUR.setText(String.format("%.2f", result.get("annualSalaryEUR")));
+        lblHourlyResultEUR.setText(String.format("%.2f", result.get("hourlyRateEUR")));
+        lblDailyResultInEUR.setText(String.format("%.2f", result.get("dailyRateEUR")));
+        System.out.println(result);
     }
 
     private double parseDouble(String value) {
