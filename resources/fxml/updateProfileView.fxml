@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProfileController">
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="822.0" spacing="8.0">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../pictures/teamLogo.png" />
+                            </image>
+                        </ImageView>
+                        <Label text="Profile Details" />
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="8.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0">
+                    <children>
+                        <GridPane prefHeight="338.0" prefWidth="496.0" HBox.hgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <padding>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </padding>
+                            <children>
+                                <Label text="First name:" GridPane.rowIndex="1" />
+                                <Label text="Last name:" GridPane.rowIndex="2" />
+                                <Label text="Annual salary:" GridPane.rowIndex="4" />
+                                <Label text="Fixed amount:" GridPane.rowIndex="5" />
+                                <Label text="Daily working hours:" GridPane.rowIndex="6" />
+                                <TextField fx:id="txtFName" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="txtLName" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="txtAnnualSalary" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField fx:id="txtFixedAmount" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <TextField fx:id="txtDailyWorkingHours" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <Label fx:id="lblProfileName" text="xxx" />
+                            </children>
+                        </GridPane>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="16.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="8.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#updateProfile" text="Update Team" />
+                    </children>
+                    <padding>
+                        <Insets right="8.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="8.0" right="25.0" top="25.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>

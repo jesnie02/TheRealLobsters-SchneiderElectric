@@ -1,7 +1,5 @@
 package GUI.Controller;
 
-import BE.Country;
-import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
@@ -15,21 +13,22 @@ import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 
 /**
  * Controller class for the Profile view.
@@ -37,9 +36,8 @@ import java.util.Map;
  */
 public class ProfileController {
 
-
     public MFXLegacyTableView<Profile> tblProfiles;
-    public TableColumn<Profile, String> colNameProfile, colRoleProfile,  colAnnualSalaryProfile;
+    public TableColumn<Profile, String> colNameProfile, colRoleProfile, colAnnualSalaryProfile;
     public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile;
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
 
@@ -52,9 +50,7 @@ public class ProfileController {
     private GeographyModel geographyModel;
     private ProjectTeamsModel projectTeamsModel;
 
-
     public ProfileController() {
-
         this.frameController = FrameController.getInstance();
     }
 
@@ -64,7 +60,6 @@ public class ProfileController {
     }
 
     public void initialize() {
-
         try {
             profileModel = new ProfileModel();
             countryModel = new CountryModel();
@@ -73,13 +68,10 @@ public class ProfileController {
             loadProfiles();
             setCellValueFactories();
             idToNameMap = createIdToNameMap();
-
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
-
     }
-
 
     /**
      * Sets up the cell value factories for the table columns.
@@ -91,8 +83,6 @@ public class ProfileController {
         formatter.setMaximumFractionDigits(2);
 
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-
 
         colAnnualSalaryProfile.setCellValueFactory(cellData -> {
             double annualSalary = cellData.getValue().getAnnualSalary();
@@ -109,15 +99,15 @@ public class ProfileController {
             return new SimpleStringProperty(formatter.format(dailyRate));
         });
 
-
-
-
-
-
-
-
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = createImageButton("/pictures/editLogo.png");
+
+            {
+                updateButton.setOnAction(event -> {
+                    Profile profile = getTableView().getItems().get(getIndex());
+                    openUpdateProfileView(profile);
+                });
+            }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -130,11 +120,10 @@ public class ProfileController {
             }
         });
 
-        colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile,Void>() {
+        colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
 
             {
-                // Add an action event to the delete button
                 deleteButton.setOnAction(event -> {
                     Profile profile = getTableView().getItems().get(getIndex());
                     deleteProfile(profile);
@@ -157,37 +146,28 @@ public class ProfileController {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         ImageView imageView = new ImageView(image);
 
-        // Juster størrelsen på billedet
-        imageView.setFitWidth(20);  // Erstat 20 med den ønskede bredde
-        imageView.setFitHeight(20); // Erstat 20 med den ønskede højde
+        // Adjust image size
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(20);
         imageView.setPreserveRatio(true);
 
         Button button = new Button("", imageView);
         button.setStyle("-fx-background-color: transparent;");
-
-        // Centrer billedet på knappen
         button.setAlignment(Pos.CENTER);
 
         return button;
     }
 
-
-
-    /**
-     * Creates a map from id to name.
-     * @return a map where the key is the id and the value is the name.
-     */
     /**
      * Creates a map from team ID to team name.
      * This map is used for displaying the team name in the table view.
      * @return a map from team ID to team name
      */
     public Map<Integer, String> createIdToNameMap() {
-
         Map<Integer, String> idToNameMap = new HashMap<>();
-            for (ProjectTeam team : projectTeamsModel.getAllProjectTeamsData()) {
-                idToNameMap.put(team.getTeamId(), team.getTeamName());
-            }
+        for (ProjectTeam team : projectTeamsModel.getAllProjectTeamsData()) {
+            idToNameMap.put(team.getTeamId(), team.getTeamName());
+        }
         return idToNameMap;
     }
 
@@ -195,7 +175,7 @@ public class ProfileController {
      * Loads the profiles into the table.
      */
     private void loadProfiles() {
-            tblProfiles.setItems(profileModel.getAllProfiles());
+        tblProfiles.setItems(profileModel.getAllProfiles());
     }
 
     private void deleteProfile(Profile profile) {
@@ -206,5 +186,29 @@ public class ProfileController {
         } else {
             AlertBox.displayInfo("Deletion Failed", "Failed to delete the profile.");
         }
+    }
+
+    private void openUpdateProfileView(Profile profile) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProfileView.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller of the update profile view
+            UpdateProfileController controller = loader.getController();
+            // Pass the selected profile to the controller
+            controller.updateUI(profile);
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Profile");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+           // AlertBox.displayError("Error", "Failed to load the update profile view.");
+        }
+    }
+
+    public void updateProfile(Profile profile) {
+        openUpdateProfileView(profile);
     }
 }

@@ -154,6 +154,11 @@ public class FrameController implements Initializable {
     }
 
     @FXML
+    public void loadProfileView() {
+        loadView("ProfileView.fxml");
+    }
+
+    @FXML
     private void openCurrency(ActionEvent actionEvent) {
         loadView("currencyView.fxml");
     }

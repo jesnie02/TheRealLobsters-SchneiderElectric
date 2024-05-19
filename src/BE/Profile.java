@@ -173,6 +173,10 @@ public class Profile {
         return fixedAmount;
     }
 
+    public void setFixedAmount(double fixedAmount) {
+        this.fixedAmount = fixedAmount;
+    }
+
 
     public double getHourlySalary() {
         return hourlySalary;

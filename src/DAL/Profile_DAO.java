@@ -111,6 +111,28 @@ public class Profile_DAO implements IProfileDataAccess {
         }
     }
 
+    @Override
+    public boolean updateProfile(Profile profile) throws ApplicationWideException {
+        String sqlProfile = "UPDATE Profile SET Fname = ?, Lname = ?, AnualSalary = ?, FixedAmount = ?, DailyWorkingHours = ? WHERE ProfileId = ?";
+
+        try (Connection conn = dbConnector.getConnection()) {
+            try (PreparedStatement pstmtProfile = conn.prepareStatement(sqlProfile)) {
+                pstmtProfile.setString(1, profile.getFName());
+                pstmtProfile.setString(2, profile.getLName());
+                pstmtProfile.setDouble(3, profile.getAnnualSalary());
+                pstmtProfile.setDouble(4, profile.getFixedAmount());
+                pstmtProfile.setDouble(5, profile.getDailyWorkingHours());
+                pstmtProfile.setInt(6, profile.getProfileId());
+
+                int affectedRows = pstmtProfile.executeUpdate();
+                return affectedRows > 0;
+            }
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to update profile", e);
+        }
+    }
+
+
     public void deleteProfile(int profileId) throws ApplicationWideException {
         String[] sqlQueries = {
                 "DELETE FROM dbo.ProfileProfileRole WHERE ProfileId = ?",

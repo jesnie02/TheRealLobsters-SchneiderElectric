@@ -12,4 +12,5 @@ public interface IProfileDataAccess {
     void createProfile(Profile newProfile) throws ApplicationWideException;
 
 
+    boolean updateProfile(Profile profile) throws ApplicationWideException;
 }

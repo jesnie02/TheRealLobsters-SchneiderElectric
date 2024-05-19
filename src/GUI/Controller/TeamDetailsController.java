@@ -69,7 +69,6 @@ public class TeamDetailsController implements Initializable {
 
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {
-        System.out.println("test updateUI");
         DataModelSingleton.getInstance().setCurrentTeam(team);
         lblTeamInTeamDetail.setText(team.getTeamName());
         if (geography != null){

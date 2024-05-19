@@ -88,4 +88,7 @@ public class ProfileManager {
         profileDAO.deleteProfile(profile.getProfileId());
     }
 
+    public boolean updateProfile(Profile profile) throws ApplicationWideException {
+        return profileDAO.updateProfile(profile);
+    }
 }
