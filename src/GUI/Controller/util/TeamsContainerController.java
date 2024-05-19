@@ -1,109 +1,110 @@
 package GUI.Controller.util;
 
-import BE.Geography;
-import BE.Profile;
-import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
-import GUI.Controller.TeamsController;
-import GUI.Model.CountryModel;
-import GUI.Model.GeographyModel;
-import GUI.Model.ProjectTeamsModel;
-import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import BE.ProjectTeam;
+import BE.Geography;
+import GUI.Model.GeographyModel;
+import GUI.Controller.TeamsController;
+import GUI.Model.ProjectTeamsModel;
 
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
-public class TeamsContainerController implements Initializable {
+public class TeamsContainerController {
 
-    private static TeamsContainerController instance;
-    private ProjectTeam selectedTeam;
-    ProjectTeamsModel projectTeamsModel;
-    CountryModel countryModel;
-    GeographyModel geographyModel;
-
-    private Map<Integer, Geography> geographyMap = new HashMap<>();
-    private List<Geography> geographies;
-
-
-
-    @FXML
-    private Label lblAnnualAVGTeamCostContainer,lblGeographyContainer, lblNumberOfMembersContainer, lblTeamNameContainer, lblLocationContainer;
+    private ProjectTeamsModel projectTeamsModel;
+    private GeographyModel geographyModel;
+    private Map<Integer, VBox> teamBoxes = new HashMap<>();
 
 
     public TeamsContainerController() {
-        instance = this;
+        initializeModels();
+
     }
 
-    public static TeamsContainerController getInstance() {
-        return instance;
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void initializeModels() {
         try {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
-            loadGeographyMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
 
-    public void updateUI(ProjectTeam team) {
-        this.selectedTeam = team;
-
-        Platform.runLater(() -> {
-            updateTeamInformation(team);
-            updateGeographyInformation(team);
-        });
-        lblTeamNameContainer.getParent().setOnMouseClicked(event -> openTeamDetailView());
+    // Initialize method to create VBox for each team
+    public void initialize() {
+        Map<Integer, Geography> geographyMap = fetchGeographyMap();
+        List<ProjectTeam> teams = fetchAllProjectTeams();
+        teams.forEach(team -> createAndStoreTeamVBox(team, geographyMap));
     }
 
-    private void updateTeamInformation(ProjectTeam team) {
-        lblTeamNameContainer.setText(team.getTeamName());
-        lblNumberOfMembersContainer.setText(String.valueOf(team.getNumberOfProfiles()));
-        lblAnnualAVGTeamCostContainer.setText(String.format("%.2f", team.getAvgAnnualSalary()));
-
-    }
-
-    private void openTeamDetailView() {
-        TeamsController teamsController = TeamsController.getInstance();
-        Geography teamGeography = geographyMap.get(selectedTeam.getGeographyId());
-        teamsController.showTeamDetails(selectedTeam, teamGeography);
-    }
-
-    private void updateGeographyInformation(ProjectTeam team) {
-       int teamGeographyId = team.getGeographyId();
-       Geography teamGeography = geographyMap.get(teamGeographyId);
-        if (teamGeography != null) {
-            lblGeographyContainer.setText(teamGeography.getGeographyName());
-        } else {
-            lblLocationContainer.setText("No Geography");
-        }
-    }
-
-    private void loadGeographyMap() {
+    private Map<Integer, Geography> fetchGeographyMap() {
         try {
-            geographyMap = geographyModel.getGeographyMap();
+            return geographyModel.getGeographyMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
+            return new HashMap<>();
         }
     }
 
-
-
-    public ProjectTeamsModel getTeam(){
-        return this.projectTeamsModel;
+    private List<ProjectTeam> fetchAllProjectTeams() {
+        return projectTeamsModel.getAllProjectTeamsData();
     }
+
+    private void createAndStoreTeamVBox(ProjectTeam team, Map<Integer, Geography> geographyMap) {
+        Geography geography = geographyMap.get(team.getGeographyId());
+        if (geography == null) {
+            System.out.println("Geography not found for team ID: " + team.getTeamId() + " with geography ID: " + team.getGeographyId());
+        }
+        VBox teamBox = createTeamVBox(team, geography);
+
+        teamBoxes.put(team.getTeamId(), teamBox);
+
+    }
+
+
+    private VBox createTeamVBox(ProjectTeam team, Geography geography) {
+        VBox vbox = new VBox(10);
+        vbox.getStyleClass().add("team-vbox");
+
+        // Labels creation with null-safe geography name retrieval
+        Label lblTeamName = createLabel(team.getTeamName(), "top-label");
+        String geoName = geography != null ? geography.getGeographyName() : "Unknown";
+        Label lblGeography = createLabel("Location: " + geoName, "other-label");
+        Label lblMembers = createLabel("Members: " + team.getNumberOfProfiles(), "other-label");
+        Label lblCost = createLabel("Average Cost: " + String.format("%.2f", team.getAvgAnnualSalary()), "other-label");
+        //System.out.println("kakao" +geography);
+        vbox.getChildren().addAll(lblTeamName, lblGeography, lblMembers, lblCost);
+        vbox.setOnMouseClicked(event -> openTeamDetailView(team, geography));
+
+        return vbox;
+    }
+
+    private Label createLabel(String text, String styleClass) {
+        Label label = new Label(text);
+        if (styleClass != null) {
+            label.getStyleClass().add(styleClass);
+        }
+        label.setMaxWidth(Double.MAX_VALUE);
+        return label;
+    }
+
+    private void openTeamDetailView(ProjectTeam team, Geography geography) {
+        System.out.println("ost" + geography);
+        TeamsController.getInstance().showTeamDetails(team, geography);
+
+    }
+
+
+    public VBox getTeamVBox(int teamId) {
+        return teamBoxes.get(teamId);
+    }
+
+
 }
+

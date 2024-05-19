@@ -10,5 +10,8 @@ public ApplicationWideException(String message, Throwable cause) {
         super(message);
     }
 
+    public ApplicationWideException(Throwable exception) {
+        super(exception);
+    }
 }
 

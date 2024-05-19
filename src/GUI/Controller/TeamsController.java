@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,25 +57,21 @@ public class TeamsController implements Initializable {
     }
 
     public void loadTeamsInTilePane() {
-        tPaneTeamOverview.getChildren().clear(); // Clear existing content before loading teams
+        tPaneTeamOverview.getChildren().clear(); // Ensure the pane is clear before loading new items.
+        TeamsContainerController teamsContainerController = new TeamsContainerController();
+        teamsContainerController.initialize(); // Initialize team boxes before loading them into the TilePane.
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/containers/teamContainer.fxml"));
-            Node teamNode = null;
-            try {
-                teamNode = loader.load();
-            } catch (IOException e) {
-                ExceptionHandler.handleException(e);
+            VBox teamBox = teamsContainerController.getTeamVBox(team.getTeamId());
+            if (teamBox != null) {
+                teamBox.setOnMouseClicked(event -> showTeamDetails(team, team.getGeography()));
+                tPaneTeamOverview.getChildren().add(teamBox);
             }
-            TeamsContainerController controller = loader.getController();
-            controller.updateUI(team);
-
-            teamNode.setOnMouseClicked(event -> handleTeamSelection(team));
-            tPaneTeamOverview.getChildren().add(teamNode);
         }
     }
 
     public void showTeamDetails(ProjectTeam team, Geography geography) {
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teamDetailsView.fxml"));
             Node teamNode = loader.load();
@@ -87,6 +84,7 @@ public class TeamsController implements Initializable {
     }
 
     private void handleTeamSelection(ProjectTeam selectedTeam) {
+
         DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
     }
 
@@ -100,6 +98,7 @@ public class TeamsController implements Initializable {
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
+
         frameController.loadCreateTeamView();
     }
 }

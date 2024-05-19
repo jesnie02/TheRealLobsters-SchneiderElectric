@@ -283,5 +283,35 @@
     }
 
 
+.team-vbox {
+    -fx-alignment: top-center;
+    -fx-pref-width: 225px;
+    -fx-pref-height: 200px;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-spacing: 14;
+}
+
+.top-label {
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 10px 5px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-radius: 10 10 0 0;
+}
+
+.other-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 2px;
+    -fx-alignment: center;
+}
 
 

@@ -292,7 +292,7 @@ public class CreateProfileController implements Initializable {
         boolean isValid = true;
         // List of all TextFields and ComboBoxes
         List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,
-                txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours);
+                txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours, cBox_Currency);
 
         for (Control field : fields) {
             if (field instanceof TextField) {
