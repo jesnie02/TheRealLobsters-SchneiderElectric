@@ -193,9 +193,9 @@ public class CreateProfileController implements Initializable {
         }
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
-        double annualSalary = parseDouble(lblAnnualResultEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
-        double hourlyResult = parseDouble(lblHourlyResultEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
-        double dailyResult = parseDouble(lblDailyResultInEUR.getText());//TODO skal dette opdateres i databasen. snak med @jonas
+        double annualSalary = parseDouble(lblAnnualResultEUR.getText());//TODO skal dette opdateres i DAO og BE. snak med @jonas
+        double hourlyResult = parseDouble(lblHourlyResultEUR.getText());//TODO skal dette opdateres i DAO og BE. snak med @jonas
+        double dailyResult = parseDouble(lblDailyResultInEUR.getText());//TODO skal dette opdateres i DAO og BE. snak med @jonas
         boolean overheadCost = checkOverhead.isSelected();
         double fixedAmount = parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());

@@ -22,6 +22,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     public Label lblDailyRateSumCountry, lblHourlyRateSumCountry, lblAvgDailyRateCountry, lblAvgHourlyRateCountry;
+
     @FXML
     private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
 
