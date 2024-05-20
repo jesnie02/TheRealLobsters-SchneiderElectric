@@ -99,7 +99,7 @@
                         <TextField fx:id="txtLastnameProfile" prefHeight="26.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <MFXSlider fx:id="sliderOverhead" decimalPrecision="1" minorTicksCount="10" prefHeight="6.0" prefWidth="130.0" showMinorTicks="true">
+                              <MFXSlider fx:id="sliderOverhead" decimalPrecision="1" minorTicksCount="10" prefHeight="6.0" prefWidth="130.0">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>

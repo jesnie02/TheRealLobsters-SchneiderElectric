@@ -240,6 +240,8 @@ public class MultiplierController {
         lblMUDailyResultP.setText("0");
         lblGMHourlyResultP.setText("0");
         lblGMDailyResultP.setText("0");
+        sliderGMP.setValue(0);
+        sliderMUP.setValue(0);
     }
 
     @FXML
@@ -255,6 +257,8 @@ public class MultiplierController {
         lblMUDailyResultT.setText("0");
         lblGMHourlyResultT.setText("0");
         lblGMDailyResultT.setText("0");
+        sliderGMT.setValue(0);
+        sliderMUT.setValue(0);
     }
 
 

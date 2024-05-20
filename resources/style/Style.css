@@ -55,6 +55,11 @@
     -fx-font-weight: bold;
 }
 
+.tab:selected{
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
+}
+
 /* TableView */
 .table-row-cell {
     -fx-cell-size: 50px;
@@ -129,9 +134,8 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 .mfx-slider {
     -mfx-main-color: #3DCD58;
-    -mfx-main-color-hover: #00BF87;
-    -mfx-main-color-pressed:#00ADB1;
-    -mfx-disabled-color: rgb(158, 158, 158);
+    -mfx-main-color-hover: #F1F1E8;
+    -mfx-main-color-pressed:#3DCD58;
 }
 
 .mfx-slider .track,
@@ -141,7 +145,7 @@
 }
 
 .mfx-slider .track {
-    -fx-fill: derive(-mfx-main-color, 140%);
+    -fx-fill: #F1F1E8;
 }
 
 .mfx-slider .bar {
@@ -168,6 +172,10 @@
     -mfx-ripple-color: -mfx-main-color;
 }
 
+.mfx-slider .tick-even,
+.mfx-slider .tick-odd {
+    -mfx-color: derive(transparent, 30%);
+}
 
 
 
@@ -313,5 +321,40 @@
     -fx-padding: 2px;
     -fx-alignment: center;
 }
+
+/* --------------------------------------------------------------------------------- */
+/*MultipliersView */
+
+#bP_Multiplier{
+    -fx-background-color: #F4F4F4;
+}
+
+#vBoxMultiplier{
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
+}
+
+#tPaneMultiplier{
+    -fx-background-color: #FFFFFF;
+}
+
+#hBoxHeaderMultiplier{
+    -fx-background-color: #F1F1E8;
+    -fx-border-color: transparent transparent #3DCD58 transparent;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-style: solid;
+}
+
+#btnResetP, #btnResultP, #btnResetT, #btnResultT{
+    -fx-background-color: #3DCD58;
+    -fx-text-fill: #18191a;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+
+
+
 
 

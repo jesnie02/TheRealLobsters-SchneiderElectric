@@ -8,370 +8,380 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultiplierController">
-   <top>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="20.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label text="Multipliers" />
-               </children>
-            </HBox>
-         </children>
-      </HBox>
-   </top>
+<BorderPane fx:id="bP_Multiplier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultiplierController">
    <center>
-      <TabPane prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Profiles">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="450.0">
-                     <left>
-                        <VBox prefHeight="326.0" prefWidth="426.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <ListView fx:id="lstVProfile" prefHeight="200.0" prefWidth="200.0">
-                                       <HBox.margin>
-                                          <Insets top="16.0" />
-                                       </HBox.margin></ListView>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Gross margin:">
-                                       <HBox.margin>
-                                          <Insets right="16.0" />
-                                       </HBox.margin></Label>
-                                    <MFXSlider fx:id="sliderGMP" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin></MFXSlider>
-                                    <TextField fx:id="txtGMP" prefHeight="25.0" prefWidth="42.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin></TextField>
-                                    <Label text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label prefHeight="17.0" prefWidth="86.0" text="Markup:">
-                                       <HBox.margin>
-                                          <Insets right="16.0" />
-                                       </HBox.margin></Label>
-                                    <MFXSlider fx:id="sliderMUP" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin></MFXSlider>
-                                    <TextField fx:id="txtMUP" prefHeight="25.0" prefWidth="42.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin></TextField>
-                                    <Label text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </left>
-                     <right>
-                        <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
-                                       <VBox.margin>
-                                          <Insets bottom="16.0" top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblGMHourlyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="8.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                             <HBox.margin>
-                                                <Insets bottom="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="lblMUHourlyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                    </HBox>
-                                    <VBox prefHeight="58.0" prefWidth="450.0">
-                                       <children>
-                                          <Label alignment="CENTER" prefHeight="25.0" prefWidth="352.0" text="Based on daily rate:">
-                                             <VBox.margin>
-                                                <Insets bottom="16.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblGMDailyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="8.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                             <HBox.margin>
-                                                <Insets bottom="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="lblMUDailyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#resetProfile" text="Reset" />
-                                          <Button mnemonicParsing="false" onAction="#calculateForProfile" text="Show result" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="8.0" right="8.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </right>
-                  </BorderPane>
-               </content>
-          </Tab>
-            <Tab text="Teams">
-               <content>
-                  <BorderPane prefHeight="200.0" prefWidth="450.0">
-                     <left>
-                        <VBox prefHeight="326.0" prefWidth="426.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <ListView fx:id="lstVTeams" prefHeight="200.0" prefWidth="200.0">
-                                       <HBox.margin>
-                                          <Insets top="16.0" />
-                                       </HBox.margin></ListView>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Gross margin:">
-                                       <HBox.margin>
-                                          <Insets right="16.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <MFXSlider fx:id="sliderGMT" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin>
-                                    </MFXSlider>
-                                    <TextField fx:id="txtGMT" prefHeight="25.0" prefWidth="42.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label prefHeight="17.0" prefWidth="86.0" text="Markup:">
-                                       <HBox.margin>
-                                          <Insets right="16.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <MFXSlider fx:id="sliderMUT" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin>
-                                    </MFXSlider>
-                                    <TextField fx:id="txtMUT" prefHeight="25.0" prefWidth="42.0">
-                                       <HBox.margin>
-                                          <Insets right="8.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Label text="\%" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </left>
-                     <right>
-                        <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
-                                       <VBox.margin>
-                                          <Insets bottom="16.0" top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblGMHourlyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="8.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                             <HBox.margin>
-                                                <Insets bottom="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="lblMUHourlyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                    </HBox>
-                                    <VBox prefHeight="58.0" prefWidth="450.0">
-                                       <children>
-                                          <Label alignment="CENTER" prefHeight="25.0" prefWidth="352.0" text="Based on daily rate:">
-                                             <VBox.margin>
-                                                <Insets bottom="16.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblGMDailyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="8.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox prefHeight="22.0" prefWidth="339.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
-                                             <padding>
-                                                <Insets left="8.0" />
-                                             </padding>
-                                             <HBox.margin>
-                                                <Insets bottom="8.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="lblMUDailyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
-                                             <padding>
-                                                <Insets right="8.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#resetTeams" text="Reset" />
-                                          <Button mnemonicParsing="false" onAction="#calculateForTeams" text="Show result" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets left="50.0" right="50.0" />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </right>
-                  </BorderPane>
-               </content>
-            </Tab>
-        </tabs>
+      <VBox fx:id="vBoxMultiplier" prefHeight="436.0" prefWidth="822.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets right="25.0" />
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </BorderPane.margin>
-      </TabPane>
+         <children>
+            <HBox fx:id="hBoxHeaderMultiplier" alignment="CENTER_LEFT" prefHeight="97.0" prefWidth="865.0">
+               <children>
+                  <Label text="Multiplier" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
+            </HBox>
+            <TabPane fx:id="tPaneMultiplier" prefHeight="426.0" prefWidth="822.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Profiles">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="450.0">
+                           <left>
+                              <VBox prefHeight="326.0" prefWidth="426.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <ListView fx:id="lstVProfile" prefHeight="200.0" prefWidth="200.0">
+                                             <HBox.margin>
+                                                <Insets top="16.0" />
+                                             </HBox.margin>
+                                          </ListView>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="86.0" text="Gross margin:">
+                                             <HBox.margin>
+                                                <Insets right="16.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <MFXSlider fx:id="sliderGMP" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </MFXSlider>
+                                          <TextField fx:id="txtGMP" prefHeight="25.0" prefWidth="45.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Label text="\%" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="86.0" text="Markup:">
+                                             <HBox.margin>
+                                                <Insets right="16.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <MFXSlider fx:id="sliderMUP" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </MFXSlider>
+                                          <TextField fx:id="txtMUP" prefHeight="25.0" prefWidth="45.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Label text="\%" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <right>
+                              <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
+                                             <VBox.margin>
+                                                <Insets bottom="16.0" top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="lblGMHourlyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                   <HBox.margin>
+                                                      <Insets bottom="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="lblMUHourlyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                          </HBox>
+                                          <VBox prefHeight="58.0" prefWidth="450.0">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="352.0" text="Based on daily rate:">
+                                                   <VBox.margin>
+                                                      <Insets bottom="16.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="lblGMDailyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                   <HBox.margin>
+                                                      <Insets bottom="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="lblMUDailyResultP" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
+                                             <children>
+                                                <Button fx:id="btnResetP" mnemonicParsing="false" onAction="#resetProfile" text="Reset" />
+                                                <Button fx:id="btnResultP" mnemonicParsing="false" onAction="#calculateForProfile" text="Show result" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" right="8.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </right>
+                        </BorderPane>
+                     </content>
+                </Tab>
+                  <Tab text="Teams">
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="450.0">
+                           <left>
+                              <VBox prefHeight="326.0" prefWidth="426.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <ListView fx:id="lstVTeams" prefHeight="200.0" prefWidth="200.0">
+                                             <HBox.margin>
+                                                <Insets top="16.0" />
+                                             </HBox.margin>
+                                          </ListView>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Gross margin:">
+                                             <HBox.margin>
+                                                <Insets right="16.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <MFXSlider fx:id="sliderGMT" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </MFXSlider>
+                                          <TextField fx:id="txtGMT" prefHeight="25.0" prefWidth="42.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Label text="\%" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="86.0" text="Markup:">
+                                             <HBox.margin>
+                                                <Insets right="16.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <MFXSlider fx:id="sliderMUT" decimalPrecision="1" prefHeight="0.0" prefWidth="190.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </MFXSlider>
+                                          <TextField fx:id="txtMUT" prefHeight="25.0" prefWidth="42.0">
+                                             <HBox.margin>
+                                                <Insets right="8.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Label text="\%" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <right>
+                              <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
+                                             <VBox.margin>
+                                                <Insets bottom="16.0" top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="lblGMHourlyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                   <HBox.margin>
+                                                      <Insets bottom="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="lblMUHourlyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                          </HBox>
+                                          <VBox prefHeight="58.0" prefWidth="450.0">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="352.0" text="Based on daily rate:">
+                                                   <VBox.margin>
+                                                      <Insets bottom="16.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Gross margin result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="lblGMDailyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox prefHeight="22.0" prefWidth="339.0">
+                                             <children>
+                                                <Label prefHeight="18.0" prefWidth="198.0" text="Markup result:">
+                                                   <padding>
+                                                      <Insets left="8.0" />
+                                                   </padding>
+                                                   <HBox.margin>
+                                                      <Insets bottom="8.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="lblMUDailyResultT" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="0">
+                                                   <padding>
+                                                      <Insets right="8.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
+                                             <children>
+                                                <Button fx:id="btnResetT" mnemonicParsing="false" onAction="#resetTeams" text="Reset" />
+                                                <Button fx:id="btnResultT" mnemonicParsing="false" onAction="#calculateForTeams" text="Show result" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="50.0" right="50.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </right>
+                        </BorderPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
    </center>
 </BorderPane>
