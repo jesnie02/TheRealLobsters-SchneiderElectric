@@ -43,13 +43,13 @@
                      </padding>
                   </Label>
                   <Pane prefHeight="30.0" prefWidth="485.0" />
-                  <TextField fx:id="txtSearchCurrency" prefHeight="26.0" prefWidth="174.0" text="Search currency" />
+                  <TextField fx:id="txtSearchCurrency" prefHeight="26.0" prefWidth="174.0" promptText="Search currency" />
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
-                  <Insets left="8.0" />
+                  <Insets left="8.0" right="8.0" />
                </padding>
             </HBox>
             <HBox prefHeight="456.0" prefWidth="825.0">

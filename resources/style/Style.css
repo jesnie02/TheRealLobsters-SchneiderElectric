@@ -195,10 +195,15 @@
         -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
     }
 
+    /* TilePane */
+
+    #tPaneTeamOverview {
+        -fx-background-color: #FFFFFF;
+    }
 
     /* Header Box */
 
-    #headerHboxCreateProfile, #hBoxHeaderCurrency {
+    #headerHboxCreateProfile, #hBoxHeaderCurrency, #hBoxHeaderTeams, #vBoxCenterTeams {
         -fx-background-color: #F1F1E8;
         -fx-border-color: transparent transparent #3DCD58 transparent;
         -fx-border-width: 0 0 2px 0;
@@ -207,7 +212,7 @@
 
     /* Header Text */
 
-    #headerTextCreateProfile, #headerTextCurrency {
+    #headerTextCreateProfile, #headerTextCurrency, #lblHeaderTeams {
         -fx-font-size: 14px;
         /* -fx-font-weight: bold; */
         -fx-text-fill: black;
@@ -232,7 +237,7 @@
 
     /* Button */
 
-    #btnCreateProfile, #btnCurrencySave {
+    #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams {
         -fx-background-color: #3DCD58;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;
@@ -317,7 +322,7 @@
 
 .other-label {
     -fx-font-size: 12px;
-    -fx-font-weight: bold;
+    -fx-font-weight: 700;
     -fx-padding: 2px;
     -fx-alignment: center;
 }

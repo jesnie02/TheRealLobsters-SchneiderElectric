@@ -10,43 +10,53 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="457.0" prefWidth="818.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
+<BorderPane prefHeight="480.0" prefWidth="861.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamsController">
    <center>
-      <ScrollPane fitToWidth="true" prefWidth="652.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxCenterTeams" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="50.0" left="50.0" right="50.0" />
-         </BorderPane.margin>
-         <content>
-            <TilePane fx:id="tPaneTeamOverview" prefHeight="327.0" prefWidth="719.0" />
-         </content>
-      </ScrollPane>
-   </center>
-   <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="769.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets left="50.0" right="50.0" top="50.0" />
+            <Insets />
          </BorderPane.margin>
          <children>
-            <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../pictures/teamLogo.png" />
-               </image>
-               <HBox.margin>
+            <HBox fx:id="hBoxHeaderTeams" alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="769.0">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/teamLogo.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="lblHeaderTeams" prefHeight="18.0" prefWidth="206.0" text="Team overview">
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
+                  <Pane prefHeight="28.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnCreateProjectTeams" alignment="CENTER" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="170.0" text="+ Create projectTeam">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
                   <Insets />
-               </HBox.margin>
-            </ImageView>
-            <Label prefHeight="18.0" prefWidth="206.0" text="Team overview">
+               </VBox.margin>
                <padding>
-                  <Insets left="8.0" />
+                  <Insets right="8.0" />
                </padding>
-            </Label>
-            <Pane prefHeight="28.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="144.0" text="+ Create projectTeam">
-               <HBox.margin>
-                  <Insets bottom="8.0" top="8.0" />
-               </HBox.margin></Button>
+            </HBox>
+            <ScrollPane fitToWidth="true" prefHeight="653.0" prefWidth="811.0">
+               <content>
+                  <TilePane fx:id="tPaneTeamOverview" prefHeight="658.0" prefWidth="797.0" />
+               </content>
+            </ScrollPane>
          </children>
-      </HBox>
-   </top>
+      </VBox>
+   </center>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </BorderPane>

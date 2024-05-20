@@ -6,6 +6,8 @@ import GUI.Model.CurrencyModel;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,11 +42,21 @@ public class CurrencyController implements Initializable {
     @FXML
     private Label lblMessageCurrency;
 
+    private FilteredList<Currency> filteredData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             currencyModel = new CurrencyModel();
+
+            // Load currencies
+            ObservableList<Currency> data = currencyModel.getCurrencies();
+            filteredData = new FilteredList<>(data, p -> true);
+            searchInCurrencyCodes();
+
+            // Set the items in the table
+            tblCurrency.setItems(filteredData);
+
         } catch (ApplicationWideException e) {
             displayMessage("Failed to load currencies: " + e.getMessage(), true);
         }
@@ -58,18 +70,32 @@ public class CurrencyController implements Initializable {
         });
     }
 
+    public void searchInCurrencyCodes() {
+        txtSearchCurrency.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(currency -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return currency.getCurrencyCode().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+    }
+
 
     public void setupTable() {
         try {
             colCurrencyId.setCellValueFactory(new PropertyValueFactory<>("currencyId"));
             colCurrencyCodes.setCellValueFactory(new PropertyValueFactory<>("currencyCode"));
             colCurrencyRate.setCellValueFactory(new PropertyValueFactory<>("currencyRate"));
-            tblCurrency.setItems(currencyModel.getCurrencies());
+
         } catch (Exception e) {
             displayMessage("Error setting up the currency table: " + e.getMessage(), true);
         }
 
     }
+
+
 
     private void bindSelectionToTextField() {
         tblCurrency.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
