@@ -5,13 +5,18 @@ import GUI.Model.MultiplierModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.ExceptionHandler;
+import GUI.Utility.SliderDecimalFilter;
 import io.github.palexdev.materialfx.controls.MFXSlider;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class MultiplierController {
     @FXML
@@ -71,6 +76,10 @@ public class MultiplierController {
             setupListViewProfiles();
             setValueInFieldTeams();
             setupListViewTeams();
+            bindSliderAndTextFieldProfileForM();
+            bindSliderAndTextFieldProfilesForGM();
+            bindSliderAndTextFieldTeamsForGM();
+            bindSliderAndTextFieldTeamsForM();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -106,6 +115,34 @@ public class MultiplierController {
     private void setValueInFieldTeams(){
         txtGMT.setText(String.valueOf(grossMarginT));
         txtMUT.setText(String.valueOf(markUpT));
+    }
+
+    public void bindSliderAndTextFieldProfilesForGM() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtGMP.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtGMP.textProperty(),sliderGMP.valueProperty(),  converter);
+    }
+
+    public void bindSliderAndTextFieldProfileForM() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtMUP.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtMUP.textProperty(),sliderMUP.valueProperty(),  converter);
+    }
+
+    public void bindSliderAndTextFieldTeamsForGM() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtGMT.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtGMT.textProperty(),sliderGMT.valueProperty(),  converter);
+    }
+
+    public void bindSliderAndTextFieldTeamsForM() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtMUT.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtMUT.textProperty(),sliderMUT.valueProperty(),  converter);
     }
 
     private String formatResult(double result) {

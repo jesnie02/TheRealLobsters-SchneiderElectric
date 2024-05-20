@@ -122,7 +122,6 @@ public class CreateProfileController implements Initializable {
         txtOverheadView.setTextFormatter(new TextFormatter<>(filter));
         StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
         Bindings.bindBidirectional(txtOverheadView.textProperty(),sliderOverhead.valueProperty(),  converter);
-
     }
 
 
