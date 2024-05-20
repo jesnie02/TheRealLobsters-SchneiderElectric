@@ -249,7 +249,7 @@
     }
 
 
-    #btnDeleteTeamTeamDetails {
+    #btnDeleteTeamTeamDetails, #btnLogOut {
         -fx-background-color: transparent;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;

@@ -42,7 +42,7 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" />
                </VBox.margin>
             </Separator>
-            <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#openDashboard" prefHeight="26.0" prefWidth="120.0" text="Dashboard">
+            <Button fx:id="btnDashboard" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openDashboard" prefHeight="33.0" prefWidth="120.0" text="Dashboard">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnProfiles" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openProfiles" prefHeight="33.0" prefWidth="120.0" text="Profiles">
+            <Button fx:id="btnProfiles" layoutX="10.0" layoutY="10.0" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openProfiles" prefHeight="33.0" prefWidth="120.0" text="Profiles">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
@@ -66,7 +66,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnTeams" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openTeams" prefHeight="26.0" prefWidth="120.0" text="Teams">
+            <Button fx:id="btnTeams" layoutX="10.0" layoutY="10.0" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openTeams" prefHeight="33.0" prefWidth="120.0" text="Teams">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
@@ -78,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnGeography" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="26.0" prefWidth="120.0" text="Geography">
+            <Button fx:id="btnGeography" layoutX="10.0" layoutY="10.0" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="33.0" prefWidth="120.0" text="Geography">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
@@ -90,7 +90,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnMultiplier" layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#openMultiplier" prefHeight="26.0" prefWidth="120.0" text="Multiplier">
+            <Button fx:id="btnMultiplier" layoutX="10.0" layoutY="200.0" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openMultiplier" prefHeight="33.0" prefWidth="120.0" text="Multiplier">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -100,7 +100,7 @@
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin></Button>
-            <Button fx:id="btnCurrency" mnemonicParsing="false" onAction="#openCurrency" prefHeight="33.0" prefWidth="120.0" text="Currency">
+            <Button fx:id="btnCurrency" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openCurrency" prefHeight="33.0" prefWidth="120.0" text="Currency">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -109,12 +109,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Pane prefHeight="114.0" prefWidth="110.0" />
-            <Button mnemonicParsing="false" onAction="#buttonLogOut" text="Log out">
-               <VBox.margin>
-                  <Insets bottom="16.0" left="26.0" />
-               </VBox.margin>
-            </Button>
+            <Pane prefHeight="146.0" prefWidth="120.0" />
+            <VBox alignment="CENTER" prefHeight="74.0" prefWidth="120.0">
+               <children>
+                  <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#buttonLogOut" prefHeight="26.0" prefWidth="97.0" text="Log out" />
+               </children>
+            </VBox>
          </children>
       </VBox>
    </left>
