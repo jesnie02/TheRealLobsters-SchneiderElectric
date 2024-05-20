@@ -249,10 +249,18 @@ public class Profile {
                 ", countryId=" + countryId +
                 ", fName='" + fName + '\'' +
                 ", lName='" + lName + '\'' +
+                ", roles='" + roles + '\'' +
                 ", overheadCost=" + overheadCost +
-                ", annualsalary=" + annualSalary +
+                ", annualSalary=" + annualSalary +
                 ", hourlySalary=" + hourlySalary +
                 ", dailyRate=" + dailyRate +
+                ", fixedAmount=" + fixedAmount +
+                ", dailyWorkingHours=" + dailyWorkingHours +
+                ", totalUtilization=" + totalUtilization +
+                ", utilization=" + utilization +
+                ", country=" + country +
+                ", projectTeams=" + projectTeams +
+                ", profileRoles=" + profileRoles +
                 '}';
     }
 

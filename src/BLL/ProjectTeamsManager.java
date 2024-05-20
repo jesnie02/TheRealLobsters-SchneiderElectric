@@ -129,7 +129,7 @@ public class ProjectTeamsManager {
         teamsDAO.deleteTeam(projectTeam);
     }
 
-    public void updateTeam(ProjectTeam projectTeam) throws Exception {
+    public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         teamsDAO.updateTeam(projectTeam);
     }
 }

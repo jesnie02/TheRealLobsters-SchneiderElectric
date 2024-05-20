@@ -80,7 +80,6 @@ public class FrameController implements Initializable {
                 view = loader.load();
 
                 viewCache.put(viewName, view);
-                System.out.println("View loaded: " + viewName);
             } catch (IOException e) {
                 ExceptionHandler.handleException(e);
                 return;

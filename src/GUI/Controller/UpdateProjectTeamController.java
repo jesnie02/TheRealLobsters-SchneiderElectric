@@ -6,6 +6,7 @@ import BE.Profile;
 import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.*;
+import GUI.Utility.AlertBox;
 import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
@@ -178,7 +179,8 @@ public class UpdateProjectTeamController implements Initializable {
             String teamName = txtProjectTeamName.getText();
             ObservableList<Profile> profilesInTeam = tblProfileToTeam.getItems();
             if (teamName == null || teamName.isEmpty() || profilesInTeam.isEmpty()) {
-                return; // TODO: Handle this error
+                AlertBox.displayInfo("Invalid Input", "Team name and profiles cannot be empty.");
+                return;
             }
             ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
             currentTeam.setTeamName(teamName);
@@ -186,12 +188,13 @@ public class UpdateProjectTeamController implements Initializable {
             currentTeam.setUtilizationsMap(utilizationsMap);
 
             projectTeamsModel.updateTeam(currentTeam);
-            showAlert("Succes", "The team " + teamName + " is updated", Alert.AlertType.INFORMATION);
-        } catch (Exception e){
-            e.printStackTrace();
-            showAlert("Error", "Error updating team: " + e.getMessage(), Alert.AlertType.ERROR);
+            AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+            AlertBox.displayError(e);
         }
     }
+
 
     @FXML
     private void removeProfileFromTbl(ActionEvent actionEvent) {

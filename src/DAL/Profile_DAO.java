@@ -29,31 +29,36 @@ public class Profile_DAO implements IProfileDataAccess {
      * @return A list of Profile objects.
      */
     @Override
-    public List<Profile> getAllProfiles() throws ApplicationWideException{
+    public List<Profile> getAllProfiles() throws ApplicationWideException {
         List<Profile> allProfiles = new ArrayList<>();
-        try(Connection conn = dbConnector.getConnection();
-            Statement stmt = conn.createStatement()){
+        try (Connection conn = dbConnector.getConnection();
+             Statement stmt = conn.createStatement()) {
 
             String sql = "SELECT * FROM Profile";
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 int profileId = rs.getInt("ProfileId");
                 String fName = rs.getString("FName");
                 String lName = rs.getString("LName");
-                Boolean overheadCost = Boolean.parseBoolean(rs.getString("OverheadCost"));
+                Boolean overheadCost = rs.getBoolean("OverheadCost");
                 double annualSalary = rs.getDouble("AnualSalary");
                 double hourlyRate = rs.getDouble("HourlySalary");
                 double dailyRate = rs.getDouble("DailyRate");
                 double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
                 double totalUtilization = rs.getDouble("TotalUtilization");
+                double fixedAmount = rs.getDouble("FixedAmount");  // Ensure this line is correct
+
                 Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization);
+                profile.setFixedAmount(fixedAmount);  // Ensure this line is included
+
                 allProfiles.add(profile);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to read all profiles",e);
+            throw new ApplicationWideException("Failed to read all profiles", e);
         }
         return allProfiles;
     }
+
 
 
     //Saves a new profile to the database.

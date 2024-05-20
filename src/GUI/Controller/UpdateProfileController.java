@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.Profile;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.ProfileModel;
+import GUI.Utility.AlertBox;
 import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
@@ -58,13 +59,20 @@ public class UpdateProfileController implements Initializable {
         profile.setFixedAmount(Double.parseDouble(txtFixedAmount.getText()));
         profile.setDailyWorkingHours(Double.parseDouble(txtDailyWorkingHours.getText()));
 
+        try {
+            boolean success = profileModel.updateProfile(profile);
+            if (success) {
+                AlertBox.displayInfo("Profile Updated", "The profile has been successfully updated.");
 
-            profileModel.updateProfile(profile);
-            // Close the update profile window
-            Stage stage = (Stage) txtFName.getScene().getWindow();
-            stage.close();
-            // Optionally refresh the profile view if needed
-            frameController.loadProfileView();
+                Stage stage = (Stage) txtFName.getScene().getWindow();
+                stage.close();
 
-    }
-}
+                frameController.loadProfileView();
+            } else {
+                AlertBox.displayInfo("Update Failed", "Failed to update the profile. Please try again.");
+            }
+
+    } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }}

@@ -152,7 +152,7 @@ public class ProjectTeamsModel {
         }
     }
 
-    public void updateTeam(ProjectTeam projectTeam) throws Exception {
+    public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeamsManager.updateTeam(projectTeam);
     }
 }

@@ -296,7 +296,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return roles;
     }
 
-    public void updateTeam(ProjectTeam projectTeam) {
+    public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException{
         String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, NumberOfProfiles = ?, AvgOfAnnualSalary = ?, SumOfAnnualSalary = ?, AvgOfHourlyRate = ?, SumOfHourlyRate = ?, AvgOfDailyRate = ?, SumOfDailyRate = ?, Geography = ? WHERE TeamsId = ?";
 
         try (Connection conn = dbConnector.getConnection();
@@ -314,7 +314,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmt.setInt(10, projectTeam.getTeamId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ApplicationWideException(e);
         }
     }
 
