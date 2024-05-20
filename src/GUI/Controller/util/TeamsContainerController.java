@@ -21,6 +21,7 @@ public class TeamsContainerController {
     private ProjectTeamsModel projectTeamsModel;
     private GeographyModel geographyModel;
     private Map<Integer, VBox> teamBoxes = new HashMap<>();
+    private Map<Integer, Geography> geographyMap = new HashMap<>();
 
 
     public TeamsContainerController() {
@@ -39,20 +40,18 @@ public class TeamsContainerController {
 
     // Initialize method to create VBox for each team
     public void initialize() {
-        Map<Integer, Geography> geographyMap = fetchGeographyMap();
+        geographyMap = fetchGeographyMap();
         List<ProjectTeam> teams = fetchAllProjectTeams();
-        teams.forEach(team -> createAndStoreTeamVBox(team, geographyMap));
+        teams.forEach(team -> {
+            Geography geography = geographyMap.get(team.getGeographyId());
+            team.setGeography(geography);  // Set the geography for the team
+            createAndStoreTeamVBox(team, geography);
+        });
     }
 
     private Map<Integer, Geography> fetchGeographyMap() {
         try {
-            Map<Integer, Geography> geographyMap = geographyModel.getGeographyMap();
-            if (geographyMap.isEmpty()) {
-                System.out.println("Geography map is empty after fetch.");
-            } else {
-                System.out.println("Geography map fetched successfully with " + geographyMap.size() + " entries.");
-            }
-            return geographyMap;
+            return geographyModel.getGeographyMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
             return new HashMap<>();
@@ -60,16 +59,11 @@ public class TeamsContainerController {
     }
 
 
-
     private List<ProjectTeam> fetchAllProjectTeams() {
         return projectTeamsModel.getAllProjectTeamsData();
     }
 
-    private void createAndStoreTeamVBox(ProjectTeam team, Map<Integer, Geography> geographyMap) {
-        Geography geography = geographyMap.get(team.getGeographyId());
-        if (geography == null) {
-            System.out.println("Geography not found for team ID: " + team.getTeamId() + " with geography ID: " + team.getGeographyId());
-        }
+    private void createAndStoreTeamVBox(ProjectTeam team, Geography geography) {
         VBox teamBox = createTeamVBox(team, geography);
         teamBoxes.put(team.getTeamId(), teamBox);
     }
@@ -91,7 +85,6 @@ public class TeamsContainerController {
         //System.out.println("kakao" +geography);
         vbox.getChildren().addAll(lblTeamName, lblGeography, lblMembers, lblCost);
         vbox.setOnMouseClicked(event -> openTeamDetailView(team, geography));
-        System.out.println("ost" + geography);
         return vbox;
     }
 
@@ -105,14 +98,16 @@ public class TeamsContainerController {
     }
 
     private void openTeamDetailView(ProjectTeam team, Geography geography) {
-
         TeamsController.getInstance().showTeamDetails(team, geography);
-        System.out.println("Bumle" + geography + " " + team);
     }
 
 
     public VBox getTeamVBox(int teamId) {
         return teamBoxes.get(teamId);
+    }
+
+    public Geography getGeographyForTeam(ProjectTeam team) {
+        return geographyMap.get(team.getGeographyId());
     }
 
 

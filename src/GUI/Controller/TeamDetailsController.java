@@ -9,7 +9,6 @@ import GUI.Utility.ExceptionHandler;
 import GUI.Utility.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
-import GUI.Utility.ExceptionHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -7,9 +7,8 @@ import BLL.CountryManager;
 import BLL.GeographyManager;
 import CustomExceptions.ApplicationWideException;
 import GUI.Utility.ExceptionHandler;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class CountryModel {
     public ObservableList<Geography> getAllFromGeographies() {
         ObservableList<Geography> geographies = null;
         try {
-            geographies = javafx.collections.FXCollections.observableArrayList(
+            geographies = FXCollections.observableArrayList(
                     geographyManager.getAllGeographies().stream()
                             .sorted(Comparator.comparing(Geography::getGeographyName))
                             .collect(Collectors.toList())

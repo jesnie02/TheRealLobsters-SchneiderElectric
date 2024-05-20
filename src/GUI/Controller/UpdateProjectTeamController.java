@@ -58,7 +58,9 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private TextField txtProjectTeamName;
     @FXML
-    private SearchableComboBox cBoxProfiles, cBoxGeographies;
+    private SearchableComboBox<Profile> cBoxProfiles;
+    @FXML
+    private SearchableComboBox<Geography> cBoxGeographies;
     private Map<Integer, Country> countriesMap;
     private Map<Profile, Double> utilizationsMap = new HashMap<>();
     ProfileModel profileModel;
@@ -84,8 +86,8 @@ public class UpdateProjectTeamController implements Initializable {
     }
 
     private void setupSearchBox() {
-        cBoxProfiles.getItems().addAll(profileModel.getAllProfiles());
-        cBoxGeographies.getItems().addAll(countryModel.getAllFromGeographies());
+        cBoxProfiles.setItems(FXCollections.observableArrayList(profileModel.getAllProfiles()));
+        cBoxGeographies.setItems(FXCollections.observableArrayList(countryModel.getAllFromGeographies()));
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
     }
@@ -94,7 +96,8 @@ public class UpdateProjectTeamController implements Initializable {
         cBoxGeographies.setConverter(new StringConverter<Geography>() {
             @Override
             public String toString(Geography geography) {
-                return geography.getGeographyName();
+
+                return geography != null ? geography.getGeographyName() : " ";
             }
 
             @Override
@@ -108,11 +111,7 @@ public class UpdateProjectTeamController implements Initializable {
          cBoxProfiles.setConverter(new StringConverter<Profile>() {
             @Override
             public String toString(Profile profile) {
-                if (profile != null) {
-                    return profile.getFName() + " " + profile.getLName() ;
-                } else {
-                    return "Select a Profile";
-                }
+                return profile != null ? profile.getFName() + " " + profile.getLName() : "Select a Profile";
             }
             @Override
             public Profile fromString(String string) {
@@ -128,6 +127,7 @@ public class UpdateProjectTeamController implements Initializable {
             lblAnnualSalarySum.setText(String.format("%.2f", currentTeam.getSumOfAnnualSalary()));
             lblDailyRateSum.setText(String.format("%.2f", currentTeam.getSumOfDailyRate()));
             lblHourlyRateSum.setText(String.format("%.2f", currentTeam.getSumOfHourlyRate()));
+            cBoxGeographies.setValue(currentTeam.getGeography());
 
             profiles.setAll(projectTeamsModel.getProfileForTeam(currentTeam.getTeamId()));
             utilizationsMap.clear();
@@ -186,6 +186,8 @@ public class UpdateProjectTeamController implements Initializable {
             currentTeam.setTeamName(teamName);
             currentTeam.setProfiles(profilesInTeam);
             currentTeam.setUtilizationsMap(utilizationsMap);
+
+            currentTeam.setGeography(cBoxGeographies.getValue());
 
             projectTeamsModel.updateTeam(currentTeam);
             AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
