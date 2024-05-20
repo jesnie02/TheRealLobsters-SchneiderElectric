@@ -4,7 +4,6 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -15,21 +14,21 @@
 
 <BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
    <center>
-      <TabPane prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPaneDashboard" prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab text="Overview">
                <content>
                   <BorderPane>
                      <top>
-                        <VBox alignment="CENTER">
+                        <VBox alignment="CENTER" prefHeight="406.0" prefWidth="860.0">
                            <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Top 10 Most Expensive Projects Based on Annual Salary">
                               <padding>
                                  <Insets bottom="10.0" top="10.0" />
                               </padding>
                            </Label>
-                           <BarChart fx:id="barChart" prefHeight="500.0" prefWidth="1000.0">
+                           <BarChart fx:id="barChart">
                               <xAxis>
-                                 <CategoryAxis fx:id="xAxis" />
+                                 <CategoryAxis prefWidth="803.0" fx:id="xAxis" />
                               </xAxis>
                               <yAxis>
                                  <NumberAxis fx:id="yAxis" />
@@ -37,9 +36,6 @@
                            </BarChart>
                         </VBox>
                      </top>
-                     <center>
-                        <PieChart fx:id="pieChart" prefHeight="200.0" prefWidth="200.0" />
-                     </center>
                   </BorderPane>
                </content>
             </Tab>
@@ -380,7 +376,10 @@
       <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="8.0" />
+         </BorderPane.margin></HBox>
    </bottom>
    <left>
       <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />

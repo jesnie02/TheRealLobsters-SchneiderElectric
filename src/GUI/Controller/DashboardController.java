@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 
 import java.net.URL;
 import java.util.List;
@@ -22,6 +23,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     public Label lblDailyRateSumCountry, lblHourlyRateSumCountry, lblAvgDailyRateCountry, lblAvgHourlyRateCountry;
+
+    @FXML
+    public TabPane tabPaneDashboard;
 
     @FXML
     private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
@@ -41,9 +45,6 @@ public class DashboardController implements Initializable {
     private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;
     @FXML
     private BarChart<String, Number> barChart;
-    @FXML
-    private PieChart pieChart;
-
     @FXML
     private CategoryAxis xAxis;
     @FXML

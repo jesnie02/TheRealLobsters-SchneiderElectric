@@ -358,6 +358,18 @@
     -fx-border-radius: 20;
 }
 
+/* --------------------------------------------------------------------------------- */
+/* DashBoard */
+
+#tabPaneDashboard {
+    -fx-background-color: #FFFFFF;
+}
+
+#tabPaneDashboard .tab-header-area .tab-header-background {
+    -fx-background-color: #F1F1E8; /* Light gray background */
+    -fx-opacity: 1; /* Fully opaque */
+}
+
 
 
 
