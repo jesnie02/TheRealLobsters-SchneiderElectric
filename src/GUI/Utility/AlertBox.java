@@ -2,6 +2,9 @@ package GUI.Utility;
 
 import CustomExceptions.ApplicationWideException;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class AlertBox {
 
@@ -21,4 +24,13 @@ public class AlertBox {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static Optional<ButtonType> displayConfirmation(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait();
+    }
+
 }

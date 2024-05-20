@@ -17,9 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,6 +27,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Controller class for the Profile view.
@@ -179,14 +178,19 @@ public class ProfileController {
     }
 
     private void deleteProfile(Profile profile) {
-        boolean success = profileModel.deleteProfile(profile);
-        if (success) {
-            tblProfiles.getItems().remove(profile);
-            AlertBox.displayInfo("Profile Deleted", "Profile has been successfully deleted.");
-        } else {
-            AlertBox.displayInfo("Deletion Failed", "Failed to delete the profile.");
+        Optional<ButtonType> result = AlertBox.displayConfirmation("Confirm Deletion", "Are you sure you want to delete the profile?\nProfile: " + profile.getFullName());
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean success = profileModel.deleteProfile(profile);
+            if (success) {
+                tblProfiles.getItems().remove(profile);
+                AlertBox.displayInfo("Profile Deleted", "Profile has been successfully deleted.");
+            } else {
+                AlertBox.displayInfo("Deletion Failed", "Failed to delete the profile.");
+            }
         }
     }
+
 
     private void openUpdateProfileView(Profile profile) {
         try {
@@ -198,17 +202,14 @@ public class ProfileController {
             // Pass the selected profile to the controller
             controller.updateUI(profile);
 
+
             Stage stage = new Stage();
             stage.setTitle("Update Profile");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-           // AlertBox.displayError("Error", "Failed to load the update profile view.");
+            ExceptionHandler.handleException(e);
         }
     }
 
-    public void updateProfile(Profile profile) {
-        openUpdateProfileView(profile);
-    }
 }
