@@ -102,7 +102,7 @@
 .scroll-pane {
     -fx-background-color: transparent; /* Make the background transparent */
     -fx-border-color: #3DCD58; /* Set the border color to green */
-    -fx-border-width: 2; /* Adjust the border width as needed */
+    -fx-border-width: 1; /* Adjust the border width as needed */
 }
 
 /* Style the ScrollBar */
@@ -190,7 +190,7 @@
 
     /* WhiteBox */
 
-    #vBoxWhiteCreateProfile, #vboxCenterCurrency {
+    #vBoxWhiteCreateProfile, #vboxCenterCurrency, #vboxCenterRole, #vBoxCenterCreateTeam, #vBoxCenterTeamDetails, #vBoxCenterGeographyOverview, #vBoxCenterCreateGeography {
         -fx-background-color: #FFFFFF;
         -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
     }
@@ -203,7 +203,8 @@
 
     /* Header Box */
 
-    #headerHboxCreateProfile, #hBoxHeaderCurrency, #hBoxHeaderTeams, #vBoxCenterTeams {
+    #headerHboxCreateProfile, #hBoxHeaderCurrency, #hBoxHeaderTeams, #vBoxCenterTeams, #hBoxHeaderProfile, #hBoxHeaderCreateTeam, #hBoxHeaderTeamDetails
+    , #hBoxHeaderGeographyOverview, #hBoxHeaderCreateGeography, #hBoxHeaderCreateRole {
         -fx-background-color: #F1F1E8;
         -fx-border-color: transparent transparent #3DCD58 transparent;
         -fx-border-width: 0 0 2px 0;
@@ -212,7 +213,8 @@
 
     /* Header Text */
 
-    #headerTextCreateProfile, #headerTextCurrency, #lblHeaderTeams {
+    #headerTextCreateProfile, #headerTextCurrency, #lblHeaderTeams, #lblHeaderProfile, #lblRole, #lblHeaderCreateTeam, #lblHeaderTextTeamDetails
+    , #lblHeaderGeographyOverview, #lblCreateGeography, #lblHeaderTextCreateGeography {
         -fx-font-size: 14px;
         /* -fx-font-weight: bold; */
         -fx-text-fill: black;
@@ -237,7 +239,8 @@
 
     /* Button */
 
-    #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams {
+    #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams, #btnSaveRole, #btnCreateTeam, #btnRemoveProfileTeams, #btnSelectProfile
+    , #btnUpdateTeamTeamDetails, #btnCreateGeography, #btnSaveGeography {
         -fx-background-color: #3DCD58;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;
@@ -245,13 +248,60 @@
         -fx-border-radius: 20;
     }
 
-    /* FrameView */
+
+    #btnDeleteTeamTeamDetails {
+        -fx-background-color: transparent;
+        -fx-text-fill: #18191a;
+        -fx-font-size: 14px;
+        -fx-background-radius: 20;
+        -fx-border-radius: 20;
+        -fx-border-color: #3DCD58;
+    }
+
+    /* tableViews */
+
+.table-view .column-header,
+.table-view .column-header-background .label {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #3DCD58 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view {
+    -fx-background-color: #FFFFFF; /* White background for the table view */
+    -fx-border-color: #3DCD58; /* Green border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 5px; /* Rounded corners for the border */
+}
+
+     /* table center alignment  */
+
+.table-cell {
+    -fx-alignment: CENTER;
+}
+
+    /*  table left alignment */
+
+#colGeoOverviewName, #colNameProfile, #colFirstNameTD, #colCurrencyCodes {
+    -fx-alignment: CENTER_LEFT;
+}
+
+
+
+/* FrameView */
     /*--------------------------------------------------------------------------------------------------------------------*/
 
-    #btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover, #btnCurrency:hover, #btnCurrency:hover {
+    #btnDashboard:hover, #btnProfiles:hover, #btnGeography:hover, #btnTeams:hover, #btnMultiplier:hover, #btnCurrency:hover {
         -fx-background-color: #F2F2F2;
         -fx-border-color: transparent transparent transparent #3DCD58;
         -fx-border-width: 0 0 0 2px;
+    }
+
+    .button-selected {
+    -fx-background-color: #F2F2F2;
+    -fx-border-color: transparent transparent transparent #3DCD58;
+    -fx-border-width: 0 0 0 2px;
+
     }
 
     /* Buttons/Background/separator/HeaderText TapBar  */

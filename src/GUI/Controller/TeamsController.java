@@ -22,12 +22,14 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 public class TeamsController implements Initializable {
 
     @FXML
     private TilePane tPaneTeamOverview;
     private ProjectTeamsModel projectTeamsModel;
+    private TeamsContainerController teamsContainerController;
     private static TeamsController instance;
 
     // Instance of FrameController to control the main frame of the application
@@ -35,7 +37,10 @@ public class TeamsController implements Initializable {
 
     public TeamsController() {
         this.frameController = FrameController.getInstance();
+        teamsContainerController = new TeamsContainerController();
         instance = this;
+
+
     }
 
     public static TeamsController getInstance() {
@@ -57,15 +62,21 @@ public class TeamsController implements Initializable {
     }
 
     public void loadTeamsInTilePane() {
-        tPaneTeamOverview.getChildren().clear(); // Ensure the pane is clear before loading new items.
-        TeamsContainerController teamsContainerController = new TeamsContainerController();
-        teamsContainerController.initialize(); // Initialize team boxes before loading them into the TilePane.
+        tPaneTeamOverview.getChildren().clear();
+        teamsContainerController.initialize();
         List<ProjectTeam> teams = projectTeamsModel.getAllProjectTeamsData();
         for (ProjectTeam team : teams) {
             VBox teamBox = teamsContainerController.getTeamVBox(team.getTeamId());
             if (teamBox != null) {
-                teamBox.setOnMouseClicked(event -> showTeamDetails(team, team.getGeography()));
+                final Geography currentGeography = team.getGeography();
+                teamBox.setOnMouseClicked(event -> showTeamDetails(team, currentGeography));
                 tPaneTeamOverview.getChildren().add(teamBox);
+
+                if (currentGeography == null) {
+                    System.out.println("Geography object in team is null");
+                } else {
+                    System.out.println("Geography object in team: " + currentGeography);
+                }
             }
         }
     }
@@ -77,6 +88,7 @@ public class TeamsController implements Initializable {
             Node teamNode = loader.load();
             TeamDetailsController controller = loader.getController();
             controller.updateUI(team, geography);
+            System.out.println("gummi" + geography);
             frameController.setMainView(teamNode);
         } catch (IOException e) {
             ExceptionHandler.handleException(e);

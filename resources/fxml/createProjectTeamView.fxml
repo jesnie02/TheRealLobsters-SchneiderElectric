@@ -8,112 +8,124 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProjectTeamController">
    <center>
-      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxCenterCreateTeam" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="25.0" prefWidth="653.0">
+            <HBox fx:id="hBoxHeaderCreateTeam" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="746.0">
                <children>
-                  <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label prefHeight="29.0" prefWidth="198.0" text="Create Team">
+                  <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/teamLogo.png" />
+                     </image></ImageView>
+                  <Label fx:id="lblHeaderCreateTeam" prefHeight="26.0" prefWidth="238.0" text="Create Team">
                      <padding>
                         <Insets left="8.0" />
                      </padding>
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
                   </Label>
+                  <Pane prefHeight="26.0" prefWidth="529.0" />
                </children>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="317.0" prefWidth="653.0" spacing="32.0">
+            <HBox prefHeight="310.0" prefWidth="746.0" spacing="32.0">
                <children>
-                  <VBox prefHeight="318.0" prefWidth="534.0">
+                  <VBox prefHeight="293.0" prefWidth="549.0">
                      <HBox.margin>
                         <Insets left="25.0" top="25.0" />
                      </HBox.margin>
                      <children>
-                        <Label prefHeight="25.0" prefWidth="275.0" text="Team details">
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="8.0" />
-                           </padding>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="275.0">
+                        <GridPane alignment="CENTER" hgap="8.0" vgap="8.0" VBox.vgrow="ALWAYS">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.3999755859375" minWidth="10.0" prefWidth="120.80000000000001" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.20008087158203" minWidth="10.0" prefWidth="124.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+                              <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+                          </rowConstraints>
                            <children>
-                              <Label prefHeight="18.0" prefWidth="89.0" text="Team name:" />
-                              <TextField fx:id="txtProjectTeamName" prefHeight="18.0" prefWidth="186.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </TextField>
+                              <Label prefHeight="25.0" prefWidth="275.0" text="Team details" />
+                              <Label prefHeight="26.0" prefWidth="140.0" text="Team name:" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtProjectTeamName" prefHeight="18.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label prefHeight="27.0" prefWidth="140.0" text="Geography:" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="cBoxGeographies" prefWidth="186.0" promptText="Geography" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </GridPane>
+                        <Pane prefHeight="33.0" prefWidth="291.0" />
+                        <HBox>
+                           <children>
+                              <Label prefHeight="26.0" prefWidth="221.0" text="Combined team member rates:" />
+                              <Pane prefHeight="0.0" prefWidth="159.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="44.0" prefHeight="23.0" prefWidth="275.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="89.0" text="Geography:" />
-                              <ComboBox fx:id="cBoxGeographies" prefWidth="186.0" promptText="Geography" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="24.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <Label layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="275.0" text="Combined team member rates">
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="8.0" />
-                           </padding>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0">
+                        <GridPane alignment="CENTER" VBox.vgrow="ALWAYS">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.4000244140625" minWidth="10.0" prefWidth="163.9999755859375" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.2000732421875" minWidth="10.0" prefWidth="160.8000244140625" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="31.9999755859375" minHeight="10.0" prefHeight="28.8000244140625" valignment="CENTER" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="52.600055694580085" minHeight="21.600024414062496" prefHeight="32.800048828125" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="41.5999755859375" minHeight="10.0" prefHeight="34.39995117187501" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
                               <Label prefHeight="18.0" prefWidth="105.0" text="Sum annual salary:" />
-                              <Label fx:id="lblAnnualSalarySum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
-                                 <padding>
-                                    <Insets right="8.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                              <HBox alignment="CENTER" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label fx:id="lblAnnualSalarySum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                                 </children>
+                              </HBox>
+                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum daily rate:" GridPane.rowIndex="1" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="lblDailyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                                 </children>
+                              </HBox>
+                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum hourly rate:" GridPane.rowIndex="2" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="lblHourlyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="18.0" text="€" />
+                                 </children>
+                              </HBox>
                            </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="144.0" prefHeight="32.0" prefWidth="275.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum daily rate:" />
-                              <Label fx:id="lblDailyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
-                                 <padding>
-                                    <Insets right="8.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="176.0" prefHeight="32.0" prefWidth="275.0">
-                           <children>
-                              <Label prefHeight="18.0" prefWidth="105.0" text="Sum hourly rate:" />
-                              <Label fx:id="lblHourlyRateSum" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="163.0" text="0.0">
-                                 <padding>
-                                    <Insets right="8.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="18.0" text="€" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="8.0" />
-                           </VBox.margin>
-                        </HBox>
+                        </GridPane>
                      </children>
                   </VBox>
                   <VBox prefHeight="292.0" prefWidth="616.0">
@@ -136,7 +148,7 @@
                         </Label>
                         <ComboBox fx:id="cBoxProfiles" prefWidth="290.0" promptText="Profiles">
                            <VBox.margin>
-                              <Insets left="25.0" right="25.0" />
+                              <Insets bottom="8.0" left="25.0" right="25.0" />
                            </VBox.margin>
                         </ComboBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
@@ -158,7 +170,7 @@
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="290.0" text="Select Profile">
+                        <Button fx:id="btnSelectProfile" mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="290.0" text="Select Profile">
                            <VBox.margin>
                               <Insets bottom="16.0" left="25.0" right="25.0" />
                            </VBox.margin>
@@ -185,14 +197,17 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="25.0">
                <VBox.margin>
                   <Insets right="25.0" top="24.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="100.0" text="Remove profile" />
-                  <Button mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="100.0" text="Create team" />
+                  <Button fx:id="btnRemoveProfileTeams" mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="100.0" text="Remove profile" />
+                  <Button fx:id="btnCreateTeam" mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="100.0" text="Create team" />
                </children>
             </HBox>
          </children>
@@ -201,16 +216,7 @@
          </BorderPane.margin>
       </VBox>
    </center>
-   <top>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
-   <bottom>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-   </right>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </BorderPane>

@@ -8,32 +8,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="350.0" spacing="8.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateGeographyController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="466.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateGeographyController">
    <children>
-      <HBox alignment="CENTER" prefHeight="125.0" prefWidth="300.0" spacing="16.0">
+      <VBox fx:id="vBoxCenterCreateGeography" prefHeight="303.0" prefWidth="549.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="125.0" prefWidth="133.0" spacing="8.0">
+            <HBox fx:id="hBoxHeaderCreateGeography" alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="417.0">
                <children>
-                  <VBox>
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="140.0" text="Enter geography here:" />
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </VBox>
-                  <TextField fx:id="txtGeography" />
-                  <Button mnemonicParsing="false" onAction="#saveGeography" text="Done" />
+                  <Label fx:id="lblHeaderTextCreateGeography" prefHeight="23.0" prefWidth="130.0" text="Create geograpy" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </Label>
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
-            <CheckComboBox fx:id="cBoxCountries" showCheckedCount="true" title="Countries" />
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="114.0" prefWidth="417.0" spacing="16.0">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblCreateGeography" prefHeight="18.0" prefWidth="188.0" text="Geography name:">
+                           <VBox.margin>
+                              <Insets bottom="4.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtGeography" prefHeight="26.0" prefWidth="179.0" />
+                     </children>
+                  </VBox>
+                  <CheckComboBox fx:id="cBoxCountries" prefHeight="50.0" prefWidth="162.0" showCheckedCount="true" title="Countries" />
+               </children>
+               <padding>
+                  <Insets left="8.0" right="8.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="417.0">
+               <children>
+                  <Button fx:id="btnSaveGeography" mnemonicParsing="false" onAction="#saveGeography" prefHeight="35.0" prefWidth="150.0" text="Create Geography" />
+               </children>
+               <padding>
+                  <Insets right="8.0" />
+               </padding>
+            </HBox>
          </children>
          <VBox.margin>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            <Insets />
          </VBox.margin>
-      </HBox>
+      </VBox>
    </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </VBox>

@@ -11,6 +11,7 @@ import GUI.Controller.TeamsController;
 import GUI.Model.ProjectTeamsModel;
 
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +46,20 @@ public class TeamsContainerController {
 
     private Map<Integer, Geography> fetchGeographyMap() {
         try {
-            return geographyModel.getGeographyMap();
+            Map<Integer, Geography> geographyMap = geographyModel.getGeographyMap();
+            if (geographyMap.isEmpty()) {
+                System.out.println("Geography map is empty after fetch.");
+            } else {
+                System.out.println("Geography map fetched successfully with " + geographyMap.size() + " entries.");
+            }
+            return geographyMap;
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
             return new HashMap<>();
         }
     }
+
+
 
     private List<ProjectTeam> fetchAllProjectTeams() {
         return projectTeamsModel.getAllProjectTeamsData();
@@ -62,10 +71,10 @@ public class TeamsContainerController {
             System.out.println("Geography not found for team ID: " + team.getTeamId() + " with geography ID: " + team.getGeographyId());
         }
         VBox teamBox = createTeamVBox(team, geography);
-
         teamBoxes.put(team.getTeamId(), teamBox);
-
     }
+
+
 
 
     private VBox createTeamVBox(ProjectTeam team, Geography geography) {
@@ -75,13 +84,14 @@ public class TeamsContainerController {
         // Labels creation with null-safe geography name retrieval
         Label lblTeamName = createLabel(team.getTeamName(), "top-label");
         String geoName = geography != null ? geography.getGeographyName() : "Unknown";
+
         Label lblGeography = createLabel("Location: " + geoName, "other-label");
         Label lblMembers = createLabel("Members: " + team.getNumberOfProfiles(), "other-label");
         Label lblCost = createLabel("Average Cost: " + String.format("%.2f", team.getAvgAnnualSalary()), "other-label");
         //System.out.println("kakao" +geography);
         vbox.getChildren().addAll(lblTeamName, lblGeography, lblMembers, lblCost);
         vbox.setOnMouseClicked(event -> openTeamDetailView(team, geography));
-
+        System.out.println("ost" + geography);
         return vbox;
     }
 
@@ -95,9 +105,9 @@ public class TeamsContainerController {
     }
 
     private void openTeamDetailView(ProjectTeam team, Geography geography) {
-        System.out.println("ost" + geography);
-        TeamsController.getInstance().showTeamDetails(team, geography);
 
+        TeamsController.getInstance().showTeamDetails(team, geography);
+        System.out.println("Bumle" + geography + " " + team);
     }
 
 

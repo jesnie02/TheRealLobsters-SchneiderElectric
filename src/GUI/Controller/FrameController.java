@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -35,6 +36,9 @@ public class FrameController implements Initializable {
     private Stack<Node> pageHistory = new Stack<>();
 
     private final String BASE_PATH = "/fxml/";
+    @FXML
+    private Button btnDashboard, btnProfiles, btnTeams, btnGeography ,btnMultiplier ,btnCurrency;
+
 
     public FrameController() {
         instance = this;
@@ -58,6 +62,8 @@ public class FrameController implements Initializable {
     }
 
 
+
+
     // This method returns the instance of the FrameController class.
     public static synchronized FrameController getInstance() {
 
@@ -71,26 +77,61 @@ public class FrameController implements Initializable {
 
     // This method loads the view with the given name.
     private void loadView(String viewName) {
-
         Node view = viewCache.get(viewName);
-
-        if (view == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(BASE_PATH + viewName));
-                view = loader.load();
-
+        try {
+            if (view == null) {
+                // Load the view only if it is not already cached
+                view = FXMLLoader.load(getClass().getResource(BASE_PATH + viewName));
                 viewCache.put(viewName, view);
-            } catch (IOException e) {
-                ExceptionHandler.handleException(e);
-                return;
             }
-        }
-        if (stackPaneFrame != null) {
+            // Always update the stackPaneFrame with the view whether it was cached or not
             stackPaneFrame.getChildren().setAll(view);
-        } else {
-            showErrorAlert("Initialization Error", "UI components are not fully initialized.");
+            updateButtonSelection(viewName); // Ensure UI update happens every time view is loaded
+        } catch (IOException e) {
+            ExceptionHandler.handleException(e);
         }
     }
+
+    private void updateButtonSelection(String viewName) {
+        clearButtonSelection(); // Clear all selections first
+        Button selectedButton = getButtonForView(viewName);
+        if (selectedButton != null) {
+            selectButton(selectedButton);
+        }
+    }
+    private Button getButtonForView(String viewName) {
+        switch (viewName) {
+            case "dashboardView.fxml":
+                return btnDashboard;
+            case "ProfileView.fxml":
+                return btnProfiles;
+            case "TeamsView.fxml":
+                return btnTeams;
+            case "geographyView.fxml":
+                return btnGeography;
+            case "multipliersView.fxml":
+                return btnMultiplier;
+            case "currencyView.fxml":
+                return btnCurrency;
+            default:
+                return null;
+        }
+    }
+
+    private void selectButton(Button button) {
+        if (button != null) {
+            button.getStyleClass().add("button-selected");
+        }
+    }
+
+    private void clearButtonSelection() {
+        for (Button btn : new Button[]{btnDashboard, btnProfiles, btnTeams, btnGeography, btnMultiplier, btnCurrency}) {
+            if (btn != null) {
+                btn.getStyleClass().remove("button-selected");
+            }
+        }
+    }
+
 
     public UpdateProjectTeamController getUpdateProjectTeamController() {
         if (updateProjectTeamController == null) {

@@ -35,7 +35,7 @@
                      </padding>
                   </Label>
                   <Pane prefHeight="28.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="btnCreateProjectTeams" alignment="CENTER" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="170.0" text="+ Create projectTeam">
+                  <Button fx:id="btnCreateProjectTeams" alignment="CENTER" mnemonicParsing="false" onAction="#openProjectTeamView" prefHeight="26.0" prefWidth="175.0" text="+ Create projectTeam">
                      <HBox.margin>
                         <Insets bottom="8.0" top="8.0" />
                      </HBox.margin>
@@ -45,7 +45,7 @@
                   <Insets />
                </VBox.margin>
                <padding>
-                  <Insets right="8.0" />
+                  <Insets left="8.0" right="8.0" />
                </padding>
             </HBox>
             <ScrollPane fitToWidth="true" prefHeight="653.0" prefWidth="811.0">
