@@ -3,8 +3,6 @@ package GUI.Controller;
 import BE.Country;
 import BE.Geography;
 import BE.Profile;
-import CustomExceptions.ApplicationWideException;
-import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
@@ -91,16 +89,12 @@ public class GeographyController  {
     private Button createImageButton(String imagePath) {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         ImageView imageView = new ImageView(image);
-
-        // Juster størrelsen på billedet
-        imageView.setFitWidth(20);  // Erstat 20 med den ønskede bredde
-        imageView.setFitHeight(20); // Erstat 20 med den ønskede højde
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(20);
         imageView.setPreserveRatio(true);
 
         Button button = new Button("", imageView);
         button.setStyle("-fx-background-color: transparent;");
-
-        // Centrer billedet på knappen
         button.setAlignment(Pos.CENTER);
 
         return button;
