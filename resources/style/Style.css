@@ -287,6 +287,14 @@
     -fx-alignment: CENTER_LEFT;
 }
 
+/* Rounded SearchField */
+
+#txtSearchCurrency {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #3DCD58;
+}
+
 
 
 /* FrameView */
