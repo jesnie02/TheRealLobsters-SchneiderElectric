@@ -17,55 +17,50 @@ import java.util.ResourceBundle;
 public class ProfileRoleModel{
 
     private static ProfileRoleManager profileRoleManager;
-
-
+    private static final ObservableList<ProfileRole> roles = FXCollections.observableArrayList();
+    private static ProfileRoleModel instance;
 
 
     public ProfileRoleModel() {
         try {
             profileRoleManager = new ProfileRoleManager();
+            loadRoles();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
+        }
+    }
+
+    public static synchronized ProfileRoleModel getInstance() {
+        if (instance == null) {
+            instance = new ProfileRoleModel();
+        }
+        return instance;
+    }
+
+
+   private void loadRoles() {
+        if (roles.isEmpty()) {
+            try {
+                roles.addAll(profileRoleManager.getAllProfileRoles());
+            } catch (ApplicationWideException e) {
+                ExceptionHandler.handleException(e);
+            }
         }
     }
 
     public ObservableList<ProfileRole> getProfileRoles() {
-        ObservableList<ProfileRole> profileRoles = FXCollections.observableArrayList();
-        try {
-            profileRoles.addAll(profileRoleManager.getAllProfileRoles());
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return profileRoles;
+        return roles;
     }
 
-    public ObservableList<String> seeAllProfileRoles(){
-        ObservableList<String> profileRoles = FXCollections.observableArrayList();
-        try {
-            for (ProfileRole profileRole : profileRoleManager.getAllProfileRoles()) {
-                profileRoles.add(profileRole.getProfileRoleType());
-            }
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return profileRoles;
-    }
 
-    public ObservableList<String> getProfileRolesId() {
-        ObservableList<String> profileRoles = FXCollections.observableArrayList();
-        try {
-            for (ProfileRole profileRole : profileRoleManager.getAllProfileRoles()) {
-                profileRoles.add(profileRole.getProfileRoleId() + " " + profileRole.getProfileRoleType());
-            }
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return profileRoles;
-    }
 
-    public void saveRole(String role) {
+
+
+    public void saveRole(String roleName) {
         try {
-            profileRoleManager.saveRole(new ProfileRole(role));
+            ProfileRole newRole = new ProfileRole(roleName);
+            profileRoleManager.saveRole(newRole);
+            roles.add(newRole);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }

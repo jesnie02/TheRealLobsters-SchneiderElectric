@@ -33,7 +33,7 @@
                         <TextField fx:id="txtGeography" prefHeight="26.0" prefWidth="179.0" />
                      </children>
                   </VBox>
-                  <CheckComboBox fx:id="cBoxCountries" prefHeight="50.0" prefWidth="162.0" showCheckedCount="true" title="Countries" />
+                  <CheckComboBox fx:id="cBoxCountries" prefHeight="46.0" prefWidth="154.0" showCheckedCount="true" title="Countries" />
                </children>
                <padding>
                   <Insets left="8.0" right="8.0" />
