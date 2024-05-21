@@ -114,7 +114,7 @@ public class CreateProjectTeamController implements Initializable {
             @Override
             public String toString(Profile profile) {
                 if (profile != null) {
-                    return profile.getFName() + " " + profile.getLName() + "  -  ";
+                    return profile.getFName() + " " + profile.getLName() ;
                 } else {
                     return "Select a Profile";
                 }

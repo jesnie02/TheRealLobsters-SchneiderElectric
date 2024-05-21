@@ -134,10 +134,16 @@ public class FrameController implements Initializable {
 
 
     public UpdateProjectTeamController getUpdateProjectTeamController() {
-        if (updateProjectTeamController == null) {
-            loadView("updateProjectTeamView.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProjectTeamView.fxml"));
+            Node updateNode = loader.load();
+            UpdateProjectTeamController controller = loader.getController();
+            setMainView(updateNode);
+            return controller;
+        } catch (IOException e) {
+            ExceptionHandler.handleException(e);
+            return null;
         }
-        return updateProjectTeamController;
     }
 
     private void showErrorAlert(String header, String content) {
@@ -189,8 +195,8 @@ public class FrameController implements Initializable {
     }
 
     @FXML
-    public void loadUpdateProjectTeamView() {
-        loadView("updateProjectTeamView.fxml");
+    public void loadUpdateProjectTeamView() throws IOException {
+       loadView("updateProjectTeamView.fxml");
     }
 
     @FXML

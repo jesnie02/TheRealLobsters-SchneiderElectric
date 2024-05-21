@@ -76,8 +76,8 @@ public class TeamsController implements Initializable {
     }
 
     public void showTeamDetails(ProjectTeam team, Geography geography) {
-
         try {
+            DataModelSingleton.getInstance().setCurrentTeam(team);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/teamDetailsView.fxml"));
             Node teamNode = loader.load();
             TeamDetailsController controller = loader.getController();
@@ -88,22 +88,9 @@ public class TeamsController implements Initializable {
         }
     }
 
-    private void handleTeamSelection(ProjectTeam selectedTeam) {
-
-        DataModelSingleton.getInstance().setCurrentTeam(selectedTeam);
-    }
-
-    private void refreshView() {
-        ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
-        UpdateProjectTeamController controller = frameController.getUpdateProjectTeamController();
-        if (controller != null) {
-            controller.initDataFromTeam();
-        }
-    }
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
-
         frameController.loadCreateTeamView();
     }
 }

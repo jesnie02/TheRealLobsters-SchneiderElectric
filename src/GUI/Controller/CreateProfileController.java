@@ -278,8 +278,8 @@ public class CreateProfileController implements Initializable {
         lblAnnualResultEUR.setText(String.format("%.2f", result.get("annualSalaryEUR")));
         lblHourlyResultEUR.setText(String.format("%.2f", result.get("hourlyRateEUR")));
         lblDailyResultInEUR.setText(String.format("%.2f", result.get("dailyRateEUR")));
-        System.out.println(result);
     }
+
 
     private double parseDouble(String value) {
         return Double.parseDouble(value.replace(",", "."));

@@ -13,10 +13,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -71,10 +74,8 @@ public class TeamDetailsController implements Initializable {
         DataModelSingleton.getInstance().setCurrentTeam(team);
         lblTeamInTeamDetail.setText(team.getTeamName());
         if (geography != null){
-            System.out.println("Geography is not null: " + geography.getGeographyName());
             txtTDGeography.setText(geography.getGeographyName());
         } else {
-            System.out.println("Geography is null");
             txtTDGeography.setText("No Geography");
         }
         updateSalaryInfo(team);
@@ -85,6 +86,7 @@ public class TeamDetailsController implements Initializable {
 
     private void updateSalaryInfo(ProjectTeam team){
         txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
+        System.out.println("Sum of annual salary: " + team.getSumOfAnnualSalary() + " from team: " + team.getTeamName());
         txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
         txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
         txtAvgAnnual.setText(String.format("%.2f", team.getAvgAnnualSalary()));
@@ -120,6 +122,14 @@ public class TeamDetailsController implements Initializable {
 
     @FXML
     private void updateProjectTeam(ActionEvent actionEvent) {
-        frameController.loadUpdateProjectTeamView();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProjectTeamView.fxml"));
+            Node updateNode = loader.load();
+            UpdateProjectTeamController controller = loader.getController();
+            controller.initDataFromTeam();
+            frameController.setMainView(updateNode);
+        } catch (IOException e) {
+            ExceptionHandler.handleException(e);
+        }
     }
 }

@@ -79,7 +79,6 @@ public class UpdateProjectTeamController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             setupSearchBox();
             setupTableView();
-            initDataFromTeam();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -124,6 +123,7 @@ public class UpdateProjectTeamController implements Initializable {
         ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
         if (currentTeam != null) {
             txtProjectTeamName.setText(currentTeam.getTeamName());
+            System.out.println("InitData, UpdateTeamController: " + currentTeam);
             lblAnnualSalarySum.setText(String.format("%.2f", currentTeam.getSumOfAnnualSalary()));
             lblDailyRateSum.setText(String.format("%.2f", currentTeam.getSumOfDailyRate()));
             lblHourlyRateSum.setText(String.format("%.2f", currentTeam.getSumOfHourlyRate()));
@@ -131,6 +131,13 @@ public class UpdateProjectTeamController implements Initializable {
 
             profiles.setAll(projectTeamsModel.getProfileForTeam(currentTeam.getTeamId()));
             utilizationsMap.clear();
+
+           for (Profile profile : profiles) {
+                utilizationsMap.put(profile, Double.valueOf(profile.getUtilization()));
+            }
+
+           tblProfileToTeam.setItems(profiles);
+           tblProfileToTeam.refresh();
 
         }
     }
@@ -213,7 +220,7 @@ public class UpdateProjectTeamController implements Initializable {
         Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationsMap.put(selectedProfile, sliderUtilization.getValue()/100);
+            utilizationsMap.put(selectedProfile, sliderUtilization.getValue());
             selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
             selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
             selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
@@ -222,12 +229,5 @@ public class UpdateProjectTeamController implements Initializable {
         }
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
 }
