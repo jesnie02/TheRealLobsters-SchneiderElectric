@@ -105,7 +105,9 @@ public class ProfileController {
                 updateButton.setOnAction(event -> {
                     Profile profile = getTableView().getItems().get(getIndex());
                     openUpdateProfileView(profile);
+                    tblProfiles.refresh();
                 });
+
             }
 
             @Override
@@ -116,6 +118,7 @@ public class ProfileController {
                 } else {
                     setGraphic(updateButton);
                 }
+
             }
         });
 
@@ -200,8 +203,13 @@ public class ProfileController {
             // Get the controller of the update profile view
             UpdateProfileController controller = loader.getController();
             // Pass the selected profile to the controller
-            controller.updateUI(profile);
-
+            controller.setProfile(profile);
+            // Set a callback to refresh the table view when the update is done
+            controller.setOnProfileUpdated(() -> {
+                // Reload profiles and refresh the table view
+                loadProfiles();
+                tblProfiles.refresh();
+            });
 
             Stage stage = new Stage();
             stage.setTitle("Update Profile");
@@ -211,5 +219,7 @@ public class ProfileController {
             ExceptionHandler.handleException(e);
         }
     }
+
+
 
 }

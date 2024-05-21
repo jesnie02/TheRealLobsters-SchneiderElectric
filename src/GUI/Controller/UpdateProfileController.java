@@ -28,6 +28,7 @@ public class UpdateProfileController implements Initializable {
 
     private FrameController frameController;
     private ProfileModel profileModel;
+    private Runnable onProfileUpdated;  // Callback for updating the profile
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,8 +40,16 @@ public class UpdateProfileController implements Initializable {
         }
     }
 
-    public void updateUI(Profile profile) {
+    public void setProfile(Profile profile) {
         DataModelSingleton.getInstance().setCurrentProfile(profile);
+        updateUI(profile);
+    }
+
+    public void setOnProfileUpdated(Runnable onProfileUpdated) {
+        this.onProfileUpdated = onProfileUpdated;
+    }
+
+    public void updateUI(Profile profile) {
         lblProfileName.setText(profile.getFName() + " " + profile.getLName());
         txtFName.setText(profile.getFName());
         txtLName.setText(profile.getLName());
@@ -59,20 +68,21 @@ public class UpdateProfileController implements Initializable {
         profile.setFixedAmount(Double.parseDouble(txtFixedAmount.getText()));
         profile.setDailyWorkingHours(Double.parseDouble(txtDailyWorkingHours.getText()));
 
-        try {
-            boolean success = profileModel.updateProfile(profile);
-            if (success) {
-                AlertBox.displayInfo("Profile Updated", "The profile has been successfully updated.");
+        boolean success = profileModel.updateProfile(profile);
+        if (success) {
+            AlertBox.displayInfo("Profile Updated", "The profile has been successfully updated.");
 
-                Stage stage = (Stage) txtFName.getScene().getWindow();
-                stage.close();
-
-                frameController.loadProfileView();
-            } else {
-                AlertBox.displayInfo("Update Failed", "Failed to update the profile. Please try again.");
+            // Call the callback to notify that the profile has been updated
+            if (onProfileUpdated != null) {
+                onProfileUpdated.run();
             }
 
-    } catch (Exception e) {
-            throw new RuntimeException(e);
+            // Close the update view
+            Stage stage = (Stage) txtFName.getScene().getWindow();
+            stage.close();
+
+        } else {
+            AlertBox.displayInfo("Update Failed", "Failed to update the profile. Please try again.");
         }
-    }}
+    }
+}
