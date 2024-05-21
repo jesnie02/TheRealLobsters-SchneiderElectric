@@ -46,7 +46,7 @@
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="450.0">
                            <left>
-                              <VBox prefHeight="326.0" prefWidth="426.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="326.0" prefWidth="426.0" style="-fx-border-color: black; -fx-border-radius: 5px;" BorderPane.alignment="CENTER">
                                  <children>
                                     <HBox alignment="CENTER">
                                        <children>
@@ -112,7 +112,7 @@
                            <right>
                               <VBox alignment="CENTER" prefHeight="395.0" prefWidth="409.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black; -fx-border-radius: 5px;">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
                                              <VBox.margin>
@@ -236,7 +236,7 @@
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="450.0">
                            <left>
-                              <VBox prefHeight="326.0" prefWidth="426.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="326.0" prefWidth="426.0" style="-fx-border-color: black; -fx-border-radius: 5px;" BorderPane.alignment="CENTER">
                                  <children>
                                     <HBox alignment="CENTER">
                                        <children>
@@ -302,7 +302,7 @@
                            <right>
                               <VBox alignment="CENTER" prefHeight="395.0" prefWidth="409.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black; -fx-border-radius: 5px;">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" text="Based on hourly rate:">
                                              <VBox.margin>
