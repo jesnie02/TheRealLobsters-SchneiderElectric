@@ -24,8 +24,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
     }
 
-
-
     @Override
     public List<Geography> getAllGeographie() throws ApplicationWideException{
         List<Geography> allGeographies = new ArrayList<>();
@@ -46,10 +44,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
         return allGeographies;
     }
-
-
-
-
 
     @Override
     public List<Geography> getSumsAndAveragesForGeographies() throws ApplicationWideException {
@@ -129,58 +123,6 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
         return new ArrayList<>(allGeographies.values());
     }
-
-    /*@Override
-    public List<Geography> getCountryGeographyList(int countryId) {
-        List<Geography> countryGeographyList = new ArrayList<>();
-        String sql = """
-                SELECT g.GeographyName
-                FROM Country c
-                JOIN GeographyCountry gc ON c.CountryId = gc.CountryId
-                JOIN Geography g ON gc.GeographyId = g.GeographyId
-                WHERE c.CountryId = ?;
-                """;
-
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, countryId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    String geographyName = rs.getString("GeographyName");
-                    countryGeographyList.add(new Geography(geographyName));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error fetching country geography list", e);
-        }
-        return countryGeographyList;
-    }
-
-     */
-
-    /*public void createGeography(String geographyName, List<Integer> countryIds) throws Exception {
-        String sql = "INSERT INTO Geography (GeographyName) VALUES (?);";
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, geographyName);
-            pstmt.executeUpdate();
-            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int geographyId = generated;
-                    String sql2 = "INSERT INTO GeographyCountry (GeographyId, CountryId) VALUES (?, ?);";
-                    try (PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
-                        for (int countryId : countryIds) {
-                            pstmt2.setInt(1, geographyId);
-                            pstmt2.setInt(2, countryId);
-                            pstmt2.addBatch();
-                        }
-                        pstmt2.executeBatch();
-                    }
-                }
-            }
-        }
-    }*/
-
 
     @Override
     public void saveGeography(Geography geography) throws ApplicationWideException {

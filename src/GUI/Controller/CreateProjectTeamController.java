@@ -40,43 +40,28 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamUtilization;
-    @FXML
-    private TableColumn<Profile, String> colTeamDailyRate;
-    @FXML
-    private TableColumn<Profile, String> colTeamHourlyRate;
-    @FXML
-    private TableColumn<Profile, String> colTeamAnnualSalary;
-    @FXML
-    private TableColumn<Profile, String> colTeamName;
-    @FXML
-    private TableColumn<Profile, Integer> colTeamCountryId;
-    @FXML
-    private TableColumn<Profile, Integer> colTeamProfileId;
-
-    private Map<Integer, Country> countriesMap;
-    private Map<Profile, Double> utilizationsMap = new HashMap<>();
-
+    private TableColumn<Profile, String> colTeamUtilization, colTeamDailyRate, colTeamHourlyRate, colTeamAnnualSalary, colTeamName, colTeamCountryId, colTeamProfileId;
     @FXML
     private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
     @FXML
     private TextField txtProjectTeamName;
-
-    private ProfileModel profileModel;
-    private CountryModel countryModel;
-    private ProjectTeamsModel projectTeamsModel;
-
     @FXML
     private MFXSlider sliderUtilization;
     @FXML
     private TextField txtUtilization;
-    private double utilization;
     @FXML
     private ComboBox<Geography> cBoxGeographies;
     @FXML
-    private ComboBox<Profile> cBoxProfiles;
 
+    private ComboBox<Profile> cBoxProfiles;
+    private double utilization;
+    private Map<Integer, Country> countriesMap;
+    private Map<Profile, Double> utilizationsMap = new HashMap<>();
     private FilteredList<Profile> filteredProfiles;
+
+    private ProfileModel profileModel;
+    private CountryModel countryModel;
+    private ProjectTeamsModel projectTeamsModel;
 
     public CreateProjectTeamController() {
     }
@@ -107,7 +92,6 @@ public class CreateProjectTeamController implements Initializable {
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
 
-        // Add a listener to the profile ComboBox's value property for utilization percentage
         cBoxProfiles.valueProperty().addListener((obs, oldProfile, newProfile) -> {
             if (newProfile != null) {
                 Profile selectedProfile = (Profile) newProfile;
@@ -120,14 +104,10 @@ public class CreateProjectTeamController implements Initializable {
             }
         });
 
-        // Add a listener to the TableView to update the ComboBox options
         tblProfileToTeam.getItems().addListener((ListChangeListener<Profile>) change -> {
             filteredProfiles.setPredicate(profile -> !tblProfileToTeam.getItems().contains(profile));
         });
     }
-
-
-
 
     private void setProfileComboBoxConverter() {
         cBoxProfiles.setConverter(new StringConverter<Profile>() {
@@ -245,6 +225,7 @@ public class CreateProjectTeamController implements Initializable {
         cBoxGeographies.setValue(null);
     }
 
+    // Configures the slider for utilization input, ensuring it doesn't exceed the initial set value.
     private void setupSlider() {
         SliderDecimalFilter filter = new SliderDecimalFilter();
         txtUtilization.setTextFormatter(new TextFormatter<>(filter));
@@ -263,9 +244,6 @@ public class CreateProjectTeamController implements Initializable {
             }
         });
     }
-
-
-
 
     private void setTextinField() {
         txtUtilization.setText(String.valueOf(utilization));
