@@ -316,7 +316,7 @@ public class CreateProfileController implements Initializable {
         boolean isValid = true;
         // List of all TextFields and ComboBoxes
         List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,
-                txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours, cBox_Currency);
+                txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours, cBox_Currency, cBoxProfile_ProfileRoles);
 
         for (Control field : fields) {
             if (field instanceof TextField) {
@@ -334,6 +334,14 @@ public class CreateProfileController implements Initializable {
                     isValid = false;
                 } else {
                     comboBox.setStyle("");
+                }
+            } else if (field instanceof CheckComboBox) {
+                CheckComboBox<?> checkComboBox = (CheckComboBox<?>) field;
+                if (checkComboBox.getCheckModel().getCheckedItems().isEmpty()) {
+                    checkComboBox.setStyle("-fx-border-color: red;");
+                    isValid = false;
+                } else {
+                    checkComboBox.setStyle("");
                 }
             }
         }
