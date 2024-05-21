@@ -114,7 +114,7 @@ public class CreateProjectTeamController implements Initializable {
             @Override
             public String toString(Profile profile) {
                 if (profile != null) {
-                    return profile.getFName() + " " + profile.getLName() ;
+                    return profile.getFName() + " " + profile.getLName();
                 } else {
                     return "Select a Profile";
                 }
@@ -195,9 +195,9 @@ public class CreateProjectTeamController implements Initializable {
 
         if (selectedProfile != null) {
             utilizationsMap.put(selectedProfile, sliderUtilization.getValue());
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() * (utilizationsMap.get(selectedProfile)));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate() * (utilizationsMap.get(selectedProfile)));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() * (utilizationsMap.get(selectedProfile)));
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()/100 * (utilizationsMap.get(selectedProfile)));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate()/100 * (utilizationsMap.get(selectedProfile)));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()/100 * (utilizationsMap.get(selectedProfile)));
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
         }
