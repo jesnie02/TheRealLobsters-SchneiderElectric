@@ -240,7 +240,7 @@
 
     /* Button */
 
-    #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams, #btnSaveRole, #btnCreateTeam, #btnRemoveProfileTeams, #btnSelectProfile
+    #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams, #btnSaveRole, #btnCreateTeam, #btnSelectProfile
     , #btnUpdateTeamTeamDetails, #btnCreateGeography, #btnSaveGeography, #btnUpdateProfile,#btnUpdateTeam {
         -fx-background-color: #3DCD58;
         -fx-text-fill: #18191a;
@@ -250,7 +250,7 @@
     }
 
 
-    #btnDeleteTeamTeamDetails, #btnLogOut, #btnRemoveProfileTeam {
+    #btnDeleteTeamTeamDetails, #btnLogOut, #btnRemoveProfileTeam, #btnRemoveProfileTeams{
         -fx-background-color: transparent;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;
