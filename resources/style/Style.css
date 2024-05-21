@@ -190,7 +190,8 @@
 
     /* WhiteBox */
 
-    #vBoxWhiteCreateProfile, #vboxCenterCurrency, #vboxCenterRole, #vBoxCenterCreateTeam, #vBoxCenterTeamDetails, #vBoxCenterGeographyOverview, #vBoxCenterCreateGeography {
+    #vBoxWhiteCreateProfile, #vboxCenterCurrency, #vboxCenterRole, #vBoxCenterCreateTeam, #vBoxCenterTeamDetails, #vBoxCenterGeographyOverview, #vBoxCenterCreateGeography
+    , #vBoxCenterUpdateProfile, #vBoxCenterUpdateTeam {
         -fx-background-color: #FFFFFF;
         -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
     }
@@ -204,7 +205,7 @@
     /* Header Box */
 
     #headerHboxCreateProfile, #hBoxHeaderCurrency, #hBoxHeaderTeams, #vBoxCenterTeams, #hBoxHeaderProfile, #hBoxHeaderCreateTeam, #hBoxHeaderTeamDetails
-    , #hBoxHeaderGeographyOverview, #hBoxHeaderCreateGeography, #hBoxHeaderCreateRole {
+    , #hBoxHeaderGeographyOverview, #hBoxHeaderCreateGeography, #hBoxHeaderCreateRole, #lblHeaderUpdateProfile, #hBoxHeaderUpdateTeam {
         -fx-background-color: #F1F1E8;
         -fx-border-color: transparent transparent #3DCD58 transparent;
         -fx-border-width: 0 0 2px 0;
@@ -214,7 +215,7 @@
     /* Header Text */
 
     #headerTextCreateProfile, #headerTextCurrency, #lblHeaderTeams, #lblHeaderProfile, #lblRole, #lblHeaderCreateTeam, #lblHeaderTextTeamDetails
-    , #lblHeaderGeographyOverview, #lblCreateGeography, #lblHeaderTextCreateGeography {
+    , #lblHeaderGeographyOverview, #lblCreateGeography, #lblHeaderTextCreateGeography, #lblHeaderTextUpdateProfile, #hBoxHeaderTextUpdateTeam {
         -fx-font-size: 14px;
         /* -fx-font-weight: bold; */
         -fx-text-fill: black;
@@ -240,7 +241,7 @@
     /* Button */
 
     #btnCreateProfile, #btnCurrencySave, #btnCreateProjectTeams, #btnSaveRole, #btnCreateTeam, #btnRemoveProfileTeams, #btnSelectProfile
-    , #btnUpdateTeamTeamDetails, #btnCreateGeography, #btnSaveGeography {
+    , #btnUpdateTeamTeamDetails, #btnCreateGeography, #btnSaveGeography, #btnUpdateProfile,#btnUpdateTeam {
         -fx-background-color: #3DCD58;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;
@@ -249,7 +250,7 @@
     }
 
 
-    #btnDeleteTeamTeamDetails, #btnLogOut {
+    #btnDeleteTeamTeamDetails, #btnLogOut, #btnRemoveProfileTeam {
         -fx-background-color: transparent;
         -fx-text-fill: #18191a;
         -fx-font-size: 14px;

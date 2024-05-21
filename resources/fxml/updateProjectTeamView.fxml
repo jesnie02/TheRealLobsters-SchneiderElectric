@@ -7,25 +7,32 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane prefHeight="463.0" prefWidth="795.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProjectTeamController">
+<BorderPane prefHeight="463.0" prefWidth="795.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProjectTeamController">
    <center>
-      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxCenterUpdateTeam" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="325.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="25.0" prefWidth="653.0">
+            <HBox fx:id="hBoxHeaderUpdateTeam" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="746.0">
                <children>
-                  <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label prefHeight="29.0" prefWidth="198.0" text="Update Team">
+                  <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/teamLogo.png" />
+                     </image></ImageView>
+                  <Label fx:id="hBoxHeaderTextUpdateTeam" prefHeight="29.0" prefWidth="198.0" text="Update Team">
                      <padding>
                         <Insets left="8.0" />
                      </padding>
                   </Label>
                </children>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
             </HBox>
             <HBox prefHeight="317.0" prefWidth="653.0" spacing="32.0">
                <children>
@@ -158,7 +165,7 @@
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="290.0" text="Select Profile">
+                        <Button fx:id="btnSelectProfileUpdateTeam" mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="290.0" text="Select Profile">
                            <VBox.margin>
                               <Insets bottom="16.0" left="25.0" right="25.0" />
                            </VBox.margin>
@@ -191,8 +198,8 @@
                   <Insets right="25.0" top="24.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="100.0" text="Remove profile" />
-                  <Button mnemonicParsing="false" onAction="#updateProjectTeam" prefHeight="26.0" prefWidth="100.0" text="Update team" />
+                  <Button fx:id="btnRemoveProfileTeam" mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="150.0" text="Remove profile" />
+                  <Button fx:id="btnUpdateTeam" mnemonicParsing="false" onAction="#updateProjectTeam" prefHeight="26.0" prefWidth="175.0" text="Update team" />
                </children>
             </HBox>
          </children>
@@ -201,16 +208,7 @@
          </BorderPane.margin>
       </VBox>
    </center>
-   <top>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
-   <bottom>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-   </right>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </BorderPane>
