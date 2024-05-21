@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import GUI.Utility.AlertBox;
 import CustomExceptions.ApplicationWideException;
 
 public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
@@ -324,27 +323,108 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return roles;
     }
 
-    public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException{
-        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, NumberOfProfiles = ?, AvgOfAnnualSalary = ?, SumOfAnnualSalary = ?, AvgOfHourlyRate = ?, SumOfHourlyRate = ?, AvgOfDailyRate = ?, SumOfDailyRate = ?, Geography = ? WHERE TeamsId = ?";
+    public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
+        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, Geography = ?, SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ?, NumberOfProfiles = ? WHERE TeamsId = ?";
+        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
+        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
+        String updateSumValuesSQL = "UPDATE ProjectTeams SET SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ? WHERE TeamsId = ?";
 
         try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(updateTeamSQL)) {
+             PreparedStatement pstmtUpdateTeam = conn.prepareStatement(updateTeamSQL);
+             PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+             PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL);
+             PreparedStatement pstmtUpdateSumValues = conn.prepareStatement(updateSumValuesSQL)) {
 
-            pstmt.setString(1, projectTeam.getTeamName());
-            pstmt.setInt(2, projectTeam.getProfiles().size());
-            pstmt.setDouble(3, projectTeam.getAvgAnnualSalary());
-            pstmt.setDouble(4, projectTeam.getSumOfAnnualSalary());
-            pstmt.setDouble(5, projectTeam.getAvgHourlyRate());
-            pstmt.setDouble(6, projectTeam.getSumOfHourlyRate());
-            pstmt.setDouble(7, projectTeam.getAvgDailyRate());
-            pstmt.setDouble(8, projectTeam.getSumOfDailyRate());
-            pstmt.setInt(9, projectTeam.getGeographyId());
-            pstmt.setInt(10, projectTeam.getTeamId());
-            pstmt.executeUpdate();
+            conn.setAutoCommit(false);
+
+            // Update the team details
+            pstmtUpdateTeam.setString(1, projectTeam.getTeamName());
+            pstmtUpdateTeam.setInt(2, projectTeam.getGeographyId());
+            pstmtUpdateTeam.setDouble(3, projectTeam.getSumOfAnnualSalary());
+            pstmtUpdateTeam.setDouble(4, projectTeam.getSumOfDailyRate());
+            pstmtUpdateTeam.setDouble(5, projectTeam.getSumOfHourlyRate());
+            pstmtUpdateTeam.setInt(6, projectTeam.getProfiles().size()); // Set the number of profiles
+            pstmtUpdateTeam.setInt(7, projectTeam.getTeamId());
+            int rowsAffected = pstmtUpdateTeam.executeUpdate();
+            //System.out.println("Rows affected in ProjectTeams: " + rowsAffected);
+
+            // Delete existing profiles from ProfileProjectTeams
+            pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
+            pstmtDeleteProfileProjectTeams.executeUpdate();
+
+            // Insert new profile into ProfileProjectTeams
+            for (Map.Entry<Profile, Double> entry : projectTeam.getUtilizationsMap().entrySet()) {
+                Profile profile = entry.getKey();
+                double utilization = entry.getValue();
+
+                pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
+                pstmtInsertProfileProjectTeams.setInt(2, projectTeam.getTeamId());
+                pstmtInsertProfileProjectTeams.setDouble(3, utilization);
+                rowsAffected = pstmtInsertProfileProjectTeams.executeUpdate();
+                //System.out.println("Rows affected in ProfileProjectTeams: " + rowsAffected);
+            }
+
+            // Update the sum values
+            pstmtUpdateSumValues.setDouble(1, projectTeam.getSumOfAnnualSalary());
+            pstmtUpdateSumValues.setDouble(2, projectTeam.getSumOfDailyRate());
+            pstmtUpdateSumValues.setDouble(3, projectTeam.getSumOfHourlyRate());
+            pstmtUpdateSumValues.setInt(4, projectTeam.getTeamId());
+            rowsAffected = pstmtUpdateSumValues.executeUpdate();
+            //System.out.println("Rows affected in ProjectTeams (sum values): " + rowsAffected);
+
+            conn.commit();
         } catch (SQLException e) {
-            throw new ApplicationWideException(e);
+            throw new ApplicationWideException("Failed to update team", e);
         }
     }
 
+    @Override
+    public void removeProfileFromProjectTeam(int projectTeamId, int profileId) throws ApplicationWideException {
+        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE ProfileId_PPT = ? AND TeamsId = ?";
+        String updateProfileCountSQL = "UPDATE ProjectTeams SET NumberOfProfiles = NumberOfProfiles - 1 WHERE TeamsId = ?";
+
+        Connection conn = null;
+        try {
+            conn = dbConnector.getConnection();
+
+            try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+                 PreparedStatement pstmtUpdateProfileCount = conn.prepareStatement(updateProfileCountSQL)) {
+
+                conn.setAutoCommit(false);
+
+                pstmtDeleteProfileProjectTeams.setInt(1, profileId);
+                pstmtDeleteProfileProjectTeams.setInt(2, projectTeamId);
+                int rowsAffectedProfileProjectTeams = pstmtDeleteProfileProjectTeams.executeUpdate();
+
+                pstmtUpdateProfileCount.setInt(1, projectTeamId);
+                pstmtUpdateProfileCount.executeUpdate();
+
+                System.out.println("Deleting profile with ID: " + profileId + " from team with ID: " + projectTeamId + "DAO_SOUT"); // Added print statement
+                System.out.println("Rows affected in ProfileProjectTeams: " + rowsAffectedProfileProjectTeams + "DAO_SOUT"); // Debug statement
+
+                conn.commit();
+            }
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    System.out.println("Transaction rolled back");
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
+                }
+            }
+            throw new ApplicationWideException("SQL operation failed: " + e.getMessage(), e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                    System.out.println("Connection closed");
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Resource cleanup failed: " + ex.getMessage(), ex);
+                }
+            }
+        }
+    }
 }
 

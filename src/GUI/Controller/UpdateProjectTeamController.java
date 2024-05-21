@@ -191,10 +191,13 @@ public class UpdateProjectTeamController implements Initializable {
             }
             ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
             currentTeam.setTeamName(teamName);
+            Geography selectedGeography = cBoxGeographies.getValue();
+            if (selectedGeography != null) {
+                currentTeam.setGeographyId(selectedGeography.getGeographyId()); // Set the GeographyId
+            }
             currentTeam.setProfiles(profilesInTeam);
             currentTeam.setUtilizationsMap(utilizationsMap);
-
-            currentTeam.setGeography(cBoxGeographies.getValue());
+            currentTeam.setNumberOfProfiles(profilesInTeam.size());
 
             projectTeamsModel.updateTeam(currentTeam);
             AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
@@ -208,10 +211,11 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private void removeProfileFromTbl(ActionEvent actionEvent) {
         Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
-
-
         if (selectedProfile != null) {
-            tblProfileToTeam.getItems().remove(selectedProfile);
+            profiles.remove(selectedProfile);
+            utilizationsMap.remove(selectedProfile);
+            tblProfileToTeam.refresh();
+            projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
         }
     }
 
@@ -228,6 +232,4 @@ public class UpdateProjectTeamController implements Initializable {
             cBoxProfiles.setValue(null);
         }
     }
-
-
 }

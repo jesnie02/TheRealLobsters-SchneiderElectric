@@ -14,4 +14,5 @@ public interface IProjectTeamsDataAccess {
 
     void updateTeam(ProjectTeam projectTeam) throws Exception;
 
+    void removeProfileFromProjectTeam(int profileId, int projectTeamId) throws ApplicationWideException;
 }

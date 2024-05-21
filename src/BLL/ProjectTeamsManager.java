@@ -5,14 +5,10 @@ import BE.ProfileRole;
 import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
 import DAL.ProjectTeams_DAO;
-import javafx.collections.ObservableList;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectTeamsManager {
@@ -131,5 +127,9 @@ public class ProjectTeamsManager {
 
     public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         teamsDAO.updateTeam(projectTeam);
+    }
+
+    public void removeProfileFromProjectTeam(int projectTeam, int profile) throws ApplicationWideException {
+        teamsDAO.removeProfileFromProjectTeam(projectTeam, profile);
     }
 }
