@@ -8,19 +8,29 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bP_Multiplier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultiplierController">
+<BorderPane fx:id="bP_Multiplier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MultiplierController">
    <center>
       <VBox fx:id="vBoxMultiplier" prefHeight="436.0" prefWidth="822.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </BorderPane.margin>
          <children>
-            <HBox fx:id="hBoxHeaderMultiplier" alignment="CENTER_LEFT" prefHeight="97.0" prefWidth="865.0">
+            <HBox fx:id="hBoxHeaderMultiplier" alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="873.0" spacing="8.0">
                <children>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/calculator.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
                   <Label text="Multiplier" />
                </children>
                <VBox.margin>
@@ -100,7 +110,7 @@
                               </VBox>
                            </left>
                            <right>
-                              <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
+                              <VBox alignment="CENTER" prefHeight="395.0" prefWidth="409.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
                                        <children>
@@ -121,7 +131,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="8.0" />
@@ -142,7 +155,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                           </HBox>
                                           <VBox prefHeight="58.0" prefWidth="450.0">
@@ -166,7 +182,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="8.0" />
@@ -187,7 +206,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
@@ -278,7 +300,7 @@
                               </VBox>
                            </left>
                            <right>
-                              <VBox alignment="CENTER" prefHeight="325.0" prefWidth="444.0" BorderPane.alignment="CENTER">
+                              <VBox alignment="CENTER" prefHeight="395.0" prefWidth="409.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;">
                                        <children>
@@ -299,7 +321,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="8.0" />
@@ -320,7 +345,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                           </HBox>
                                           <VBox prefHeight="58.0" prefWidth="450.0">
@@ -344,7 +372,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="119.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="8.0" />
@@ -365,7 +396,10 @@
                                                       <Insets right="8.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                                <Label layoutX="88.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€">
+                                                   <HBox.margin>
+                                                      <Insets right="8.0" />
+                                                   </HBox.margin></Label>
                                              </children>
                                           </HBox>
                                           <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
