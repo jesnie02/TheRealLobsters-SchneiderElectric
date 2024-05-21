@@ -65,12 +65,12 @@
                         <Label prefHeight="18.0" prefWidth="174.0" text="Annual salary:" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="142.0">
+                              <TextField fx:id="txtAnnualSalary" prefHeight="26.0" prefWidth="123.0">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </TextField>
-                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="27.0" prefWidth="93.0">
+                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="27.0" prefWidth="82.0">
                                  <HBox.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </HBox.margin>
