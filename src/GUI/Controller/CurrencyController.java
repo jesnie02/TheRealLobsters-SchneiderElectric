@@ -61,6 +61,7 @@ public class CurrencyController implements Initializable {
             displayMessage("Failed to load currencies: " + e.getMessage(), true);
         }
 
+        setRegexValidationForTextFields(txtCurrency);
         setupTable();
         bindSelectionToTextField();
 
@@ -93,6 +94,14 @@ public class CurrencyController implements Initializable {
             displayMessage("Error setting up the currency table: " + e.getMessage(), true);
         }
 
+    }
+
+    private void setRegexValidationForTextFields(TextField textField){
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*([\\.,]\\d*)?")) {
+                textField.setText(oldValue);
+            }
+        });
     }
 
 

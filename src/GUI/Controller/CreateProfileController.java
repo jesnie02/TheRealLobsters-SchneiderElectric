@@ -287,7 +287,7 @@ public class CreateProfileController implements Initializable {
 
     private void setRegexValidationForTextFields(TextField textField){
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+            if (!newValue.matches("\\d*([\\.,]\\d*)?")) {
                 textField.setText(oldValue);
             }
         });
