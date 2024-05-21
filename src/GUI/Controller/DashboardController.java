@@ -30,8 +30,7 @@ public class DashboardController implements Initializable {
     @FXML
     private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
 
-    @FXML
-    private ComboBox<Country> cBoxCountryGeo;
+
     @FXML
     private ComboBox<Geography> cBoxGeographyDash;
     @FXML
@@ -74,11 +73,6 @@ public class DashboardController implements Initializable {
                 updateLabelsGeographyTab(newValue);
             });
 
-            // Country
-            cBoxCountryGeo.setItems(countryModel.getSumsAndAveragesForCountries());
-            cBoxCountryGeo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                updateLabelsCountryTab(newValue);
-            });
 
             // Team
             cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
@@ -141,21 +135,6 @@ public class DashboardController implements Initializable {
             lblDailyRateSumTeam.setText("");
             lblAvgDailyRateTeam.setText("");
             lblAvgHourlyRateTeam.setText("");
-        }
-    }
-
-    private void updateLabelsCountryTab(Country selectedCountry) {
-        if (selectedCountry != null) {
-            lblHourlyRateSumCountry.setText(String.format("%.2f", selectedCountry.getSumOfHourlyRate()));
-            lblDailyRateSumCountry.setText(String.format("%.2f", selectedCountry.getSumOfDailyRate()));
-            lblAvgDailyRateCountry.setText(String.format("%.2f", selectedCountry.getAvgDailyRate()));
-            lblAvgHourlyRateCountry.setText(String.format("%.2f", selectedCountry.getAvgHourlyRate()));
-        } else {
-            // Clear labels if no country is selected
-            lblHourlyRateSumCountry.setText("");
-            lblDailyRateSumCountry.setText("");
-            lblAvgDailyRateCountry.setText("");
-            lblAvgHourlyRateCountry.setText("");
         }
     }
 }
