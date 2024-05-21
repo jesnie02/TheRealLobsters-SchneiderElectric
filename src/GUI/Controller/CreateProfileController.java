@@ -55,7 +55,7 @@ public class CreateProfileController implements Initializable {
     public Label employeeHourlyRateCurrency, employeeDailyRateCurrency;
     @FXML
     public Label lblDailyResultInEUR, lblAnnualResultEUR, lblHourlyResultEUR;
-    private double overheadMultiplierProfile;
+
 
     // comboBox for country and team
 
@@ -107,6 +107,26 @@ public class CreateProfileController implements Initializable {
     private void populateCountryCurrencyComboBox() {
         ObservableList<Currency> currencies = currencyModel.getCurrencies();
         cBox_Currency.setItems(currencies);
+
+       // Set default currency to EUR if available, otherwise default to first currency in list
+        Currency defaultCurrency = currencies.stream()
+                .filter(currency -> currency.toString().equals("EUR"))
+                .findFirst()
+                .orElse(null);
+
+
+        if (defaultCurrency == null) {
+            ExceptionHandler.handleException(new ApplicationWideException("EUR currency not available. Defaulting to another currency."));
+            defaultCurrency = currencies.get(0);
+        }
+
+        cBox_Currency.getSelectionModel().select(defaultCurrency);
+        if (defaultCurrency != null) {
+            employeeHourlyRateCurrency.setText(defaultCurrency.toString());
+            employeeDailyRateCurrency.setText(defaultCurrency.toString());
+        }
+
+        // Listener to update labels when currency changes
         cBox_Currency.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 String currencyString = newValue.toString();

@@ -70,7 +70,7 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </TextField>
-                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="26.0" prefWidth="100.0">
+                              <SearchableComboBox fx:id="cBox_Currency" prefHeight="27.0" prefWidth="93.0">
                                  <HBox.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </HBox.margin>
@@ -153,7 +153,7 @@
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="117.0">
+                                    <Label fx:id="lblHourlyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -161,7 +161,7 @@
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="employeeHourlyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="24.0">
+                                    <Label fx:id="employeeHourlyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="38.0">
                                        <HBox.margin>
                                           <Insets right="16.0" />
                                        </HBox.margin></Label>
@@ -190,7 +190,7 @@
                                           <Insets left="8.0" right="8.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="112.0">
+                                    <Label fx:id="lblDailyResult" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="104.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
@@ -198,7 +198,7 @@
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="employeeDailyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="27.0">
+                                    <Label fx:id="employeeDailyRateCurrency" alignment="CENTER" prefHeight="18.0" prefWidth="40.0">
                                        <HBox.margin>
                                           <Insets right="16.0" />
                                        </HBox.margin></Label>
