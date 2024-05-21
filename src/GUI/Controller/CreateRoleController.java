@@ -36,6 +36,7 @@ public class CreateRoleController implements Initializable {
         }
 
             profileRoleModel.saveRole(role);
+
             displayInfo("Role saved successfully");
             closeWindow(actionEvent);
 

@@ -114,7 +114,7 @@
                         <Label prefHeight="18.0" prefWidth="174.0" text="Role:" GridPane.rowIndex="5" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <CheckComboBox fx:id="cBoxProfile_ProfileRoles" prefHeight="26.0" prefWidth="178.0" showCheckedCount="true" title="Roles">
+                              <CheckComboBox fx:id="cBoxProfile_ProfileRoles" prefHeight="26.0" prefWidth="178.0" title="Roles">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>

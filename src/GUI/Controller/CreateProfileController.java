@@ -11,6 +11,7 @@ import GUI.Utility.SliderDecimalFilter;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,7 +72,7 @@ public class CreateProfileController implements Initializable {
     @FXML
     private ComboBox<Currency> cBox_Currency;
     @FXML
-    private CheckComboBox cBoxProfile_ProfileRoles;
+    private CheckComboBox<ProfileRole> cBoxProfile_ProfileRoles;
 
 
     public CreateProfileController() {
@@ -81,6 +82,7 @@ public class CreateProfileController implements Initializable {
             profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
             currencyModel = new CurrencyModel();
+            profileRoleModel = ProfileRoleModel.getInstance();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -92,17 +94,20 @@ public class CreateProfileController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setupListenersAndBindings();
         setupCheckboxListeners();
         setupListenersOnTextFields();
         populateCountryCurrencyComboBox();
         setupRegex();
-        populateProfileRolesComboBox();
         bindSliderAndTextField();
     }
 
-    private void populateProfileRolesComboBox() {
-        cBoxProfile_ProfileRoles.getItems().addAll(profileRoleModel.getProfileRoles());
+    private void setupListenersAndBindings() {
+        Bindings.bindContentBidirectional(cBoxProfile_ProfileRoles.getItems(), profileRoleModel.getProfileRoles());
     }
+
+
+
 
     private void populateCountryCurrencyComboBox() {
         ObservableList<Currency> currencies = currencyModel.getCurrencies();
