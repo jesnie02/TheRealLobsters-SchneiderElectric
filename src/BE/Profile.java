@@ -116,15 +116,6 @@ public class Profile {
         this.profileId = profileId;
     }
 
-    public int getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
-    }
-
-
     public void setCountry(List<Country> country) {
         this.country = country;
     }

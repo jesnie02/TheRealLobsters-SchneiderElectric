@@ -93,7 +93,7 @@ public class FrameController implements Initializable {
     }
 
     private void updateButtonSelection(String viewName) {
-        clearButtonSelection(); // Clear all selections first
+        clearButtonSelection();
         Button selectedButton = getButtonForView(viewName);
         if (selectedButton != null) {
             selectButton(selectedButton);

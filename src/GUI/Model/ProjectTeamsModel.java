@@ -129,7 +129,6 @@ public class ProjectTeamsModel {
         return FXCollections.observableArrayList(profiles);
     }
 
-
     public double calculateAndSetHourlyRateWithUtilization(
             double annualSalaryProfile, double overheadMultiplierProfile,
             double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {

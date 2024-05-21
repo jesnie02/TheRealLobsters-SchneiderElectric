@@ -259,9 +259,7 @@ public class MultiplierController {
     }
 
     private double getAvgHourlyRate() {
-
             return getRatesForTeam(ProjectTeamsModel.ProjectTeamRateType.AVGHOURLY);
-
     }
 
     @FXML

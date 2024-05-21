@@ -17,7 +17,7 @@
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox fx:id="vBoxWhiteCreateProfile" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -84,13 +84,13 @@
                         <TextField fx:id="txtEffectiveHours" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <HBox alignment="CENTER" spacing="24.0" GridPane.rowIndex="8">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="81.0" text="Overhead cost:" />
-                              <CheckBox fx:id="checkOverhead" mnemonicParsing="false" />
+                              <Label prefHeight="18.0" prefWidth="87.0" text="Overhead cost:" />
+                              <CheckBox fx:id="checkOverhead" mnemonicParsing="false" selected="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" spacing="24.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="110.0" text="Production resource:" />
+                              <Label prefHeight="18.0" prefWidth="118.0" text="Production resource:" />
                               <CheckBox fx:id="checkProduction" mnemonicParsing="false" />
                            </children>
                         </HBox>

@@ -18,9 +18,12 @@ import java.util.stream.Collectors;
 public class ProfileModel {
 
     private ProfileManager profileManager;
+    private ObservableList<Profile> profiles;
 
     public ProfileModel() throws ApplicationWideException {
             profileManager = new ProfileManager();
+            profiles = FXCollections.observableArrayList();
+            profiles.addAll(profileManager.getAllProfiles());
     }
 
 
@@ -42,6 +45,7 @@ public class ProfileModel {
     public void createProfile(Profile newProfile) {
         try {
             profileManager.createProfile(newProfile);
+            profiles.add(newProfile);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -65,7 +69,7 @@ public class ProfileModel {
 
 
     public ObservableList<Profile> getAllProfiles() {
-        ObservableList<Profile> profiles = FXCollections.observableArrayList();
+        profiles = FXCollections.observableArrayList();
         try {
             profiles.addAll(profileManager.getAllProfiles());
         } catch (ApplicationWideException e) {
@@ -122,7 +126,7 @@ public class ProfileModel {
     public boolean deleteProfile(Profile profile) {
         try {
             profileManager.deleteProfile(profile);
-            return true;
+            return profiles.remove(profile);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
             return false;
@@ -131,14 +135,16 @@ public class ProfileModel {
 
     public boolean updateProfile(Profile profile) {
         try {
-            return profileManager.updateProfile(profile);
+            if (profileManager.updateProfile(profile)) {
+                int index = profiles.indexOf(profile);
+                if (index >= 0) {
+                    profiles.set(index, profile);
+                }
+                return true;
+            }
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
         return false;
     }
-
-
-
-
 }

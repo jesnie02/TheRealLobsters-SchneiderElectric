@@ -169,7 +169,7 @@ public class CreateProfileController implements Initializable {
                  try {
                      calculateAndSetProfileRatesInEUR();
                  } catch (ApplicationWideException e) {
-                     throw new RuntimeException(e);
+                     ExceptionHandler.handleException(e);
                  }
              }
          });
@@ -182,7 +182,7 @@ public class CreateProfileController implements Initializable {
             try {
                 calculateAndSetProfileRatesInEUR();
             } catch (ApplicationWideException e) {
-                throw new RuntimeException(e);
+                ExceptionHandler.handleException(e);
             }
         };
 

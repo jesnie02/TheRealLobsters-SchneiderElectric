@@ -35,9 +35,13 @@ import java.util.Optional;
  */
 public class ProfileController {
 
+    @FXML
     public MFXLegacyTableView<Profile> tblProfiles;
-    public TableColumn<Profile, String> colNameProfile, colRoleProfile, colAnnualSalaryProfile;
+    @FXML
+    public TableColumn<Profile, String> colNameProfile, colAnnualSalaryProfile;
+    @FXML
     public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile;
+    @FXML
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
 
     private Map<Integer, String> idToNameMap;
@@ -66,11 +70,17 @@ public class ProfileController {
             projectTeamsModel = new ProjectTeamsModel();
             loadProfiles();
             setCellValueFactories();
+            bindTableView();
             idToNameMap = createIdToNameMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
+
+    private void bindTableView(){
+        tblProfiles.setItems(profileModel.getAllProfiles());
+    }
+
 
     /**
      * Sets up the cell value factories for the table columns.
@@ -97,6 +107,7 @@ public class ProfileController {
             double dailyRate = cellData.getValue().getDailyRate();
             return new SimpleStringProperty(formatter.format(dailyRate));
         });
+
 
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = createImageButton("/pictures/editLogo.png");
@@ -142,6 +153,7 @@ public class ProfileController {
                 }
             }
         });
+
     }
 
     private Button createImageButton(String imagePath) {
@@ -178,6 +190,7 @@ public class ProfileController {
      */
     private void loadProfiles() {
         tblProfiles.setItems(profileModel.getAllProfiles());
+
     }
 
     private void deleteProfile(Profile profile) {
@@ -203,17 +216,17 @@ public class ProfileController {
             // Get the controller of the update profile view
             UpdateProfileController controller = loader.getController();
             // Pass the selected profile to the controller
-            controller.setProfile(profile);
-            // Set a callback to refresh the table view when the update is done
+            controller.setProfile(profile);// Set a callback to refresh the table view when the update is done
             controller.setOnProfileUpdated(() -> {
                 // Reload profiles and refresh the table view
                 loadProfiles();
                 tblProfiles.refresh();
             });
-
             Stage stage = new Stage();
             stage.setTitle("Update Profile");
             stage.setScene(new Scene(root));
+            stage.initOwner(tblProfiles.getScene().getWindow());
+            stage.setUserData(this);
             stage.show();
         } catch (IOException e) {
             ExceptionHandler.handleException(e);
