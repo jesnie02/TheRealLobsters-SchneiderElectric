@@ -14,12 +14,10 @@ import java.util.ResourceBundle;
 
 public class CreateRoleController implements Initializable {
 
-
     @FXML
     private TextField txtProfileRole;
 
     private ProfileRoleModel profileRoleModel;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -27,29 +25,27 @@ public class CreateRoleController implements Initializable {
     }
 
     @FXML
-    private void saveRole(ActionEvent actionEvent) {
+    private void createRole(ActionEvent actionEvent) {
         String role = txtProfileRole.getText().trim();
 
         if (role.isEmpty()) {
             displayInfo("Role cannot be empty");
             return;
         }
-
-            profileRoleModel.saveRole(role);
-
-            displayInfo("Role saved successfully");
-            closeWindow(actionEvent);
-
+        profileRoleModel.createRole(role);
+        displayInfo("Role saved successfully");
+        closeWindow(actionEvent);
     }
 
 
     private void displayInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
-        alert.setHeaderText(null); // Ingen header tekst
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 
     private void closeWindow(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();

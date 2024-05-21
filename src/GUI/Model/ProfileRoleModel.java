@@ -17,7 +17,9 @@ import java.util.ResourceBundle;
 public class ProfileRoleModel{
 
     private static ProfileRoleManager profileRoleManager;
-    private static final ObservableList<ProfileRole> roles = FXCollections.observableArrayList();
+    private final ObservableList<ProfileRole> roles = FXCollections.observableArrayList();
+
+    // Singleton
     private static ProfileRoleModel instance;
 
 
@@ -30,13 +32,13 @@ public class ProfileRoleModel{
         }
     }
 
+    // Singleton
     public static synchronized ProfileRoleModel getInstance() {
         if (instance == null) {
             instance = new ProfileRoleModel();
         }
         return instance;
     }
-
 
    private void loadRoles() {
         if (roles.isEmpty()) {
@@ -52,15 +54,11 @@ public class ProfileRoleModel{
         return roles;
     }
 
-
-
-
-
-    public void saveRole(String roleName) {
+    public void createRole(String roleName) {
         try {
             ProfileRole newRole = new ProfileRole(roleName);
-            profileRoleManager.saveRole(newRole);
-            roles.add(newRole);
+            profileRoleManager.createRole(newRole);
+            roles.add(newRole);// Add the new role to the observable list
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }

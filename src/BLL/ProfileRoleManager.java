@@ -20,7 +20,7 @@ public class ProfileRoleManager {
         return profileRoleDAO.getAllProfileRoles();
     }
 
-    public void saveRole(ProfileRole profileRole) throws ApplicationWideException {
+    public void createRole(ProfileRole profileRole) throws ApplicationWideException {
         profileRoleDAO.createProfileRole(profileRole);
     }
 

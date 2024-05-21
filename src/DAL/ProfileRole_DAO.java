@@ -42,6 +42,7 @@ public class ProfileRole_DAO implements IProfileRoleDataAccess{
         return allProfileRoles;
     }
 
+    @Override
     public void createProfileRole(ProfileRole profileRole) throws ApplicationWideException {
         String sql = "INSERT INTO ProfileRole (ProfileRoleType) VALUES (?)";
         try (Connection conn = dbConnector.getConnection();

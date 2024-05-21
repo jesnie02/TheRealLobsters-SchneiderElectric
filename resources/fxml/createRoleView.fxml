@@ -33,7 +33,7 @@
                         <Insets bottom="50.0" left="16.0" right="16.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button fx:id="btnSaveRole" mnemonicParsing="false" onAction="#saveRole" prefHeight="36.0" prefWidth="144.0" text="Done">
+                  <Button fx:id="btnSaveRole" mnemonicParsing="false" onAction="#createRole" prefHeight="36.0" prefWidth="144.0" text="Done">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

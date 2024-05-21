@@ -194,10 +194,9 @@ public class CreateProfileController implements Initializable {
     }
 
 
-    /**
-     * This method initializes fields, ComboBoxes, and listeners. with the values from the database.
-     * getAllCountries() and getAllProjectTeams() are methods read from the database.
-     */
+
+     //This method initializes fields, ComboBoxes, and listeners. with the values from the database.
+     //getAllCountries() and getAllProjectTeams() are methods read from the database.
     @FXML
     public void initialize() {
         ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -302,16 +301,14 @@ public class CreateProfileController implements Initializable {
         setRegexValidationForTextFields(txtAnnualSalary);
         setRegexValidationForTextFields(txtFixedAmount);
         setRegexValidationForTextFields(txtEffectiveHours);
-        //setRegexValidationForTextFields(txtOverheadView);
         setRegexValidationForTextFields(txtDailyWorkingHours);
     }
 
 
-    /*
-     This method validates the input in the TextFields and ComboBoxes.
-     If a field is empty,it is highlighted in red and the method returns false.
-     If all fields are filled, the method returns true.
-     */
+
+     //This method validates the input in the TextFields and ComboBoxes.
+     //If a field is empty,it is highlighted in red and the method returns false.
+    // If all fields are filled, the method returns true.
     private boolean validateInput() {
         boolean isValid = true;
         // List of all TextFields and ComboBoxes
