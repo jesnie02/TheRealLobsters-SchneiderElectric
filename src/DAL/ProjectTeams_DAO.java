@@ -92,6 +92,12 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         // SQL for inserting into ProfileProjectTeams
         String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
 
+        // SQL for inserting into GeographyProfile
+        String insertGeographyProfileSQL = "INSERT INTO GeographyProfile (GeographyId, ProfileId) VALUES (?, ?)";
+
+        // SQL for updating GeographyProfile
+        String updateGeographyProfileSQL = "UPDATE GeographyProfile SET GeographyId = ? WHERE ProfileId = ?";
+
         // Declare connection outside of try block to handle rollback
         Connection conn = null;
 
@@ -104,7 +110,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             conn = dbConnector.getConnection();
 
             try (PreparedStatement pstmt = conn.prepareStatement(insertTeamSQL, Statement.RETURN_GENERATED_KEYS);
-                 PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL)) {
+                 PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL);
+                 PreparedStatement pstmtInsertGeographyProfile = conn.prepareStatement(insertGeographyProfileSQL);
+                 PreparedStatement pstmtUpdateGeographyProfile = conn.prepareStatement(updateGeographyProfileSQL)) {
 
                 // Disable auto-commit for transaction management
                 conn.setAutoCommit(false);
@@ -126,13 +134,31 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                     if (generatedKeys.next()) {
                         int teamId = generatedKeys.getInt(1);
 
-                        // Insert each profile into ProfileProjectTeams
+                        // Insert each profile into ProfileProjectTeams and update GeographyProfile
                         for (Map.Entry<Profile, Double> entry : projectTeam.getUtilizationsMap().entrySet()) {
-                            pstmtInsertProfileProjectTeams.setInt(1, entry.getKey().getProfileId());
+                            Profile profile = entry.getKey();
+                            double utilization = entry.getValue();
+
+                            // Insert into ProfileProjectTeams
+                            pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
                             pstmtInsertProfileProjectTeams.setInt(2, teamId);
-                            pstmtInsertProfileProjectTeams.setDouble(3, entry.getValue());
-                            adjustUtilization(entry.getKey(), entry.getValue());
+                            pstmtInsertProfileProjectTeams.setDouble(3, utilization);
                             pstmtInsertProfileProjectTeams.addBatch();
+
+                            // Try to update GeographyProfile first
+                            pstmtUpdateGeographyProfile.setInt(1, projectTeam.getGeographyId());
+                            pstmtUpdateGeographyProfile.setInt(2, profile.getProfileId());
+                            int rowsAffected = pstmtUpdateGeographyProfile.executeUpdate();
+
+                            // If no rows were updated, insert into GeographyProfile
+                            if (rowsAffected == 0) {
+                                pstmtInsertGeographyProfile.setInt(1, projectTeam.getGeographyId());
+                                pstmtInsertGeographyProfile.setInt(2, profile.getProfileId());
+                                pstmtInsertGeographyProfile.executeUpdate();
+                            }
+
+                            // Adjust profile utilization
+                            adjustUtilization(profile, utilization);
                         }
                         pstmtInsertProfileProjectTeams.executeBatch();
                     } else {
@@ -163,6 +189,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
+
 
     @Override
     public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
