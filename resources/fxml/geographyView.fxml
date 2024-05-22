@@ -11,13 +11,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.GeographyController">
    <center>
-      <VBox fx:id="vBoxCenterGeographyOverview" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxCenterGeographyOverview" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
-            <HBox fx:id="hBoxHeaderGeographyOverview" alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="880.0" VBox.vgrow="ALWAYS">
+            <HBox fx:id="hBoxHeaderGeographyOverview" alignment="CENTER_LEFT" prefHeight="35.0" VBox.vgrow="NEVER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -27,7 +28,7 @@
                         <Image url="@../pictures/iconGeography.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblHeaderGeographyOverview" prefHeight="35.0" prefWidth="236.0" text="Geography Overview">
+                  <Label fx:id="lblHeaderGeographyOverview" text="Geography Overview">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -35,44 +36,40 @@
                         <Insets left="8.0" />
                      </padding>
                   </Label>
-                  <Pane prefHeight="42.0" prefWidth="408.0" />
-                  <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="289.0">
-                     <children>
-                        <Button fx:id="btnCreateGeography" mnemonicParsing="false" onAction="#createNewGeography" prefHeight="26.0" prefWidth="175.0" text="+ Create Geography">
-                           <HBox.margin>
-                              <Insets bottom="8.0" top="8.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <Pane HBox.hgrow="ALWAYS"/>
+                  <Button fx:id="btnCreateGeography" mnemonicParsing="false" onAction="#createNewGeography" prefHeight="26.0" text="+ Create Geography">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <padding>
                   <Insets left="8.0" right="8.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="494.0" prefWidth="915.0">
+            <HBox alignment="CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXLegacyTableView fx:id="tblGeographyOverview" prefHeight="375.0" prefWidth="679.0">
+                  <MFXLegacyTableView fx:id="tblGeographyOverview" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </HBox.margin>
                      <columns>
-                        <TableColumn fx:id="colGeoOverviewName" prefWidth="113.0" text="Geography Name" />
-                        <TableColumn fx:id="colGeoOverviewTeamNumber" prefWidth="147.0" text="Number of teams" />
-                        <TableColumn fx:id="colGeoOverviewEmployeeNumber" prefWidth="149.0" text="Number of employees" />
-                        <TableColumn fx:id="colGeoOverviewEdit" prefWidth="75.0" text="Edit" />
-                        <TableColumn fx:id="colGeoOverviewDelete" prefWidth="75.0" text="Delete" />
+                        <TableColumn fx:id="colGeoOverviewName" text="Geography Name" />
+                        <TableColumn fx:id="colGeoOverviewTeamNumber" text="Number of teams" />
+                        <TableColumn fx:id="colGeoOverviewEmployeeNumber" text="Number of employees" />
+                        <TableColumn fx:id="colGeoOverviewEdit" text="Edit" />
+                        <TableColumn fx:id="colGeoOverviewDelete" text="Delete" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </MFXLegacyTableView>
-                  <MFXLegacyTableView fx:id="tblGeographyOverviewCountry" prefHeight="375.0" prefWidth="197.0">
+                  <MFXLegacyTableView fx:id="tblGeographyOverviewCountry" prefWidth="200.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </HBox.margin>
                      <columns>
-                        <TableColumn fx:id="colGeoOverviewCountry" prefWidth="75.0" text="Countries" />
+                        <TableColumn fx:id="colGeoOverviewCountry" text="Countries" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
