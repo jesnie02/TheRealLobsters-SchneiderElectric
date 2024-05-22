@@ -16,7 +16,7 @@
    <top>
       <VBox prefHeight="61.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="hboxFrameLogo" prefHeight="54.0" prefWidth="600.0">
+            <HBox fx:id="hboxFrameLogo" prefHeight="54.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="47.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -25,12 +25,12 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox prefHeight="22.0" prefWidth="600.0" />
+            <HBox prefHeight="59.0" prefWidth="1000.0" HBox.hgrow="ALWAYS" />
          </children>
       </VBox>
    </top>
    <left>
-      <VBox fx:id="vboxTapBar" alignment="CENTER_LEFT" prefHeight="338.0" prefWidth="120.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vboxTapBar" alignment="CENTER_LEFT" prefHeight="549.0" prefWidth="120.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
             <Label fx:id="lblFrameHeader" prefHeight="18.0" prefWidth="100.0" text="Overview">
                <VBox.margin>
@@ -99,7 +99,8 @@
                </graphic>
                <VBox.margin>
                   <Insets bottom="8.0" />
-               </VBox.margin></Button>
+               </VBox.margin>
+            </Button>
             <Button fx:id="btnCurrency" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openCurrency" prefHeight="33.0" prefWidth="120.0" text="Currency">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
@@ -109,16 +110,19 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Pane prefHeight="146.0" prefWidth="120.0" />
+            <Pane VBox.vgrow="ALWAYS" />
             <VBox alignment="CENTER" prefHeight="74.0" prefWidth="120.0">
                <children>
                   <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#buttonLogOut" prefHeight="26.0" prefWidth="97.0" text="Log out" />
                </children>
             </VBox>
          </children>
+         <padding>
+            <Insets left="8.0" top="16.0" />
+         </padding>
       </VBox>
    </left>
    <center>
-      <StackPane fx:id="stackPaneFrame" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <StackPane fx:id="stackPaneFrame" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS" />
    </center>
 </BorderPane>

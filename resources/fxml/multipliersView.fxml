@@ -21,7 +21,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <HBox fx:id="hBoxHeaderMultiplier" alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="820.0" spacing="8.0">
+            <HBox fx:id="hBoxHeaderMultiplier" alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="820.0" spacing="8.0" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>

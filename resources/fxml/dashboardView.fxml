@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
+<BorderPane prefHeight="486.0" prefWidth="915.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.DashboardController">
    <center>
       <TabPane fx:id="tabPaneDashboard" prefHeight="426.0" prefWidth="842.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
@@ -264,7 +264,7 @@
       </TabPane>
    </center>
    <top>
-      <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="28.0" prefWidth="769.0" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
       <HBox prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">

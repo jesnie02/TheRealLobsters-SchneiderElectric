@@ -40,7 +40,8 @@
       </VBox>
    </center>
    <top>
-      <HBox fx:id="hBoxHeaderProfile" alignment="CENTER" prefHeight="36.0" prefWidth="881.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hBoxHeaderProfile" alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="769.0">
+
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>

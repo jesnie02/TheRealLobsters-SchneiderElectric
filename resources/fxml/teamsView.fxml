@@ -48,9 +48,9 @@
                   <Insets left="8.0" right="8.0" />
                </padding>
             </HBox>
-            <ScrollPane fitToWidth="true" prefHeight="653.0" prefWidth="811.0">
+            <ScrollPane fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="653.0" prefWidth="811.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                <content>
-                  <TilePane fx:id="tPaneTeamOverview" prefHeight="658.0" prefWidth="797.0" />
+                  <TilePane fx:id="tPaneTeamOverview" prefHeight="900.0" prefWidth="797.0" />
                </content>
             </ScrollPane>
          </children>
