@@ -33,6 +33,10 @@ public class GeographyManager {
         geographyDAO.saveGeography(geography);
     }
 
+    public void deleteGeography(Geography geography) throws ApplicationWideException {
+        geographyDAO.deleteGeography(geography.getGeographyId());
+    }
+
     /*
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyDAO.getCountryGeographyList(countryId);

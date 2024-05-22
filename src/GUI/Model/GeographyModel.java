@@ -69,4 +69,14 @@ public class GeographyModel {
         geographies.add(geography);
 
     }
+
+    public boolean deleteGeography(Geography geography) {
+        try {
+            geographyManager.deleteGeography(geography);
+            return geographies.remove(geography);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+            return false;
+        }
+    }
 }

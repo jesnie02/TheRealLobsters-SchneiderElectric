@@ -196,4 +196,57 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
     }
 
+
+    @Override
+    public void deleteGeography(int geographyId) throws ApplicationWideException {
+        String updateProjectTeamsSql = "UPDATE ProjectTeams SET Geography = NULL WHERE Geography = ?;";
+        String deleteProfileProjectTeamsSql = "DELETE FROM ProfileProjectTeams WHERE TeamsId IN (SELECT TeamsId FROM ProjectTeams WHERE Geography = ?);";
+        String deleteGeographyCountrySql = "DELETE FROM GeographyCountry WHERE GeographyId = ?;";
+        String deleteGeographyProfileSql = "DELETE FROM GeographyProfile WHERE GeographyId = ?;";
+        String deleteGeographySql = "DELETE FROM Geography WHERE GeographyId = ?;";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmtUpdateProjectTeams = conn.prepareStatement(updateProjectTeamsSql);
+             PreparedStatement pstmtProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSql);
+             PreparedStatement pstmtGeographyCountry = conn.prepareStatement(deleteGeographyCountrySql);
+             PreparedStatement pstmtGeographyProfile = conn.prepareStatement(deleteGeographyProfileSql);
+             PreparedStatement pstmtGeography = conn.prepareStatement(deleteGeographySql)) {
+
+            conn.setAutoCommit(false); // Start transaction
+
+            try {
+                // Step 1: Set Geography to NULL in ProjectTeams
+                pstmtUpdateProjectTeams.setInt(1, geographyId);
+                pstmtUpdateProjectTeams.executeUpdate();
+
+                // Step 2: Delete from ProfileProjectTeams
+                pstmtProfileProjectTeams.setInt(1, geographyId);
+                pstmtProfileProjectTeams.executeUpdate();
+
+                // Step 3: Delete from GeographyCountry
+                pstmtGeographyCountry.setInt(1, geographyId);
+                pstmtGeographyCountry.executeUpdate();
+
+                // Step 4: Delete from GeographyProfile
+                pstmtGeographyProfile.setInt(1, geographyId);
+                pstmtGeographyProfile.executeUpdate();
+
+                // Step 5: Delete from Geography
+                pstmtGeography.setInt(1, geographyId);
+                pstmtGeography.executeUpdate();
+
+                conn.commit(); // Commit transaction if all updates and deletes are successful
+            } catch (SQLException e) {
+                conn.rollback(); // Rollback transaction if any update or delete fails
+                throw new ApplicationWideException("Failed to delete geography", e);
+            }
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to delete geography", e);
+        }
+    }
+
+
+
+
+
 }

@@ -138,6 +138,7 @@ public class Profile_DAO implements IProfileDataAccess {
     }
 
 
+    @Override
     public void deleteProfile(int profileId) throws ApplicationWideException {
         String[] sqlQueries = {
                 "DELETE FROM dbo.ProfileProfileRole WHERE ProfileId = ?",

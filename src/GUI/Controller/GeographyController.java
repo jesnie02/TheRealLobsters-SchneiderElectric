@@ -4,6 +4,7 @@ import BE.Country;
 import BE.Geography;
 import BE.Profile;
 import GUI.Model.GeographyModel;
+import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class GeographyController  {
     public Button btnCreateGeography;
@@ -71,8 +74,15 @@ public class GeographyController  {
            }
        });
 
-       colGeoOverviewDelete.setCellFactory(param -> new TableCell<Profile,Void>() {
+       colGeoOverviewDelete.setCellFactory(param -> new TableCell<Geography,Void>() {
            private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
+
+           {
+               deleteButton.setOnAction(event -> {
+                   Geography geography = getTableView().getItems().get(getIndex());
+                   deleteGeography(geography);
+               });
+           }
 
            @Override
            protected void updateItem(Void item, boolean empty) {
@@ -115,6 +125,20 @@ public class GeographyController  {
         List<Country> countries = newSelection.getCountries();
         ObservableList<Country> countryObservableList = FXCollections.observableArrayList(countries);
         tblGeographyOverviewCountry.setItems(countryObservableList);
+    }
+
+    private void deleteGeography(Geography geography) {
+        Optional<ButtonType> result = AlertBox.displayConfirmation("Confirm Deletion", "Are you sure you want to delete the geography?\nGeography: " + geography.getGeographyName());
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean success = geographyModel.deleteGeography(geography);
+            if (success) {
+                tblGeographyOverview.getItems().remove(geography);
+                AlertBox.displayInfo("Geography Deleted", "Geography has been successfully deleted.");
+            } else {
+                AlertBox.displayInfo("Deletion Failed", "Failed to delete the geography.");
+            }
+        }
     }
 
     public void createNewGeography(ActionEvent actionEvent) {
