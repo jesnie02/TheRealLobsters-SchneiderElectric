@@ -87,7 +87,7 @@ public class ProjectTeamsManager {
 
     private List<Profile> processProfiles(List<Profile> rawProfiles) {
         for (Profile profile : rawProfiles) {
-            List<ProfileRole> roles = parseRoles(profile.getRolesString());  // Assume getter for roles string
+            List<ProfileRole> roles = parseRoles(profile.getRolesString());
             profile.setProfileRoles(roles);
         }
         return rawProfiles;
