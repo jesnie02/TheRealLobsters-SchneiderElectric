@@ -17,14 +17,14 @@
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
+<BorderPane fx:id="bP_CreateProfile" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateProfileController">
    <center>
       <VBox fx:id="vBoxWhiteCreateProfile" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </BorderPane.margin>
          <children>
-            <HBox fx:id="headerHboxCreateProfile" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="822.0" VBox.vgrow="ALWAYS">
+            <HBox fx:id="headerHboxCreateProfile" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="822.0">
                <children>
                   <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
@@ -40,7 +40,7 @@
                      </padding></Label>
                </children>
             </HBox>
-            <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0">
+            <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="25.0" right="25.0" top="16.0" />
                </VBox.margin>
