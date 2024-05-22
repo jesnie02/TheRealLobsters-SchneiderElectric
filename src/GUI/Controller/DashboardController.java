@@ -8,12 +8,15 @@ import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.ExceptionHandler;
+import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.List;
@@ -48,6 +51,14 @@ public class DashboardController implements Initializable {
     private CategoryAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+    @FXML
+    private MFXLegacyTableView<ProjectTeam> tblTeams;
+    @FXML
+    private TableColumn<ProjectTeam, String> colTeams;
+    @FXML
+    private MFXLegacyTableView<Geography> tblGeography;
+    @FXML
+    private TableColumn<Geography, String> colGeographies;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,15 +79,17 @@ public class DashboardController implements Initializable {
     private void setUpComboBoxListeners() {
 
             // Geography
-            cBoxGeographyDash.setItems(geographyModel.getSumsAndAveragesForGeographies());
-            cBoxGeographyDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            colGeographies.setCellValueFactory(new PropertyValueFactory<>("geographyName"));
+            tblGeography.setItems(geographyModel.getSumsAndAveragesForGeographies());
+            tblGeography.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsGeographyTab(newValue);
             });
 
 
             // Team
-            cBoxTeamDash.setItems(projectTeamsModel.getAllProjectTeamsData());
-            cBoxTeamDash.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            colTeams.setCellValueFactory(new PropertyValueFactory<>("TeamName"));
+            tblTeams.setItems(projectTeamsModel.getAllProjectTeamsData());
+            tblTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsTeamTab(newValue);
             });
     }

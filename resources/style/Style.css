@@ -283,7 +283,7 @@
 
     /*  table left alignment */
 
-#colGeoOverviewName, #colNameProfile, #colFirstNameTD, #colCurrencyCodes {
+#colGeoOverviewName, #colNameProfile, #colFirstNameTD, #colCurrencyCodes, #colGeographies, #colTeams {
     -fx-alignment: CENTER_LEFT;
 }
 
