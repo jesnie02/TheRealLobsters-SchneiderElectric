@@ -4,6 +4,7 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Model.MultiplierModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import GUI.Utility.SliderDecimalFilter;
 import io.github.palexdev.materialfx.controls.MFXSlider;
@@ -160,39 +161,33 @@ public class MultiplierController {
     }
 
     private void calculateAndSetResultForProfile()  {
-        double percentageGMP = parseTextField(txtGMP);
-        double percentageMUP = parseTextField(txtMUP);
-
-        if (lstVProfile.getSelectionModel().getSelectedItem() != null) {
+        if (checkSelection(lstVProfile, "No profile selected, please select one.")) {
+            double percentageGMP = parseTextField(txtGMP);
+            double percentageMUP = parseTextField(txtMUP);
             double hourlyRate = getHourlyRate();
             double dayRate = getDailyRate();
 
             calculateAndSetResultForRateForProfile(dayRate, hourlyRate, percentageGMP, percentageMUP);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selection error");
-            alert.setHeaderText(null);
-            alert.setContentText("No profile selected, please select one");
-            alert.showAndWait();
         }
     }
 
     private void calculateAndSetResultForTeam() {
-        double percentageGMT = parseTextField(txtGMT);
-        double percentageMUT = parseTextField(txtMUT);
-        if (lstVTeams.getSelectionModel().getSelectedItem() != null) {
-
+        if (checkSelection(lstVTeams, "No team selected, please select one.")) {
+            double percentageGMT = parseTextField(txtGMT);
+            double percentageMUT = parseTextField(txtMUT);
             double avgHourlyRate = getAvgHourlyRate();
             double avgDailyRate = getAvgDailyRate();
 
             calculateAndSetResultForRateForTeams(avgDailyRate, avgHourlyRate, percentageGMT, percentageMUT);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selection error");
-            alert.setHeaderText(null);
-            alert.setContentText("No team selected, please select one");
-            alert.showAndWait();
         }
+    }
+
+    private boolean checkSelection(ListView listView, String errorMessage) {
+        if (listView.getSelectionModel().getSelectedItem() == null) {
+            AlertBox.displayInfo("Selection Error", errorMessage);
+            return false;
+        }
+        return true;
     }
 
     private void calculateAndSetResultForRateForProfile(double dayRate, double hourlyRate, double percentageGM, double percentageMU) {
