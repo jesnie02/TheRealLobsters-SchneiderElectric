@@ -299,7 +299,6 @@ public class CreateProjectTeamController implements Initializable {
 
     private void setTextinFieldTime() {
         txtUtilizationTime.setText(String.valueOf(utilizationTime));
-        System.out.println("Utilization Time Field Set: " + utilizationTime);
     }
 
     private void setTextinFieldCost() {

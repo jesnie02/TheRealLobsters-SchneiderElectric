@@ -65,13 +65,11 @@ public class TeamDetailsController implements Initializable {
 
         colUtilizationTime.setCellValueFactory(cellData -> {
             double utilizationTime = cellData.getValue().getUtilizationTime();
-            //System.out.println("Utilization Time for " + cellData.getValue().getFName() + ": " + utilizationTime);
             return new SimpleDoubleProperty(utilizationTime).asObject();
         });
 
         colUtilizationCost.setCellValueFactory(cellData -> {
             double utilizationCost = cellData.getValue().getUtilizationCost();
-            //System.out.println("Utilization Cost for " + cellData.getValue().getFName() + ": " + utilizationCost);
             return new SimpleDoubleProperty(utilizationCost).asObject();
         });
 
@@ -98,10 +96,7 @@ public class TeamDetailsController implements Initializable {
         updateSalaryInfo(team);
         ObservableList<Profile> profiles = projectTeam.getProfileForTeam(team.getTeamId());
 
-        // Log profiles and their utilization times
-        profiles.forEach(profile -> {
-            //System.out.println("Profile: " + profile.getFName() + ", Utilization Time: " + profile.getUtilizationTime());
-        });
+
 
         tableViewProfile.setItems(profiles);
     }

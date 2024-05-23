@@ -293,7 +293,7 @@ public class UpdateProjectTeamController implements Initializable {
                 sliderUtilizationTime.setMax(100);
                 Profile selectedProfile = newProfile;
                 double profileUtilizationTime = selectedProfile.getTotalUtilization();
-                double profileUtilizationCost = selectedProfile.getUtilizationCost(); // Correctly fetch utilization cost
+                double profileUtilizationCost = selectedProfile.getUtilizationCost();
 
                 sliderUtilizationTime.setValue(profileUtilizationTime);
                 sliderUtilizationTime.setUserData(profileUtilizationTime);
@@ -313,7 +313,6 @@ public class UpdateProjectTeamController implements Initializable {
 
     private void setTextinFieldTime() {
         txtUtilizationTime.setText(String.valueOf(utilizationTime));
-        System.out.println("Utilization Time Field Set: " + utilizationTime);
     }
 
     private void setTextinFieldCost() {

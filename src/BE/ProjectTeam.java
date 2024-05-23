@@ -85,7 +85,6 @@ public class ProjectTeam {
     }
 
 
-
     public Map<Profile, Double> getUtilizationCostMap() {
         return utilizationCostsMap;
     }
