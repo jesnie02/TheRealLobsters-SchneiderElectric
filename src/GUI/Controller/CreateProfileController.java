@@ -231,7 +231,6 @@ public class CreateProfileController implements Initializable {
 
         profileModel.createProfile(newProfile);
         lblShowMassage.setText("Profile has been saved");
-        System.out.println(newProfile);
     }
 
 

@@ -40,28 +40,31 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamUtilization, colTeamDailyRate, colTeamHourlyRate, colTeamAnnualSalary, colTeamName, colTeamCountryId, colTeamProfileId;
+    private TableColumn<Profile, String> colTeamUtilizationTime, colTeamUtilizationCost, colTeamDailyRate, colTeamHourlyRate, colTeamAnnualSalary, colTeamName, colTeamCountryId, colTeamProfileId;
     @FXML
     private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
     @FXML
     private TextField txtProjectTeamName;
     @FXML
-    private MFXSlider sliderUtilization;
+    private MFXSlider sliderUtilizationTime, sliderUtilizationCost;
     @FXML
-    private TextField txtUtilization;
+    private TextField txtUtilizationTime, txtUtilizationCost;
     @FXML
     private ComboBox<Geography> cBoxGeographies;
     @FXML
-
     private ComboBox<Profile> cBoxProfiles;
-    private double utilization;
+
+    private double utilizationTime;
+    private double utilizationCost;
     private Map<Integer, Country> countriesMap;
-    private Map<Profile, Double> utilizationsMap = new HashMap<>();
+    private Map<Profile, Double> utilizationTimeMap = new HashMap<>();
+    private Map<Profile, Double> utilizationCostMap = new HashMap<>();
     private FilteredList<Profile> filteredProfiles;
 
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
+
 
     public CreateProjectTeamController() {
     }
@@ -74,8 +77,10 @@ public class CreateProjectTeamController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             populateComboBoxes();
             setTblProfileToTeam();
-            setupSlider();
-            setTextinField();
+            setupSliderTime();
+            setupSliderCost();
+            setTextinFieldTime();
+            setTextinFieldCost();
             setupRegex();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
@@ -94,13 +99,24 @@ public class CreateProjectTeamController implements Initializable {
 
         cBoxProfiles.valueProperty().addListener((obs, oldProfile, newProfile) -> {
             if (newProfile != null) {
-                Profile selectedProfile = (Profile) newProfile;
-                double profileUtilization = selectedProfile.getTotalUtilization();
-                sliderUtilization.setMax(100); // Set the maximum value of the slider to 100%
-                sliderUtilization.setValue(profileUtilization);
-                sliderUtilization.setUserData(profileUtilization); // Store the initial utilization value in userData
-                utilization = profileUtilization;
-                setTextinField();
+                Profile selectedProfile = newProfile;
+                double profileUtilizationTime = selectedProfile.getTotalUtilization();
+                double profileUtilizationCost = selectedProfile.getUtilizationCost(); // Correctly fetch utilization cost
+
+
+                sliderUtilizationTime.setMax(100);
+                sliderUtilizationTime.setValue(profileUtilizationTime);
+                sliderUtilizationTime.setUserData(profileUtilizationTime);
+
+                sliderUtilizationCost.setMax(100);
+                sliderUtilizationCost.setValue(profileUtilizationCost);
+                sliderUtilizationCost.setUserData(profileUtilizationCost);
+
+                utilizationTime = profileUtilizationTime;
+                utilizationCost = profileUtilizationCost;
+
+                setTextinFieldTime();
+                setTextinFieldCost();
             }
         });
 
@@ -183,21 +199,28 @@ public class CreateProjectTeamController implements Initializable {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
-        colTeamUtilization.setCellValueFactory(cellData -> {
-            double utilization = utilizationsMap.get(cellData.getValue());
+        colTeamUtilizationCost.setCellValueFactory(cellData -> {
+            double utilization = utilizationCostMap.getOrDefault(cellData.getValue(), 0.0);
+            return new SimpleStringProperty(formatter.format(utilization) + " %");
+        });
+        colTeamUtilizationTime.setCellValueFactory(cellData -> {
+            double utilization = utilizationTimeMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
     }
 
     @FXML
     public void selectProfileToTable(ActionEvent event) {
-        Profile selectedProfile = (Profile) cBoxProfiles.getValue();
+        Profile selectedProfile = cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationsMap.put(selectedProfile, sliderUtilization.getValue());
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()/100 * (utilizationsMap.get(selectedProfile)));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate()/100 * (utilizationsMap.get(selectedProfile)));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()/100 * (utilizationsMap.get(selectedProfile)));
+            utilizationTimeMap.put(selectedProfile, sliderUtilizationTime.getValue());
+            utilizationCostMap.put(selectedProfile, sliderUtilizationCost.getValue());
+
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() / 100 * utilizationCostMap.get(selectedProfile));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate() / 100 * utilizationCostMap.get(selectedProfile));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() / 100 * utilizationCostMap.get(selectedProfile));
+
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
         }
@@ -212,9 +235,10 @@ public class CreateProjectTeamController implements Initializable {
 
         ProjectTeam projectTeam = new ProjectTeam(txtProjectTeamName.getText());
         projectTeam.setProfiles(profiles);
-        projectTeam.setUtilizationsMap(utilizationsMap);
+        projectTeam.setUtilizationsMap(utilizationTimeMap);
+        projectTeam.setUtilizationCostMap(utilizationCostMap);
 
-        Geography selectedGeography = (Geography) cBoxGeographies.getValue();
+        Geography selectedGeography = cBoxGeographies.getValue();
         if (selectedGeography != null) {
             projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
@@ -225,28 +249,52 @@ public class CreateProjectTeamController implements Initializable {
         cBoxGeographies.setValue(null);
     }
 
-    // Configures the slider for utilization input, ensuring it doesn't exceed the initial set value.
-    private void setupSlider() {
+    private void setupSliderTime() {
         SliderDecimalFilter filter = new SliderDecimalFilter();
-        txtUtilization.setTextFormatter(new TextFormatter<>(filter));
+        txtUtilizationTime.setTextFormatter(new TextFormatter<>(filter));
         StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
-        Bindings.bindBidirectional(txtUtilization.textProperty(), sliderUtilization.valueProperty(), converter);
+        Bindings.bindBidirectional(txtUtilizationTime.textProperty(), sliderUtilizationTime.valueProperty(), converter);
 
-        // Ensure the slider cannot exceed the initial utilization value stored in userData
-        sliderUtilization.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (sliderUtilization.getUserData() != null) {
-                double initialUtilization = (double) sliderUtilization.getUserData();
+        sliderUtilizationTime.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (sliderUtilizationTime.getUserData() != null) {
+                double initialUtilization = (double) sliderUtilizationTime.getUserData();
                 if (newValue.doubleValue() > initialUtilization) {
-                    sliderUtilization.setValue(initialUtilization);
+                    sliderUtilizationTime.setValue(initialUtilization);
                 } else {
-                    utilization = newValue.doubleValue();
+                    utilizationTime = newValue.doubleValue();
+                    System.out.println("Updated Utilization Time: " + utilizationTime);
                 }
             }
         });
     }
 
-    private void setTextinField() {
-        txtUtilization.setText(String.valueOf(utilization));
+    private void setupSliderCost() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtUtilizationCost.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtUtilizationCost.textProperty(), sliderUtilizationCost.valueProperty(), converter);
+
+        sliderUtilizationCost.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (sliderUtilizationCost.getUserData() != null) {
+                double initialUtilization = (double) sliderUtilizationCost.getUserData();
+                if (newValue.doubleValue() > initialUtilization) {
+                    sliderUtilizationCost.setValue(initialUtilization);
+                } else {
+                    utilizationCost = newValue.doubleValue();
+                }
+            } else {
+            }
+        });
+    }
+
+
+    private void setTextinFieldTime() {
+        txtUtilizationTime.setText(String.valueOf(utilizationTime));
+        System.out.println("Utilization Time Field Set: " + utilizationTime);
+    }
+
+    private void setTextinFieldCost() {
+        txtUtilizationCost.setText(String.valueOf(utilizationCost));
     }
 
     @FXML
@@ -267,7 +315,7 @@ public class CreateProjectTeamController implements Initializable {
     }
 
     private void setupRegex() {
-        setRegexValidationForTextFields(txtUtilization);
+        setRegexValidationForTextFields(txtUtilizationTime);
     }
 
     private boolean validateInput() {
@@ -296,3 +344,4 @@ public class CreateProjectTeamController implements Initializable {
         return isValid;
     }
 }
+

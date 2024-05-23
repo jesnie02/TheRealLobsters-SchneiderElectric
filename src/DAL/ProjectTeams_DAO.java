@@ -85,19 +85,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
-        // SQL for inserting a new project team
         String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate, Geography) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        // SQL for inserting into ProfileProjectTeams
-        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
-
-        // SQL for inserting into GeographyProfile
+        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization, UtilizationCost) VALUES (?, ?, ?, ?)";
         String insertGeographyProfileSQL = "INSERT INTO GeographyProfile (GeographyId, ProfileId) VALUES (?, ?)";
-
-        // SQL for updating GeographyProfile
         String updateGeographyProfileSQL = "UPDATE GeographyProfile SET GeographyId = ? WHERE ProfileId = ?";
 
-        // Declare connection outside of try block to handle rollback
         Connection conn = null;
 
         try {
@@ -113,10 +105,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                  PreparedStatement pstmtInsertGeographyProfile = conn.prepareStatement(insertGeographyProfileSQL);
                  PreparedStatement pstmtUpdateGeographyProfile = conn.prepareStatement(updateGeographyProfileSQL)) {
 
-                // Disable auto-commit for transaction management
                 conn.setAutoCommit(false);
 
-                // Insert the new team
                 pstmt.setString(1, projectTeam.getTeamName());
                 pstmt.setInt(2, projectTeam.getProfiles().size());
                 pstmt.setDouble(3, projectTeam.getAvgAnnualSalary());
@@ -128,23 +118,22 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmt.setInt(9, projectTeam.getGeographyId());
                 pstmt.executeUpdate();
 
-                // Retrieve the generated team ID
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int teamId = generatedKeys.getInt(1);
 
-                        // Insert each profile into ProfileProjectTeams and update GeographyProfile
-                        for (Map.Entry<Profile, Double> entry : projectTeam.getUtilizationsMap().entrySet()) {
-                            Profile profile = entry.getKey();
-                            double utilization = entry.getValue();
+                        for (Profile profile : projectTeam.getProfiles()) {
+                            double utilization = projectTeam.getUtilizationsMap().get(profile);
+                            double utilizationCost = projectTeam.getUtilizationCostMap().get(profile);
 
                             // Insert into ProfileProjectTeams
                             pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
                             pstmtInsertProfileProjectTeams.setInt(2, teamId);
                             pstmtInsertProfileProjectTeams.setDouble(3, utilization);
+                            pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
                             pstmtInsertProfileProjectTeams.addBatch();
 
-                            // Try to update GeographyProfile first
+                            // Update GeographyProfile
                             pstmtUpdateGeographyProfile.setInt(1, projectTeam.getGeographyId());
                             pstmtUpdateGeographyProfile.setInt(2, profile.getProfileId());
                             int rowsAffected = pstmtUpdateGeographyProfile.executeUpdate();
@@ -156,8 +145,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                                 pstmtInsertGeographyProfile.executeUpdate();
                             }
 
-                            // Adjust profile utilization
+                            // Adjust profile utilization and utilization cost
                             adjustUtilization(profile, utilization);
+                            adjustUtilizationCost(profile, utilizationCost);
                         }
                         pstmtInsertProfileProjectTeams.executeBatch();
                     } else {
@@ -188,6 +178,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
+
 
 
 
@@ -222,7 +214,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             if (conn != null) {
                 try {
                     conn.rollback();
-                    System.out.println("Transaction rolled back");
                 } catch (SQLException ex) {
                     throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
                 }
@@ -233,7 +224,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 try {
                     conn.setAutoCommit(true);
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException ex) {
                     throw new ApplicationWideException("Resource cleanup failed: " + ex.getMessage(), ex);
                 }
@@ -257,6 +247,21 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     }
 
+    private void adjustUtilizationCost(Profile profile, double utilizationCost) throws ApplicationWideException {
+        String updateUtilizationCostSQL = "UPDATE Profile SET UtilizationCost = UtilizationCost - ? WHERE ProfileId = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateUtilizationCostSQL)) {
+
+            pstmt.setDouble(1, utilizationCost);
+            pstmt.setInt(2, profile.getProfileId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to adjust utilization cost", e);
+        }
+    }
+
+
     public boolean doesTeamNameExist(String teamName) throws ApplicationWideException {
         String checkTeamSQL = "SELECT COUNT(*) FROM ProjectTeams WHERE TeamName = ?";
 
@@ -278,13 +283,13 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     public List<Profile> getProfileFromProjectTeam(int projectTeamID) throws ApplicationWideException {
         List<Profile> profiles = new ArrayList<>();
-        String sql = "SELECT p.*, ppt.Utilization, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
+        String sql = "SELECT p.*, ppt.Utilization, ppt.UtilizationCost, STRING_AGG(pr.ProfileRoleType, ', ') AS Roles " +
                 "FROM Profile p " +
                 "JOIN ProfileProjectTeams ppt ON p.ProfileId = ppt.ProfileId_PPT " +
                 "JOIN ProfileProfileRole ppr ON p.ProfileId = ppr.ProfileId " +
                 "JOIN ProfileRole pr ON ppr.ProfileRoleId = pr.ProfileRoleId " +
                 "WHERE ppt.TeamsId = ? " +
-                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization, p.UtilizationCost, p.EffectiveWorkingHours, p.OverheadMultiplierPercentage";
+                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization, ppt.UtilizationCost";
 
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -293,24 +298,27 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
             while (rs.next()) {
                 List<ProfileRole> profileRoles = parseRoles(rs.getString("Roles"));
-                        int id = rs.getInt("ProfileId");
-                        String fName = rs.getString("Fname");
-                        String lName = rs.getString("Lname");
-                        boolean overhead = rs.getBoolean("Overheadcost");
-                        double annual =rs.getDouble("AnualSalary");
-                        double hourly = rs.getDouble("HourlySalary");
-                        double daily = rs.getDouble("DailyRate");
-                        double workingHR = rs.getDouble("DailyWorkingHours");
-                        float utilization = rs.getFloat("Utilization");
+                int id = rs.getInt("ProfileId");
+                String fName = rs.getString("Fname");
+                String lName = rs.getString("Lname");
+                boolean overhead = rs.getBoolean("Overheadcost");
+                double annual = rs.getDouble("AnualSalary");
+                double hourly = rs.getDouble("HourlySalary");
+                double daily = rs.getDouble("DailyRate");
+                double workingHR = rs.getDouble("DailyWorkingHours");
+                double utilizationTime = rs.getDouble("Utilization");
+                double utilizationCost = rs.getDouble("UtilizationCost");
 
-                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilization, profileRoles);
+
+                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilizationTime, utilizationCost, profileRoles);
                 profiles.add(profile);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to get profiles from project team",e);
+            throw new ApplicationWideException("Failed to get profiles from project team", e);
         }
         return profiles;
     }
+
 
     private List<ProfileRole> parseRoles(String rolesString) {
         List<ProfileRole> roles = new ArrayList<>();
@@ -361,7 +369,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmtInsertProfileProjectTeams.setInt(2, projectTeam.getTeamId());
                 pstmtInsertProfileProjectTeams.setDouble(3, utilization);
                 rowsAffected = pstmtInsertProfileProjectTeams.executeUpdate();
-                //System.out.println("Rows affected in ProfileProjectTeams: " + rowsAffected);
             }
 
             // Update the sum values
@@ -370,7 +377,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmtUpdateSumValues.setDouble(3, projectTeam.getSumOfHourlyRate());
             pstmtUpdateSumValues.setInt(4, projectTeam.getTeamId());
             rowsAffected = pstmtUpdateSumValues.executeUpdate();
-            //System.out.println("Rows affected in ProjectTeams (sum values): " + rowsAffected);
 
             conn.commit();
         } catch (SQLException e) {
@@ -399,9 +405,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmtUpdateProfileCount.setInt(1, projectTeamId);
                 pstmtUpdateProfileCount.executeUpdate();
 
-                System.out.println("Deleting profile with ID: " + profileId + " from team with ID: " + projectTeamId + "DAO_SOUT"); // Added print statement
-                System.out.println("Rows affected in ProfileProjectTeams: " + rowsAffectedProfileProjectTeams + "DAO_SOUT"); // Debug statement
-
                 conn.commit();
             }
         } catch (SQLException e) {
@@ -419,7 +422,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 try {
                     conn.setAutoCommit(true);
                     conn.close();
-                    System.out.println("Connection closed");
                 } catch (SQLException ex) {
                     throw new ApplicationWideException("Resource cleanup failed: " + ex.getMessage(), ex);
                 }

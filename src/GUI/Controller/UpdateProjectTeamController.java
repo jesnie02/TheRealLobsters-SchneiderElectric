@@ -123,7 +123,6 @@ public class UpdateProjectTeamController implements Initializable {
         ProjectTeam currentTeam = DataModelSingleton.getInstance().getCurrentTeam();
         if (currentTeam != null) {
             txtProjectTeamName.setText(currentTeam.getTeamName());
-            System.out.println("InitData, UpdateTeamController: " + currentTeam);
             lblAnnualSalarySum.setText(String.format("%.2f", currentTeam.getSumOfAnnualSalary()));
             lblDailyRateSum.setText(String.format("%.2f", currentTeam.getSumOfDailyRate()));
             lblHourlyRateSum.setText(String.format("%.2f", currentTeam.getSumOfHourlyRate()));
@@ -133,7 +132,7 @@ public class UpdateProjectTeamController implements Initializable {
             utilizationsMap.clear();
 
            for (Profile profile : profiles) {
-                utilizationsMap.put(profile, Double.valueOf(profile.getUtilization()));
+                utilizationsMap.put(profile, Double.valueOf(profile.getUtilizationTime()));
             }
 
            tblProfileToTeam.setItems(profiles);

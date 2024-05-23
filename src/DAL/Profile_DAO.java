@@ -46,12 +46,13 @@ public class Profile_DAO implements IProfileDataAccess {
                 double dailyRate = rs.getDouble("DailyRate");
                 double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
                 double totalUtilization = rs.getDouble("TotalUtilization");
+                double utilizationCost = rs.getDouble("UtilizationCost");
                 double fixedAmount = rs.getDouble("FixedAmount");
                 double effectiveHours = rs.getDouble("EffectiveWorkingHours");
                 double overheadMultiplier = rs.getDouble("OverheadMultiplierPercentage");
 
-                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization, effectiveHours, overheadMultiplier);
-                profile.setFixedAmount(fixedAmount);  // Ensure this line is included
+                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization, utilizationCost, effectiveHours, overheadMultiplier);
+                profile.setFixedAmount(fixedAmount);
 
                 allProfiles.add(profile);
             }

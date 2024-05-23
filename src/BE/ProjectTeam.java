@@ -15,6 +15,7 @@ public class ProjectTeam {
     private int count;
     private List<Profile> profiles = new ArrayList<>();
     private Map<Profile, Double> utilizationsMap = new HashMap<>();
+    private Map<Profile, Double> utilizationCostsMap = new HashMap<>();
     private Country country;
     private Geography geography;
     private int geographyId;
@@ -81,6 +82,16 @@ public class ProjectTeam {
 
     public void setUtilizationsMap(Map<Profile, Double> utilizationsMap){
         this.utilizationsMap = utilizationsMap;
+    }
+
+
+
+    public Map<Profile, Double> getUtilizationCostMap() {
+        return utilizationCostsMap;
+    }
+
+    public void setUtilizationCostMap(Map<Profile, Double> utilizationCostMap) {
+        this.utilizationCostsMap = utilizationCostMap;
     }
 
     public int getTeamId() {
@@ -188,4 +199,7 @@ public class ProjectTeam {
     public Geography getGeography() {
         return geography;
     }
+
+
+
 }

@@ -86,7 +86,6 @@ public class TeamDetailsController implements Initializable {
 
     private void updateSalaryInfo(ProjectTeam team){
         txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
-        System.out.println("Sum of annual salary: " + team.getSumOfAnnualSalary() + " from team: " + team.getTeamName());
         txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
         txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
         txtAvgAnnual.setText(String.format("%.2f", team.getAvgAnnualSalary()));

@@ -82,7 +82,6 @@ public class TeamsContainerController {
         Label lblGeography = createLabel("Location: " + geoName, "other-label");
         Label lblMembers = createLabel("Members: " + team.getNumberOfProfiles(), "other-label");
         Label lblCost = createLabel("Average Cost: " + String.format("%.2f", team.getAvgAnnualSalary()), "other-label");
-        //System.out.println("kakao" +geography);
         vbox.getChildren().addAll(lblTeamName, lblGeography, lblMembers, lblCost);
         vbox.setOnMouseClicked(event -> openTeamDetailView(team, geography));
         return vbox;
