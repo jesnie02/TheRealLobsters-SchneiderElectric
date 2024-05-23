@@ -3,12 +3,13 @@ package GUI.Controller;
 import BE.Country;
 import BE.Geography;
 import BE.Profile;
+import CustomExceptions.ApplicationWideException;
+import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 public class GeographyController  {
@@ -39,10 +39,12 @@ public class GeographyController  {
     public TableColumn<Geography, String> colGeoOverviewCountry;
 
     private GeographyModel geographyModel;
+    private CountryModel countryModel;
 
     @FXML
     private void initialize() throws Exception {
         geographyModel = new GeographyModel();
+        countryModel = new CountryModel();
         loadGeographies();
         initializeTables();
     }
@@ -111,21 +113,15 @@ public class GeographyController  {
         return button;
     }
 
-    public void loadGeographies()  {
+    public void loadGeographies() throws ApplicationWideException {
         ObservableList<Geography> geographies = geographyModel.getAllGeographiesGeographyOverview();
         tblGeographyOverview.setItems(geographies);
         tblGeographyOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-
-                loadCountriesForGeography(newSelection);
+                ObservableList<Country> countries = countryModel.getCountriesForGeographyOverview(newSelection.getGeographyId());
+                tblGeographyOverviewCountry.setItems(countries);
             }
         });
-    }
-
-    private void loadCountriesForGeography(Geography newSelection) {
-        List<Country> countries = newSelection.getCountries();
-        ObservableList<Country> countryObservableList = FXCollections.observableArrayList(countries);
-        tblGeographyOverviewCountry.setItems(countryObservableList);
     }
 
     private void deleteGeography(Geography geography) {

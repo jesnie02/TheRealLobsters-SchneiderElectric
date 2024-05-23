@@ -40,19 +40,15 @@ public class GeographyModel {
     }
 
     private void loadInitialGeographies() {
-        List<Geography> geographyList = null;
-        try {
-            geographyList = geographyManager.getAllGeographiesGeographyOverview();
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        geographies.setAll(geographyList.stream()
+        geographies.setAll(this.geographies.stream()
                 .sorted(Comparator.comparing(Geography::getGeographyName))
                 .collect(Collectors.toList()));
     }
 
-    public ObservableList<Geography> getAllGeographiesGeographyOverview() {
-        return geographies;
+    public ObservableList<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException {
+        return geographyManager.getAllGeographiesGeographyOverview().stream()
+                .sorted(Comparator.comparing(Geography::getGeographyName))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 
     public Map<Integer, Geography> getGeographyMap() throws ApplicationWideException {

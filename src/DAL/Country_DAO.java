@@ -1,15 +1,12 @@
 package DAL;
 
 import BE.Country;
+import BE.Geography;
 import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,30 @@ public class Country_DAO implements ICountryDataAccess {
             throw new ApplicationWideException("Failed to read all countries",e);
         }
         return allCountries;
+    }
+
+    @Override
+    public List<Country> getCountriesForGeographyOverview(int geographyId) throws ApplicationWideException {
+        List<Country> countriesForGeography = new ArrayList<>();
+        String sql = "SELECT * FROM Country c JOIN GeographyCountry gc ON c.CountryId = gc.CountryId WHERE gc.GeographyId = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, geographyId); // Use geographyId directly
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                Country country = new Country(
+                        rs.getInt("CountryId"),
+                        rs.getString("CountryName")
+                );
+                countriesForGeography.add(country);
+            }
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to read countries for geography", e);
+        }
+        return countriesForGeography;
     }
 
     public List<Country> getSumsAndAveragesForCountries() throws ApplicationWideException{

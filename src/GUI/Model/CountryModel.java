@@ -10,6 +10,7 @@ import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,21 @@ public class CountryModel {
         try {
             countries = javafx.collections.FXCollections.observableArrayList(
                     countryManager.getSumsAndAveragesForCountries().stream()
+                            .sorted(Comparator.comparing(Country::getCountryName))
+                            .collect(Collectors.toList())
+            );
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
+        return countries;
+    }
+
+    public ObservableList<Country> getCountriesForGeographyOverview(int geographyId) {
+        ObservableList<Country> countries = null;
+        try {
+            List<Country> countryList = countryManager.getCountriesForGeographyOverview(geographyId);
+            countries = FXCollections.observableArrayList(
+                    countryList.stream()
                             .sorted(Comparator.comparing(Country::getCountryName))
                             .collect(Collectors.toList())
             );

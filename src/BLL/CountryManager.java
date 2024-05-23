@@ -28,4 +28,8 @@ public class CountryManager {
         return countryDAO.getSumsAndAveragesForCountries();
     }
 
+    public List<Country> getCountriesForGeographyOverview(int geographyId) throws ApplicationWideException {
+        return countryDAO.getCountriesForGeographyOverview(geographyId);
+    }
+
 }
