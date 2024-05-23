@@ -333,7 +333,9 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     }
 
     public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
-        try (Connection conn = dbConnector.getConnection()) {
+        Connection conn = null;
+        try {
+            conn = dbConnector.getConnection();
             conn.setAutoCommit(false);
 
             updateTeamDetails(conn, projectTeam);
@@ -344,7 +346,23 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             conn.commit();
             mergeProfileProjectTeams(projectTeam);
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    throw new ApplicationWideException("Failed to rollback transaction", rollbackEx);
+                }
+            }
             throw new ApplicationWideException("Failed to update team", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Failed to reset connection settings and close the connection", ex);
+                }
+            }
         }
     }
 
