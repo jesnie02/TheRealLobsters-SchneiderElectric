@@ -333,19 +333,24 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     }
 
     public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
-        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, Geography = ?, SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ?, NumberOfProfiles = ? WHERE TeamsId = ?";
-        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
-        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
-        String updateSumValuesSQL = "UPDATE ProjectTeams SET SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ? WHERE TeamsId = ?";
-
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement pstmtUpdateTeam = conn.prepareStatement(updateTeamSQL);
-             PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
-             PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL);
-             PreparedStatement pstmtUpdateSumValues = conn.prepareStatement(updateSumValuesSQL)) {
-
+        try (Connection conn = dbConnector.getConnection()) {
             conn.setAutoCommit(false);
 
+            updateTeamDetails(conn, projectTeam);
+            deleteExistingProfiles(conn, projectTeam);
+            insertNewProfiles(conn, projectTeam);
+            updateSumValues(conn, projectTeam);
+
+            conn.commit();
+            mergeProfileProjectTeams(projectTeam);
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to update team", e);
+        }
+    }
+
+    private void updateTeamDetails(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, Geography = ?, SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ?, NumberOfProfiles = ? WHERE TeamsId = ?";
+        try (PreparedStatement pstmtUpdateTeam = conn.prepareStatement(updateTeamSQL)) {
             pstmtUpdateTeam.setString(1, projectTeam.getTeamName());
             pstmtUpdateTeam.setInt(2, projectTeam.getGeographyId());
             pstmtUpdateTeam.setDouble(3, projectTeam.getSumOfAnnualSalary());
@@ -354,12 +359,20 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmtUpdateTeam.setInt(6, projectTeam.getProfiles().size());
             pstmtUpdateTeam.setInt(7, projectTeam.getTeamId());
             pstmtUpdateTeam.executeUpdate();
+        }
+    }
 
-            // Delete existing profiles from ProfileProjectTeams
+    private void deleteExistingProfiles(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
+        try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL)) {
             pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
             pstmtDeleteProfileProjectTeams.executeUpdate();
+        }
+    }
 
-            // Insert new profile into ProfileProjectTeams
+    private void insertNewProfiles(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL)) {
             for (Map.Entry<Profile, Double> entry : projectTeam.getUtilizationsMap().entrySet()) {
                 Profile profile = entry.getKey();
                 double utilization = entry.getValue();
@@ -367,20 +380,20 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
                 pstmtInsertProfileProjectTeams.setInt(2, projectTeam.getTeamId());
                 pstmtInsertProfileProjectTeams.setDouble(3, utilization);
-                pstmtInsertProfileProjectTeams.executeUpdate();
+                pstmtInsertProfileProjectTeams.addBatch();
             }
+            pstmtInsertProfileProjectTeams.executeBatch(); //batch processing for inserting multiple rows
+        }
+    }
 
-            // Update the sum values
+    private void updateSumValues(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String updateSumValuesSQL = "UPDATE ProjectTeams SET SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ? WHERE TeamsId = ?";
+        try (PreparedStatement pstmtUpdateSumValues = conn.prepareStatement(updateSumValuesSQL)) {
             pstmtUpdateSumValues.setDouble(1, projectTeam.getSumOfAnnualSalary());
             pstmtUpdateSumValues.setDouble(2, projectTeam.getSumOfDailyRate());
             pstmtUpdateSumValues.setDouble(3, projectTeam.getSumOfHourlyRate());
             pstmtUpdateSumValues.setInt(4, projectTeam.getTeamId());
             pstmtUpdateSumValues.executeUpdate();
-
-            conn.commit();
-            mergeProfileProjectTeams(projectTeam);
-        } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to update team", e);
         }
     }
 
