@@ -9,6 +9,7 @@ import GUI.Utility.ExceptionHandler;
 import GUI.Utility.DataModelSingleton;
 import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,14 +62,29 @@ public class TeamDetailsController implements Initializable {
     private void setupTable() {
         colFirstNameTD.setCellValueFactory(new PropertyValueFactory<>("FName"));
         colLastNameTD.setCellValueFactory(new PropertyValueFactory<>("LName"));
-        colUtilizationTime.setCellValueFactory(new PropertyValueFactory<>("UtilizationTime"));
-        colUtilizationCost.setCellValueFactory(new PropertyValueFactory<>("UtilizationCost"));
+
+        colUtilizationTime.setCellValueFactory(cellData -> {
+            double utilizationTime = cellData.getValue().getUtilizationTime();
+            System.out.println("Utilization Time for " + cellData.getValue().getFName() + ": " + utilizationTime);
+            return new SimpleDoubleProperty(utilizationTime).asObject();
+        });
+
+        colUtilizationCost.setCellValueFactory(cellData -> {
+            double utilizationCost = cellData.getValue().getUtilizationCost();
+            System.out.println("Utilization Cost for " + cellData.getValue().getFName() + ": " + utilizationCost);
+            return new SimpleDoubleProperty(utilizationCost).asObject();
+        });
+
         colProfileRoleTD.setCellValueFactory(cellData -> new SimpleStringProperty(
                 cellData.getValue().getProfileRoles().stream()
                         .map(ProfileRole::toString)
                         .collect(Collectors.joining(", "))
         ));
     }
+
+
+
+
 
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {
@@ -81,9 +97,15 @@ public class TeamDetailsController implements Initializable {
         }
         updateSalaryInfo(team);
         ObservableList<Profile> profiles = projectTeam.getProfileForTeam(team.getTeamId());
-        tableViewProfile.setItems(profiles);
 
+        // Log profiles and their utilization times
+        profiles.forEach(profile -> {
+            System.out.println("Profile: " + profile.getFName() + ", Utilization Time: " + profile.getUtilizationTime());
+        });
+
+        tableViewProfile.setItems(profiles);
     }
+
 
     private void updateSalaryInfo(ProjectTeam team){
         txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));

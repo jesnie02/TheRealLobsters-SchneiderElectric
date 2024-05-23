@@ -12,7 +12,9 @@ import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +33,7 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamUtilization;
+    private TableColumn<Profile, String> colTeamUtilizationTime, colTeamUtilizationCost;
     @FXML
     private TableColumn<Profile, String> colTeamDailyRate;
     @FXML
@@ -43,10 +45,12 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private TableColumn<Profile, Integer> colTeamCountryId;
 
+    private double utilizationTime;
+    private double utilizationCost;
+
     @FXML
     private TableColumn<Profile, Integer> colTeamProfileId;
-    @FXML
-    private TextField txtUtilization;
+
     @FXML
     private MFXSlider sliderUtilization;
     @FXML
@@ -62,12 +66,18 @@ public class UpdateProjectTeamController implements Initializable {
     @FXML
     private SearchableComboBox<Geography> cBoxGeographies;
     private Map<Integer, Country> countriesMap;
-    private Map<Profile, Double> utilizationsMap = new HashMap<>();
+    private Map<Profile, Double> utilizationsTimeMap = new HashMap<>();
+    private Map<Profile, Double> utilizationsCostMap = new HashMap<>();
     ProfileModel profileModel;
     CountryModel countryModel;
     ProfileRoleModel profileRoleModel;
     ProjectTeamsModel projectTeamsModel;
     private ObservableList<Profile> profiles = FXCollections.observableArrayList();
+    @FXML
+    private MFXSlider sliderUtilizationTime, sliderUtilizationCost;
+    @FXML
+    private TextField txtUtilizationTime, txtUtilizationCost;
+
 
 
     @Override
@@ -77,6 +87,7 @@ public class UpdateProjectTeamController implements Initializable {
             countryModel = new CountryModel();
             profileRoleModel = new ProfileRoleModel();
             projectTeamsModel = new ProjectTeamsModel();
+            populateComboBoxes();
             setupSearchBox();
             setupTableView();
         } catch (ApplicationWideException e) {
@@ -129,10 +140,11 @@ public class UpdateProjectTeamController implements Initializable {
             cBoxGeographies.setValue(currentTeam.getGeography());
 
             profiles.setAll(projectTeamsModel.getProfileForTeam(currentTeam.getTeamId()));
-            utilizationsMap.clear();
+            utilizationsTimeMap.clear();
 
            for (Profile profile : profiles) {
-                utilizationsMap.put(profile, Double.valueOf(profile.getUtilizationTime()));
+                utilizationsTimeMap.put(profile, Double.valueOf(profile.getUtilizationTime()));
+                utilizationsCostMap.put(profile, Double.valueOf(profile.getUtilizationCost()));
             }
 
            tblProfileToTeam.setItems(profiles);
@@ -186,8 +198,12 @@ public class UpdateProjectTeamController implements Initializable {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
-        colTeamUtilization.setCellValueFactory(cellData -> {
-            double utilization = utilizationsMap.getOrDefault(cellData.getValue(), 0.0);
+        colTeamUtilizationTime.setCellValueFactory(cellData -> {
+            double utilization = utilizationsTimeMap.getOrDefault(cellData.getValue(), 0.0);
+            return new SimpleStringProperty(formatter.format(utilization) + " %");
+        });
+        colTeamUtilizationCost.setCellValueFactory(cellData -> {
+            double utilization = utilizationsCostMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         tblProfileToTeam.setItems(profiles);
@@ -209,7 +225,8 @@ public class UpdateProjectTeamController implements Initializable {
                 currentTeam.setGeographyId(selectedGeography.getGeographyId());
             }
             currentTeam.setProfiles(profilesInTeam);
-            currentTeam.setUtilizationsMap(utilizationsMap);
+            currentTeam.setUtilizationsMap(utilizationsTimeMap);
+            currentTeam.setUtilizationCostMap(utilizationsCostMap);
             currentTeam.setNumberOfProfiles(profilesInTeam.size());
 
 
@@ -236,7 +253,8 @@ public class UpdateProjectTeamController implements Initializable {
         Profile selectedProfile = tblProfileToTeam.getSelectionModel().getSelectedItem();
         if (selectedProfile != null) {
             profiles.remove(selectedProfile);
-            utilizationsMap.remove(selectedProfile);
+            utilizationsCostMap.remove(selectedProfile);
+            utilizationsTimeMap.remove(selectedProfile);
             tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
             updateSumLabels();
@@ -245,21 +263,63 @@ public class UpdateProjectTeamController implements Initializable {
 
     @FXML
     private void selectProfileToTable(ActionEvent actionEvent) {
-        Profile selectedProfile = (Profile) cBoxProfiles.getValue();
+        Profile selectedProfile = cBoxProfiles.getValue();
+
 
         if (selectedProfile != null) {
-            double utilization = sliderUtilization.getValue();
-            utilizationsMap.put(selectedProfile, utilization);
+            double utilizationTimeValue = sliderUtilizationTime.getValue();
+            double utilizationCostValue = sliderUtilizationCost.getValue();
 
-            Map<String, Double> rates = projectTeamsModel.calculateRatesWithUtilizationForUpdateTeam(selectedProfile, utilization);
+            utilizationsTimeMap.put(selectedProfile, utilizationTimeValue);
+            utilizationsCostMap.put(selectedProfile, utilizationCostValue);
 
-            selectedProfile.setHourlyRate(rates.get("hourlyRate"));
-            selectedProfile.setDailyRate(rates.get("dailyRate"));
-            selectedProfile.setAnnualSalary(rates.get("annualSalary"));
-
+            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() / 100 * utilizationsCostMap.get(selectedProfile));
+            selectedProfile.setDailyRate(selectedProfile.getDailyRate() / 100 * utilizationsCostMap.get(selectedProfile));
+            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() / 100 * utilizationsCostMap.get(selectedProfile));
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
             updateSumLabels();
         }
     }
-}
+
+    private void populateComboBoxes() {
+            cBoxProfiles.setItems(FXCollections.observableArrayList(profileModel.getAllProfiles()));
+            cBoxGeographies.setItems(FXCollections.observableArrayList(countryModel.getAllFromGeographies()));
+
+        cBoxProfiles.valueProperty().addListener((obs, oldProfile, newProfile) -> {
+            if (newProfile != null) {
+                txtUtilizationTime.setText(String.valueOf(utilizationsTimeMap.getOrDefault(newProfile, 0.0)));
+                txtUtilizationCost.setText(String.valueOf(utilizationsCostMap.getOrDefault(newProfile, 0.0)));
+                sliderUtilizationTime.setMax(100);
+                Profile selectedProfile = newProfile;
+                double profileUtilizationTime = selectedProfile.getTotalUtilization();
+                double profileUtilizationCost = selectedProfile.getUtilizationCost(); // Correctly fetch utilization cost
+
+                sliderUtilizationTime.setValue(profileUtilizationTime);
+                sliderUtilizationTime.setUserData(profileUtilizationTime);
+
+                sliderUtilizationCost.setMax(100);
+                sliderUtilizationCost.setValue(profileUtilizationCost);
+                sliderUtilizationCost.setUserData(profileUtilizationCost);
+
+                utilizationTime = profileUtilizationTime;
+                utilizationCost = profileUtilizationCost;
+
+                setTextinFieldTime();
+                setTextinFieldCost();
+            }
+        });
+        }
+
+    private void setTextinFieldTime() {
+        txtUtilizationTime.setText(String.valueOf(utilizationTime));
+        System.out.println("Utilization Time Field Set: " + utilizationTime);
+    }
+
+    private void setTextinFieldCost() {
+        txtUtilizationCost.setText(String.valueOf(utilizationCost));
+    }
+    }
+
+
+

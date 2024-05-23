@@ -309,7 +309,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 double utilizationTime = rs.getDouble("Utilization");
                 double utilizationCost = rs.getDouble("UtilizationCost");
 
-
                 Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilizationTime, utilizationCost, profileRoles);
                 profiles.add(profile);
             }
@@ -318,6 +317,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
         return profiles;
     }
+
 
 
 
@@ -416,11 +416,10 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     }
 
     public void mergeProfileProjectTeams(ProjectTeam projectTeam) throws ApplicationWideException {
-        String updateSQL = "UPDATE ProfileProjectTeams SET Utilization = ? " +
+        String updateSQL = "UPDATE ProfileProjectTeams SET Utilization = ?, UtilizationCost = ? " +
                 "WHERE ProfileId_PPT = ? AND TeamsId = ?";
-
-        String insertSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) " +
-                "VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization, UtilizationCost) " +
+                "VALUES (?, ?, ?, ?)";
 
         Connection conn = null;
         try {
@@ -432,9 +431,10 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
             for (Profile profile : projectTeam.getProfiles()) {
                 // First try to update
-                pstmtUpdate.setDouble(1, profile.getUtilization());
-                pstmtUpdate.setInt(2, profile.getProfileId());
-                pstmtUpdate.setInt(3, projectTeam.getTeamId());
+                pstmtUpdate.setDouble(1, profile.getUtilizationTime());
+                pstmtUpdate.setDouble(2, profile.getUtilizationCost());
+                pstmtUpdate.setInt(3, profile.getProfileId());
+                pstmtUpdate.setInt(4, projectTeam.getTeamId());
 
                 int affectedRows = pstmtUpdate.executeUpdate();
 
@@ -442,7 +442,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 if (affectedRows == 0) {
                     pstmtInsert.setInt(1, profile.getProfileId());
                     pstmtInsert.setInt(2, projectTeam.getTeamId());
-                    pstmtInsert.setDouble(3, profile.getUtilization());
+                    pstmtInsert.setDouble(3, profile.getUtilizationTime());
+                    pstmtInsert.setDouble(4, profile.getUtilizationCost());
                     pstmtInsert.executeUpdate();
                 }
             }
@@ -468,6 +469,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
 
     @Override
     public void removeProfileFromProjectTeam(int projectTeamId, int profileId) throws ApplicationWideException {

@@ -10,7 +10,7 @@ public class Profile {
     private String fName, lName, roles;
     private boolean overheadCost;
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, overheadMultiplier, effectiveWorkingHours;
-    private double utilizationTime, utilizationCost, utilization;
+    private double utilizationTime, utilizationCost;
 
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
@@ -38,7 +38,7 @@ public class Profile {
         this.overheadMultiplier = overheadMultiplier;
     }
 
-    public Profile( String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+    public Profile(String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
 
         this.fName = fName;
         this.lName = lName;
@@ -206,11 +206,11 @@ public class Profile {
         this.dailyRate = dailyRate;
     }
 
-    public List<Country> getCountry(){
+    public List<Country> getCountry() {
         return country;
     }
 
-    public List<ProjectTeam> getProjectTeams(){
+    public List<ProjectTeam> getProjectTeams() {
         return projectTeams;
     }
 
@@ -321,12 +321,6 @@ public class Profile {
     public int hashCode() {
         return Objects.hash(profileId);
     }
-
-    public double getUtilization() {
-        return utilization;
-    }
-
-    public void setUtilization(double utilization) {
-        this.utilization = utilization;
-    }
 }
+
+

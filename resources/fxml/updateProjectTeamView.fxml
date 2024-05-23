@@ -29,7 +29,7 @@
          <left>
             <VBox prefHeight="383.0" prefWidth="300.0" BorderPane.alignment="TOP_LEFT">
                <children>
-                  <GridPane vgap="15.0" VBox.vgrow="ALWAYS">
+                  <GridPane prefHeight="209.0" prefWidth="300.0" vgap="15.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="171.0" />
                       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -108,6 +108,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
                         <Label prefHeight="25.0" prefWidth="299.0" text="Team members">
@@ -126,21 +127,37 @@
                         <SearchableComboBox fx:id="cBoxProfiles" prefHeight="25.0" prefWidth="285.0" promptText="Profiles" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="67.0" text="Utilization:">
+                              <Label prefHeight="18.0" prefWidth="67.0" text="Time:">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </Label>
-                              <MFXSlider fx:id="sliderUtilization" decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
+                              <MFXSlider fx:id="sliderUtilizationTime" decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
                                  <HBox.margin>
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </MFXSlider>
-                              <TextField fx:id="txtUtilization" prefHeight="26.0" prefWidth="46.0" />
+                              <TextField fx:id="txtUtilizationTime" prefHeight="26.0" prefWidth="46.0" />
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnSelectProfileUpdateTeam" mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="305.0" text="Select Profile" GridPane.rowIndex="4" />
+                        <Button fx:id="btnSelectProfileUpdateTeam" mnemonicParsing="false" onAction="#selectProfileToTable" prefHeight="26.0" prefWidth="305.0" text="Select Profile" GridPane.rowIndex="5" />
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="113.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="67.0" text="Cost:">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <MFXSlider fx:id="sliderUtilizationCost" decimalPrecision="1" minorTicksCount="10" prefHeight="0.0" prefWidth="144.0" showMinorTicks="true">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </MFXSlider>
+                              <TextField fx:id="txtUtilizationCost" prefHeight="26.0" prefWidth="46.0" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
+                           </children>
+                        </HBox>
                      </children>
                   </GridPane>
                </children>
@@ -169,7 +186,8 @@
                     <columns>
                        <TableColumn fx:id="colTeamProfileId" minWidth="0.0" prefWidth="42.4000244140625" text="ProfileId" visible="false" />
                        <TableColumn fx:id="colTeamName" prefWidth="107.0" text="Name" />
-                       <TableColumn fx:id="colTeamUtilization" minWidth="0.0" prefWidth="71.5" text="Utilization" />
+                       <TableColumn fx:id="colTeamUtilizationTime" minWidth="0.0" prefWidth="71.5" text="Time" />
+                        <TableColumn fx:id="colTeamUtilizationCost" minWidth="0.0" prefWidth="71.5" text="Cost" />
                        <TableColumn fx:id="colTeamAnnualSalary" minWidth="6.13323974609375" prefWidth="63.199920654296875" text="Annual " />
                        <TableColumn fx:id="colTeamDailyRate" minWidth="0.0" prefWidth="53.999969482421875" text="Daily " />
                        <TableColumn fx:id="colTeamHourlyRate" minWidth="0.0" prefWidth="48.66668701171875" text="Hourly" />
