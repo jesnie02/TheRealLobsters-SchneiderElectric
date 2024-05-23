@@ -9,7 +9,7 @@ public class Profile {
     private int profileId, countryId;
     private String fName, lName, roles;
     private boolean overheadCost;
-    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization;
+    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, overheadMultiplier, effectiveWorkingHours;
     private float utilization;
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
@@ -22,7 +22,7 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization) {
+    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization, double effectiveWorkingHours, double overheadMultiplier) {
         this.profileId = profileId;
         this.fName = fName;
         this.lName = lName;
@@ -32,6 +32,8 @@ public class Profile {
         this.dailyRate = dailyRate;
         this.dailyWorkingHours = dailyWorkingHours;
         this.totalUtilization = totalUtilization;
+        this.effectiveWorkingHours = effectiveWorkingHours;
+        this.overheadMultiplier = overheadMultiplier;
     }
 
     public Profile( String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
@@ -46,7 +48,7 @@ public class Profile {
     }
 
     //Create Profile
-    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, List<ProfileRole> profileRoles) {
+    public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, List<ProfileRole> profileRoles, double effectiveWorkingHours, double overheadMultiplier) {
         this.fName = firstName;
         this.lName = lastName;
         this.overheadCost = overheadCost;
@@ -56,6 +58,8 @@ public class Profile {
         this.fixedAmount = fixedAmount;
         this.dailyWorkingHours = dailyWorkingHours;
         this.profileRoles = profileRoles;
+        this.effectiveWorkingHours = effectiveWorkingHours;
+        this.overheadMultiplier = overheadMultiplier;
     }
 
     public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, float utilization, List<ProfileRole> profileRoles) {
@@ -231,6 +235,22 @@ public class Profile {
 
     public void setTotalUtilization(double totalUtilization) {
         this.totalUtilization = totalUtilization;
+    }
+
+    public double getOverheadMultiplier() {
+        return overheadMultiplier;
+    }
+
+    public void setOverheadMultiplier(double overheadMultiplier) {
+        this.overheadMultiplier = overheadMultiplier;
+    }
+
+    public double getEffectiveWorkingHours() {
+        return effectiveWorkingHours;
+    }
+
+    public void setEffectiveWorkingHours(double effectiveWorkingHours) {
+        this.effectiveWorkingHours = effectiveWorkingHours;
     }
 
     @Override

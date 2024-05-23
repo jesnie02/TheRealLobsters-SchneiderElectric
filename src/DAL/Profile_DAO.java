@@ -46,9 +46,11 @@ public class Profile_DAO implements IProfileDataAccess {
                 double dailyRate = rs.getDouble("DailyRate");
                 double dailyWorkingHours = rs.getDouble("DailyWorkingHours");
                 double totalUtilization = rs.getDouble("TotalUtilization");
-                double fixedAmount = rs.getDouble("FixedAmount");  // Ensure this line is correct
+                double fixedAmount = rs.getDouble("FixedAmount");
+                double effectiveHours = rs.getDouble("EffectiveWorkingHours");
+                double overheadMultiplier = rs.getDouble("OverheadMultiplierPercentage");
 
-                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization);
+                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization, effectiveHours, overheadMultiplier);
                 profile.setFixedAmount(fixedAmount);  // Ensure this line is included
 
                 allProfiles.add(profile);
@@ -65,7 +67,7 @@ public class Profile_DAO implements IProfileDataAccess {
     @Override
     public void createProfile(Profile newProfile) throws ApplicationWideException {
         String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
-                "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                "DailyRate, Overheadcost, FixedAmount, DailyWorkingHours, EffectiveWorkingHours, OverheadMultiplierPercentage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String sqlProfileRole = "INSERT INTO dbo.ProfileProfileRole (ProfileId, ProfileRoleId) VALUES (?, ?)";
 
@@ -83,6 +85,8 @@ public class Profile_DAO implements IProfileDataAccess {
                 pstmtProfile.setBoolean(6, newProfile.isOverheadCost());
                 pstmtProfile.setDouble(7, newProfile.getFixedAmount());
                 pstmtProfile.setDouble(8, newProfile.getDailyWorkingHours());
+                pstmtProfile.setDouble(9, newProfile.getEffectiveWorkingHours());
+                pstmtProfile.setDouble(10, newProfile.getOverheadMultiplier());
                 pstmtProfile.executeUpdate();
 
 
