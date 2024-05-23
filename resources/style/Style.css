@@ -32,7 +32,10 @@
 
 .tab-pane .tab-header-area .tab-header-background {
     -fx-opacity: 0;
+
 }
+
+
 
 .tab {
     -fx-background-color: transparent;
@@ -41,6 +44,7 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-shape: "M 10,10 C 0,10 0,0 10,0 L 100,0 C 110,0 110,10 100,10 L 0,10 Z";
+
 }
 
 .tab:hover {
@@ -210,6 +214,7 @@
         -fx-border-color: transparent transparent #3DCD58 transparent;
         -fx-border-width: 0 0 2px 0;
         -fx-border-style: solid;
+        -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
     }
 
     /* Header Text */
@@ -289,7 +294,7 @@
 
 /* Rounded SearchField */
 
-#txtSearchCurrency {
+#txtSearchCurrency, #txtSearchDashboardGeo, #txtSearchDashboardTeam {
     -fx-background-radius: 20;
     -fx-border-radius: 20;
     -fx-border-color: #3DCD58;
@@ -414,12 +419,21 @@
     -fx-border-style: solid;
 }
 
-#btnResetP, #btnResultP, #btnResetT, #btnResultT{
+#btnResultP, #btnResultT{
     -fx-background-color: #3DCD58;
     -fx-text-fill: #18191a;
     -fx-font-size: 14px;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
+}
+
+#btnResetP, #btnResetT {
+    -fx-background-color: transparent;
+    -fx-text-fill: #18191a;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #3DCD58;
 }
 
 /* --------------------------------------------------------------------------------- */

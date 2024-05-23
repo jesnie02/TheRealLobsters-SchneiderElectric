@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="466.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateGeographyController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="311.0" prefWidth="535.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.CreateGeographyController">
    <children>
       <VBox fx:id="vBoxCenterCreateGeography" prefHeight="303.0" prefWidth="549.0">
          <children>
@@ -39,7 +39,7 @@
                   <Insets left="8.0" right="8.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="417.0">
+            <HBox alignment="CENTER" prefHeight="85.0" prefWidth="486.0">
                <children>
                   <Button fx:id="btnSaveGeography" mnemonicParsing="false" onAction="#saveGeography" prefHeight="35.0" prefWidth="150.0" text="Create Geography" />
                </children>

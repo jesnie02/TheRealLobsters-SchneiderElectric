@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,9 +34,9 @@ public class GeographyController  {
     public MFXLegacyTableView<Geography> tblGeographyOverview;
     public MFXLegacyTableView<Country> tblGeographyOverviewCountry;
     public TableColumn<Geography, String> colGeoOverviewName, colGeoOverviewTeamNumber, colGeoOverviewEmployeeNumber;
-    public TableColumn colGeoOverviewEdit;
-    public TableColumn colGeoOverviewDelete;
-    public TableColumn colGeoOverviewCountry;
+    public TableColumn<Profile, Void> colGeoOverviewEdit;
+    public TableColumn<Geography,Void> colGeoOverviewDelete;
+    public TableColumn<Geography, String> colGeoOverviewCountry;
 
     private GeographyModel geographyModel;
 
@@ -147,6 +148,8 @@ public class GeographyController  {
             loader.setControllerFactory(param -> new CreateGeographyController(geographyModel));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setTitle("Create geography");
             stage.show();

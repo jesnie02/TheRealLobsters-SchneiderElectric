@@ -25,6 +25,7 @@ import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -355,8 +356,10 @@ public class CreateProfileController implements Initializable {
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Create role");
-        stage.show();
+        stage.showAndWait();
     }
         catch (Exception e) {
         ExceptionHandler.handleException(e);

@@ -9,13 +9,12 @@ import GUI.Model.GeographyModel;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -59,6 +58,13 @@ public class DashboardController implements Initializable {
     private MFXLegacyTableView<Geography> tblGeography;
     @FXML
     private TableColumn<Geography, String> colGeographies;
+    @FXML
+    private TextField txtSearchDashboardGeo;
+    @FXML
+    private TextField txtSearchDashboardTeam;
+
+    private FilteredList<Geography> filteredData;
+    private FilteredList<ProjectTeam> filteredDataTeam;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,6 +73,9 @@ public class DashboardController implements Initializable {
             projectTeamsModel = new ProjectTeamsModel();
             geographyModel = new GeographyModel();
 
+            setUpFilteredData();
+            setupSearchListeners();
+
             // Populate the AreaChart with team expenses
             populateBarChartWithTeamExpenses();
 
@@ -74,21 +83,54 @@ public class DashboardController implements Initializable {
             ExceptionHandler.handleException(e);
         }
         setUpComboBoxListeners();
+
+
+    }
+
+    private void setUpFilteredData() {
+        filteredData = new FilteredList<>(geographyModel.getSumsAndAveragesForGeographies(), p -> true);
+        SortedList<Geography> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tblGeography.comparatorProperty());
+        tblGeography.setItems(sortedData);
+
+        filteredDataTeam = new FilteredList<>(projectTeamsModel.getAllProjectTeamsData(), p -> true);
+        SortedList<ProjectTeam> sortedDataTeam = new SortedList<>(filteredDataTeam);
+        sortedDataTeam.comparatorProperty().bind(tblTeams.comparatorProperty());
+        tblTeams.setItems(sortedDataTeam);
+    }
+
+    private void setupSearchListeners() {
+        txtSearchDashboardGeo.textProperty().addListener((observable, oldValue, newValue) ->
+                filteredData.setPredicate(geography -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return geography.getGeographyName().toLowerCase().contains(lowerCaseFilter);
+                })
+        );
+
+        txtSearchDashboardTeam.textProperty().addListener((observable, oldValue, newValue) ->
+                filteredDataTeam.setPredicate(team -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return team.getTeamName().toLowerCase().contains(lowerCaseFilter);
+                })
+        );
     }
 
     private void setUpComboBoxListeners() {
 
             // Geography
             colGeographies.setCellValueFactory(new PropertyValueFactory<>("geographyName"));
-            tblGeography.setItems(geographyModel.getSumsAndAveragesForGeographies());
             tblGeography.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsGeographyTab(newValue);
             });
 
-
             // Team
             colTeams.setCellValueFactory(new PropertyValueFactory<>("TeamName"));
-            tblTeams.setItems(projectTeamsModel.getAllProjectTeamsData());
             tblTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 updateLabelsTeamTab(newValue);
             });

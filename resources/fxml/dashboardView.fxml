@@ -10,10 +10,12 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -46,7 +48,7 @@
             </Tab>
             <Tab fx:id="areaChartTeam" text="Team">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane>
                      <left>
                         <MFXLegacyTableView fx:id="tblTeams" maxWidth="300.0" prefHeight="358.0" prefWidth="210.0" BorderPane.alignment="CENTER">
                            <columns>
@@ -56,49 +58,49 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                            <BorderPane.margin>
-                              <Insets bottom="25.0" left="6.0" top="25.0" />
+                              <Insets bottom="15.0" left="6.0" />
                            </BorderPane.margin>
                         </MFXLegacyTableView>
                      </left>
                      <center>
-                        <GridPane style="-fx-border-color: black; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
+                        <GridPane alignment="CENTER" style="-fx-border-color: black; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
                           <columnConstraints>
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
                           </rowConstraints>
                            <children>
-                              <Label prefHeight="18.0" prefWidth="200.0" text="Sum daily rate:" GridPane.rowIndex="1">
+                              <Label prefHeight="18.0" prefWidth="235.0" text="Sum daily rate:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="18.0" prefWidth="200.0" text="Sum Hourly rate:" GridPane.rowIndex="2">
+                              <Label prefHeight="18.0" prefWidth="236.0" text="Sum Hourly rate:" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
-                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="352.0" text="Avg." GridPane.rowIndex="3" />
-                              <Label prefHeight="18.0" prefWidth="200.0" text="Avg. daily rate:" GridPane.rowIndex="4">
+                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="232.0" text="Avg." GridPane.rowIndex="3" />
+                              <Label prefHeight="18.0" prefWidth="226.0" text="Avg. daily rate:" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="18.0" prefWidth="200.0" text="Avg. Hourly rate:" GridPane.rowIndex="5">
+                              <Label prefHeight="18.0" prefWidth="234.0" text="Avg. Hourly rate:" GridPane.rowIndex="5">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
                               <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="545.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Label fx:id="lblDailyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblDailyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
@@ -108,7 +110,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <Label fx:id="lblHourlyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblHourlyRateSumTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
@@ -118,7 +120,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <Label fx:id="lblAvgDailyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblAvgDailyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
@@ -128,7 +130,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="339.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Label fx:id="lblAvgHourlyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblAvgHourlyRateTeam" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
@@ -136,13 +138,24 @@
                                     <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
                                  </children>
                               </HBox>
-                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="292.0" text="Sum " />
+                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="237.0" text="Sum " />
                            </children>
                            <BorderPane.margin>
-                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                              <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </center>
+                     <top>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="38.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Pane prefHeight="26.0" prefWidth="606.0" />
+                              <TextField fx:id="txtSearchDashboardTeam" prefHeight="26.0" prefWidth="180.0" promptText="Search teams.." />
+                           </children>
+                           <padding>
+                              <Insets right="25.0" />
+                           </padding>
+                        </HBox>
+                     </top>
                   </BorderPane>
                </content>
             </Tab>
@@ -150,7 +163,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <left>
-                        <MFXLegacyTableView fx:id="tblGeography" maxWidth="300.0" prefHeight="407.0" prefWidth="210.0" BorderPane.alignment="CENTER">
+                        <MFXLegacyTableView fx:id="tblGeography" maxWidth="300.0" prefHeight="360.0" prefWidth="210.0" BorderPane.alignment="CENTER">
                            <columns>
                               <TableColumn fx:id="colGeographies" prefWidth="263.2000240087509" text="geographies" />
                            </columns>
@@ -158,36 +171,36 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                            <BorderPane.margin>
-                              <Insets bottom="25.0" left="6.0" top="25.0" />
+                              <Insets bottom="15.0" left="6.0" />
                            </BorderPane.margin>
                         </MFXLegacyTableView>
                      </left>
                      <center>
-                        <GridPane alignment="CENTER_LEFT" focusTraversable="true" prefHeight="289.0" prefWidth="546.0" style="-fx-border-color: black; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
+                        <GridPane alignment="CENTER_LEFT" focusTraversable="true" style="-fx-border-color: black; -fx-border-radius: 10;" BorderPane.alignment="TOP_LEFT">
                           <columnConstraints>
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
                           </rowConstraints>
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="14.0" prefWidth="545.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Label fx:id="lblSumDailyRateGeo" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblSumDailyRateGeo" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="20.0" prefWidth="30.0" text="€" />
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="198.0" text="Sum Hourly rate:" GridPane.rowIndex="2">
+                              <Label prefHeight="20.0" prefWidth="224.0" text="Sum Hourly rate:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
@@ -197,57 +210,71 @@
                               </Label>
                               <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="545.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <Label fx:id="lblSumHourlyRateGeo" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblSumHourlyRateGeo" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="20.0" prefWidth="30.0" text="€" />
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="198.0" text="Avg. daily rate:" GridPane.rowIndex="4">
+                              <Label prefHeight="20.0" prefWidth="224.0" text="Avg. daily rate:" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
                               <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="599.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <Label fx:id="lblAvgDailyRateGeo" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblAvgDailyRateGeo" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="20.0" prefWidth="30.0" text="€" />
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="198.0" text="Avg. Hourly rate:" GridPane.rowIndex="5">
+                              <Label prefHeight="20.0" prefWidth="224.0" text="Avg. Hourly rate:" GridPane.rowIndex="5">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
                               <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="624.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Label fx:id="lblAvgHourlyRateGeo" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="139.0" text="0">
+                                    <Label fx:id="lblAvgHourlyRateGeo" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="150.0" text="0">
                                        <padding>
                                           <Insets right="8.0" />
                                        </padding>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="18.0" prefWidth="30.0" text="€" />
+                                    <Label alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="20.0" prefWidth="30.0" text="€" />
                                  </children>
                               </HBox>
-                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="292.0" text="Avg." GridPane.rowIndex="3" />
-                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="292.0" text="Sum " />
-                              <Label prefHeight="18.0" prefWidth="200.0" text="Sum daily rate:" GridPane.rowIndex="1">
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="224.0" text="Avg." GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="224.0" text="Sum " />
+                              <Label prefHeight="20.0" prefWidth="224.0" text="Sum daily rate:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="8.0" />
                                  </padding>
                               </Label>
                            </children>
                            <BorderPane.margin>
-                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                              <Insets bottom="75.0" left="75.0" right="75.0" top="75.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </center>
+                     <top>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="810.0" BorderPane.alignment="CENTER_RIGHT">
+                           <children>
+                              <Pane prefHeight="38.0" prefWidth="605.0" />
+                              <TextField fx:id="txtSearchDashboardGeo" prefHeight="26.0" prefWidth="180.0" promptText="Search geographies.." />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets right="25.0" />
+                           </padding>
+                        </HBox>
+                     </top>
                   </BorderPane>
                </content>
             </Tab>
