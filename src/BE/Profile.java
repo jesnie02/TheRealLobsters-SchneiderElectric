@@ -101,6 +101,19 @@ public class Profile {
         this.profileRoles = new ArrayList<>();
     }
 
+//    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
+//        this.profileId = id;
+//        this.fName = fName;
+//        this.lName = lName;
+//        this.overheadCost = overhead;
+//        this.annualSalary = annual;
+//        this.hourlySalary = hourly;
+//        this.dailyRate = daily;
+//        this.dailyWorkingHours = workingHR;
+//        this.utilizationTime = utilizationTime;
+//        this.profileRoles = profileRoles;
+//    }
+
     public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
         this.profileId = id;
         this.fName = fName;
@@ -111,19 +124,7 @@ public class Profile {
         this.dailyRate = daily;
         this.dailyWorkingHours = workingHR;
         this.utilizationTime = utilizationTime;
-        this.profileRoles = profileRoles;
-    }
-
-    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, List<ProfileRole> profileRoles) {
-        this.profileId = id;
-        this.fName = fName;
-        this.lName = lName;
-        this.overheadCost = overhead;
-        this.annualSalary = annual;
-        this.hourlySalary = hourly;
-        this.dailyRate = daily;
-        this.dailyWorkingHours = workingHR;
-        this.utilizationTime = utilizationTime;
+        this.utilizationCost = utilizationCost;
         this.profileRoles = profileRoles;
     }
 

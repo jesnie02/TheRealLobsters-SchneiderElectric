@@ -200,12 +200,12 @@ public class CreateProjectTeamController implements Initializable {
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
         colTeamUtilizationTime.setCellValueFactory(cellData -> {
-            double utilization = cellData.getValue().getUtilizationTime();
+            double utilization = utilizationTimeMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         colTeamUtilizationCost.setCellValueFactory(cellData -> {
-            double utilizationCost = cellData.getValue().getUtilizationCost();
-            return new SimpleStringProperty(formatter.format(utilizationCost) + " %");
+            double utilization = utilizationCostMap.getOrDefault(cellData.getValue(), 0.0);
+            return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
     }
 
