@@ -6,15 +6,24 @@ import GUI.Model.ProfileModel;
 import GUI.Utility.AlertBox;
 import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
+import GUI.Utility.SliderDecimalFilter;
+import io.github.palexdev.materialfx.controls.MFXSlider;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UpdateProfileController implements Initializable {
@@ -29,16 +38,25 @@ public class UpdateProfileController implements Initializable {
     private FrameController frameController;
     private ProfileModel profileModel;
     private Runnable onProfileUpdated;  // Callback for updating the profile
+    @FXML
+    private TextField txtOverhead;
+    @FXML
+    private TextField txtEffectiveHours;
+    @FXML
+    private MFXSlider sliderOverheadMulti;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             profileModel = new ProfileModel();
             frameController = FrameController.getInstance();
+            bindSliderAndTextField();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
+
+
 
     public void setProfile(Profile profile) {
         DataModelSingleton.getInstance().setCurrentProfile(profile);
@@ -54,8 +72,17 @@ public class UpdateProfileController implements Initializable {
         txtFName.setText(profile.getFName());
         txtLName.setText(profile.getLName());
         txtAnnualSalary.setText(String.valueOf(profile.getAnnualSalary()));
+        txtOverhead.setText(String.valueOf(profile.getOverheadMultiplier()));
         txtFixedAmount.setText(String.valueOf(profile.getFixedAmount()));
         txtDailyWorkingHours.setText(String.valueOf(profile.getDailyWorkingHours()));
+        txtEffectiveHours.setText(String.valueOf(profile.getEffectiveWorkingHours()));
+    }
+
+    public void bindSliderAndTextField() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtOverhead.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtOverhead.textProperty(),sliderOverheadMulti.valueProperty(),  converter);
     }
 
     @FXML
@@ -67,6 +94,8 @@ public class UpdateProfileController implements Initializable {
         profile.setAnnualSalary(Double.parseDouble(txtAnnualSalary.getText()));
         profile.setFixedAmount(Double.parseDouble(txtFixedAmount.getText()));
         profile.setDailyWorkingHours(Double.parseDouble(txtDailyWorkingHours.getText()));
+        profile.setEffectiveWorkingHours(Double.parseDouble(txtEffectiveHours.getText()));
+        profile.setOverheadMultiplier(Double.parseDouble(txtOverhead.getText()));
 
         try {
             profileModel.updateProfileRates(profile);

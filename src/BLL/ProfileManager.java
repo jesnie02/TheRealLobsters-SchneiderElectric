@@ -102,7 +102,6 @@ public class ProfileManager {
                 .filter(p -> p.getProfileId() == profile.getProfileId())
                 .findFirst()
                 .orElseThrow(() -> new ApplicationWideException("Profile not found"));
-        System.out.println("Profile found: " + currentProfile.getFName());
 
         double overheadMultiplier = currentProfile.getOverheadMultiplier();
         double effectiveHours = currentProfile.getEffectiveWorkingHours();
@@ -115,9 +114,7 @@ public class ProfileManager {
                 profile.getDailyWorkingHours(), newHourlyRate);
 
         profile.setHourlyRate(newHourlyRate);
-        System.out.println("New hourly rate: " + newHourlyRate);
         profile.setDailyRate(newDailyRate);
-        System.out.println("New daily rate: " + newDailyRate);
     }
 
 

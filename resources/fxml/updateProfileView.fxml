@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="923.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.UpdateProfileController">
     <center>
         <VBox fx:id="vBoxCenterUpdateProfile" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
@@ -50,8 +51,10 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <padding>
                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -61,13 +64,31 @@
                                 <Label text="Last name:" GridPane.rowIndex="2" />
                                 <Label text="Annual salary:" GridPane.rowIndex="4" />
                                 <Label text="Fixed amount:" GridPane.rowIndex="5" />
-                                <Label text="Daily working hours:" GridPane.rowIndex="6" />
-                                <TextField fx:id="txtFName" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField fx:id="txtLName" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <TextField fx:id="txtAnnualSalary" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <TextField fx:id="txtFixedAmount" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <TextField fx:id="txtDailyWorkingHours" alignment="CENTER_RIGHT" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <Label text="Daily working hours:" GridPane.rowIndex="7" />
+                                <TextField fx:id="txtFName" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="txtLName" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="txtAnnualSalary" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField fx:id="txtFixedAmount" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <TextField fx:id="txtDailyWorkingHours" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                 <Label fx:id="lblProfileName" text="xxx" />
+                        <Label text="Annual effective working hours:" GridPane.rowIndex="8" />
+                        <Label text="Overhead multiplier percentage:" GridPane.rowIndex="6" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                              <MFXSlider fx:id="sliderOverheadMulti" decimalPrecision="1" prefHeight="6.0" prefWidth="130.0" />
+                              <TextField fx:id="txtOverhead" prefHeight="26.0" prefWidth="56.0">
+                                 <HBox.margin>
+                                    <Insets left="168.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Label text="\%">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtEffectiveHours" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                             </children>
                         </GridPane>
                     </children>
