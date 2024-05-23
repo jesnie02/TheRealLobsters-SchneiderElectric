@@ -280,13 +280,10 @@
             </Tab>
          </tabs>
          <BorderPane.margin>
-            <Insets right="25.0" />
+            <Insets />
          </BorderPane.margin>
       </TabPane>
    </center>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-   </left>
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>

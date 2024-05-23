@@ -16,36 +16,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="865.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamDetailsController">
+<BorderPane prefHeight="531.0" prefWidth="865.0" stylesheets="/style/Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.TeamDetailsController">
    <center>
       <VBox fx:id="vBoxCenterTeamDetails" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="hBoxHeaderTeamDetails" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="815.0" spacing="8.0" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0" VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../pictures/teamLogo.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="lblHeaderTextTeamDetails" prefHeight="26.0" prefWidth="187.0" text="Team Details">
-                     <HBox.margin>
-                        <Insets bottom="8.0" top="8.0" />
-                     </HBox.margin></Label>
-                  <Pane prefHeight="30.0" prefWidth="666.0" />
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets left="8.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="338.0" prefWidth="774.0" spacing="50.0">
-               <children>
-                  <GridPane alignment="CENTER" prefHeight="338.0" prefWidth="496.0" HBox.hgrow="ALWAYS">
+                  <GridPane alignment="CENTER" maxHeight="400.0" prefHeight="338.0" prefWidth="496.0" vgap="16.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-                      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -119,4 +99,24 @@
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
+   <top>
+      <HBox fx:id="hBoxHeaderTeamDetails" alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="815.0" spacing="8.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/teamLogo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblHeaderTextTeamDetails" prefHeight="26.0" prefWidth="187.0" text="Team Details">
+               <HBox.margin>
+                  <Insets bottom="8.0" top="8.0" />
+               </HBox.margin>
+            </Label>
+            <Pane prefHeight="30.0" prefWidth="666.0" />
+         </children>
+         <padding>
+            <Insets left="8.0" />
+         </padding>
+      </HBox>
+   </top>
 </BorderPane>
