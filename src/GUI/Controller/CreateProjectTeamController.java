@@ -20,6 +20,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.paint.Color;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,7 +43,7 @@ public class CreateProjectTeamController implements Initializable {
     @FXML
     private TableColumn<Profile, String> colTeamUtilizationTime, colTeamUtilizationCost, colTeamDailyRate, colTeamHourlyRate, colTeamAnnualSalary, colTeamName, colTeamCountryId, colTeamProfileId;
     @FXML
-    private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum;
+    private Label lblAnnualSalarySum, lblDailyRateSum, lblHourlyRateSum, lblMessageCreateTeam;
     @FXML
     private TextField txtProjectTeamName;
     @FXML
@@ -64,6 +65,7 @@ public class CreateProjectTeamController implements Initializable {
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
+
 
 
     public CreateProjectTeamController() {
@@ -243,10 +245,18 @@ public class CreateProjectTeamController implements Initializable {
             projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
 
-        projectTeamsModel.addProfileToTeam(projectTeam);
+        try {
+            projectTeamsModel.addProfileToTeam(projectTeam);
+        } catch (ApplicationWideException e) {
+            lblMessageCreateTeam.setTextFill(Color.RED);
+            lblMessageCreateTeam.setText("Error occurred during the creation of the team.");
+        }
 
         txtProjectTeamName.clear();
         cBoxGeographies.setValue(null);
+
+        lblMessageCreateTeam.setTextFill(Color.GREEN);
+        lblMessageCreateTeam.setText("The team was created successfully.");
     }
 
     private void setupSliderTime() {

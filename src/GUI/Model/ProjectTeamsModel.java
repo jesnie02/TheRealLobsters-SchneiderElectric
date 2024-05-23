@@ -38,12 +38,9 @@ public class ProjectTeamsModel {
         return teamNames;
     }
 
-    public void addProfileToTeam(ProjectTeam projectTeam) {
-        try {
-            projectTeamsManager.addProfileToTeam(projectTeam);
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
+    public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
+        projectTeamsManager.addProfileToTeam(projectTeam);
+
     }
 
     public ObservableList<String> getEveryProjectTeam() {

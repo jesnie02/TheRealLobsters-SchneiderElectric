@@ -185,9 +185,14 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Label fx:id="lblMessageCreateTeam" alignment="CENTER" prefHeight="0.0" prefWidth="458.0">
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                  </Label>
                   <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="444.0" spacing="25.0">
                      <VBox.margin>
-                        <Insets right="25.0" top="24.0" />
+                        <Insets right="25.0" top="8.0" />
                      </VBox.margin>
                      <children>
                         <Button fx:id="btnRemoveProfileTeams" mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="141.0" text="Remove profile" />
