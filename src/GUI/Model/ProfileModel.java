@@ -147,4 +147,8 @@ public class ProfileModel {
         }
         return false;
     }
+
+    public void updateProfileRates(Profile profile) throws ApplicationWideException {
+        profileManager.updateProfileRates(profile);
+    }
 }

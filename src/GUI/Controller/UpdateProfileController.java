@@ -68,6 +68,13 @@ public class UpdateProfileController implements Initializable {
         profile.setFixedAmount(Double.parseDouble(txtFixedAmount.getText()));
         profile.setDailyWorkingHours(Double.parseDouble(txtDailyWorkingHours.getText()));
 
+        try {
+            profileModel.updateProfileRates(profile);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+            AlertBox.displayInfo("Update Failed", "Failed to update the rates.");
+        }
+
         boolean success = profileModel.updateProfile(profile);
         if (success) {
             AlertBox.displayInfo("Profile Updated", "The profile has been successfully updated.");

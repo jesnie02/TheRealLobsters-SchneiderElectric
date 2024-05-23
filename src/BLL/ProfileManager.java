@@ -96,6 +96,30 @@ public class ProfileManager {
         return profileDAO.updateProfile(profile);
     }
 
+    public void updateProfileRates(Profile profile) throws ApplicationWideException {
+        List<Profile> allProfiles = getAllProfiles();
+        Profile currentProfile = allProfiles.stream()
+                .filter(p -> p.getProfileId() == profile.getProfileId())
+                .findFirst()
+                .orElseThrow(() -> new ApplicationWideException("Profile not found"));
+        System.out.println("Profile found: " + currentProfile.getFName());
+
+        double overheadMultiplier = currentProfile.getOverheadMultiplier();
+        double effectiveHours = currentProfile.getEffectiveWorkingHours();
+
+        double newHourlyRate = calculateAndSetHourlyRateCreateProfile(
+                profile.getAnnualSalary(), overheadMultiplier,
+                profile.getFixedAmount(), effectiveHours);
+
+        double newDailyRate = calculateAndSetDailyRateCreateProfile(
+                profile.getDailyWorkingHours(), newHourlyRate);
+
+        profile.setHourlyRate(newHourlyRate);
+        System.out.println("New hourly rate: " + newHourlyRate);
+        profile.setDailyRate(newDailyRate);
+        System.out.println("New daily rate: " + newDailyRate);
+    }
+
 
     public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, String currencyCode) throws ApplicationWideException {
         Currency selectedCurrency = currencyManager.getCurrencyByCode(currencyCode);

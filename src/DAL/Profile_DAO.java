@@ -122,7 +122,7 @@ public class Profile_DAO implements IProfileDataAccess {
 
     @Override
     public boolean updateProfile(Profile profile) throws ApplicationWideException {
-        String sqlProfile = "UPDATE Profile SET Fname = ?, Lname = ?, AnualSalary = ?, FixedAmount = ?, DailyWorkingHours = ? WHERE ProfileId = ?";
+        String sqlProfile = "UPDATE Profile SET Fname = ?, Lname = ?, AnualSalary = ?, FixedAmount = ?, DailyWorkingHours = ?, HourlySalary = ?, DailyRate = ? WHERE ProfileId = ?";
 
         try (Connection conn = dbConnector.getConnection()) {
             try (PreparedStatement pstmtProfile = conn.prepareStatement(sqlProfile)) {
@@ -131,7 +131,9 @@ public class Profile_DAO implements IProfileDataAccess {
                 pstmtProfile.setDouble(3, profile.getAnnualSalary());
                 pstmtProfile.setDouble(4, profile.getFixedAmount());
                 pstmtProfile.setDouble(5, profile.getDailyWorkingHours());
-                pstmtProfile.setInt(6, profile.getProfileId());
+                pstmtProfile.setDouble(6, profile.getHourlySalary());
+                pstmtProfile.setDouble(7, profile.getDailyRate());
+                pstmtProfile.setInt(8, profile.getProfileId());
 
                 int affectedRows = pstmtProfile.executeUpdate();
                 return affectedRows > 0;
