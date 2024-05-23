@@ -206,6 +206,26 @@ public class CalculatorManager implements ICalculateManager {
 
         return result;
     }
+
+
+    @Override
+    public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
+        double utilizationFactor = utilization / 100;
+        double newHourlyRate = profile.getHourlySalary() * utilizationFactor;
+        double newDailyRate = profile.getDailyRate() * utilizationFactor;
+        double newAnnualSalary = profile.getAnnualSalary() * utilizationFactor;
+
+        profile.setHourlyRate(newHourlyRate);
+        profile.setDailyRate(newDailyRate);
+        profile.setAnnualSalary(newAnnualSalary);
+
+        Map<String, Double> rates = new HashMap<>();
+        rates.put("hourlyRate", newHourlyRate);
+        rates.put("dailyRate", newDailyRate);
+        rates.put("annualSalary", newAnnualSalary);
+
+        return rates;
+    }
 }
 
 

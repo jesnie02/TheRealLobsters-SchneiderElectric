@@ -162,4 +162,9 @@ public class ProjectTeamsModel {
             ExceptionHandler.handleException(e);
         }
     }
+
+    public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
+        return projectTeamsManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
+    }
+
 }

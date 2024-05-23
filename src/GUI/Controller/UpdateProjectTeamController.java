@@ -141,6 +141,20 @@ public class UpdateProjectTeamController implements Initializable {
         }
     }
 
+    private void updateSumLabels() {
+        double hourlyRateSum = 0;
+        double dailyRateSum = 0;
+        double annualSalarySum = 0;
+        for (Profile profile : profiles) {
+            hourlyRateSum += profile.getHourlyRate();
+            dailyRateSum += profile.getDailyRate();
+            annualSalarySum += profile.getAnnualSalary();
+        }
+        lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
+        lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
+        lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
+    }
+
 
     private void setupTableView(){
         NumberFormat formatter = NumberFormat.getNumberInstance();
@@ -192,20 +206,30 @@ public class UpdateProjectTeamController implements Initializable {
             currentTeam.setTeamName(teamName);
             Geography selectedGeography = cBoxGeographies.getValue();
             if (selectedGeography != null) {
-                currentTeam.setGeographyId(selectedGeography.getGeographyId()); // Set the GeographyId
+                currentTeam.setGeographyId(selectedGeography.getGeographyId());
             }
             currentTeam.setProfiles(profilesInTeam);
             currentTeam.setUtilizationsMap(utilizationsMap);
             currentTeam.setNumberOfProfiles(profilesInTeam.size());
 
+
+            String hourlyRateStr = lblHourlyRateSum.getText().replace(",", ".");
+            String dailyRateStr = lblDailyRateSum.getText().replace(",", ".");
+            String annualSalaryStr = lblAnnualSalarySum.getText().replace(",", ".");
+
+            currentTeam.setSumOfHourlyRate(Double.parseDouble(hourlyRateStr));
+            currentTeam.setSumOfDailyRate(Double.parseDouble(dailyRateStr));
+            currentTeam.setSumOfAnnualSalary(Double.parseDouble(annualSalaryStr));
+
             projectTeamsModel.updateTeam(currentTeam);
+
             AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
+            FrameController.getInstance().loadTeamsView();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
             AlertBox.displayError(e);
         }
     }
-
 
     @FXML
     private void removeProfileFromTbl(ActionEvent actionEvent) {
@@ -215,6 +239,7 @@ public class UpdateProjectTeamController implements Initializable {
             utilizationsMap.remove(selectedProfile);
             tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
+            updateSumLabels();
         }
     }
 
@@ -223,12 +248,18 @@ public class UpdateProjectTeamController implements Initializable {
         Profile selectedProfile = (Profile) cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationsMap.put(selectedProfile, sliderUtilization.getValue());
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary()*(utilizationsMap.get(selectedProfile)));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate()*(utilizationsMap.get(selectedProfile)));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary()*(utilizationsMap.get(selectedProfile)));
+            double utilization = sliderUtilization.getValue();
+            utilizationsMap.put(selectedProfile, utilization);
+
+            Map<String, Double> rates = projectTeamsModel.calculateRatesWithUtilizationForUpdateTeam(selectedProfile, utilization);
+
+            selectedProfile.setHourlyRate(rates.get("hourlyRate"));
+            selectedProfile.setDailyRate(rates.get("dailyRate"));
+            selectedProfile.setAnnualSalary(rates.get("annualSalary"));
+
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
+            updateSumLabels();
         }
     }
 }

@@ -10,7 +10,7 @@ public class Profile {
     private String fName, lName, roles;
     private boolean overheadCost;
     private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, overheadMultiplier, effectiveWorkingHours;
-    private double utilizationTime, utilizationCost;
+    private double utilizationTime, utilizationCost, utilization;
 
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
@@ -319,5 +319,13 @@ public class Profile {
     @Override
     public int hashCode() {
         return Objects.hash(profileId);
+    }
+
+    public double getUtilization() {
+        return utilization;
+    }
+
+    public void setUtilization(double utilization) {
+        this.utilization = utilization;
     }
 }

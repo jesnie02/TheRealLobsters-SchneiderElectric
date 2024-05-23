@@ -9,6 +9,7 @@ import DAL.ProjectTeams_DAO;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectTeamsManager {
@@ -50,32 +51,17 @@ public class ProjectTeamsManager {
     }
 
 
-    /**
-     * Calculates the total annual salary for a list of profiles.
-     *
-     * @param profiles The list of profiles for which to calculate the total annual salary.
-     * @return The total annual salary for the provided list of profiles.
-     */
+
     public double calculateTotalAnnualSalary(List<Profile> profiles) {
         return iCalculateManager.annualSalaryWithFixedAmount(profiles);
     }
 
-    /**
-     * Calculates the total daily rate for a list of profiles.
-     *
-     * @param profiles The list of profiles for which to calculate the total daily rate.
-     * @return The total daily rate for the provided list of profiles.
-     */
+
     public double calculateTotalDailyRate(List<Profile> profiles) {
         return iCalculateManager.sumOfDailyRate(profiles);
     }
 
-    /**
-     * Calculates the total hourly rate for a list of profiles.
-     *
-     * @param profiles The list of profiles for which to calculate the total hourly rate.
-     * @return The total hourly rate for the provided list of profiles.
-     */
+
     public double calculateTotalHourlyRate(List<Profile> profiles) {
         return iCalculateManager.sumOfHourlyRate(profiles);
     }
@@ -131,5 +117,9 @@ public class ProjectTeamsManager {
 
     public void removeProfileFromProjectTeam(int projectTeam, int profile) throws ApplicationWideException {
         teamsDAO.removeProfileFromProjectTeam(projectTeam, profile);
+    }
+
+    public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
+        return iCalculateManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
     }
 }

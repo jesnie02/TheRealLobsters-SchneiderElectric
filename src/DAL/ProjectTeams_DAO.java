@@ -346,16 +346,14 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
             conn.setAutoCommit(false);
 
-            // Update the team details
             pstmtUpdateTeam.setString(1, projectTeam.getTeamName());
             pstmtUpdateTeam.setInt(2, projectTeam.getGeographyId());
             pstmtUpdateTeam.setDouble(3, projectTeam.getSumOfAnnualSalary());
             pstmtUpdateTeam.setDouble(4, projectTeam.getSumOfDailyRate());
             pstmtUpdateTeam.setDouble(5, projectTeam.getSumOfHourlyRate());
-            pstmtUpdateTeam.setInt(6, projectTeam.getProfiles().size()); // Set the number of profiles
+            pstmtUpdateTeam.setInt(6, projectTeam.getProfiles().size());
             pstmtUpdateTeam.setInt(7, projectTeam.getTeamId());
-            int rowsAffected = pstmtUpdateTeam.executeUpdate();
-            //System.out.println("Rows affected in ProjectTeams: " + rowsAffected);
+            pstmtUpdateTeam.executeUpdate();
 
             // Delete existing profiles from ProfileProjectTeams
             pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
@@ -369,7 +367,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
                 pstmtInsertProfileProjectTeams.setInt(2, projectTeam.getTeamId());
                 pstmtInsertProfileProjectTeams.setDouble(3, utilization);
-                rowsAffected = pstmtInsertProfileProjectTeams.executeUpdate();
+                pstmtInsertProfileProjectTeams.executeUpdate();
             }
 
             // Update the sum values
@@ -377,11 +375,66 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmtUpdateSumValues.setDouble(2, projectTeam.getSumOfDailyRate());
             pstmtUpdateSumValues.setDouble(3, projectTeam.getSumOfHourlyRate());
             pstmtUpdateSumValues.setInt(4, projectTeam.getTeamId());
-            rowsAffected = pstmtUpdateSumValues.executeUpdate();
+            pstmtUpdateSumValues.executeUpdate();
+
+            conn.commit();
+            mergeProfileProjectTeams(projectTeam);
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to update team", e);
+        }
+    }
+
+    public void mergeProfileProjectTeams(ProjectTeam projectTeam) throws ApplicationWideException {
+        String updateSQL = "UPDATE ProfileProjectTeams SET Utilization = ? " +
+                "WHERE ProfileId_PPT = ? AND TeamsId = ?";
+
+        String insertSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization) " +
+                "VALUES (?, ?, ?)";
+
+        Connection conn = null;
+        try {
+            conn = dbConnector.getConnection();
+            PreparedStatement pstmtUpdate = conn.prepareStatement(updateSQL);
+            PreparedStatement pstmtInsert = conn.prepareStatement(insertSQL);
+
+            conn.setAutoCommit(false);
+
+            for (Profile profile : projectTeam.getProfiles()) {
+                // First try to update
+                pstmtUpdate.setDouble(1, profile.getUtilization());
+                pstmtUpdate.setInt(2, profile.getProfileId());
+                pstmtUpdate.setInt(3, projectTeam.getTeamId());
+
+                int affectedRows = pstmtUpdate.executeUpdate();
+
+                // If no rows were updated, insert new row
+                if (affectedRows == 0) {
+                    pstmtInsert.setInt(1, profile.getProfileId());
+                    pstmtInsert.setInt(2, projectTeam.getTeamId());
+                    pstmtInsert.setDouble(3, profile.getUtilization());
+                    pstmtInsert.executeUpdate();
+                }
+            }
 
             conn.commit();
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to update team", e);
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    throw new ApplicationWideException("Failed to rollback transaction", rollbackEx);
+                }
+            }
+            throw new ApplicationWideException("Failed to merge profile project teams", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException ex) {
+                    throw new ApplicationWideException("Failed to reset connection settings and close the connection", ex);
+                }
+            }
         }
     }
 
