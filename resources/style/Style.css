@@ -190,7 +190,7 @@
 
     /* WhiteBox */
 
-    #vBoxWhiteCreateProfile, #vboxCenterCurrency, #vboxCenterRole, #vBoxCenterCreateTeam, #vBoxCenterTeamDetails, #vBoxCenterGeographyOverview, #vBoxCenterCreateGeography
+    #vBoxWhiteCreateProfile, #vboxCenterCurrency, #vboxCenterRole, #bpCenterCreateTeam, #vBoxCenterTeamDetails, #vBoxCenterGeographyOverview, #vBoxCenterCreateGeography
     , #vBoxCenterUpdateProfile, #vBoxCenterUpdateTeam {
         -fx-background-color: #FFFFFF;
         -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);
