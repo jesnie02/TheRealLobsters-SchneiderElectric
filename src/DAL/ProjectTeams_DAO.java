@@ -289,7 +289,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 "JOIN ProfileProfileRole ppr ON p.ProfileId = ppr.ProfileId " +
                 "JOIN ProfileRole pr ON ppr.ProfileRoleId = pr.ProfileRoleId " +
                 "WHERE ppt.TeamsId = ? " +
-                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization, ppt.UtilizationCost";
+                "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization, ppt.UtilizationCost, p.UtilizationCost, p.EffectiveWorkingHours, p.OverheadMultiplierPercentage";
 
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -318,6 +318,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
         return profiles;
     }
+
 
 
     private List<ProfileRole> parseRoles(String rolesString) {
@@ -411,7 +412,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             if (conn != null) {
                 try {
                     conn.rollback();
-                    System.out.println("Transaction rolled back");
                 } catch (SQLException ex) {
                     throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
                 }

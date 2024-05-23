@@ -171,7 +171,7 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    public void setTblProfileToTeam() {
+    private void setTblProfileToTeam() {
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(2);
         formatter.setMaximumFractionDigits(2);
@@ -199,13 +199,13 @@ public class CreateProjectTeamController implements Initializable {
             double annualSalary = cellData.getValue().getAnnualSalary();
             return new SimpleStringProperty(formatter.format(annualSalary));
         });
-        colTeamUtilizationCost.setCellValueFactory(cellData -> {
-            double utilization = utilizationCostMap.getOrDefault(cellData.getValue(), 0.0);
+        colTeamUtilizationTime.setCellValueFactory(cellData -> {
+            double utilization = cellData.getValue().getUtilizationTime();
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
-        colTeamUtilizationTime.setCellValueFactory(cellData -> {
-            double utilization = utilizationTimeMap.getOrDefault(cellData.getValue(), 0.0);
-            return new SimpleStringProperty(formatter.format(utilization) + " %");
+        colTeamUtilizationCost.setCellValueFactory(cellData -> {
+            double utilizationCost = cellData.getValue().getUtilizationCost();
+            return new SimpleStringProperty(formatter.format(utilizationCost) + " %");
         });
     }
 
@@ -262,7 +262,6 @@ public class CreateProjectTeamController implements Initializable {
                     sliderUtilizationTime.setValue(initialUtilization);
                 } else {
                     utilizationTime = newValue.doubleValue();
-                    System.out.println("Updated Utilization Time: " + utilizationTime);
                 }
             }
         });

@@ -42,7 +42,7 @@ public class TeamDetailsController implements Initializable {
     @FXML
     private TableColumn <Profile, String> colFirstNameTD, colLastNameTD, colProfileRoleTD;
     @FXML
-    private TableColumn<Profile,  Double> colUtilizationTD;
+    private TableColumn<Profile,  Double> colUtilizationTime, colUtilizationCost;
 
 
 
@@ -61,7 +61,8 @@ public class TeamDetailsController implements Initializable {
     private void setupTable() {
         colFirstNameTD.setCellValueFactory(new PropertyValueFactory<>("FName"));
         colLastNameTD.setCellValueFactory(new PropertyValueFactory<>("LName"));
-        colUtilizationTD.setCellValueFactory(new PropertyValueFactory<>("Utilization"));
+        colUtilizationTime.setCellValueFactory(new PropertyValueFactory<>("UtilizationTime"));
+        colUtilizationCost.setCellValueFactory(new PropertyValueFactory<>("UtilizationCost"));
         colProfileRoleTD.setCellValueFactory(cellData -> new SimpleStringProperty(
                 cellData.getValue().getProfileRoles().stream()
                         .map(ProfileRole::toString)
