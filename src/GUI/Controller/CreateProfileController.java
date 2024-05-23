@@ -80,14 +80,16 @@ public class CreateProfileController implements Initializable {
         try {
             countryModel = new CountryModel();
             projectTeamsModel = new ProjectTeamsModel();
-            profileModel = new ProfileModel();
             profileRoleModel = new ProfileRoleModel();
             currencyModel = new CurrencyModel();
             profileRoleModel = ProfileRoleModel.getInstance();
+            profileModel = ProfileModel.getInstance();
+
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
+
 
     /**
      * This method is called after all @FXML annotated members have been injected.
@@ -212,9 +214,11 @@ public class CreateProfileController implements Initializable {
     //It validates the input, creates a new Profile object, and saves it to the database.
     @FXML
     private void createProfile(ActionEvent actionEvent) {
+
         if (!validateInput()) {
             return;
         }
+
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
         double annualSalary = parseDouble(lblAnnualResultEUR.getText());
@@ -228,12 +232,33 @@ public class CreateProfileController implements Initializable {
         double effectiveWorkingHours = parseDouble(txtEffectiveHours.getText());
 
 
+
         Profile newProfile = new Profile(firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles, effectiveWorkingHours, overheadMultiplier);
 
-        profileModel.createProfile(newProfile);
-        lblShowMassage.setText("Profile has been saved");
+
+       profileModel.createProfile(newProfile);
+       clearFields();
+       lblShowMassage.setText("Profile has been saved");
     }
 
+    public void clearFields() {
+        txtFirstnameProfile.clear();
+        txtLastnameProfile.clear();
+        txtAnnualSalary.clear();
+        txtFixedAmount.clear();
+        txtEffectiveHours.clear();
+        txtDailyWorkingHours.clear();
+        txtOverheadView.clear();
+        lblHourlyResult.setText("");
+        lblDailyResult.setText("");
+        lblShowMassage.setText("");
+        lblAnnualResultEUR.setText("");
+        lblHourlyResultEUR.setText("");
+        lblDailyResultInEUR.setText("");
+        cBox_Currency.getSelectionModel().clearSelection();
+        cBoxProfile_ProfileRoles.getCheckModel().clearChecks();
+        sliderOverhead.setValue(0.0);
+    }
 
     public double calculateAndSetHourlyRateCreateProfile() {
         if (txtAnnualSalary.getText().isEmpty() || txtOverheadView.getText().isEmpty() || txtFixedAmount.getText().isEmpty()
@@ -316,7 +341,6 @@ public class CreateProfileController implements Initializable {
         // List of all TextFields and ComboBoxes
         List<Control> fields = Arrays.asList(txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary,
                 txtFixedAmount, txtDailyWorkingHours, txtEffectiveHours, cBox_Currency, cBoxProfile_ProfileRoles);
-
         for (Control field : fields) {
             if (field instanceof TextField) {
                 TextField textField = (TextField) field;

@@ -8,44 +8,44 @@ import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class ProfileModel {
 
-    private ProfileManager profileManager;
+    private final ProfileManager profileManager;
+
+    private static ProfileModel instance;
     private ObservableList<Profile> profiles;
 
+    private final UUID id = UUID.randomUUID();
+
     public ProfileModel() throws ApplicationWideException {
-            profileManager = new ProfileManager();
-            profiles = FXCollections.observableArrayList();
-            profiles.addAll(profileManager.getAllProfiles());
+        profileManager = new ProfileManager();
+        profiles = FXCollections.observableArrayList(profileManager.getAllProfiles());
+
     }
 
 
-    public ObservableList<String> getCountryAndCurrencyCodes() {
-        URL resourceUrl = getClass().getResource("/Currency");
-        String filePath = resourceUrl.getPath();
-        Map<String, String> currencyMap = CurrencyReader.readCurrencyFromFile(filePath);
-        ArrayList<String> countryAndCurrencyCodes = new ArrayList<>();
-        for (Map.Entry<String, String> entry : currencyMap.entrySet()) {
-            countryAndCurrencyCodes.add(entry.getKey() + " - " + entry.getValue());
+
+    public static synchronized ProfileModel getInstance() {
+        if (instance == null) {
+            try {
+                instance = new ProfileModel();
+            } catch (ApplicationWideException e) {
+                ExceptionHandler.handleException(e);
+            }
         }
-        Collections.sort(countryAndCurrencyCodes);
-        return FXCollections.observableArrayList(countryAndCurrencyCodes);
+        return instance;
     }
-
-
 
      // Create a new profile to the database.
     public void createProfile(Profile newProfile) {
         try {
             profileManager.createProfile(newProfile);
             profiles.add(newProfile);
+
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -68,15 +68,7 @@ public class ProfileModel {
     }
 
 
-    public ObservableList<Profile> getAllProfiles() {
-        profiles = FXCollections.observableArrayList();
-        try {
-            profiles.addAll(profileManager.getAllProfiles());
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return profiles;
-    }
+
 
 
     public double calculateAndSetHourlyRateCreateProfile(
@@ -89,7 +81,9 @@ public class ProfileModel {
     }
 
 
-
+    public ObservableList<Profile> getAllProfiles() {
+        return profiles;
+    }
 
 
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
@@ -150,5 +144,9 @@ public class ProfileModel {
 
     public void updateProfileRates(Profile profile) throws ApplicationWideException {
         profileManager.updateProfileRates(profile);
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

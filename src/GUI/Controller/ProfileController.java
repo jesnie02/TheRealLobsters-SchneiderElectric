@@ -10,7 +10,9 @@ import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +56,9 @@ public class ProfileController {
     private GeographyModel geographyModel;
     private ProjectTeamsModel projectTeamsModel;
 
+
     public ProfileController() {
+        profileModel = ProfileModel.getInstance();
         this.frameController = FrameController.getInstance();
     }
 
@@ -65,51 +69,46 @@ public class ProfileController {
 
     public void initialize() {
         try {
-            profileModel = new ProfileModel();
+
+            profileModel = ProfileModel.getInstance();
             countryModel = new CountryModel();
             geographyModel = new GeographyModel();
             projectTeamsModel = new ProjectTeamsModel();
+            setupTableView();
             loadProfiles();
-            setCellValueFactories();
-            bindTableView();
+
+
             idToNameMap = createIdToNameMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
 
-    private void bindTableView(){
-        tblProfiles.setItems(profileModel.getAllProfiles());
+
+
+    private void setupTableView() {
+        setupCellValueFactories();
+        setupButtonsInTable();
     }
 
+    private void loadProfiles() {
+        tblProfiles.setItems(profileModel.getAllProfiles());
 
-    /**
-     * Sets up the cell value factories for the table columns.
-     * The cell value factories determine how the data for each cell is retrieved from the profile objects.
-     */
-    private void setCellValueFactories() {
-        NumberFormat formatter = NumberFormat.getNumberInstance();
-        formatter.setMinimumFractionDigits(2);
-        formatter.setMaximumFractionDigits(2);
+    }
 
+    private void setupCellValueFactories() {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        colAnnualSalaryProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getAnnualSalary())));
+        colHourlyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getHourlySalary())));
+        colDailyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getDailyRate())));
 
-        colAnnualSalaryProfile.setCellValueFactory(cellData -> {
-            double annualSalary = cellData.getValue().getAnnualSalary();
-            return new SimpleStringProperty(formatter.format(annualSalary));
+        profileModel.getAllProfiles().addListener((ListChangeListener<? super Profile>) c -> {
+            tblProfiles.refresh();
         });
+    }
 
-        colHourlyRateProfile.setCellValueFactory(cellData -> {
-            double hourlySalary = cellData.getValue().getHourlySalary();
-            return new SimpleStringProperty(formatter.format(hourlySalary));
-        });
-
-        colDailyRateProfile.setCellValueFactory(cellData -> {
-            double dailyRate = cellData.getValue().getDailyRate();
-            return new SimpleStringProperty(formatter.format(dailyRate));
-        });
-
-
+    private void setupButtonsInTable() {
         colUpdateIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button updateButton = createImageButton("/pictures/editLogo.png");
 
@@ -134,6 +133,9 @@ public class ProfileController {
             }
         });
 
+
+
+
         colDeleteIconProfile.setCellFactory(param -> new TableCell<Profile, Void>() {
             private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
 
@@ -157,6 +159,7 @@ public class ProfileController {
 
     }
 
+
     private Button createImageButton(String imagePath) {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         ImageView imageView = new ImageView(image);
@@ -173,6 +176,7 @@ public class ProfileController {
         return button;
     }
 
+
     /**
      * Creates a map from team ID to team name.
      * This map is used for displaying the team name in the table view.
@@ -186,13 +190,8 @@ public class ProfileController {
         return idToNameMap;
     }
 
-    /**
-     * Loads the profiles into the table.
-     */
-    private void loadProfiles() {
-        tblProfiles.setItems(profileModel.getAllProfiles());
 
-    }
+
 
     private void deleteProfile(Profile profile) {
         Optional<ButtonType> result = AlertBox.displayConfirmation("Confirm Deletion", "Are you sure you want to delete the profile?\nProfile: " + profile.getFullName());
