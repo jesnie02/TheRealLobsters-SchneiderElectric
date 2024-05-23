@@ -9,7 +9,9 @@ import GUI.Model.*;
 import GUI.Utility.AlertBox;
 import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
+import GUI.Utility.SliderDecimalFilter;
 import io.github.palexdev.materialfx.controls.MFXSlider;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -21,11 +23,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.control.SearchableComboBox;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -90,6 +96,8 @@ public class UpdateProjectTeamController implements Initializable {
             populateComboBoxes();
             setupSearchBox();
             setupTableView();
+            bindSliderAndTextFieldTime();
+            bindSliderAndTextFieldCost();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -100,6 +108,20 @@ public class UpdateProjectTeamController implements Initializable {
         cBoxGeographies.setItems(FXCollections.observableArrayList(countryModel.getAllFromGeographies()));
         setCountryComboBoxConverter();
         setProfileComboBoxConverter();
+    }
+
+    public void bindSliderAndTextFieldTime() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtUtilizationTime.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtUtilizationTime.textProperty(),sliderUtilizationTime.valueProperty(),  converter);
+    }
+
+    public void bindSliderAndTextFieldCost() {
+        SliderDecimalFilter filter = new SliderDecimalFilter();
+        txtUtilizationCost.setTextFormatter(new TextFormatter<>(filter));
+        StringConverter<Number> converter = new NumberStringConverter(new DecimalFormat("0.0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)));
+        Bindings.bindBidirectional(txtUtilizationCost.textProperty(),sliderUtilizationCost.valueProperty(),  converter);
     }
 
     private void setCountryComboBoxConverter() {
