@@ -3,7 +3,6 @@ package GUI.Model;
 import BE.Profile;
 import BLL.ProfileManager;
 import CustomExceptions.ApplicationWideException;
-import GUI.Controller.util.CurrencyReader;
 import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +25,6 @@ public class ProfileModel {
         profiles = FXCollections.observableArrayList(profileManager.getAllProfiles());
 
     }
-
 
 
     public static synchronized ProfileModel getInstance() {

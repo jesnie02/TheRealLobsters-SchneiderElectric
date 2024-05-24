@@ -7,6 +7,8 @@ import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -34,6 +37,8 @@ public class TeamsController implements Initializable {
 
     // Instance of FrameController to control the main frame of the application
     private FrameController frameController;
+    @FXML
+    private Button btnCreateProjectTeams;
 
     public TeamsController() {
         this.frameController = FrameController.getInstance();
@@ -59,6 +64,9 @@ public class TeamsController implements Initializable {
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
+
+
+
     }
 
     public void loadTeamsInTilePane() {
@@ -91,6 +99,8 @@ public class TeamsController implements Initializable {
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {
+
         frameController.loadCreateTeamView();
+       // frameController.selectTeamsButton();
     }
 }

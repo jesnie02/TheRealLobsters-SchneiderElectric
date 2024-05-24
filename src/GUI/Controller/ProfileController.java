@@ -11,6 +11,7 @@ import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -46,25 +48,29 @@ public class ProfileController {
     public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile;
     @FXML
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
-
+    FrameController frameController = FrameController.getInstance();
     private Map<Integer, String> idToNameMap;
 
     // Instance of FrameController to control the main frame of the application
-    private final FrameController frameController;
+
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private GeographyModel geographyModel;
     private ProjectTeamsModel projectTeamsModel;
 
 
+
     public ProfileController() {
         profileModel = ProfileModel.getInstance();
-        this.frameController = FrameController.getInstance();
+
     }
 
     @FXML
     private void openCreateProfile(ActionEvent actionEvent) {
         frameController.loadCreateProfileView();
+
+
+
     }
 
     public void initialize() {
@@ -97,11 +103,10 @@ public class ProfileController {
     }
 
     private void setupCellValueFactories() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         colNameProfile.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        colAnnualSalaryProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getAnnualSalary())));
-        colHourlyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getHourlySalary())));
-        colDailyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(currencyFormat.format(cellData.getValue().getDailyRate())));
+        colAnnualSalaryProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getAnnualSalary())));
+        colHourlyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getHourlySalary())));
+        colDailyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getDailyRate())));
 
         profileModel.getAllProfiles().addListener((ListChangeListener<? super Profile>) c -> {
             tblProfiles.refresh();

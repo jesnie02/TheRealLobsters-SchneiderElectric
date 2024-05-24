@@ -1,12 +1,10 @@
 package BLL;
 
-import BE.Country;
 import BE.Geography;
 import CustomExceptions.ApplicationWideException;
 import DAL.Geography_DAO;
 import DAL.IGeographyDataAccess;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class GeographyManager {
@@ -35,6 +33,7 @@ public class GeographyManager {
 
     public void deleteGeography(Geography geography) throws ApplicationWideException {
         geographyDAO.deleteGeography(geography.getGeographyId());
+
     }
 
     public void updateGeography(Geography geography) throws ApplicationWideException {

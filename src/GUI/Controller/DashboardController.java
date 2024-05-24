@@ -85,7 +85,11 @@ public class DashboardController implements Initializable {
         setUpComboBoxListeners();
 
 
+
+
+
     }
+
 
     private void setUpFilteredData() {
         filteredData = new FilteredList<>(geographyModel.getSumsAndAveragesForGeographies(), p -> true);
@@ -212,4 +216,6 @@ public class DashboardController implements Initializable {
             lblAvgHourlyRateTeam.setText("");
         }
     }
+
+
 }

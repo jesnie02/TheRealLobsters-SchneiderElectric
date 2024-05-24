@@ -1,13 +1,12 @@
 package GUI.Model;
 
-import BE.Country;
 import BE.Geography;
 import BLL.GeographyManager;
 import CustomExceptions.ApplicationWideException;
 import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.List;
+
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -21,8 +20,10 @@ public class GeographyModel {
 
     public GeographyModel() throws ApplicationWideException {
         geographyManager = new GeographyManager();
-        geographies = FXCollections.observableArrayList();
+        geographies = FXCollections.observableArrayList(geographyManager.getAllGeographiesGeographyOverview());
         loadInitialGeographies();
+
+
     }
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies()  {
@@ -59,10 +60,11 @@ public class GeographyModel {
     public void saveGeography(Geography geography)  {
         try {
             geographyManager.saveGeography(geography);
+            geographies.add(geography);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
-        geographies.add(geography);
+
 
     }
 

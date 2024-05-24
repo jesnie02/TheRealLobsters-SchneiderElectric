@@ -76,6 +76,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
+                        <SearchableComboBox fx:id="cBoxProfiles" prefHeight="25.0" prefWidth="285.0" promptText="Profiles" GridPane.rowIndex="3" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
                            <children>
                               <Label prefHeight="18.0" prefWidth="67.0" text="Time:">
@@ -108,7 +109,6 @@
                               <Label alignment="CENTER_RIGHT" prefHeight="22.0" prefWidth="22.0" text="\%" />
                            </children>
                         </HBox>
-                        <SearchableComboBox fx:id="cBoxProfiles" prefHeight="25.0" prefWidth="285.0" promptText="Profiles" GridPane.rowIndex="3" />
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="297.0" text="Select one or more profiles" GridPane.rowIndex="2">
                            <padding>
                               <Insets left="8.0" />

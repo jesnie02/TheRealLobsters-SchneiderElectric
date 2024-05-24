@@ -26,9 +26,9 @@ public class CreateGeographyController implements Initializable {
     @FXML
     private TextField txtGeography;
     @FXML
-    private CheckComboBox cBoxCountries;
+    private CheckComboBox<Country> cBoxCountries;
     private CountryModel countryModel;
-    private GeographyModel geographyModel;
+    private final GeographyModel geographyModel;
 
     public CreateGeographyController(GeographyModel geographyModel) {
         this.geographyModel = geographyModel;

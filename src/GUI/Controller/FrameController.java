@@ -1,7 +1,10 @@
 package GUI.Controller;
 
+
 import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,16 +24,19 @@ import java.util.*;
 public class FrameController implements Initializable {
 
 
+
     private static FrameController instance;
     private UpdateProjectTeamController updateProjectTeamController;
 
     @FXML
     private StackPane stackPaneFrame;
 
-    private final UUID uuid = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     // A map to store the views that have been loaded.
     private Map<String, Node> viewCache = new HashMap<>();
+
+    private Map<String, Button> buttonMap = new HashMap<>();
 
     // A stack to store the history of the pages that have been visited.
     private Stack<Node> pageHistory = new Stack<>();
@@ -38,6 +44,13 @@ public class FrameController implements Initializable {
     private final String BASE_PATH = "/fxml/";
     @FXML
     private Button btnDashboard, btnProfiles, btnTeams, btnGeography ,btnMultiplier ,btnCurrency;
+
+    private final BooleanProperty dashboardSelected = new SimpleBooleanProperty(false);
+    private final BooleanProperty profilesSelected = new SimpleBooleanProperty(false);
+    private final BooleanProperty teamsSelected = new SimpleBooleanProperty(false);
+    private final BooleanProperty CurrencySelected = new SimpleBooleanProperty(false);
+    private final BooleanProperty multiplierSelected = new SimpleBooleanProperty(false);
+    private final BooleanProperty geographySelected = new SimpleBooleanProperty(false);
 
 
     public FrameController() {
@@ -48,6 +61,9 @@ public class FrameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        bindButtonStyles();
+        Platform.runLater(this::addStylesheet);
+        //initializeButtonMap();
         loadDashboardOnStart();
     }
 
@@ -62,8 +78,6 @@ public class FrameController implements Initializable {
     }
 
 
-
-
     // This method returns the instance of the FrameController class.
     public static synchronized FrameController getInstance() {
 
@@ -75,62 +89,121 @@ public class FrameController implements Initializable {
 
 
 
-    // This method loads the view with the given name.
+
     private void loadView(String viewName) {
-        Node view = viewCache.get(viewName);
-        try {
-            if (view == null) {
-                // Load the view only if it is not already cached
-                view = FXMLLoader.load(getClass().getResource(BASE_PATH + viewName));
-                viewCache.put(viewName, view);
-            }
-            // Always update the stackPaneFrame with the view whether it was cached or not
+        Node view = viewCache.computeIfAbsent(viewName, this::loadFXML);
+        if (view != null) {
             stackPaneFrame.getChildren().setAll(view);
-            updateButtonSelection(viewName); // Ensure UI update happens every time view is loaded
+            //updateButtonSelection(viewName);
+        }
+    }
+
+    private Node loadFXML(String viewName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(BASE_PATH + viewName));
+            return loader.load();
         } catch (IOException e) {
+            ExceptionHandler.handleException(e);
+            return null;
+        }
+    }
+
+    private void bindButtonStyles() {
+        btnDashboard.getStyleClass().addAll("button");
+        btnProfiles.getStyleClass().addAll("button");
+        btnTeams.getStyleClass().addAll("button");
+        btnGeography.getStyleClass().addAll("button");
+        btnMultiplier.getStyleClass().addAll("button");
+        btnCurrency.getStyleClass().addAll("button");
+
+        dashboardSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnDashboard, newVal));
+        profilesSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnProfiles, newVal));
+        teamsSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnTeams, newVal));
+        geographySelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnGeography, newVal));
+        CurrencySelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnCurrency, newVal));
+        multiplierSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnMultiplier, newVal));
+    }
+
+
+
+
+
+    private void updateStyleClass(Button button, boolean isSelected) {
+        // Run updates on the JavaFX application thread to avoid concurrency issues
+        Platform.runLater(() -> {
+            if (isSelected) {
+                if (!button.getStyleClass().contains("button-selected")) {
+                    button.getStyleClass().add("button-selected");
+                }
+            } else {
+                button.getStyleClass().remove("button-selected");
+            }
+        });
+    }
+
+    private void addStylesheet() {
+        try {
+            if (stackPaneFrame.getScene() != null) {
+                // Adjust path if necessary
+                URL stylesheetURL = getClass().getResource("/style/Style.css");
+                if (stylesheetURL != null) {
+                    stackPaneFrame.getScene().getStylesheets().add(stylesheetURL.toExternalForm());
+                } else {
+                    System.out.println("Stylesheet file not found.");
+                }
+            } else {
+                System.out.println("Scene is still null.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading stylesheet: " + e.getMessage());
             ExceptionHandler.handleException(e);
         }
     }
 
-    private void updateButtonSelection(String viewName) {
-        clearButtonSelection();
-        Button selectedButton = getButtonForView(viewName);
-        if (selectedButton != null) {
-            selectButton(selectedButton);
-        }
-    }
-    private Button getButtonForView(String viewName) {
-        switch (viewName) {
-            case "dashboardView.fxml":
-                return btnDashboard;
-            case "ProfileView.fxml":
-                return btnProfiles;
-            case "TeamsView.fxml":
-                return btnTeams;
-            case "geographyView.fxml":
-                return btnGeography;
-            case "multipliersView.fxml":
-                return btnMultiplier;
-            case "currencyView.fxml":
-                return btnCurrency;
-            default:
-                return null;
-        }
+/*
+    private void initializeButtonMap() {
+        buttonMap.put("DashboardView", btnDashboard);
+        buttonMap.put("TeamsView", btnTeams);
+        buttonMap.put("ProfileView", btnProfiles);
+        buttonMap.put("GeographyView", btnGeography);
+        buttonMap.put("multipliersView", btnMultiplier);
+        buttonMap.put("currencyView", btnCurrency);
     }
 
-    private void selectButton(Button button) {
-        if (button != null) {
-            button.getStyleClass().add("button-selected");
+    public void selectDashboardButton() {
+        updateButtonSelection("DashboardView");
+        System.out.println("Dashboard button selected"+id);
+
+    }
+
+    public void selectProfileButton() {
+        updateButtonSelection("ProfileView");
+        System.out.println("Profile button selected"+id);
+
+    }
+
+    public void selectTeamsButton() {
+        updateButtonSelection("TeamsView");
+        System.out.println("Teams button selected"+id);
+
+    }
+
+    void updateButtonSelection(String viewName) {
+        clearButtonSelection();
+        Button selectedButton = buttonMap.get(viewName);
+        if (selectedButton != null) {
+            selectedButton.getStyleClass().add("button-selected");
+
         }
     }
 
     private void clearButtonSelection() {
-        for (Button btn : new Button[]{btnDashboard, btnProfiles, btnTeams, btnGeography, btnMultiplier, btnCurrency}) {
-            if (btn != null) {
-                btn.getStyleClass().remove("button-selected");
-            }
-        }
+        buttonMap.values().forEach(button -> button.getStyleClass().remove("button-selected"));
     }
+
+ */
+
+
 
 
     public UpdateProjectTeamController getUpdateProjectTeamController() {
@@ -146,6 +219,9 @@ public class FrameController implements Initializable {
         }
     }
 
+
+
+
     private void showErrorAlert(String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -157,16 +233,19 @@ public class FrameController implements Initializable {
     @FXML
     private void openDashboard(ActionEvent actionEvent) {
         loadView("DashboardView.fxml");
+
     }
 
     @FXML
     private void openProfiles(ActionEvent actionEvent) {
         loadView("ProfileView.fxml");
+
     }
 
     @FXML
     private void openTeams(ActionEvent actionEvent) {
         loadView("TeamsView.fxml");
+
     }
 
     @FXML

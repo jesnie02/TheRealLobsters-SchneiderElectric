@@ -79,6 +79,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return everyProjectTeam;
     }
 
+
+
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         String insertTeamSQL = "INSERT INTO ProjectTeams (TeamName, NumberOfProfiles, AvgOfAnnualSalary, SumOfAnnualSalary, AvgOfHourlyRate, SumOfHourlyRate, AvgOfDailyRate, SumOfDailyRate, Geography) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -122,28 +124,40 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                             double utilization = projectTeam.getUtilizationsMap().get(profile);
                             double utilizationCost = projectTeam.getUtilizationCostMap().get(profile);
 
-                            // Insert into ProfileProjectTeams
-                            pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
-                            pstmtInsertProfileProjectTeams.setInt(2, teamId);
-                            pstmtInsertProfileProjectTeams.setDouble(3, utilization);
-                            pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
-                            pstmtInsertProfileProjectTeams.addBatch();
-
-                            // Update GeographyProfile
-                            pstmtUpdateGeographyProfile.setInt(1, projectTeam.getGeographyId());
-                            pstmtUpdateGeographyProfile.setInt(2, profile.getProfileId());
-                            int rowsAffected = pstmtUpdateGeographyProfile.executeUpdate();
-
-                            // If no rows were updated, insert into GeographyProfile
-                            if (rowsAffected == 0) {
-                                pstmtInsertGeographyProfile.setInt(1, projectTeam.getGeographyId());
-                                pstmtInsertGeographyProfile.setInt(2, profile.getProfileId());
-                                pstmtInsertGeographyProfile.executeUpdate();
+                            try {
+                                // Insert into ProfileProjectTeams
+                                pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
+                                pstmtInsertProfileProjectTeams.setInt(2, teamId);
+                                pstmtInsertProfileProjectTeams.setDouble(3, utilization);
+                                pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
+                                pstmtInsertProfileProjectTeams.addBatch();
+                            } catch (SQLException e) {
+                                throw new ApplicationWideException("Failed to insert into ProfileProjectTeams", e);
                             }
 
-                            // Adjust profile utilization and utilization cost
-                            adjustUtilization(profile, utilization);
-                            adjustUtilizationCost(profile, utilizationCost);
+                            try {
+                                // Update GeographyProfile
+                                pstmtUpdateGeographyProfile.setInt(1, projectTeam.getGeographyId());
+                                pstmtUpdateGeographyProfile.setInt(2, profile.getProfileId());
+                                int rowsAffected = pstmtUpdateGeographyProfile.executeUpdate();
+
+                                // If no rows were updated, insert into GeographyProfile
+                                if (rowsAffected == 0) {
+                                    pstmtInsertGeographyProfile.setInt(1, projectTeam.getGeographyId());
+                                    pstmtInsertGeographyProfile.setInt(2, profile.getProfileId());
+                                    pstmtInsertGeographyProfile.executeUpdate();
+                                }
+                            } catch (SQLException e) {
+                                throw new ApplicationWideException("Failed to update or insert into GeographyProfile", e);
+                            }
+
+                            try {
+                                // Adjust profile utilization and utilization cost
+                                adjustUtilization(profile, utilization);
+                                adjustUtilizationCost(profile, utilizationCost);
+                            } catch (ApplicationWideException e) {
+                                throw new ApplicationWideException("Failed to adjust profile utilization and utilization cost", e);
+                            }
                         }
                         pstmtInsertProfileProjectTeams.executeBatch();
                     } else {

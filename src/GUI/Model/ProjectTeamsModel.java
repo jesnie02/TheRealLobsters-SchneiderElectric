@@ -150,6 +150,7 @@ public class ProjectTeamsModel {
 
     public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeamsManager.updateTeam(projectTeam);
+
     }
 
     public void removeProfileFromTeam(int projectTeam, int profile) {

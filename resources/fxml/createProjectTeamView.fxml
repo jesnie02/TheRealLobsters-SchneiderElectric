@@ -220,7 +220,7 @@
                      </VBox.margin>
                      <children>
                         <Button fx:id="btnRemoveProfileTeams" mnemonicParsing="false" onAction="#removeProfileFromTbl" prefHeight="26.0" prefWidth="141.0" text="Remove profile" />
-                        <Button fx:id="btnCreateTeam" mnemonicParsing="false" onAction="#createProjectTeamToDatabase" prefHeight="26.0" prefWidth="150.0" text="Create team" />
+                        <Button fx:id="btnCreateTeam" mnemonicParsing="false" onAction="#createProjectTeam" prefHeight="26.0" prefWidth="150.0" text="Create team" />
                      </children>
                   </HBox>
                </children>

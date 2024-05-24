@@ -243,7 +243,12 @@ public class Geography_DAO implements IGeographyDataAccess {
         } catch (SQLException e) {
             throw new ApplicationWideException("Failed to delete geography", e);
         }
+
     }
+
+
+
+
 
     @Override
     public void updateGeography(Geography geography) throws ApplicationWideException {

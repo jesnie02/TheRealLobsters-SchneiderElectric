@@ -229,7 +229,7 @@ public class CreateProjectTeamController implements Initializable {
     }
 
     @FXML
-    public void createProjectTeamToDatabase(ActionEvent event) {
+    public void createProjectTeam(ActionEvent event) {
         if (!validateInput()) {
             return;
         }
@@ -247,17 +247,25 @@ public class CreateProjectTeamController implements Initializable {
 
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
+            clearInputInFields();
+            lblMessageCreateTeam.setTextFill(Color.GREEN);
+            lblMessageCreateTeam.setText("The team was created successfully.");
         } catch (ApplicationWideException e) {
             lblMessageCreateTeam.setTextFill(Color.RED);
-            lblMessageCreateTeam.setText("Error occurred during the creation of the team.");
+            lblMessageCreateTeam.setText("Error occurred during the creation of the team: " + e.getMessage());
         }
-
-        txtProjectTeamName.clear();
-        cBoxGeographies.setValue(null);
-
-        lblMessageCreateTeam.setTextFill(Color.GREEN);
-        lblMessageCreateTeam.setText("The team was created successfully.");
     }
+
+    private void clearInputInFields() {
+        txtProjectTeamName.clear();
+        cBoxGeographies.getSelectionModel().clearSelection();
+        tblProfileToTeam.getItems().clear();
+        sliderUtilizationCost.setValue(0);
+        sliderUtilizationTime.setValue(0);
+
+    }
+
+
 
     private void setupSliderTime() {
         SliderDecimalFilter filter = new SliderDecimalFilter();

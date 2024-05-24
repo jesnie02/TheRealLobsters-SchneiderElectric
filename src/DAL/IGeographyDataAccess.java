@@ -3,7 +3,6 @@ package DAL;
 import BE.Geography;
 import CustomExceptions.ApplicationWideException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface IGeographyDataAccess {
@@ -20,6 +19,8 @@ public interface IGeographyDataAccess {
 
 
     void deleteGeography(int geographyId) throws ApplicationWideException;
+
+
 
     void updateGeography(Geography geography) throws ApplicationWideException;
 }

@@ -48,6 +48,7 @@ public class GeographyController  {
         countryModel = new CountryModel();
         loadGeographies();
         initializeTables();
+
     }
 
     private void initializeTables() {
@@ -140,9 +141,12 @@ public class GeographyController  {
             boolean success = geographyModel.deleteGeography(geography);
             if (success) {
                 tblGeographyOverview.getItems().remove(geography);
+
                 AlertBox.displayInfo("Geography Deleted", "Geography has been successfully deleted.");
+
             } else {
                 AlertBox.displayInfo("Deletion Failed", "Failed to delete the geography.");
+
             }
         }
     }
@@ -155,8 +159,23 @@ public class GeographyController  {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
+
             stage.setScene(scene);
             stage.setTitle("Create geography");
+
+            stage.setOnHidden(windowEvent -> {
+                try {
+
+                    loadGeographies();
+                } catch (ApplicationWideException e) {
+                    ExceptionHandler.handleException(e);
+                }
+                initializeTables();
+                tblGeographyOverview.refresh();
+                tblGeographyOverviewCountry.refresh();
+
+            });
+
             stage.show();
         }
         catch (IOException e) {
