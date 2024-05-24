@@ -37,6 +37,10 @@ public class GeographyManager {
         geographyDAO.deleteGeography(geography.getGeographyId());
     }
 
+    public void updateGeography(Geography geography) throws ApplicationWideException {
+        geographyDAO.updateGeography(geography);
+    }
+
     /*
     public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
         return geographyDAO.getCountryGeographyList(countryId);

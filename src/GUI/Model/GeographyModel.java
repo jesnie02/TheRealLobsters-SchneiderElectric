@@ -75,4 +75,17 @@ public class GeographyModel {
             return false;
         }
     }
+
+    public void updateGeography(Geography geography) {
+        try {
+            geographyManager.updateGeography(geography);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
+        // Update the local list if necessary
+        int index = geographies.indexOf(geography);
+        if (index >= 0) {
+            geographies.set(index, geography);
+        }
+    }
 }

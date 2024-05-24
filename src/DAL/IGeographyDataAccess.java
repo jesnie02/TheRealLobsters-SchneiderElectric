@@ -20,4 +20,6 @@ public interface IGeographyDataAccess {
 
 
     void deleteGeography(int geographyId) throws ApplicationWideException;
+
+    void updateGeography(Geography geography) throws ApplicationWideException;
 }

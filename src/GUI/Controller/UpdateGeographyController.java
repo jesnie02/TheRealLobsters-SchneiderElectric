@@ -4,7 +4,10 @@ import BE.Country;
 import BE.Geography;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
+import GUI.Model.GeographyModel;
+import GUI.Utility.AlertBox;
 import GUI.Utility.DataModelSingleton;
+import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +23,7 @@ public class UpdateGeographyController implements Initializable {
 
     private Runnable onGeographyUpdated;
     private CountryModel countryModel;
+    private GeographyModel geographyModel;
     private Geography geography;
     @FXML
     private CheckComboBox<Country> cBoxCountries;
@@ -34,6 +38,7 @@ public class UpdateGeographyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             countryModel = new CountryModel();
+            geographyModel = new GeographyModel();
             loadAllCountries();
         } catch (ApplicationWideException e) {
             throw new RuntimeException(e);
@@ -64,7 +69,6 @@ public class UpdateGeographyController implements Initializable {
         List<Country> selectedCountries = geography.getCountries();
         cBoxCountries.getCheckModel().clearChecks();
         selectedCountries.forEach(country -> cBoxCountries.getCheckModel().check(country));
-        System.out.println("Selected countries: " + selectedCountries);
     }
 
     public void setGeographyAndCountries(List<Country> countries) {
@@ -74,5 +78,23 @@ public class UpdateGeographyController implements Initializable {
 
     @FXML
     private void updateGeography(ActionEvent event) {
+        String updatedGeographyName = txtGeography.getText();
+
+        geography.setGeographyName(updatedGeographyName);
+
+        List<Country> selectedCountries = cBoxCountries.getCheckModel().getCheckedItems();
+        geography.setCountries(selectedCountries);
+
+        try {
+            GeographyModel geographyModel = new GeographyModel();
+            geographyModel.updateGeography(geography);
+            if (onGeographyUpdated != null) {
+                onGeographyUpdated.run();
+            }
+            AlertBox.displayInfo("Update Successful", "The geography has been successfully updated.");
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
     }
+
 }

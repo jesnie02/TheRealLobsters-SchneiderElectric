@@ -245,8 +245,41 @@ public class Geography_DAO implements IGeographyDataAccess {
         }
     }
 
+    @Override
+    public void updateGeography(Geography geography) throws ApplicationWideException {
+        String updateGeographySql = "UPDATE Geography SET GeographyName = ? WHERE GeographyId = ?;";
+        String deleteGeographyCountrySql = "DELETE FROM GeographyCountry WHERE GeographyId = ?;";
+        String insertGeographyCountrySql = "INSERT INTO GeographyCountry (GeographyId, CountryId) VALUES (?, ?);";
 
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmtUpdateGeography = conn.prepareStatement(updateGeographySql);
+             PreparedStatement pstmtDeleteGeographyCountry = conn.prepareStatement(deleteGeographyCountrySql);
+             PreparedStatement pstmtInsertGeographyCountry = conn.prepareStatement(insertGeographyCountrySql)) {
 
+            conn.setAutoCommit(false);
 
+            try {
+                pstmtUpdateGeography.setString(1, geography.getGeographyName());
+                pstmtUpdateGeography.setInt(2, geography.getGeographyId());
+                pstmtUpdateGeography.executeUpdate();
 
+                pstmtDeleteGeographyCountry.setInt(1, geography.getGeographyId());
+                pstmtDeleteGeographyCountry.executeUpdate();
+
+                for (Country country : geography.getCountries()) {
+                    pstmtInsertGeographyCountry.setInt(1, geography.getGeographyId());
+                    pstmtInsertGeographyCountry.setInt(2, country.getCountryId());
+                    pstmtInsertGeographyCountry.addBatch();
+                }
+                pstmtInsertGeographyCountry.executeBatch();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new ApplicationWideException("Failed to update geography", e);
+            }
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Failed to update geography", e);
+        }
+    }
 }
