@@ -553,22 +553,43 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void removeProfileFromProjectTeam(int projectTeamId, int profileId) throws ApplicationWideException {
+        String selectUtilizationAndCostSQL = "SELECT Utilization, UtilizationCost FROM ProfileProjectTeams WHERE ProfileId_PPT = ? AND TeamsId = ?";
         String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE ProfileId_PPT = ? AND TeamsId = ?";
         String updateProfileCountSQL = "UPDATE ProjectTeams SET NumberOfProfiles = NumberOfProfiles - 1 WHERE TeamsId = ?";
+        String updateProfileUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization + ?, UtilizationCost = UtilizationCost + ? WHERE ProfileId = ?";
 
         Connection conn = null;
         try {
             conn = dbConnector.getConnection();
 
-            try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
-                 PreparedStatement pstmtUpdateProfileCount = conn.prepareStatement(updateProfileCountSQL)) {
+            try (PreparedStatement pstmtSelectUtilizationAndCost = conn.prepareStatement(selectUtilizationAndCostSQL);
+                 PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+                 PreparedStatement pstmtUpdateProfileCount = conn.prepareStatement(updateProfileCountSQL);
+                 PreparedStatement pstmtUpdateProfileUtilization = conn.prepareStatement(updateProfileUtilizationSQL)) {
 
                 conn.setAutoCommit(false);
 
+                // Retrieve the Utilization and UtilizationCost
+                pstmtSelectUtilizationAndCost.setInt(1, profileId);
+                pstmtSelectUtilizationAndCost.setInt(2, projectTeamId);
+                ResultSet rs = pstmtSelectUtilizationAndCost.executeQuery();
+                if (rs.next()) {
+                    double utilization = rs.getDouble("Utilization");
+                    double utilizationCost = rs.getDouble("UtilizationCost");
+
+                    // Add the Utilization and UtilizationCost to the profile's totals
+                    pstmtUpdateProfileUtilization.setDouble(1, utilization);
+                    pstmtUpdateProfileUtilization.setDouble(2, utilizationCost);
+                    pstmtUpdateProfileUtilization.setInt(3, profileId);
+                    pstmtUpdateProfileUtilization.executeUpdate();
+                }
+
+                // Delete the profile from the ProfileProjectTeams table
                 pstmtDeleteProfileProjectTeams.setInt(1, profileId);
                 pstmtDeleteProfileProjectTeams.setInt(2, projectTeamId);
-                int rowsAffectedProfileProjectTeams = pstmtDeleteProfileProjectTeams.executeUpdate();
+                pstmtDeleteProfileProjectTeams.executeUpdate();
 
+                // Update the profile count in the ProjectTeams table
                 pstmtUpdateProfileCount.setInt(1, projectTeamId);
                 pstmtUpdateProfileCount.executeUpdate();
 
@@ -594,4 +615,5 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
 }
