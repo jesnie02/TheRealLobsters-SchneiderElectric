@@ -394,10 +394,15 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                     pstmtInsert.setDouble(3, utilization);
                     pstmtInsert.setDouble(4, utilizationCost);
                     pstmtInsert.executeUpdate();
+
+                    // Adjust profile utilization and utilization cost for new profiles
+                    adjustUtilization(profile, utilization);
+                    adjustUtilizationCost(profile, utilizationCost);
                 }
             }
         }
     }
+
 
     private Set<Integer> getExistingProfileIds(Connection conn, int teamId) throws SQLException {
         Set<Integer> existingProfileIds = new HashSet<>();
