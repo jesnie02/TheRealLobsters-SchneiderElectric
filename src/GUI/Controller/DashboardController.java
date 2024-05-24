@@ -93,10 +93,30 @@ public class DashboardController implements Initializable {
         sortedData.comparatorProperty().bind(tblGeography.comparatorProperty());
         tblGeography.setItems(sortedData);
 
+        txtSearchDashboardGeo.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(geography -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String firstLetter = String.valueOf(newValue.charAt(0)).toUpperCase();
+                return geography.getGeographyName().toUpperCase().startsWith(firstLetter);
+            });
+        });
+
         filteredDataTeam = new FilteredList<>(projectTeamsModel.getAllProjectTeamsData(), p -> true);
         SortedList<ProjectTeam> sortedDataTeam = new SortedList<>(filteredDataTeam);
         sortedDataTeam.comparatorProperty().bind(tblTeams.comparatorProperty());
         tblTeams.setItems(sortedDataTeam);
+
+        txtSearchDashboardTeam.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredDataTeam.setPredicate(team -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String firstLetter = String.valueOf(newValue.charAt(0)).toUpperCase();
+                return team.getTeamName().toUpperCase().startsWith(firstLetter);
+            });
+        });
     }
 
     private void setupSearchListeners() {
@@ -105,8 +125,8 @@ public class DashboardController implements Initializable {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
-                    String lowerCaseFilter = newValue.toLowerCase();
-                    return geography.getGeographyName().toLowerCase().contains(lowerCaseFilter);
+                    String firstLetterFilter = newValue.substring(0, 1).toLowerCase();
+                    return geography.getGeographyName().toLowerCase().startsWith(firstLetterFilter);
                 })
         );
 
@@ -115,8 +135,8 @@ public class DashboardController implements Initializable {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
-                    String lowerCaseFilter = newValue.toLowerCase();
-                    return team.getTeamName().toLowerCase().contains(lowerCaseFilter);
+                    String firstLetterFilter = newValue.substring(0, 1).toLowerCase();
+                    return team.getTeamName().toLowerCase().startsWith(firstLetterFilter);
                 })
         );
     }
