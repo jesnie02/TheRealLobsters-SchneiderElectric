@@ -464,112 +464,18 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmtUpdateTeam.setInt(7, projectTeam.getTeamId());
             pstmtUpdateTeam.executeUpdate();
         }
+
+        // Call the method to update averages
+        updateAverages(conn, projectTeam);
     }
 
-    private void deleteExistingProfiles(Connection conn, ProjectTeam projectTeam) throws SQLException {
-        String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
-        try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL)) {
-            pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
-            pstmtDeleteProfileProjectTeams.executeUpdate();
-        }
-    }
-
-    private void insertNewProfiles(Connection conn, ProjectTeam projectTeam, Set<Integer> existingProfileIds) throws SQLException, ApplicationWideException {
-        String insertProfileProjectTeamsSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization, UtilizationCost) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement pstmtInsertProfileProjectTeams = conn.prepareStatement(insertProfileProjectTeamsSQL)) {
-            for (Profile profile : projectTeam.getProfiles()) {
-                double utilization = projectTeam.getUtilizationsMap().get(profile);
-                double utilizationCost = projectTeam.getUtilizationCostMap().get(profile);
-
-                pstmtInsertProfileProjectTeams.setInt(1, profile.getProfileId());
-                pstmtInsertProfileProjectTeams.setInt(2, projectTeam.getTeamId());
-                pstmtInsertProfileProjectTeams.setDouble(3, utilization);
-                pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
-                pstmtInsertProfileProjectTeams.addBatch();
-
-                if (!existingProfileIds.contains(profile.getProfileId())) {
-                    // Adjust profile utilization and utilization cost only for new profiles
-                    adjustUtilization(profile, utilization);
-                    adjustUtilizationCost(profile, utilizationCost);
-                }
-            }
-            pstmtInsertProfileProjectTeams.executeBatch(); // Batch processing for inserting multiple rows
-        }
-    }
-
-    private void updateSumValues(Connection conn, ProjectTeam projectTeam) throws SQLException {
-        String updateSumValuesSQL = "UPDATE ProjectTeams SET SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ? WHERE TeamsId = ?";
-        try (PreparedStatement pstmtUpdateSumValues = conn.prepareStatement(updateSumValuesSQL)) {
-            pstmtUpdateSumValues.setDouble(1, projectTeam.getSumOfAnnualSalary());
-            pstmtUpdateSumValues.setDouble(2, projectTeam.getSumOfDailyRate());
-            pstmtUpdateSumValues.setDouble(3, projectTeam.getSumOfHourlyRate());
-            pstmtUpdateSumValues.setInt(4, projectTeam.getTeamId());
-            pstmtUpdateSumValues.executeUpdate();
-        }
-    }
-
-    public void mergeProfileProjectTeams(ProjectTeam projectTeam, Set<Integer> existingProfileIds) throws ApplicationWideException {
-        String updateSQL = "UPDATE ProfileProjectTeams SET Utilization = ?, UtilizationCost = ? WHERE ProfileId_PPT = ? AND TeamsId = ?";
-        String insertSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization, UtilizationCost) VALUES (?, ?, ?, ?)";
-
-        Connection conn = null;
-        try {
-            conn = dbConnector.getConnection();
-            PreparedStatement pstmtUpdate = conn.prepareStatement(updateSQL);
-            PreparedStatement pstmtInsert = conn.prepareStatement(insertSQL);
-
-            conn.setAutoCommit(false);
-
-            for (Profile profile : projectTeam.getProfiles()) {
-                double utilization = projectTeam.getUtilizationsMap().get(profile);
-                double utilizationCost = projectTeam.getUtilizationCostMap().get(profile);
-
-                if (existingProfileIds.contains(profile.getProfileId())) {
-                    // First try to update
-                    pstmtUpdate.setDouble(1, utilization);
-                    pstmtUpdate.setDouble(2, utilizationCost);
-                    pstmtUpdate.setInt(3, profile.getProfileId());
-                    pstmtUpdate.setInt(4, projectTeam.getTeamId());
-
-                    int affectedRows = pstmtUpdate.executeUpdate();
-
-                    if (affectedRows == 0) {
-                        // If no rows were updated, insert new row
-                        pstmtInsert.setInt(1, profile.getProfileId());
-                        pstmtInsert.setInt(2, projectTeam.getTeamId());
-                        pstmtInsert.setDouble(3, utilization);
-                        pstmtInsert.setDouble(4, utilizationCost);
-                        pstmtInsert.executeUpdate();
-                    }
-                } else {
-                    // Insert new row for new profiles
-                    pstmtInsert.setInt(1, profile.getProfileId());
-                    pstmtInsert.setInt(2, projectTeam.getTeamId());
-                    pstmtInsert.setDouble(3, utilization);
-                    pstmtInsert.setDouble(4, utilizationCost);
-                    pstmtInsert.executeUpdate();
-                }
-            }
-
-            conn.commit();
-        } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException rollbackEx) {
-                    throw new ApplicationWideException("Failed to rollback transaction", rollbackEx);
-                }
-            }
-            throw new ApplicationWideException("Failed to merge profile project teams", e);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
-                    conn.close();
-                } catch (SQLException ex) {
-                    throw new ApplicationWideException("Failed to reset connection settings and close the connection", ex);
-                }
-            }
+    //TODO ved ikke om jeg må lave en udregning her
+    private void updateAverages(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String updateAveragesSQL = "UPDATE ProjectTeams SET AvgOfAnnualSalary = SumOfAnnualSalary / NULLIF(NumberOfProfiles, 0), AvgOfDailyRate = SumOfDailyRate / NULLIF(NumberOfProfiles, 0), AvgOfHourlyRate = SumOfHourlyRate / NULLIF(NumberOfProfiles, 0) WHERE TeamsId = ?";
+        try (PreparedStatement pstmtUpdateAverages = conn.prepareStatement(updateAveragesSQL)) {
+            pstmtUpdateAverages.setInt(1, projectTeam.getTeamId());
+            pstmtUpdateAverages.executeUpdate();
+            System.out.println("ikke sikker på jeg må lave en udregning her, i en SQL statement. linje 473 i ProjectTeams_DAO");
         }
     }
 

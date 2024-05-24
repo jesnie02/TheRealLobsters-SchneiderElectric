@@ -264,6 +264,8 @@ public class UpdateProjectTeamController implements Initializable {
 
             AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
             FrameController.getInstance().loadTeamsView();
+            TeamsController.getInstance().loadTeamsInTilePane();
+
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
             AlertBox.displayError(e);
