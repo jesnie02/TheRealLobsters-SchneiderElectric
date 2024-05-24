@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
@@ -92,6 +93,7 @@ public class UpdateGeographyController implements Initializable {
                 onGeographyUpdated.run();
             }
             AlertBox.displayInfo("Update Successful", "The geography has been successfully updated.");
+            ((Stage) btnSaveGeography.getScene().getWindow()).close();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
