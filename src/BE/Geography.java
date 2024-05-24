@@ -2,6 +2,7 @@ package BE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Geography {
 
@@ -107,6 +108,19 @@ public class Geography {
         return avgHourlyRate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Geography geography = (Geography) o;
+        return geographyId == geography.geographyId &&
+                Objects.equals(geographyName, geography.geographyName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(geographyId, geographyName);
+    }
 
     @Override
     public String toString() {

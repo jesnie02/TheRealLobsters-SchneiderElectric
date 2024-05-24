@@ -20,6 +20,7 @@ public class UpdateGeographyController implements Initializable {
 
     private Runnable onGeographyUpdated;
     private CountryModel countryModel;
+    private Geography geography;
     @FXML
     private CheckComboBox<Country> cBoxCountries;
     @FXML
@@ -33,7 +34,7 @@ public class UpdateGeographyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             countryModel = new CountryModel();
-            setupComboBox();
+            loadAllCountries();
         } catch (ApplicationWideException e) {
             throw new RuntimeException(e);
         }
@@ -42,35 +43,36 @@ public class UpdateGeographyController implements Initializable {
 
     private void updateUI(Geography geography) {
         txtGeography.setText(geography.getGeographyName());
-        cBoxCountries.getCheckModel().clearChecks();
-        List<Country> selectedCountries = geography.getCountries();
-        List<Country> allCountries = countryModel.getAllCountries();
-        cBoxCountries.getItems().setAll(allCountries);
-        for (Country country : selectedCountries) {
-            for (Country comboBoxCountry : cBoxCountries.getItems()) {
-                if (country.equals(comboBoxCountry)) {
-                    cBoxCountries.getCheckModel().check(comboBoxCountry);
-                }
-            }
-        }
-    }
-
-    private void setupComboBox(){
-        cBoxCountries.getItems().addAll(countryModel.getAllCountries());
-    }
-
-    @FXML
-    private void updateGeography(ActionEvent event) {
     }
 
     public void setGeography(Geography geography) {
-        DataModelSingleton.getInstance().setCurrentGeography(geography);
+        this.geography = geography;
+        //DataModelSingleton.getInstance().setCurrentGeography(geography);
         updateUI(geography);
+        loadGeographyDetails();
     }
 
     public void setOnGeographyUpdated(Runnable onProfileUpdated) {
         this.onGeographyUpdated = onProfileUpdated;
     }
 
+    private void loadAllCountries() throws ApplicationWideException {
+        cBoxCountries.getItems().setAll(countryModel.getAllCountries());
+    }
 
+    private void loadGeographyDetails(){
+        List<Country> selectedCountries = geography.getCountries();
+        cBoxCountries.getCheckModel().clearChecks();
+        selectedCountries.forEach(country -> cBoxCountries.getCheckModel().check(country));
+        System.out.println("Selected countries: " + selectedCountries);
+    }
+
+    public void setGeographyAndCountries(List<Country> countries) {
+        cBoxCountries.getCheckModel().clearChecks();
+        countries.forEach(country -> cBoxCountries.getCheckModel().check(country));
+    }
+
+    @FXML
+    private void updateGeography(ActionEvent event) {
+    }
 }

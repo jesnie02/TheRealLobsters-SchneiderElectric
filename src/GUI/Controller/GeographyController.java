@@ -72,7 +72,6 @@ public class GeographyController  {
                     Geography geography = getTableView().getItems().get(getIndex());
                     openUpdateGeographyView(geography);
                     tblGeographyOverview.refresh();
-
                 });
             }
 
@@ -170,16 +169,18 @@ public class GeographyController  {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateGeographyView.fxml"));
             Parent root = loader.load();
             UpdateGeographyController controller = loader.getController();
-            controller.setGeography(geography);// Set a callback to refresh the table view when the update is done
+            controller.setGeography(geography);
             controller.setOnGeographyUpdated(() -> {
-                // Reload profiles and refresh the table view
                 try {
                     loadGeographies();
                 } catch (ApplicationWideException e) {
-                    throw new RuntimeException(e);
+                    ExceptionHandler.handleException(e);
                 }
                 tblGeographyOverview.refresh();
             });
+
+            ObservableList<Country> countries = countryModel.getCountriesForGeographyOverview(geography.getGeographyId());
+            controller.setGeographyAndCountries(countries);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

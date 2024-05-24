@@ -37,7 +37,7 @@ public class UpdateProfileController implements Initializable {
 
     private FrameController frameController;
     private ProfileModel profileModel;
-    private Runnable onProfileUpdated;  // Callback for updating the profile
+    private Runnable onProfileUpdated;
     @FXML
     private TextField txtOverhead;
     @FXML
