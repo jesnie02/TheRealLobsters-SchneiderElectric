@@ -177,22 +177,41 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
+        String selectUtilizationsSQL = "SELECT ProfileId_PPT, Utilization, UtilizationCost FROM ProfileProjectTeams WHERE TeamsId = ?";
         String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
         String deleteCountryProjectTeamsSQL = "DELETE FROM CountryProjectTeams WHERE TeamsId = ?";
         String deleteGeographyProfileSQL = "DELETE FROM GeographyProfile WHERE GeographyId = ?";
         String deleteTeamSQL = "DELETE FROM ProjectTeams WHERE TeamsId = ?";
+        String updateProfileUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization + ?, UtilizationCost = UtilizationCost + ? WHERE ProfileId = ?";
 
         Connection conn = null;
         try {
             conn = dbConnector.getConnection();
             conn.setAutoCommit(false);
 
-            try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+            try (PreparedStatement pstmtSelectUtilizations = conn.prepareStatement(selectUtilizationsSQL);
+                 PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
                  PreparedStatement pstmtDeleteCountryProjectTeams = conn.prepareStatement(deleteCountryProjectTeamsSQL);
                  PreparedStatement pstmtDeleteGeographyProfile = conn.prepareStatement(deleteGeographyProfileSQL);
-                 PreparedStatement pstmtDeleteTeam = conn.prepareStatement(deleteTeamSQL)) {
+                 PreparedStatement pstmtDeleteTeam = conn.prepareStatement(deleteTeamSQL);
+                 PreparedStatement pstmtUpdateProfileUtilization = conn.prepareStatement(updateProfileUtilizationSQL)) {
 
                 int teamId = projectTeam.getTeamId();
+
+                // Retrieve the Utilization and UtilizationCost for each profile
+                pstmtSelectUtilizations.setInt(1, teamId);
+                ResultSet rs = pstmtSelectUtilizations.executeQuery();
+                while (rs.next()) {
+                    int profileId = rs.getInt("ProfileId_PPT");
+                    double utilization = rs.getDouble("Utilization");
+                    double utilizationCost = rs.getDouble("UtilizationCost");
+
+                    // Add the Utilization and UtilizationCost to the profile's totals
+                    pstmtUpdateProfileUtilization.setDouble(1, utilization);
+                    pstmtUpdateProfileUtilization.setDouble(2, utilizationCost);
+                    pstmtUpdateProfileUtilization.setInt(3, profileId);
+                    pstmtUpdateProfileUtilization.executeUpdate();
+                }
 
                 // Delete from ProfileProjectTeams
                 pstmtDeleteProfileProjectTeams.setInt(1, teamId);
@@ -211,16 +230,18 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 pstmtDeleteTeam.executeUpdate();
 
                 conn.commit();
+            } catch (SQLException e) {
+                if (conn != null) {
+                    try {
+                        conn.rollback();
+                    } catch (SQLException ex) {
+                        throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
+                    }
+                }
+                throw new ApplicationWideException("SQL operation failed: " + e.getMessage(), e);
             }
         } catch (SQLException e) {
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    throw new ApplicationWideException("Transaction rollback failed: " + ex.getMessage(), ex);
-                }
-            }
-            throw new ApplicationWideException("SQL operation failed: " + e.getMessage(), e);
+            throw new ApplicationWideException("Failed to delete team", e);
         } finally {
             if (conn != null) {
                 try {
@@ -232,6 +253,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
 
 
 
