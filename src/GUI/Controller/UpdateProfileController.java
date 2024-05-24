@@ -28,22 +28,17 @@ import java.util.ResourceBundle;
 
 public class UpdateProfileController implements Initializable {
 
+
     @FXML
-    private TilePane tPaneProfileUpdateOverview;
-    @FXML
-    private TextField txtFName, txtLName, txtOverheadCost, txtAnnualSalary, txtFixedAmount, txtDailyWorkingHours, txtUtilizationInTheTeam;
+    private TextField txtFName, txtLName, txtEffectiveHours,txtOverhead , txtAnnualSalary, txtFixedAmount, txtDailyWorkingHours;
     @FXML
     private Label lblProfileName;
+    @FXML
+    private MFXSlider sliderOverheadMulti;
 
     private FrameController frameController;
     private ProfileModel profileModel;
     private Runnable onProfileUpdated;
-    @FXML
-    private TextField txtOverhead;
-    @FXML
-    private TextField txtEffectiveHours;
-    @FXML
-    private MFXSlider sliderOverheadMulti;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -108,12 +103,12 @@ public class UpdateProfileController implements Initializable {
         if (success) {
             AlertBox.displayInfo("Profile Updated", "The profile has been successfully updated.");
 
-            // Call the callback to notify that the profile has been updated
+            // callback to notify that the profile has been updated
             if (onProfileUpdated != null) {
                 onProfileUpdated.run();
             }
 
-            // Close the update view
+
             Stage stage = (Stage) txtFName.getScene().getWindow();
             stage.close();
 

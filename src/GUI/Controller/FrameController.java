@@ -4,7 +4,10 @@ package GUI.Controller;
 import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +26,11 @@ import java.util.*;
 
 public class FrameController implements Initializable {
 
+   public enum ViewType {
+        DASHBOARD, PROFILES, TEAMS, GEOGRAPHY, MULTIPLIER, CURRENCY
+   }
 
+    private ObjectProperty<ViewType> currentView = new SimpleObjectProperty<>(ViewType.DASHBOARD);
 
     private static FrameController instance;
     private UpdateProjectTeamController updateProjectTeamController;
@@ -36,21 +43,16 @@ public class FrameController implements Initializable {
     // A map to store the views that have been loaded.
     private Map<String, Node> viewCache = new HashMap<>();
 
-    private Map<String, Button> buttonMap = new HashMap<>();
 
     // A stack to store the history of the pages that have been visited.
     private Stack<Node> pageHistory = new Stack<>();
+
+    private static final PseudoClass ACTIVPSEOUDOCLASS = PseudoClass.getPseudoClass("active");
 
     private final String BASE_PATH = "/fxml/";
     @FXML
     private Button btnDashboard, btnProfiles, btnTeams, btnGeography ,btnMultiplier ,btnCurrency;
 
-    private final BooleanProperty dashboardSelected = new SimpleBooleanProperty(false);
-    private final BooleanProperty profilesSelected = new SimpleBooleanProperty(false);
-    private final BooleanProperty teamsSelected = new SimpleBooleanProperty(false);
-    private final BooleanProperty CurrencySelected = new SimpleBooleanProperty(false);
-    private final BooleanProperty multiplierSelected = new SimpleBooleanProperty(false);
-    private final BooleanProperty geographySelected = new SimpleBooleanProperty(false);
 
 
     public FrameController() {
@@ -61,9 +63,17 @@ public class FrameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        bindButtonStyles();
-        Platform.runLater(this::addStylesheet);
-        //initializeButtonMap();
+
+        btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, true);
+        currentView.addListener((ob, ov, nv) -> {
+          btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.DASHBOARD);
+            btnProfiles.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.PROFILES);
+            btnTeams.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.TEAMS);
+            btnGeography.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.GEOGRAPHY);
+            btnMultiplier.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.MULTIPLIER);
+            btnCurrency.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.CURRENCY);
+        });
+
         loadDashboardOnStart();
     }
 
@@ -108,102 +118,6 @@ public class FrameController implements Initializable {
         }
     }
 
-    private void bindButtonStyles() {
-        btnDashboard.getStyleClass().addAll("button");
-        btnProfiles.getStyleClass().addAll("button");
-        btnTeams.getStyleClass().addAll("button");
-        btnGeography.getStyleClass().addAll("button");
-        btnMultiplier.getStyleClass().addAll("button");
-        btnCurrency.getStyleClass().addAll("button");
-
-        dashboardSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnDashboard, newVal));
-        profilesSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnProfiles, newVal));
-        teamsSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnTeams, newVal));
-        geographySelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnGeography, newVal));
-        CurrencySelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnCurrency, newVal));
-        multiplierSelected.addListener((obs, oldVal, newVal) -> updateStyleClass(btnMultiplier, newVal));
-    }
-
-
-
-
-
-    private void updateStyleClass(Button button, boolean isSelected) {
-        // Run updates on the JavaFX application thread to avoid concurrency issues
-        Platform.runLater(() -> {
-            if (isSelected) {
-                if (!button.getStyleClass().contains("button-selected")) {
-                    button.getStyleClass().add("button-selected");
-                }
-            } else {
-                button.getStyleClass().remove("button-selected");
-            }
-        });
-    }
-
-    private void addStylesheet() {
-        try {
-            if (stackPaneFrame.getScene() != null) {
-                // Adjust path if necessary
-                URL stylesheetURL = getClass().getResource("/style/Style.css");
-                if (stylesheetURL != null) {
-                    stackPaneFrame.getScene().getStylesheets().add(stylesheetURL.toExternalForm());
-                } else {
-                    System.out.println("Stylesheet file not found.");
-                }
-            } else {
-                System.out.println("Scene is still null.");
-            }
-        } catch (Exception e) {
-            System.err.println("Error loading stylesheet: " + e.getMessage());
-            ExceptionHandler.handleException(e);
-        }
-    }
-
-/*
-    private void initializeButtonMap() {
-        buttonMap.put("DashboardView", btnDashboard);
-        buttonMap.put("TeamsView", btnTeams);
-        buttonMap.put("ProfileView", btnProfiles);
-        buttonMap.put("GeographyView", btnGeography);
-        buttonMap.put("multipliersView", btnMultiplier);
-        buttonMap.put("currencyView", btnCurrency);
-    }
-
-    public void selectDashboardButton() {
-        updateButtonSelection("DashboardView");
-        System.out.println("Dashboard button selected"+id);
-
-    }
-
-    public void selectProfileButton() {
-        updateButtonSelection("ProfileView");
-        System.out.println("Profile button selected"+id);
-
-    }
-
-    public void selectTeamsButton() {
-        updateButtonSelection("TeamsView");
-        System.out.println("Teams button selected"+id);
-
-    }
-
-    void updateButtonSelection(String viewName) {
-        clearButtonSelection();
-        Button selectedButton = buttonMap.get(viewName);
-        if (selectedButton != null) {
-            selectedButton.getStyleClass().add("button-selected");
-
-        }
-    }
-
-    private void clearButtonSelection() {
-        buttonMap.values().forEach(button -> button.getStyleClass().remove("button-selected"));
-    }
-
- */
-
-
 
 
     public UpdateProjectTeamController getUpdateProjectTeamController() {
@@ -232,29 +146,34 @@ public class FrameController implements Initializable {
 
     @FXML
     private void openDashboard(ActionEvent actionEvent) {
+        currentView.set(ViewType.DASHBOARD);
         loadView("DashboardView.fxml");
 
     }
 
     @FXML
     private void openProfiles(ActionEvent actionEvent) {
+        currentView.set(ViewType.PROFILES);
         loadView("ProfileView.fxml");
 
     }
 
     @FXML
     private void openTeams(ActionEvent actionEvent) {
+        currentView.set(ViewType.TEAMS);
         loadView("TeamsView.fxml");
 
     }
 
     @FXML
     private void openGeography(ActionEvent actionEvent) {
+        currentView.set(ViewType.GEOGRAPHY);
         loadView("geographyView.fxml");
     }
 
     @FXML
     private void openMultiplier(ActionEvent actionEvent) {
+        currentView.set(ViewType.MULTIPLIER);
         loadView("multipliersView.fxml");
     }
 
@@ -285,6 +204,7 @@ public class FrameController implements Initializable {
 
     @FXML
     private void openCurrency(ActionEvent actionEvent) {
+        currentView.set(ViewType.CURRENCY);
         loadView("currencyView.fxml");
     }
 

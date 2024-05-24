@@ -311,12 +311,17 @@
         -fx-border-width: 0 0 0 3px;
     }
 
-    .button-selected {
+
+
+
+
+
+/* do not delete this */
+.button:active {
     -fx-background-color: #F2F2F2;
     -fx-border-color: transparent transparent transparent #3DCD58;
     -fx-border-width: 0 0 0 3px;
-
-    }
+}
 
     /* Buttons/Background/separator/HeaderText TapBar  */
 
@@ -326,11 +331,7 @@
         -fx-alignment: CENTER_LEFT;
         -fx-padding: 0 10px;
     }
-#btnDashboard:focused, #btnProfiles:focused, #btnGeography:focused, #btnTeams:focused, #btnMultiplier:focused, #btnCurrency:focused,
-#btnDashboard:selected, #btnProfiles:selected, #btnGeography:selected, #btnTeams:selected, #btnMultiplier:selected, #btnCurrency:selected {
-    -fx-border-color: transparent transparent transparent #3DCD58;
-    -fx-border-width: 0 0 0 3px;
-}
+
 
     #vboxTapBar {
         -fx-background-color: #FFFFFF;

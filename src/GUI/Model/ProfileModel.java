@@ -38,7 +38,7 @@ public class ProfileModel {
         return instance;
     }
 
-     // Create a new profile to the database.
+     // Create a new profile
     public void createProfile(Profile newProfile) {
         try {
             profileManager.createProfile(newProfile);

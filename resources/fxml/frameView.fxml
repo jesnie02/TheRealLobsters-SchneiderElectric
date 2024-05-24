@@ -78,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnGeography" layoutX="10.0" layoutY="10.0" maxHeight="33.0" maxWidth="120.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="33.0" prefWidth="120.0" text="Geography">
+            <Button fx:id="btnGeography" layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="130.0" minHeight="33.0" minWidth="120.0" mnemonicParsing="false" onAction="#openGeography" prefHeight="34.0" prefWidth="130.0" text="Geography">
                <VBox.margin>
                   <Insets bottom="8.0" />
                </VBox.margin>
@@ -118,7 +118,7 @@
             </VBox>
          </children>
          <padding>
-            <Insets left="8.0" top="16.0" />
+            <Insets top="16.0" />
          </padding>
       </VBox>
    </left>

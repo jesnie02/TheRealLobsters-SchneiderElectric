@@ -165,7 +165,6 @@ public class GeographyController  {
 
             stage.setOnHidden(windowEvent -> {
                 try {
-
                     loadGeographies();
                 } catch (ApplicationWideException e) {
                     ExceptionHandler.handleException(e);
