@@ -325,12 +325,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
             updateTeamDetails(conn, projectTeam);
             Set<Integer> existingProfileIds = getExistingProfileIds(conn, projectTeam.getTeamId());
-            deleteExistingProfiles(conn, projectTeam);
-            insertNewProfiles(conn, projectTeam, existingProfileIds);
-            updateSumValues(conn, projectTeam);
+
+            deleteProfilesNotInList(conn, projectTeam.getTeamId(), projectTeam.getProfiles());
+            insertOrUpdateProfiles(conn, projectTeam);
 
             conn.commit();
-            mergeProfileProjectTeams(projectTeam, existingProfileIds);
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -347,6 +346,54 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                     conn.close();
                 } catch (SQLException ex) {
                     throw new ApplicationWideException("Failed to reset connection settings and close the connection", ex);
+                }
+            }
+        }
+    }
+
+    private void deleteProfilesNotInList(Connection conn, int teamId, List<Profile> profiles) throws SQLException {
+        String deleteSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ? AND ProfileId_PPT NOT IN (";
+        for (int i = 0; i < profiles.size(); i++) {
+            deleteSQL += "?";
+            if (i < profiles.size() - 1) {
+                deleteSQL += ",";
+            }
+        }
+        deleteSQL += ")";
+
+        try (PreparedStatement pstmtDelete = conn.prepareStatement(deleteSQL)) {
+            pstmtDelete.setInt(1, teamId);
+            for (int i = 0; i < profiles.size(); i++) {
+                pstmtDelete.setInt(i + 2, profiles.get(i).getProfileId());
+            }
+            pstmtDelete.executeUpdate();
+        }
+    }
+
+    private void insertOrUpdateProfiles(Connection conn, ProjectTeam projectTeam) throws SQLException, ApplicationWideException {
+        String updateSQL = "UPDATE ProfileProjectTeams SET Utilization = ?, UtilizationCost = ? WHERE ProfileId_PPT = ? AND TeamsId = ?";
+        String insertSQL = "INSERT INTO ProfileProjectTeams (ProfileId_PPT, TeamsId, Utilization, UtilizationCost) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement pstmtUpdate = conn.prepareStatement(updateSQL);
+             PreparedStatement pstmtInsert = conn.prepareStatement(insertSQL)) {
+
+            for (Profile profile : projectTeam.getProfiles()) {
+                double utilization = projectTeam.getUtilizationsMap().get(profile);
+                double utilizationCost = projectTeam.getUtilizationCostMap().get(profile);
+
+                pstmtUpdate.setDouble(1, utilization);
+                pstmtUpdate.setDouble(2, utilizationCost);
+                pstmtUpdate.setInt(3, profile.getProfileId());
+                pstmtUpdate.setInt(4, projectTeam.getTeamId());
+
+                int affectedRows = pstmtUpdate.executeUpdate();
+
+                if (affectedRows == 0) {
+                    pstmtInsert.setInt(1, profile.getProfileId());
+                    pstmtInsert.setInt(2, projectTeam.getTeamId());
+                    pstmtInsert.setDouble(3, utilization);
+                    pstmtInsert.setDouble(4, utilizationCost);
+                    pstmtInsert.executeUpdate();
                 }
             }
         }
