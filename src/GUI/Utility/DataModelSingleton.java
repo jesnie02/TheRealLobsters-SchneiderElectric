@@ -1,5 +1,6 @@
 package GUI.Utility;
 
+import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
 import GUI.Model.ProfileModel;
@@ -9,6 +10,7 @@ public class DataModelSingleton {
     private static DataModelSingleton instance = new DataModelSingleton();
     private ProjectTeam currentTeam;
     private Profile currentProfile;
+    private Geography currentGeography;
 
     private DataModelSingleton() {
     }
@@ -34,5 +36,13 @@ public class DataModelSingleton {
 
     public void setCurrentProfile(Profile currentProfile) {
         this.currentProfile = currentProfile;
+    }
+
+    public Geography getCurrentGeography() {
+        return currentGeography;
+    }
+
+    public void setCurrentGeography(Geography currentGeography) {
+        this.currentGeography = currentGeography;
     }
 }

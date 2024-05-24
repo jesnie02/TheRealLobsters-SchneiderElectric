@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -34,7 +35,7 @@ public class GeographyController  {
     public MFXLegacyTableView<Geography> tblGeographyOverview;
     public MFXLegacyTableView<Country> tblGeographyOverviewCountry;
     public TableColumn<Geography, String> colGeoOverviewName, colGeoOverviewTeamNumber, colGeoOverviewEmployeeNumber;
-    public TableColumn<Profile, Void> colGeoOverviewEdit;
+    public TableColumn<Geography, Void> colGeoOverviewEdit;
     public TableColumn<Geography,Void> colGeoOverviewDelete;
     public TableColumn<Geography, String> colGeoOverviewCountry;
 
@@ -63,40 +64,49 @@ public class GeographyController  {
             return new SimpleStringProperty(String.valueOf(teamCount));
         });
 
-       colGeoOverviewEdit.setCellFactory(param -> new TableCell<Profile, Void>() {
-           private final Button updateButton = createImageButton("/pictures/editLogo.png");
+        colGeoOverviewEdit.setCellFactory(param -> new TableCell<Geography, Void>() {
+            private final Button updateButton = createImageButton("/pictures/editLogo.png");
 
-           @Override
-           protected void updateItem(Void item, boolean empty) {
-               super.updateItem(item, empty);
-               if (empty) {
-                   setGraphic(null);
-               } else {
-                   setGraphic(updateButton);
-               }
-           }
-       });
+            {
+                updateButton.setOnAction(event ->{
+                    Geography geography = getTableView().getItems().get(getIndex());
+                    openUpdateGeographyView(geography);
+                    tblGeographyOverview.refresh();
 
-       colGeoOverviewDelete.setCellFactory(param -> new TableCell<Geography,Void>() {
-           private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
+                });
+            }
 
-           {
-               deleteButton.setOnAction(event -> {
-                   Geography geography = getTableView().getItems().get(getIndex());
-                   deleteGeography(geography);
-               });
-           }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(updateButton);
+                }
+            }
+        });
 
-           @Override
-           protected void updateItem(Void item, boolean empty) {
-               super.updateItem(item, empty);
-               if (empty) {
-                   setGraphic(null);
-               } else {
-                   setGraphic(deleteButton);
-               }
-           }
-       });
+        colGeoOverviewDelete.setCellFactory(param -> new TableCell<Geography,Void>() {
+            private final Button deleteButton = createImageButton("/pictures/TrashLogo.png");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Geography geography = getTableView().getItems().get(getIndex());
+                    deleteGeography(geography);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
     }
 
     private Button createImageButton(String imagePath) {
@@ -151,6 +161,31 @@ public class GeographyController  {
             stage.show();
         }
         catch (IOException e) {
+            ExceptionHandler.handleException(e);
+        }
+    }
+
+    private void openUpdateGeographyView(Geography geography) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateGeographyView.fxml"));
+            Parent root = loader.load();
+            UpdateGeographyController controller = loader.getController();
+            controller.setGeography(geography);// Set a callback to refresh the table view when the update is done
+            controller.setOnGeographyUpdated(() -> {
+                // Reload profiles and refresh the table view
+                try {
+                    loadGeographies();
+                } catch (ApplicationWideException e) {
+                    throw new RuntimeException(e);
+                }
+                tblGeographyOverview.refresh();
+            });
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Update Geography");
+            stage.show();
+        } catch (IOException e) {
             ExceptionHandler.handleException(e);
         }
     }
