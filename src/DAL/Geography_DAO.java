@@ -91,20 +91,19 @@ public class Geography_DAO implements IGeographyDataAccess {
     public List<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException {
         Map<Integer, Geography> allGeographies = new HashMap<>();
         String sql = """
-       SELECT g.GeographyId, g.GeographyName, c.CountryName, 
-              COUNT(DISTINCT gp.ProfileId) AS ProfileCount, 
-              (
-                  SELECT COUNT(DISTINCT t.TeamsId)
-                  FROM ProjectTeams t
-                  WHERE t.Geography = g.GeographyId
-              ) AS TeamCount
-        FROM Geography g
-        LEFT JOIN GeographyCountry gc ON g.GeographyId = gc.GeographyId
-        LEFT JOIN Country c ON gc.CountryId = c.CountryId
-        LEFT JOIN GeographyProfile gp ON g.GeographyId = gp.GeographyId
-        LEFT JOIN Profile p ON gp.ProfileId = p.ProfileId
-        GROUP BY g.GeographyId, g.GeographyName, c.CountryName;
-        """;
+           SELECT g.GeographyId, g.GeographyName, c.CountryName,
+                  COUNT(DISTINCT gp.ProfileId) AS ProfileCount,
+                  COUNT(DISTINCT t.TeamsId) AS TeamCount,
+                  COUNT(DISTINCT ppt.ProfileId_PPT) AS ProfileInTeamsCount
+            FROM Geography g
+            LEFT JOIN GeographyCountry gc ON g.GeographyId = gc.GeographyId
+            LEFT JOIN Country c ON gc.CountryId = c.CountryId
+            LEFT JOIN GeographyProfile gp ON g.GeographyId = gp.GeographyId
+            LEFT JOIN Profile p ON gp.ProfileId = p.ProfileId
+            LEFT JOIN ProjectTeams t ON g.GeographyId = t.Geography
+            LEFT JOIN ProfileProjectTeams ppt ON t.TeamsId = ppt.TeamsId
+            GROUP BY g.GeographyId, g.GeographyName, c.CountryName;
+    """;
 
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement();
@@ -119,7 +118,8 @@ public class Geography_DAO implements IGeographyDataAccess {
                             geographyId,
                             rs.getString("GeographyName"),
                             rs.getInt("ProfileCount"),
-                            rs.getInt("TeamCount")
+                            rs.getInt("TeamCount"),
+                            rs.getInt("ProfileInTeamsCount") // Add this line
                     );
                     allGeographies.put(geographyId, geography);
                 }

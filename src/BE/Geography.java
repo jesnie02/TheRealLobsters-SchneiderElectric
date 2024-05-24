@@ -15,6 +15,7 @@ public class Geography {
     private double avgHourlyRate;
     private int profileCount;
     private int teamCount;
+    private int profileInTeamsCount;
     private List<Country> countries;
 
 
@@ -34,11 +35,12 @@ public class Geography {
         this.geographyName = geographyName;
     }
 
-    public Geography(int geographyId, String geographyName, int profileCount, int teamCount) {
+    public Geography(int geographyId, String geographyName, int profileCount, int teamCount, int profileInTeamsCount) { //TODO DEN HER JONAS
         this.geographyId = geographyId;
         this.geographyName = geographyName;
         this.profileCount = profileCount;
         this.teamCount = teamCount;
+        this.profileInTeamsCount = profileInTeamsCount;
         this.countries = new ArrayList<>();
     }
 
@@ -125,6 +127,14 @@ public class Geography {
     @Override
     public String toString() {
         return geographyName;
+    }
+
+    public int getProfileInTeamsCount() {
+        return profileInTeamsCount;
+    }
+
+    public void setProfileInTeamsCount(int profileInTeamsCount) {
+        this.profileInTeamsCount = profileInTeamsCount;
     }
 
 

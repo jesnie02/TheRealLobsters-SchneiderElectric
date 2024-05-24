@@ -177,27 +177,37 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     @Override
     public void deleteTeam(ProjectTeam projectTeam) throws ApplicationWideException {
-        String deleteTeamSQL = "DELETE FROM ProjectTeams WHERE TeamsId = ?";
         String deleteProfileProjectTeamsSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ?";
         String deleteCountryProjectTeamsSQL = "DELETE FROM CountryProjectTeams WHERE TeamsId = ?";
+        String deleteGeographyProfileSQL = "DELETE FROM GeographyProfile WHERE GeographyId = ?";
+        String deleteTeamSQL = "DELETE FROM ProjectTeams WHERE TeamsId = ?";
 
         Connection conn = null;
         try {
             conn = dbConnector.getConnection();
+            conn.setAutoCommit(false);
 
-            try (PreparedStatement pstmtDeleteTeam = conn.prepareStatement(deleteTeamSQL);
-                 PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
-                 PreparedStatement pstmtDeleteCountryProjectTeams = conn.prepareStatement(deleteCountryProjectTeamsSQL)) {
+            try (PreparedStatement pstmtDeleteProfileProjectTeams = conn.prepareStatement(deleteProfileProjectTeamsSQL);
+                 PreparedStatement pstmtDeleteCountryProjectTeams = conn.prepareStatement(deleteCountryProjectTeamsSQL);
+                 PreparedStatement pstmtDeleteGeographyProfile = conn.prepareStatement(deleteGeographyProfileSQL);
+                 PreparedStatement pstmtDeleteTeam = conn.prepareStatement(deleteTeamSQL)) {
 
-                conn.setAutoCommit(false);
+                int teamId = projectTeam.getTeamId();
 
-                pstmtDeleteProfileProjectTeams.setInt(1, projectTeam.getTeamId());
+                // Delete from ProfileProjectTeams
+                pstmtDeleteProfileProjectTeams.setInt(1, teamId);
                 pstmtDeleteProfileProjectTeams.executeUpdate();
 
-                pstmtDeleteCountryProjectTeams.setInt(1, projectTeam.getTeamId());
+                // Delete from CountryProjectTeams
+                pstmtDeleteCountryProjectTeams.setInt(1, teamId);
                 pstmtDeleteCountryProjectTeams.executeUpdate();
 
-                pstmtDeleteTeam.setInt(1, projectTeam.getTeamId());
+                // Delete from GeographyProfile
+                pstmtDeleteGeographyProfile.setInt(1, projectTeam.getGeographyId());
+                pstmtDeleteGeographyProfile.executeUpdate();
+
+                // Delete from ProjectTeams
+                pstmtDeleteTeam.setInt(1, teamId);
                 pstmtDeleteTeam.executeUpdate();
 
                 conn.commit();
@@ -222,6 +232,8 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
+
+
 
     private void adjustUtilization(Profile profile, double utilization) throws ApplicationWideException {
         String updateUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization - ? WHERE ProfileId = ?";
