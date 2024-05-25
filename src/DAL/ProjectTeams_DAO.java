@@ -6,7 +6,6 @@ import BE.ProjectTeam;
 import BLL.ProjectTeamsManager;
 import DAL.DBConnector.DBConnector;
 import GUI.Utility.AlertBox;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;

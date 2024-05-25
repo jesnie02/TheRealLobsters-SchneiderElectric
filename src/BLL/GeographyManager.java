@@ -40,11 +40,5 @@ public class GeographyManager {
         geographyDAO.updateGeography(geography);
     }
 
-    /*
-    public List<Geography> getRegionsByCountryId(int countryId) throws Exception {
-        return geographyDAO.getCountryGeographyList(countryId);
-    }
-
-     */
 
 }

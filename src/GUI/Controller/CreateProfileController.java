@@ -40,28 +40,19 @@ public class CreateProfileController implements Initializable {
 
     public TextField txtDailyWorkingHours;
 
-    // slider for overhead  and textField to show the value of the slider
     @FXML
     private MFXSlider sliderOverhead;
-
-    // textFields for the profile name, annual salary, fixed amount and effective hours
     @FXML
     private TextField txtFirstnameProfile, txtLastnameProfile, txtAnnualSalary, txtFixedAmount, txtEffectiveHours, txtOverheadView;
-
     @FXML
     private CheckBox checkOverhead, checkProduction;
-
     @FXML
-    private Label lblHourlyResult, lblDailyResult, lblShowMassage;
+    private ComboBox<Currency> cBox_Currency;
     @FXML
-    public Label employeeHourlyRateCurrency, employeeDailyRateCurrency;
+    private CheckComboBox<ProfileRole> cBoxProfile_ProfileRoles;
     @FXML
-    public Label lblDailyResultInEUR, lblAnnualResultEUR, lblHourlyResultEUR;
-
-
-    // comboBox for country and team
-
-
+    private Label lblHourlyResult, lblDailyResult, lblShowMassage, employeeHourlyRateCurrency, employeeDailyRateCurrency, lblDailyResultInEUR, lblAnnualResultEUR, lblHourlyResultEUR;
+    
 
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
@@ -70,10 +61,6 @@ public class CreateProfileController implements Initializable {
     private CurrencyModel currencyModel;
 
 
-    @FXML
-    private ComboBox<Currency> cBox_Currency;
-    @FXML
-    private CheckComboBox<ProfileRole> cBoxProfile_ProfileRoles;
 
 
     public CreateProfileController() {

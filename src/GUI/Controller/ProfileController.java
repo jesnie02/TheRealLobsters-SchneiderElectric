@@ -10,14 +10,11 @@ import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,30 +25,23 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Controller class for the Profile view.
- * Handles the interaction between the Profile view and the model classes.
- */
+
 public class ProfileController {
 
     @FXML
     public MFXLegacyTableView<Profile> tblProfiles;
     @FXML
-    public TableColumn<Profile, String> colNameProfile, colAnnualSalaryProfile;
-    @FXML
-    public TableColumn<Profile, String> colHourlyRateProfile, colDailyRateProfile;
+    public TableColumn<Profile, String> colNameProfile, colAnnualSalaryProfile, colHourlyRateProfile, colDailyRateProfile;
     @FXML
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
+
     FrameController frameController = FrameController.getInstance();
     private Map<Integer, String> idToNameMap;
 
-    // Instance of FrameController to control the main frame of the application
 
     private ProfileModel profileModel;
     private CountryModel countryModel;
@@ -62,15 +52,11 @@ public class ProfileController {
 
     public ProfileController() {
         profileModel = ProfileModel.getInstance();
-
     }
 
     @FXML
     private void openCreateProfile(ActionEvent actionEvent) {
         frameController.loadCreateProfileView();
-
-
-
     }
 
     public void initialize() {

@@ -4,20 +4,15 @@ import BE.Country;
 import BE.Geography;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
-
 import GUI.Model.GeographyModel;
 import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.fxml.Initializable;
-
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

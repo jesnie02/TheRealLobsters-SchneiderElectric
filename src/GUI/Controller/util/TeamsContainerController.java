@@ -10,8 +10,6 @@ import GUI.Model.GeographyModel;
 import GUI.Controller.TeamsController;
 import GUI.Model.ProjectTeamsModel;
 
-
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +24,6 @@ public class TeamsContainerController {
 
     public TeamsContainerController() {
         initializeModels();
-
     }
 
     private void initializeModels() {

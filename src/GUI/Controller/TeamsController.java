@@ -31,21 +31,18 @@ public class TeamsController implements Initializable {
 
     @FXML
     private TilePane tPaneTeamOverview;
+
     private ProjectTeamsModel projectTeamsModel;
     private TeamsContainerController teamsContainerController;
     private static TeamsController instance;
 
     // Instance of FrameController to control the main frame of the application
     private FrameController frameController;
-    @FXML
-    private Button btnCreateProjectTeams;
 
     public TeamsController() {
         this.frameController = FrameController.getInstance();
         teamsContainerController = new TeamsContainerController();
         instance = this;
-
-
     }
 
     public static TeamsController getInstance() {

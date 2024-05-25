@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.Country;
 import BE.Geography;
-import BE.Profile;
 import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
@@ -31,13 +30,14 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class GeographyController  {
-    public Button btnCreateGeography;
+
     public MFXLegacyTableView<Geography> tblGeographyOverview;
     public MFXLegacyTableView<Country> tblGeographyOverviewCountry;
-    public TableColumn<Geography, String> colGeoOverviewName, colGeoOverviewTeamNumber, colGeoOverviewEmployeeNumber;
-    public TableColumn<Geography, Void> colGeoOverviewEdit;
-    public TableColumn<Geography,Void> colGeoOverviewDelete;
-    public TableColumn<Geography, String> colGeoOverviewCountry;
+
+    public TableColumn<Geography, String> colGeoOverviewName, colGeoOverviewTeamNumber, colGeoOverviewEmployeeNumber, colGeoOverviewCountry;
+    public TableColumn<Geography, Void> colGeoOverviewEdit, colGeoOverviewDelete;
+
+    public Button btnCreateGeography;
 
     private GeographyModel geographyModel;
     private CountryModel countryModel;

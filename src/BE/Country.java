@@ -2,15 +2,9 @@ package BE;
 
 public class Country {
 
-    private int CountryId;
     private String CountryName;
-    private double sumOfHourlyRate;
-    private double sumOfDailyRate;
-    private double avgDailyRate;
-    private double avgHourlyRate;
-    private double sumOfAnnualSalary;
-    private int profileCount;
-
+    private double avgHourlyRate, sumOfAnnualSalary, avgDailyRate, sumOfDailyRate, sumOfHourlyRate;
+    private int profileCount, CountryId;
 
     public Country(int countryId, String countryName, double totalHourlyRate, double avgHourlyRate, double totalDailyRate, double avgDailyRate, int profileCount) {
         this.CountryId = countryId;

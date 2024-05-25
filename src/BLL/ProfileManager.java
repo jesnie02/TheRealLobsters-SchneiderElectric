@@ -4,53 +4,33 @@ import BE.Currency;
 import BE.Profile;
 import CustomExceptions.ApplicationWideException;
 import DAL.Profile_DAO;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Manager class for handling Profile related operations.
- * It communicates with the Profile_DAO to perform these operations and uses CalculatorManager for calculations.
- */
 public class ProfileManager {
 
     private Profile_DAO profileDAO;
     private CalculatorManager calculatorManager;
     private CurrencyManager currencyManager;
 
-    /**
-     * Constructor for the ProfileManager class.
-     * It initializes the profileDAO and calculatorManager variables with instances of Profile_DAO and CalculatorManager.
-     * @throws IOException if an I/O error occurs
-     */
+
     public ProfileManager() throws ApplicationWideException {
         calculatorManager = new CalculatorManager();
         profileDAO = new Profile_DAO();
         currencyManager = new CurrencyManager();
     }
 
-    /**
-     * Returns a list of all profiles.
-     * @return A list of Profile objects.
-     */
+
     public List<Profile> getAllProfiles() throws ApplicationWideException {
         return profileDAO.getAllProfiles();
     }
 
-    /**
-     * Saves a new profile to the database.
-     * @param newProfile The new profile to be saved.
-     */
+
     public void createProfile(Profile newProfile) throws ApplicationWideException {
         profileDAO.createProfile(newProfile);
     }
 
-    /**
-     * Returns a profile by its name.
-     * @param name The name of the profile.
-     * @return The Profile object if found, null otherwise.
-     */
+
     public Profile getProfileByName(String name) throws ApplicationWideException {
     for (Profile profile : getAllProfiles()) {
         if ((profile.getFName() + " " + profile.getLName()).equals(name)) {

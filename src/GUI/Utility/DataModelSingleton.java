@@ -3,7 +3,6 @@ package GUI.Utility;
 import BE.Geography;
 import BE.Profile;
 import BE.ProjectTeam;
-import GUI.Model.ProfileModel;
 
 public class DataModelSingleton {
 

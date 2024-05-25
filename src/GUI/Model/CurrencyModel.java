@@ -6,8 +6,6 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.IOException;
 import java.util.List;
 
 public class CurrencyModel {

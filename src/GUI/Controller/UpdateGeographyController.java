@@ -6,7 +6,6 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.GeographyModel;
 import GUI.Utility.AlertBox;
-import GUI.Utility.DataModelSingleton;
 import GUI.Utility.ExceptionHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,16 +21,18 @@ import java.util.ResourceBundle;
 
 public class UpdateGeographyController implements Initializable {
 
-    private Runnable onGeographyUpdated;
-    private CountryModel countryModel;
-    private GeographyModel geographyModel;
-    private Geography geography;
     @FXML
     private CheckComboBox<Country> cBoxCountries;
     @FXML
     private TextField txtGeography;
     @FXML
     private Button btnSaveGeography;
+
+    private Runnable onGeographyUpdated;
+    private CountryModel countryModel;
+    private GeographyModel geographyModel;
+    private Geography geography;
+
 
 
 
@@ -53,7 +54,6 @@ public class UpdateGeographyController implements Initializable {
 
     public void setGeography(Geography geography) {
         this.geography = geography;
-        //DataModelSingleton.getInstance().setCurrentGeography(geography);
         updateUI(geography);
         loadGeographyDetails();
     }

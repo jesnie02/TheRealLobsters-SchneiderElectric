@@ -3,9 +3,7 @@ package GUI.Controller;
 
 import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
@@ -15,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;

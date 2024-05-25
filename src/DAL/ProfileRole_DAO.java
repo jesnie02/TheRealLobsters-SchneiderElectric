@@ -3,8 +3,6 @@ package DAL;
 import BE.ProfileRole;
 import CustomExceptions.ApplicationWideException;
 import DAL.DBConnector.DBConnector;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;

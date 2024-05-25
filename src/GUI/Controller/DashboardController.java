@@ -24,24 +24,17 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
 
     @FXML
-    public Label lblDailyRateSumCountry, lblHourlyRateSumCountry, lblAvgDailyRateCountry, lblAvgHourlyRateCountry;
-
-    @FXML
     public TabPane tabPaneDashboard;
-
+    @FXML
+    private TableColumn<ProjectTeam, String> colTeams;
+    @FXML
+    private TableColumn<Geography, String> colGeographies;
+    @FXML
+    private MFXLegacyTableView<ProjectTeam> tblTeams;
+    @FXML
+    private MFXLegacyTableView<Geography> tblGeography;
     @FXML
     private Label lblAvgHourlyRateTeam, lblAvgDailyRateTeam, lblHourlyRateSumTeam, lblDailyRateSumTeam;
-
-
-    @FXML
-    private ComboBox<Geography> cBoxGeographyDash;
-    @FXML
-    private ComboBox<ProjectTeam> cBoxTeamDash;
-
-    private CountryModel countryModel;
-    private ProjectTeamsModel projectTeamsModel;
-    private GeographyModel geographyModel;
-
     @FXML
     private Label lblSumDailyRateGeo, lblSumHourlyRateGeo, lblAvgDailyRateGeo, lblAvgHourlyRateGeo;
     @FXML
@@ -51,17 +44,11 @@ public class DashboardController implements Initializable {
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private MFXLegacyTableView<ProjectTeam> tblTeams;
-    @FXML
-    private TableColumn<ProjectTeam, String> colTeams;
-    @FXML
-    private MFXLegacyTableView<Geography> tblGeography;
-    @FXML
-    private TableColumn<Geography, String> colGeographies;
-    @FXML
-    private TextField txtSearchDashboardGeo;
-    @FXML
-    private TextField txtSearchDashboardTeam;
+    private TextField txtSearchDashboardGeo, txtSearchDashboardTeam;
+
+    private CountryModel countryModel;
+    private ProjectTeamsModel projectTeamsModel;
+    private GeographyModel geographyModel;
 
     private FilteredList<Geography> filteredData;
     private FilteredList<ProjectTeam> filteredDataTeam;

@@ -20,47 +20,22 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class MultiplierController {
+
     @FXML
-    private ListView lstVProfile;
+    private ListView lstVProfile, lstVTeams;
     @FXML
-    private MFXSlider sliderGMP;
+    private MFXSlider sliderGMP, sliderGMT, sliderMUT, sliderMUP;
     @FXML
-    private TextField txtGMP;
+    private TextField txtGMP, txtGMT, txtMUT, txtMUP;
     @FXML
-    private MFXSlider sliderMUP;
-    @FXML
-    private TextField txtMUP;
-    @FXML
-    private Label lblGMHourlyResultP;
-    @FXML
-    private Label lblMUHourlyResultP;
-    @FXML
-    private Label lblGMDailyResultP;
-    @FXML
-    private Label lblMUDailyResultP;
-    @FXML
-    private ListView lstVTeams;
-    @FXML
-    private MFXSlider sliderGMT;
-    @FXML
-    private TextField txtGMT;
-    @FXML
-    private MFXSlider sliderMUT;
-    @FXML
-    private TextField txtMUT;
-    @FXML
-    private Label lblGMHourlyResultT;
-    @FXML
-    private Label lblMUHourlyResultT;
-    @FXML
-    private Label lblGMDailyResultT;
-    @FXML
-    private Label lblMUDailyResultT;
+    private Label lblGMHourlyResultP, lblMUHourlyResultP, lblGMDailyResultP, lblMUDailyResultP, lblGMHourlyResultT, lblMUHourlyResultT, lblGMDailyResultT, lblMUDailyResultT;
+
+    private double grossMarginP, markUpP, grossMarginT, markUpT;
+
     private ProjectTeamsModel projectTeamsModel;
     private MultiplierModel multiplierModel;
     private ProfileModel profileModel;
 
-    private double grossMarginP, markUpP, grossMarginT, markUpT;
 
 
 

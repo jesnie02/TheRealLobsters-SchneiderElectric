@@ -2,8 +2,6 @@ package BLL;
 
 import BE.Country;
 import CustomExceptions.ApplicationWideException;
-
-import java.io.IOException;
 import java.util.List;
 
 public class CountryManager {
@@ -14,12 +12,7 @@ public class CountryManager {
         countryDAO = new DAL.Country_DAO();
     }
 
-    /**
-     * Gets all countries from the database.
-     *
-     * @return A list of all countries.
-     * @throws Exception
-     */
+
     public List<Country> getAllCountries() throws ApplicationWideException {
         return countryDAO.getAllCountries();
     }

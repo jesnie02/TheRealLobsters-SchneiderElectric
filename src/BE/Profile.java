@@ -9,19 +9,12 @@ public class Profile {
     private int profileId, countryId;
     private String fName, lName, roles;
     private boolean overheadCost;
-    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, overheadMultiplier, effectiveWorkingHours;
-    private double utilizationTime, utilizationCost;
+    private double annualSalary, hourlySalary, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, overheadMultiplier, effectiveWorkingHours, utilizationTime, utilizationCost;
 
     private List<Country> country;
     private List<ProjectTeam> projectTeams;
     private List<ProfileRole> profileRoles;
 
-
-    // For testing purposes
-    public Profile(double annualSalary, double fixedAmount) {
-        this.annualSalary = annualSalary;
-        this.fixedAmount = fixedAmount;
-    }
 
     public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveWorkingHours, double overheadMultiplier) {
         this.profileId = profileId;
@@ -64,6 +57,20 @@ public class Profile {
         this.overheadMultiplier = overheadMultiplier;
     }
 
+    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
+        this.profileId = id;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overhead;
+        this.annualSalary = annual;
+        this.hourlySalary = hourly;
+        this.dailyRate = daily;
+        this.dailyWorkingHours = workingHR;
+        this.utilizationTime = utilizationTime;
+        this.utilizationCost = utilizationCost;
+        this.profileRoles = profileRoles;
+    }
+
     public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
         this.fName = firstName;
         this.lName = lastName;
@@ -101,31 +108,11 @@ public class Profile {
         this.profileRoles = new ArrayList<>();
     }
 
-//    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
-//        this.profileId = id;
-//        this.fName = fName;
-//        this.lName = lName;
-//        this.overheadCost = overhead;
-//        this.annualSalary = annual;
-//        this.hourlySalary = hourly;
-//        this.dailyRate = daily;
-//        this.dailyWorkingHours = workingHR;
-//        this.utilizationTime = utilizationTime;
-//        this.profileRoles = profileRoles;
-//    }
 
-    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
-        this.profileId = id;
-        this.fName = fName;
-        this.lName = lName;
-        this.overheadCost = overhead;
-        this.annualSalary = annual;
-        this.hourlySalary = hourly;
-        this.dailyRate = daily;
-        this.dailyWorkingHours = workingHR;
-        this.utilizationTime = utilizationTime;
-        this.utilizationCost = utilizationCost;
-        this.profileRoles = profileRoles;
+    // For testing purposes
+    public Profile(double annualSalary, double fixedAmount) {
+        this.annualSalary = annualSalary;
+        this.fixedAmount = fixedAmount;
     }
 
 
@@ -274,6 +261,29 @@ public class Profile {
         return utilizationCost;
     }
 
+    public String getRolesString() {
+        StringBuilder rolesString = new StringBuilder();
+        for (ProfileRole role : profileRoles) {
+            rolesString.append(role.getProfileRoleType()).append(", ");
+        }
+        return rolesString.toString();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Profile profile = (Profile) o;
+        return profileId == profile.profileId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(profileId);
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
@@ -297,29 +307,6 @@ public class Profile {
                 ", projectTeams=" + projectTeams +
                 ", profileRoles=" + profileRoles +
                 '}';
-    }
-
-    public String getRolesString() {
-        StringBuilder rolesString = new StringBuilder();
-        for (ProfileRole role : profileRoles) {
-            rolesString.append(role.getProfileRoleType()).append(", ");
-        }
-        return rolesString.toString();
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Profile profile = (Profile) o;
-        return profileId == profile.profileId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(profileId);
     }
 }
 

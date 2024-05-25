@@ -7,8 +7,6 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectTeamsModel {
-
 
     private final ProjectTeamsManager projectTeamsManager;
 

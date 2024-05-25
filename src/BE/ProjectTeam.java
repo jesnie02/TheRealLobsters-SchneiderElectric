@@ -1,7 +1,4 @@
 package BE;
-
-import javafx.collections.ObservableList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,19 +6,16 @@ import java.util.Map;
 
 public class ProjectTeam {
 
-    private int TeamId;
     private String TeamName;
     private double sumOfHourlyRate, sumOfDailyRate, avgDailyRate, avgHourlyRate, sumOfAnnualSalary, avgAnnualSalary;
-    private int count;
+    private int geographyId, numberOfProfiles, TeamId, count;
+
     private List<Profile> profiles = new ArrayList<>();
     private Map<Profile, Double> utilizationsMap = new HashMap<>();
     private Map<Profile, Double> utilizationCostsMap = new HashMap<>();
+
     private Country country;
     private Geography geography;
-    private int geographyId;
-    private int numberOfProfiles;
-
-
 
     public ProjectTeam(String name) {
         this.TeamName = name;

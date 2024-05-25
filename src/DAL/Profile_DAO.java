@@ -15,7 +15,6 @@ public class Profile_DAO implements IProfileDataAccess {
 
     private final DBConnector dbConnector;
 
-
     public Profile_DAO() throws ApplicationWideException {
         try {
             dbConnector = new DBConnector();

@@ -14,9 +14,7 @@ import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,53 +34,37 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateProjectTeamController implements Initializable {
+
     @FXML
     private TableView<Profile> tblProfileToTeam;
     @FXML
-    private TableColumn<Profile, String> colTeamUtilizationTime, colTeamUtilizationCost;
+    private TableColumn<Profile, String> colTeamAnnualSalary, colTeamName, colTeamHourlyRate, colTeamDailyRate, colTeamUtilizationTime, colTeamUtilizationCost;
     @FXML
-    private TableColumn<Profile, String> colTeamDailyRate;
+    private TableColumn<Profile, Integer> colTeamCountryId, colTeamProfileId;
     @FXML
-    private TableColumn<Profile, String> colTeamHourlyRate;
+    private Label lblDailyRateSum, lblAnnualSalarySum, lblHourlyRateSum;
     @FXML
-    private TableColumn<Profile, String> colTeamAnnualSalary;
+    private MFXSlider sliderUtilizationTime, sliderUtilizationCost;
     @FXML
-    private TableColumn<Profile, String> colTeamName;
-    @FXML
-    private TableColumn<Profile, Integer> colTeamCountryId;
-
-    private double utilizationTime;
-    private double utilizationCost;
-
-    @FXML
-    private TableColumn<Profile, Integer> colTeamProfileId;
-
-    @FXML
-    private MFXSlider sliderUtilization;
-    @FXML
-    private Label lblHourlyRateSum;
-    @FXML
-    private Label lblDailyRateSum;
-    @FXML
-    private Label lblAnnualSalarySum;
-    @FXML
-    private TextField txtProjectTeamName;
+    private TextField txtUtilizationTime, txtUtilizationCost, txtProjectTeamName;
     @FXML
     private SearchableComboBox<Profile> cBoxProfiles;
     @FXML
     private SearchableComboBox<Geography> cBoxGeographies;
+
     private Map<Integer, Country> countriesMap;
     private Map<Profile, Double> utilizationsTimeMap = new HashMap<>();
     private Map<Profile, Double> utilizationsCostMap = new HashMap<>();
+
+    private ObservableList<Profile> profiles = FXCollections.observableArrayList();
+    private double utilizationTime;
+    private double utilizationCost;
+
     ProfileModel profileModel;
     CountryModel countryModel;
     ProfileRoleModel profileRoleModel;
     ProjectTeamsModel projectTeamsModel;
-    private ObservableList<Profile> profiles = FXCollections.observableArrayList();
-    @FXML
-    private MFXSlider sliderUtilizationTime, sliderUtilizationCost;
-    @FXML
-    private TextField txtUtilizationTime, txtUtilizationCost;
+
 
 
 

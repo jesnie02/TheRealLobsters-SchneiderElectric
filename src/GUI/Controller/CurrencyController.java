@@ -32,17 +32,15 @@ public class CurrencyController implements Initializable {
     @FXML
     private TableColumn<Currency, Integer> colCurrencyId;
     @FXML
-    private TextField txtCurrency;
+    private TextField txtCurrency, txtSearchCurrency;
     @FXML
     private Button btnCurrencySave;
-
-    private CurrencyModel currencyModel;
-    @FXML
-    private TextField txtSearchCurrency;
     @FXML
     private Label lblMessageCurrency;
 
     private FilteredList<Currency> filteredData;
+    private CurrencyModel currencyModel;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

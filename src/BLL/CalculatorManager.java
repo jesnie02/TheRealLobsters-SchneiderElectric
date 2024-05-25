@@ -1,7 +1,6 @@
 package BLL;
 
 import BE.Profile;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.Map;
  * It implements the ICalculateManager interface.
  */
 public class CalculatorManager implements ICalculateManager {
-
 
     /**
      * Calculates the daily rate with a multiplier.

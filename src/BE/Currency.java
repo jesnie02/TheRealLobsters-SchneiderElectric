@@ -6,8 +6,6 @@ public class Currency {
     private double currencyRate;
     private int CurrencyId;
 
-
-
     public Currency(String currencyCode, double currencyRate) {
         this.currencyCode = currencyCode;
         this.currencyRate = currencyRate;

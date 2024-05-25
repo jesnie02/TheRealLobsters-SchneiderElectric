@@ -7,18 +7,10 @@ import java.util.Objects;
 public class Geography {
 
 
-    private int geographyId;
     private String geographyName;
-    private double sumOfDailyRate;
-    private double sumOfHourlyRate;
-    private double avgDailyRate;
-    private double avgHourlyRate;
-    private int profileCount;
-    private int teamCount;
-    private int profileInTeamsCount;
+    private double avgDailyRate, avgHourlyRate, sumOfHourlyRate, sumOfDailyRate;
+    private int teamCount, profileInTeamsCount, profileCount, geographyId;
     private List<Country> countries;
-
-
 
     public Geography(int geographyId, String geographyName, double sumOfDailyRate, double sumOfHourlyRate, double avgDailyRate, double avgHourlyRate, int profileCount) {
         this.geographyId = geographyId;

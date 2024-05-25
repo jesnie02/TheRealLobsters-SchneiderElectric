@@ -34,7 +34,6 @@ import java.text.NumberFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.*;
-import java.util.logging.Handler;
 
 public class CreateProjectTeamController implements Initializable {
 
