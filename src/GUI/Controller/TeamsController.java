@@ -6,7 +6,6 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.DataModelSingleton;
-import GUI.Utility.EventBroadcaster;
 import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

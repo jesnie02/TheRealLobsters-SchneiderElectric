@@ -8,7 +8,6 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
-import GUI.Utility.EventBroadcaster;
 import GUI.Utility.SliderDecimalFilter;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
