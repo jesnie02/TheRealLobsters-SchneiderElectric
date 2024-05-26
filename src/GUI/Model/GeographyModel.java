@@ -22,8 +22,6 @@ public class GeographyModel {
         geographyManager = new GeographyManager();
         geographies = FXCollections.observableArrayList(geographyManager.getAllGeographiesGeographyOverview());
         loadInitialGeographies();
-
-
     }
 
     public ObservableList<Geography> getSumsAndAveragesForGeographies()  {
@@ -68,8 +66,6 @@ public class GeographyModel {
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
-
-
     }
 
     public boolean deleteGeography(Geography geography) {
@@ -81,8 +77,6 @@ public class GeographyModel {
               ExceptionHandler.handleException(e);
               return false;
           }
-
-
     }
 
     public void updateGeography(Geography geography) {
