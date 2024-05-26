@@ -79,7 +79,7 @@ public class DashboardController implements Initializable {
 
 
     private void setUpFilteredData() {
-        filteredData = new FilteredList<>(geographyModel.getGeographies(), p -> true);
+        filteredData = new FilteredList<>(geographyModel.getSumsAndAveragesForGeographies(), p -> true);
         SortedList<Geography> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tblGeography.comparatorProperty());
         tblGeography.setItems(sortedData);

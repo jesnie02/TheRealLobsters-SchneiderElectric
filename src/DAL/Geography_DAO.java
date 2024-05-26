@@ -49,22 +49,22 @@ public class Geography_DAO implements IGeographyDataAccess {
     public List<Geography> getSumsAndAveragesForGeographies() throws ApplicationWideException {
         List<Geography> allGeographies = new ArrayList<>();
         String sql = """
-        SELECT
-           g.GeographyId,
-           g.GeographyName,
-           SUM(p.DailyRate) AS TotalDailyRate,
-           AVG(p.DailyRate) AS AvgDailyRate,
-           SUM(p.HourlySalary) AS TotalHourlyRate,
-           AVG(p.HourlySalary) AS AvgHourlyRate,
-           COUNT(p.ProfileId) AS ProfileCount
-       FROM
-           Geography g
-       JOIN
-           GeographyProfile gp ON g.GeographyId = gp.GeographyId
-       JOIN
-           Profile p ON gp.ProfileId = p.ProfileId
-       GROUP BY
-           g.GeographyId, g.GeographyName;
+    SELECT
+       g.GeographyId,
+       g.GeographyName,
+       SUM(p.DailyRate) AS TotalDailyRate,
+       AVG(p.DailyRate) AS AvgDailyRate,
+       SUM(p.HourlySalary) AS TotalHourlyRate,
+       AVG(p.HourlySalary) AS AvgHourlyRate,
+       COUNT(p.ProfileId) AS ProfileCount
+   FROM
+       Geography g
+   LEFT JOIN
+       GeographyProfile gp ON g.GeographyId = gp.GeographyId
+   LEFT JOIN
+       Profile p ON gp.ProfileId = p.ProfileId
+   GROUP BY
+       g.GeographyId, g.GeographyName;
     """;
         try (Connection conn = dbConnector.getConnection();
              Statement stmt = conn.createStatement();
@@ -82,10 +82,11 @@ public class Geography_DAO implements IGeographyDataAccess {
                 allGeographies.add(geography);
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to get sum and average",e);
+            throw new ApplicationWideException("Failed to get sum and average", e);
         }
         return allGeographies;
     }
+
 
     @Override
     public List<Geography> getAllGeographiesGeographyOverview() throws ApplicationWideException {
