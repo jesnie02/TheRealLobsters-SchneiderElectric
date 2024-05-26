@@ -6,7 +6,9 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Controller.util.TeamsContainerController;
 import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.DataModelSingleton;
+import GUI.Utility.EventBroadcaster;
 import GUI.Utility.ExceptionHandler;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -57,14 +59,16 @@ public class TeamsController implements Initializable {
             tPaneTeamOverview.setVgap(50);
             tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
             tPaneTeamOverview.setAlignment(Pos.CENTER);
+
+
             loadTeamsInTilePane();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
 
-
-
     }
+
+
 
     public void loadTeamsInTilePane() {
         tPaneTeamOverview.getChildren().clear();
@@ -92,7 +96,6 @@ public class TeamsController implements Initializable {
             ExceptionHandler.handleException(e);
         }
     }
-
 
     @FXML
     private void openProjectTeamView(ActionEvent actionEvent) {

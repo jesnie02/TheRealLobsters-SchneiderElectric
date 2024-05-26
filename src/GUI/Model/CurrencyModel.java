@@ -37,7 +37,6 @@ public class CurrencyModel {
 
 
     public void setCurrency(Currency selectedCurrency) {
-
         try {
             currencyManager.setCurrency(selectedCurrency);
         } catch (ApplicationWideException e) {

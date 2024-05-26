@@ -238,9 +238,12 @@ public class Geography_DAO implements IGeographyDataAccess {
                 conn.commit(); // Commit transaction if all updates and deletes are successful
             } catch (SQLException e) {
                 conn.rollback(); // Rollback transaction if any update or delete fails
-                throw new ApplicationWideException("Failed to delete geography", e);
+                //e.printStackTrace();
+                throw new ApplicationWideException("Failed to delete geography roolback", e);
+
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ApplicationWideException("Failed to delete geography", e);
         }
 

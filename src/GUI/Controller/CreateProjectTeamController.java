@@ -8,6 +8,7 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Model.CountryModel;
 import GUI.Model.ProfileModel;
 import GUI.Model.ProjectTeamsModel;
+import GUI.Utility.EventBroadcaster;
 import GUI.Utility.SliderDecimalFilter;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
@@ -67,7 +68,6 @@ public class CreateProjectTeamController implements Initializable {
     private ProfileModel profileModel;
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
-
 
 
     public CreateProjectTeamController() {
@@ -249,6 +249,7 @@ public class CreateProjectTeamController implements Initializable {
 
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
+
             clearInputInFields();
             lblMessageCreateTeam.setTextFill(Color.GREEN);
             lblMessageCreateTeam.setText("The team was created successfully.");
@@ -256,6 +257,8 @@ public class CreateProjectTeamController implements Initializable {
                 lblMessageCreateTeam.setText("");
             }));
             timeline.play();
+            FrameController.getInstance().loadTeamsView();
+            TeamsController.getInstance().loadTeamsInTilePane();
         } catch (ApplicationWideException e) {
             lblMessageCreateTeam.setTextFill(Color.RED);
             lblMessageCreateTeam.setText("Error occurred during the creation of the team: " + e.getMessage());
@@ -263,6 +266,8 @@ public class CreateProjectTeamController implements Initializable {
                 lblMessageCreateTeam.setText("");
             }));
             timeline.play();
+
+
         }
     }
 
