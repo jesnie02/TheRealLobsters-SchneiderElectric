@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,10 +23,6 @@ class CalculatorManagerTest {
     //--------------------------------------------------------------------------------------------------------
 
     @Test
-    /**
-     * Test for getDailyRateWithMultiplier method
-     * Test for valid input with multiplication of percentage of both gross margin and markup
-     */
     void getDailyRateWithMultiplier_returnsCorrectValueForValidInput() {
         //arrange
         double dayRate = 100;
@@ -37,10 +35,6 @@ class CalculatorManagerTest {
     }
 
     @Test
-    /**
-     * Test for getDailyRateWithMultiplier method
-     * Test for valid input with multiplication of zero of both gross margin and markup
-     */
     void getDailyRateWithMultiplier_returnsZeroForZeroDayRate() {
         //arrange
         double dayRate = 20;
@@ -59,10 +53,6 @@ class CalculatorManagerTest {
     }
 
     @Test
-    /**
-     * Test for getDailyRateWithMultiplier method
-     * Test for valid input with multiplication of negative percentage
-     */
     void getDailyRateWithMultiplier_throwsExceptionForNegativeDayRate() {
         //arrange
         double dayRate = -100;
@@ -304,7 +294,6 @@ class CalculatorManagerTest {
         double overheadMultiplierProfile = 1.5;
         double annualFixedAmountProfile = 10000;
         double effectiveHoursProfile = 2000;
-        double utilizationPercentageProfile = 80;
 
         // Act
         double actual = calculatorManager.calculateAndSetHourlyRateCreateProfile(
@@ -375,10 +364,6 @@ class CalculatorManagerTest {
     //--------------------------------------------------------------------------------------------------------
 
     @Test
-    /**
-     * Test for getHourlyRateWithMultiplier method
-     * Test for valid input with multiplication of percentage of both gross margin and markup
-     */
     void getHourlyRateWithMultiplier_returnsCorrectValueForValidInput() {
         //arrange
         double hourlyRate = 100;
@@ -391,10 +376,6 @@ class CalculatorManagerTest {
     }
 
     @Test
-    /**
-     * Test for getHourlyRateWithMultiplier method
-     * Test for valid input with multiplication of zero of both gross margin and markup
-     */
     void getHourlyRateWithMultiplier_returnsZeroForZeroHourlyRate() {
         //arrange
         double hourlyRate = 20;
@@ -413,10 +394,6 @@ class CalculatorManagerTest {
     }
 
     @Test
-    /**
-     * Test for getHourlyRateWithMultiplier method
-     * Test for valid input with multiplication of negative percentage
-     */
     void getHourlyRateWithMultiplier_throwsExceptionForNegativeHourlyRate() {
         //arrange
         double hourlyRate = -100;
@@ -426,5 +403,335 @@ class CalculatorManagerTest {
     }
 
     //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void avgAnnualSalary_returnsCorrectAverageForValidProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(50000, 10000));
+        profiles.add(new Profile(60000, 20000));
+        profiles.add(new Profile(70000, 30000));
+
+        double expected = 80000; // ((50000+10000) + (60000+20000) + (70000 + 30000)) / 3 profiler = 80000
+
+        // Act
+        double actual = calculatorManager.avgAnnualSalary(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void avgAnnualSalary_returnsZeroForEmptyProfiles() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.avgAnnualSalary(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void avgAnnualSalary_returnsZeroForProfilesWithZeroAnnualSalary() {
+        // Arrange
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile(0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0));
+
+        double expected = 0.0;
+
+        // Act
+        double actual = calculatorManager.avgAnnualSalary(profiles);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void calculateAndSetHourlyRateWithUtilization_returnsCorrectValueForValidInput() {
+        // Arrange
+        double annualSalaryProfile = 50000;
+        double overheadMultiplierProfile = 20;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentage = 80; // 80%
+        // 50000 + 10000 = 60000
+        // 60000 / 2000 = 30
+        // 30 * (1 + 20/100) = 36
+        // 36 * (80/100) = 28.8
+        double expected = 28.8; // ((50000 + 10000) / 2000) * (1 + 20/100) * (80/100) = 28.8
+
+        // Act
+        double actual = calculatorManager.calculateAndSetHourlyRateWithUtilization(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentage);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetHourlyRateWithUtilization_returnsZeroForZeroAnnualSalary() {
+        // Arrange
+        double annualSalaryProfile = 0;
+        double overheadMultiplierProfile = 20;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentage = 80; // 80%
+
+        double expected = 0;
+
+        // Act
+        double actual = calculatorManager.calculateAndSetHourlyRateWithUtilization(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentage);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetHourlyRateWithUtilization_throwsExceptionForNegativeAnnualSalary() {
+        // Arrange
+        double annualSalaryProfile = -50000;
+        double overheadMultiplierProfile = 20;
+        double annualFixedAmountProfile = 10000;
+        double effectiveHoursProfile = 2000;
+        double utilizationPercentage = 80; // 80%
+
+        // Act and Assert
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetHourlyRateWithUtilization(
+                annualSalaryProfile, overheadMultiplierProfile,
+                annualFixedAmountProfile, effectiveHoursProfile,
+                utilizationPercentage));
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void calculateAndSetDailyRateWithUtilization_returnsCorrectValueForValidInput() {
+        // Arrange
+        double dailyWorkingHours = 8;
+        double hourlyRate = 20;
+        double expected = 160; // 8 hours * 20 rate = 160
+
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetDailyRateWithUtilization_returnsZeroForZeroHourlyRate() {
+        // Arrange
+        double dailyWorkingHours = 8;
+        double hourlyRate = 0;
+        double expected = 0; // 8 hours * 0 rate = 0
+
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetDailyRateWithUtilization_returnsZeroForZeroWorkingHours() {
+        // Arrange
+        double dailyWorkingHours = 0;
+        double hourlyRate = 20;
+        double expected = 0; // 0 hours * 20 rate = 0
+
+        // Act
+        double actual = calculatorManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void calculateAndSetProfileRatesEUR_returnsCorrectValuesForValidInput() {
+
+        // Arrange
+        double annualSalary = 50000;
+        double fixedAmount = 10000;
+        double hourlyRate = 25;
+        double dailyRate = 200;
+        double conversionRate = 1.2; // Assuming 1 EUR = 1.2 of the selected currency
+
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("annualSalaryEUR", (annualSalary + fixedAmount) / conversionRate);
+        expected.put("hourlyRateEUR", hourlyRate / conversionRate);
+        expected.put("dailyRateEUR", dailyRate / conversionRate);
+
+        // Act
+        Map<String, Double> actual = calculatorManager.calculateAndSetProfileRatesEUR(
+                annualSalary, fixedAmount, hourlyRate, dailyRate, conversionRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetProfileRatesEUR_returnsZeroForZeroConversionRate() {
+
+        // Arrange
+        double annualSalary = 50000;
+        double fixedAmount = 10000;
+        double hourlyRate = 25;
+        double dailyRate = 200;
+        double conversionRate = 0;
+
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("annualSalaryEUR", 0.0);
+        expected.put("hourlyRateEUR", 0.0);
+        expected.put("dailyRateEUR", 0.0);
+
+        // Act
+        Map<String, Double> actual = calculatorManager.calculateAndSetProfileRatesEUR(
+                annualSalary, fixedAmount, hourlyRate, dailyRate, conversionRate);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calculateAndSetProfileRatesEUR_throwsExceptionForNegativeRates() {
+        // Arrange
+        double fixedAmount = 10000;
+        double hourlyRate = 25;
+        double dailyRate = 200;
+        double conversionRate = 1.2;
+
+        // Act and Assert for negative annualSalary
+        double annualSalary = -50000;
+        double finalAnnualSalary = annualSalary;
+        double finalFixedAmount = fixedAmount;
+        double finalHourlyRate = hourlyRate;
+        double finalDailyRate = dailyRate;
+        double finalConversionRate = conversionRate;
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetProfileRatesEUR(
+                finalAnnualSalary, finalFixedAmount, finalHourlyRate, finalDailyRate, finalConversionRate));
+
+        // Act and Assert for negative fixedAmount
+        annualSalary = 50000;
+        fixedAmount = -10000;
+        double finalAnnualSalary1 = annualSalary;
+        double finalFixedAmount1 = fixedAmount;
+        double finalHourlyRate1 = hourlyRate;
+        double finalDailyRate1 = dailyRate;
+        double finalConversionRate1 = conversionRate;
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetProfileRatesEUR(
+                finalAnnualSalary1, finalFixedAmount1, finalHourlyRate1, finalDailyRate1, finalConversionRate1));
+
+        // Act and Assert for negative hourlyRate
+        fixedAmount = 10000;
+        hourlyRate = -25;
+        double finalAnnualSalary2 = annualSalary;
+        double finalFixedAmount2 = fixedAmount;
+        double finalHourlyRate2 = hourlyRate;
+        double finalDailyRate2 = dailyRate;
+        double finalConversionRate2 = conversionRate;
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetProfileRatesEUR(
+                finalAnnualSalary2, finalFixedAmount2, finalHourlyRate2, finalDailyRate2, finalConversionRate2));
+
+        // Act and Assert for negative dailyRate
+        hourlyRate = 25;
+        dailyRate = -200;
+        double finalAnnualSalary3 = annualSalary;
+        double finalFixedAmount3 = fixedAmount;
+        double finalHourlyRate3 = hourlyRate;
+        double finalDailyRate3 = dailyRate;
+        double finalConversionRate3 = conversionRate;
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetProfileRatesEUR(
+                finalAnnualSalary3, finalFixedAmount3, finalHourlyRate3, finalDailyRate3, finalConversionRate3));
+
+        // Act and Assert for negative conversionRate
+        dailyRate = 200;
+        conversionRate = -1.2;
+        double finalAnnualSalary4 = annualSalary;
+        double finalFixedAmount4 = fixedAmount;
+        double finalHourlyRate4 = hourlyRate;
+        double finalDailyRate4 = dailyRate;
+        double finalConversionRate4 = conversionRate;
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateAndSetProfileRatesEUR(
+                finalAnnualSalary4, finalFixedAmount4, finalHourlyRate4, finalDailyRate4, finalConversionRate4));
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+
+    @Test
+    void calculateRatesWithUtilizationForUpdateTeam_returnsCorrectValuesForValidInput() {
+        // Arrange
+        Profile profile = new Profile(50000, 10000, 25, 200); // Assuming these are the annualSalary, fixedAmount, hourlyRate, and dailyRate respectively
+        double utilization = 80; // 80%
+
+        double expectedHourlyRate = profile.getHourlySalary() * (utilization / 100);
+        double expectedDailyRate = profile.getDailyRate() * (utilization / 100);
+        double expectedAnnualSalary = profile.getAnnualSalary() * (utilization / 100);
+
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("hourlyRate", expectedHourlyRate);
+        expected.put("dailyRate", expectedDailyRate);
+        expected.put("annualSalary", expectedAnnualSalary);
+
+        // Act
+        Map<String, Double> actual = calculatorManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
+
+        // Assert
+        assertEquals(expected, actual);
+        // Also assert that the profile's rates have been updated
+        assertEquals(expectedHourlyRate, profile.getHourlyRate());
+        assertEquals(expectedDailyRate, profile.getDailyRate());
+        assertEquals(expectedAnnualSalary, profile.getAnnualSalary());
+    }
+
+    @Test
+    void calculateRatesWithUtilizationForUpdateTeam_returnsOriginalValuesForZeroUtilization() {
+        // Arrange
+        Profile profile = new Profile(50000, 10000, 25, 200);
+        double utilization = 0; // 0%
+
+        double expectedHourlyRate = profile.getHourlySalary();
+        double expectedDailyRate = profile.getDailyRate();
+        double expectedAnnualSalary = profile.getAnnualSalary();
+
+        Map<String, Double> expected = new HashMap<>();
+        expected.put("hourlyRate", expectedHourlyRate);
+        expected.put("dailyRate", expectedDailyRate);
+        expected.put("annualSalary", expectedAnnualSalary);
+
+        // Act
+        Map<String, Double> actual = calculatorManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
+
+        // Assert
+        assertEquals(expected, actual);
+        // Also assert that the profile's rates have been updated
+        assertEquals(expectedHourlyRate, profile.getHourlyRate());
+        assertEquals(expectedDailyRate, profile.getDailyRate());
+        assertEquals(expectedAnnualSalary, profile.getAnnualSalary());
+    }
+
+    @Test
+    void calculateRatesWithUtilizationForUpdateTeam_throwsExceptionForNegativeUtilization() {
+        // Arrange
+        Profile profile = new Profile(50000, 10000, 25, 200);
+        double utilization = -10; // -10%
+
+        // Act and Assert
+        assertThrows(IllegalArgumentException.class, () -> calculatorManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization));
+    }
 
 }

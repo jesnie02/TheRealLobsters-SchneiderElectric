@@ -35,6 +35,9 @@ public class CalculatorManager implements ICalculateManager {
      */
     @Override
     public double getHourlyRateWithMultiplier(double hourlyRate, double percentage) {
+        if(hourlyRate < 0) {
+            throw new IllegalArgumentException("Hourly rate cannot be negative");
+        }
         double calculation = hourlyRate * (1 + percentage / 100);
         return calculation;
     }
@@ -60,6 +63,9 @@ public class CalculatorManager implements ICalculateManager {
      */
     @Override
     public double avgAnnualSalary(List<Profile> profiles) {
+        if (profiles.isEmpty()) {
+            return 0;
+        }
         return annualSalaryWithFixedAmount(profiles) / profiles.size();
     }
 
@@ -150,7 +156,15 @@ public class CalculatorManager implements ICalculateManager {
         return result;
     }
 
-
+    /**
+     * Calculates and sets the hourly rate for a profile with utilization.
+     * @param annualSalaryProfile The annual salary of the profile.
+     * @param overheadMultiplierProfile The overhead multiplier of the profile.
+     * @param annualFixedAmountProfile The annual fixed amount of the profile.
+     * @param effectiveHoursProfile The effective hours of the profile.
+     * @param utilizationPercentage The utilization percentage of the profile.
+     * @return The calculated hourly rate with utilization.
+     */
     @Override
     public double calculateAndSetHourlyRateWithUtilization(
             double annualSalaryProfile, double overheadMultiplierProfile,
@@ -197,6 +211,17 @@ public class CalculatorManager implements ICalculateManager {
         double hourlyRateEUR = hourlyRate / conversionRate;
         double dailyRateEUR = dailyRate / conversionRate;
 
+        if (annualSalary < 0 || fixedAmount < 0 || hourlyRate < 0 || dailyRate < 0 || conversionRate < 0) {
+            throw new IllegalArgumentException("Rates cannot be negative");
+        }
+
+        if (conversionRate == 0) {
+            Map<String, Double> result = new HashMap<>();
+            result.put("annualSalaryEUR", annualSalaryEUR = 0.0);
+            result.put("hourlyRateEUR", hourlyRateEUR = 0.0);
+            result.put("dailyRateEUR", dailyRateEUR = 0.0);
+        }
+
         Map<String, Double> result = new HashMap<>();
         result.put("annualSalaryEUR", annualSalaryEUR);
         result.put("hourlyRateEUR", hourlyRateEUR);
@@ -206,16 +231,36 @@ public class CalculatorManager implements ICalculateManager {
     }
 
 
+    /**
+     * Calculates the rates with utilization for a profile.
+     * @param profile The profile.
+     * @param utilization The utilization percentage.
+     * @return A map containing the calculated rates with utilization.
+     */
     @Override
     public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
-        double utilizationFactor = utilization / 100;
-        double newHourlyRate = profile.getHourlySalary() * utilizationFactor;
-        double newDailyRate = profile.getDailyRate() * utilizationFactor;
-        double newAnnualSalary = profile.getAnnualSalary() * utilizationFactor;
+        double newHourlyRate;
+        double newDailyRate;
+        double newAnnualSalary;
 
-        profile.setHourlyRate(newHourlyRate);
-        profile.setDailyRate(newDailyRate);
-        profile.setAnnualSalary(newAnnualSalary);
+        if (utilization < 0) {
+            throw new IllegalArgumentException("Utilization cannot be negative");
+        }
+
+        if (utilization == 0) {
+            newHourlyRate = profile.getHourlyRate();
+            newDailyRate = profile.getDailyRate();
+            newAnnualSalary = profile.getAnnualSalary();
+        } else {
+            double utilizationFactor = utilization / 100;
+            newHourlyRate = profile.getHourlySalary() * utilizationFactor;
+            newDailyRate = profile.getDailyRate() * utilizationFactor;
+            newAnnualSalary = profile.getAnnualSalary() * utilizationFactor;
+
+            profile.setHourlyRate(newHourlyRate);
+            profile.setDailyRate(newDailyRate);
+            profile.setAnnualSalary(newAnnualSalary);
+        }
 
         Map<String, Double> rates = new HashMap<>();
         rates.put("hourlyRate", newHourlyRate);
