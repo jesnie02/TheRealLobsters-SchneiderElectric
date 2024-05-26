@@ -32,27 +32,26 @@ public class CurrencyController implements Initializable {
     @FXML
     private TableColumn<Currency, Integer> colCurrencyId;
     @FXML
-    private TextField txtCurrency, txtSearchCurrency;
+    private TextField txtCurrency,txtSearchCurrency;
     @FXML
     private Button btnCurrencySave;
     @FXML
     private Label lblMessageCurrency;
 
-    private FilteredList<Currency> filteredData;
-    private CurrencyModel currencyModel;
 
+    private CurrencyModel currencyModel;
+    private FilteredList<Currency> filteredData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             currencyModel = new CurrencyModel();
 
-            // Load currencies
+
             ObservableList<Currency> data = currencyModel.getCurrencies();
             filteredData = new FilteredList<>(data, p -> true);
             searchInCurrencyCodes();
 
-            // Set the items in the table
             tblCurrency.setItems(filteredData);
 
         } catch (ApplicationWideException e) {
@@ -76,7 +75,7 @@ public class CurrencyController implements Initializable {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                return currency.getCurrencyCode().toLowerCase().contains(lowerCaseFilter);
+                return currency.getCurrencyCode().toLowerCase().startsWith(lowerCaseFilter);
             });
         });
     }
@@ -101,8 +100,6 @@ public class CurrencyController implements Initializable {
             }
         });
     }
-
-
 
     private void bindSelectionToTextField() {
         tblCurrency.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -135,7 +132,6 @@ public class CurrencyController implements Initializable {
     private void displayMessage(String message, boolean isError) {
         lblMessageCurrency.setText(message);
         lblMessageCurrency.setStyle(isError ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
-
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> lblMessageCurrency.setText("")));
         timeline.play();

@@ -11,6 +11,8 @@ import GUI.Model.ProjectTeamsModel;
 import GUI.Utility.SliderDecimalFilter;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.MFXSlider;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -24,6 +26,7 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -249,9 +252,17 @@ public class CreateProjectTeamController implements Initializable {
             clearInputInFields();
             lblMessageCreateTeam.setTextFill(Color.GREEN);
             lblMessageCreateTeam.setText("The team was created successfully.");
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> {
+                lblMessageCreateTeam.setText("");
+            }));
+            timeline.play();
         } catch (ApplicationWideException e) {
             lblMessageCreateTeam.setTextFill(Color.RED);
             lblMessageCreateTeam.setText("Error occurred during the creation of the team: " + e.getMessage());
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> {
+                lblMessageCreateTeam.setText("");
+            }));
+            timeline.play();
         }
     }
 

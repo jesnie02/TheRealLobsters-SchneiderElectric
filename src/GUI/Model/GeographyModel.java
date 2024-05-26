@@ -57,6 +57,10 @@ public class GeographyModel {
                 .collect(Collectors.toMap(Geography::getGeographyId, geography -> geography));
     }
 
+    public ObservableList<Geography> getGeographies() {
+        return geographies;
+    }
+
     public void saveGeography(Geography geography)  {
         try {
             geographyManager.saveGeography(geography);
