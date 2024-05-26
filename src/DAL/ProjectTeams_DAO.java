@@ -482,13 +482,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         updateAverages(conn, projectTeam);
     }
 
-    //TODO ved ikke om jeg må lave en udregning her
     private void updateAverages(Connection conn, ProjectTeam projectTeam) throws SQLException {
         String updateAveragesSQL = "UPDATE ProjectTeams SET AvgOfAnnualSalary = SumOfAnnualSalary / NULLIF(NumberOfProfiles, 0), AvgOfDailyRate = SumOfDailyRate / NULLIF(NumberOfProfiles, 0), AvgOfHourlyRate = SumOfHourlyRate / NULLIF(NumberOfProfiles, 0) WHERE TeamsId = ?";
         try (PreparedStatement pstmtUpdateAverages = conn.prepareStatement(updateAveragesSQL)) {
             pstmtUpdateAverages.setInt(1, projectTeam.getTeamId());
             pstmtUpdateAverages.executeUpdate();
-            System.out.println("ikke sikker på jeg må lave en udregning her, i en SQL statement. linje 473 i ProjectTeams_DAO");
         }
     }
 
