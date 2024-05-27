@@ -291,7 +291,6 @@ public class UpdateProjectTeamController implements Initializable {
             tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
             updateSumLabels();
-
         }
     }
 
@@ -341,17 +340,17 @@ public class UpdateProjectTeamController implements Initializable {
                 utilizationTime = profileUtilizationTime;
                 utilizationCost = profileUtilizationCost;
 
-                setTextinFieldTime();
-                setTextinFieldCost();
+                setTextInFieldTime();
+                setTextInFieldCost();
             }
         });
         }
 
-    private void setTextinFieldTime() {
+    private void setTextInFieldTime() {
         txtUtilizationTime.setText(String.valueOf(utilizationTime));
     }
 
-    private void setTextinFieldCost() {
+    private void setTextInFieldCost() {
         txtUtilizationCost.setText(String.valueOf(utilizationCost));
     }
 
@@ -392,7 +391,6 @@ public class UpdateProjectTeamController implements Initializable {
             }
         });
     }
-
 
     private void markChangesMade() {
         if (!changesMade.get()) {

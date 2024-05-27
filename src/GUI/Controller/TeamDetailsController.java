@@ -98,27 +98,69 @@ public class TeamDetailsController implements Initializable {
     public void updateUI(ProjectTeam team, Geography geography) {
         DataModelSingleton.getInstance().setCurrentTeam(team);
         lblTeamInTeamDetail.setText(team.getTeamName());
-        if (geography != null){
+        if (geography != null) {
             txtTDGeography.setText(geography.getGeographyName());
         } else {
             txtTDGeography.setText("No Geography");
         }
-        updateSalaryInfo(team);
         ObservableList<Profile> profiles = projectTeam.getProfileForTeam(team.getTeamId());
 
+        profiles.forEach(profile -> {
+            double utilizationTime = profile.getUtilizationTime();
+            double utilizationCost = profile.getUtilizationCost();
+            System.out.println("Utilization Time: " + utilizationTime + " Utilization Cost: " + utilizationCost);
 
+
+            double adjustedAnnualSalary = profile.getAnnualSalary() * (utilizationCost / 100);
+            double adjustedDailyRate = profile.getDailyRate() * (utilizationCost / 100);
+            double adjustedHourlyRate = profile.getHourlySalary() * (utilizationCost / 100);
+
+
+            double adjustedAnnualSalaryWithTime = adjustedAnnualSalary;
+            double adjustedDailyRateWithTime = adjustedDailyRate;
+            double adjustedHourlyRateWithTime = adjustedHourlyRate;
+
+            System.out.println("Adjusted Annual Salary: " + adjustedAnnualSalaryWithTime);
+            System.out.println("Adjusted Daily Rate: " + adjustedDailyRateWithTime);
+            System.out.println("Adjusted Hourly Rate: " + adjustedHourlyRateWithTime);
+
+            profile.setAnnualSalary(adjustedAnnualSalaryWithTime);
+            profile.setDailyRate(adjustedDailyRateWithTime);
+            profile.setHourlySalary(adjustedHourlyRateWithTime);
+        });
 
         tableViewProfile.setItems(profiles);
+        updateSalaryInfo(team);
     }
 
 
     private void updateSalaryInfo(ProjectTeam team){
-        txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
-        txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
-        txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
-        txtAvgAnnual.setText(String.format("%.2f", team.getAvgAnnualSalary()));
-        txtAvgDaily.setText(String.format("%.2f", team.getAvgDailyRate()));
-        txtAvgHourly.setText(String.format("%.2f", team.getAvgHourlyRate()));
+        ObservableList<Profile> profiles = tableViewProfile.getItems();
+        System.out.println("Profiles: "  + profiles);
+
+        double sumAnnual = profiles.stream().mapToDouble(Profile::getAnnualSalary).sum();
+        System.out.println("Sum Annual: " + sumAnnual);
+        double fixedAmount = profiles.stream().mapToDouble(Profile::getFixedAmount).sum();
+        System.out.println("Fixed Amount: " + fixedAmount);
+        double sumDaily = profiles.stream().mapToDouble(Profile::getDailyRate).sum();
+        double sumHourly = profiles.stream().mapToDouble(Profile::getHourlySalary).sum();
+        double sumAvgAndFixed = sumAnnual + fixedAmount;
+
+        int profileCount = profiles.size();
+
+        txtSumAnnual.setText(String.format("%.2f", sumAvgAndFixed));
+        txtSumDaily.setText(String.format("%.2f", sumDaily));
+        txtSumHourly.setText(String.format("%.2f", sumHourly));
+
+        if (profileCount > 0) {
+            txtAvgAnnual.setText(String.format("%.2f", sumAnnual / profileCount));
+            txtAvgDaily.setText(String.format("%.2f", sumDaily / profileCount));
+            txtAvgHourly.setText(String.format("%.2f", sumHourly / profileCount));
+        } else {
+            txtAvgAnnual.setText("0.00");
+            txtAvgDaily.setText("0.00");
+            txtAvgHourly.setText("0.00");
+        }
     }
 
 

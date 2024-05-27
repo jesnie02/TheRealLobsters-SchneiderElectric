@@ -398,6 +398,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
     }
 
+
     private void deleteProfilesNotInList(Connection conn, int teamId, List<Profile> profiles) throws SQLException {
         String deleteSQL = "DELETE FROM ProfileProjectTeams WHERE TeamsId = ? AND ProfileId_PPT NOT IN (";
         for (int i = 0; i < profiles.size(); i++) {
@@ -465,9 +466,14 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         return existingProfileIds;
     }
 
-    private void updateTeamDetails(Connection conn, ProjectTeam projectTeam) throws SQLException {
-        String updateTeamSQL = "UPDATE ProjectTeams SET TeamName = ?, Geography = ?, SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ?, NumberOfProfiles = ? WHERE TeamsId = ?";
+    public void updateTeamDetails(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String updateTeamSQL = "UPDATE ProjectTeams SET " +
+                "TeamName = ?, Geography = ?, SumOfAnnualSalary = ?, SumOfDailyRate = ?, SumOfHourlyRate = ?, NumberOfProfiles = ? " +
+                "WHERE TeamsId = ?";
+
         try (PreparedStatement pstmtUpdateTeam = conn.prepareStatement(updateTeamSQL)) {
+
+            // Update team details
             pstmtUpdateTeam.setString(1, projectTeam.getTeamName());
             pstmtUpdateTeam.setInt(2, projectTeam.getGeographyId());
             pstmtUpdateTeam.setDouble(3, projectTeam.getSumOfAnnualSalary());
@@ -476,14 +482,19 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             pstmtUpdateTeam.setInt(6, projectTeam.getProfiles().size());
             pstmtUpdateTeam.setInt(7, projectTeam.getTeamId());
             pstmtUpdateTeam.executeUpdate();
-        }
 
-        // Call the method to update averages
-        updateAverages(conn, projectTeam);
+            // Update averages
+            updateAverages(conn, projectTeam);
+        }
     }
 
-    private void updateAverages(Connection conn, ProjectTeam projectTeam) throws SQLException {
-        String updateAveragesSQL = "UPDATE ProjectTeams SET AvgOfAnnualSalary = SumOfAnnualSalary / NULLIF(NumberOfProfiles, 0), AvgOfDailyRate = SumOfDailyRate / NULLIF(NumberOfProfiles, 0), AvgOfHourlyRate = SumOfHourlyRate / NULLIF(NumberOfProfiles, 0) WHERE TeamsId = ?";
+    public void updateAverages(Connection conn, ProjectTeam projectTeam) throws SQLException {
+        String updateAveragesSQL = "UPDATE ProjectTeams SET " +
+                "AvgOfAnnualSalary = SumOfAnnualSalary / NULLIF(NumberOfProfiles, 0), " +
+                "AvgOfDailyRate = SumOfDailyRate / NULLIF(NumberOfProfiles, 0), " +
+                "AvgOfHourlyRate = SumOfHourlyRate / NULLIF(NumberOfProfiles, 0) " +
+                "WHERE TeamsId = ?";
+
         try (PreparedStatement pstmtUpdateAverages = conn.prepareStatement(updateAveragesSQL)) {
             pstmtUpdateAverages.setInt(1, projectTeam.getTeamId());
             pstmtUpdateAverages.executeUpdate();

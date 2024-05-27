@@ -7,6 +7,8 @@ import CustomExceptions.ApplicationWideException;
 import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,7 +151,6 @@ public class ProjectTeamsModel {
 
     public void updateTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeamsManager.updateTeam(projectTeam);
-
     }
 
     public void removeProfileFromTeam(int projectTeam, int profile) {
