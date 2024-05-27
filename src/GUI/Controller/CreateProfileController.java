@@ -59,6 +59,7 @@ public class CreateProfileController implements Initializable {
     private ProfileModel profileModel;
     private ProfileRoleModel profileRoleModel;
     private CurrencyModel currencyModel;
+    private FrameController frameController;
 
 
 
@@ -71,6 +72,7 @@ public class CreateProfileController implements Initializable {
             currencyModel = new CurrencyModel();
             profileRoleModel = ProfileRoleModel.getInstance();
             profileModel = ProfileModel.getInstance();
+            frameController = FrameController.getInstance();
 
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
@@ -234,15 +236,12 @@ public class CreateProfileController implements Initializable {
         txtAnnualSalary.clear();
         txtFixedAmount.clear();
         txtEffectiveHours.clear();
-        txtDailyWorkingHours.clear();
-        txtOverheadView.clear();
         lblHourlyResult.setText("");
         lblDailyResult.setText("");
         lblShowMassage.setText("");
         lblAnnualResultEUR.setText("");
         lblHourlyResultEUR.setText("");
         lblDailyResultInEUR.setText("");
-        cBox_Currency.getSelectionModel().clearSelection();
         cBoxProfile_ProfileRoles.getCheckModel().clearChecks();
         sliderOverhead.setValue(0.0);
     }

@@ -213,41 +213,38 @@ public class Geography_DAO implements IGeographyDataAccess {
              PreparedStatement pstmtGeographyProfile = conn.prepareStatement(deleteGeographyProfileSql);
              PreparedStatement pstmtGeography = conn.prepareStatement(deleteGeographySql)) {
 
-            conn.setAutoCommit(false); // Start transaction
+            conn.setAutoCommit(false);
 
             try {
-                // Step 1: Set Geography to NULL in ProjectTeams
+                // Set Geography to NULL in ProjectTeams
                 pstmtUpdateProjectTeams.setInt(1, geographyId);
                 pstmtUpdateProjectTeams.executeUpdate();
 
-                // Step 2: Delete from ProfileProjectTeams
+                // Delete from ProfileProjectTeams
                 pstmtProfileProjectTeams.setInt(1, geographyId);
                 pstmtProfileProjectTeams.executeUpdate();
 
-                // Step 3: Delete from GeographyCountry
+                // Delete from GeographyCountry
                 pstmtGeographyCountry.setInt(1, geographyId);
                 pstmtGeographyCountry.executeUpdate();
 
-                // Step 4: Delete from GeographyProfile
+                // Delete from GeographyProfile
                 pstmtGeographyProfile.setInt(1, geographyId);
                 pstmtGeographyProfile.executeUpdate();
 
-                // Step 5: Delete from Geography
+                // Delete from Geography
                 pstmtGeography.setInt(1, geographyId);
                 pstmtGeography.executeUpdate();
 
-                conn.commit(); // Commit transaction if all updates and deletes are successful
+                conn.commit();
             } catch (SQLException e) {
-                conn.rollback(); // Rollback transaction if any update or delete fails
-                //e.printStackTrace();
+                conn.rollback();
                 throw new ApplicationWideException("Failed to delete geography roolback", e);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new ApplicationWideException("Failed to delete geography", e);
         }
-
     }
 
 

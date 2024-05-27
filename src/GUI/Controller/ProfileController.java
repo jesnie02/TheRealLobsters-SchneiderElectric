@@ -12,6 +12,7 @@ import GUI.Utility.AlertBox;
 import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -21,12 +22,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -206,7 +212,9 @@ public void searchInProfiles() {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             boolean success = profileModel.deleteProfile(profile);
             if (success) {
-                tblProfiles.getItems().remove(profile);
+                List<Profile> modifiableList = new ArrayList<>(tblProfiles.getItems());
+                modifiableList.remove(profile);
+                tblProfiles.setItems(FXCollections.observableArrayList(modifiableList));
                 AlertBox.displayInfo("Profile Deleted", "Profile has been successfully deleted.");
             } else {
                 AlertBox.displayInfo("Deletion Failed", "Failed to delete the profile.");

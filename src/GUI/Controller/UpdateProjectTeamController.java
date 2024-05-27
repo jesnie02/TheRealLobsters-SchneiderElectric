@@ -58,6 +58,7 @@ public class UpdateProjectTeamController implements Initializable {
     private Map<Profile, Double> utilizationsTimeMap = new HashMap<>();
     private Map<Profile, Double> utilizationsCostMap = new HashMap<>();
 
+
     private ObservableList<Profile> profiles = FXCollections.observableArrayList();
     private double utilizationTime;
     private double utilizationCost;
