@@ -1,6 +1,8 @@
 package BLL;
 
 import BE.Profile;
+import BE.ProjectTeam;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,15 +60,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average annual salary for a list of profiles.
-     * @param profiles The list of profiles.
+     * @param teams The project team.
      * @return The average annual salary.
      */
     @Override
-    public double avgAnnualSalary(List<Profile> profiles) {
-        if (profiles.isEmpty()) {
-            return 0;
-        }
-        return annualSalaryWithFixedAmount(profiles) / profiles.size();
+    public double avgAnnualSalary(ProjectTeam teams) {
+        return teams.getSumOfAnnualSalary() / teams.getProfiles().size();
     }
 
     /**
@@ -85,12 +84,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average hourly rate for a list of profiles.
-     * @param profiles The list of profiles.
+     * @param teams The list of profiles.
      * @return The average hourly rate.
      */
     @Override
-    public double avgHourlyRate(List<Profile> profiles) {
-        return sumOfHourlyRate(profiles) / profiles.size();
+    public double avgHourlyRate(ProjectTeam teams) {
+        return teams.getSumOfHourlyRate() / teams.getProfiles().size();
     }
 
     /**
@@ -109,12 +108,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average daily rate for a list of profiles.
-     * @param profiles The list of profiles.
+     * @param teams The list of profiles.
      * @return The average daily rate.
      */
     @Override
-    public double avgDailyRate(List<Profile> profiles) {
-        return sumOfDailyRate(profiles) / profiles.size();
+    public double avgDailyRate(ProjectTeam teams){
+        return teams.getSumOfDailyRate() / teams.getProfiles().size();
     }
 
 

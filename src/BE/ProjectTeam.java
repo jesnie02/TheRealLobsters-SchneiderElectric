@@ -139,8 +139,9 @@ public class ProjectTeam {
         this.sumOfAnnualSalary = sumOfAnnualSalary;
     }
 
-    public void setAvgAnnualSalary(double avgAnnualSalary) {
+    public double setAvgAnnualSalary(double avgAnnualSalary) {
         this.avgAnnualSalary = avgAnnualSalary;
+        return this.avgAnnualSalary;
     }
 
     public void setSumOfHourlyRate(double sumOfHourlyRate) {

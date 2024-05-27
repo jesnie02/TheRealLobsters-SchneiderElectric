@@ -135,6 +135,7 @@ public class TeamDetailsController implements Initializable {
         txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
         txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
 
+        txtAvgAnnual.setText(String.format("%.2f", team.getAvgAnnualSalary()));
         txtAvgDaily.setText(String.format("%.2f", team.getAvgDailyRate()));
         txtAvgHourly.setText(String.format("%.2f", team.getAvgHourlyRate()));
 
