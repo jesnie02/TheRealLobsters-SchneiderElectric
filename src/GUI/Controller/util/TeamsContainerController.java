@@ -21,7 +21,6 @@ public class TeamsContainerController {
     private Map<Integer, VBox> teamBoxes = new HashMap<>();
     private Map<Integer, Geography> geographyMap = new HashMap<>();
 
-
     public TeamsContainerController() {
         initializeModels();
     }
@@ -55,7 +54,6 @@ public class TeamsContainerController {
         }
     }
 
-
     private List<ProjectTeam> fetchAllProjectTeams() {
         return projectTeamsModel.getAllProjectTeamsData();
     }
@@ -64,9 +62,6 @@ public class TeamsContainerController {
         VBox teamBox = createTeamVBox(team, geography);
         teamBoxes.put(team.getTeamId(), teamBox);
     }
-
-
-
 
     private VBox createTeamVBox(ProjectTeam team, Geography geography) {
         VBox vbox = new VBox(10);
@@ -97,7 +92,6 @@ public class TeamsContainerController {
         TeamsController.getInstance().showTeamDetails(team, geography);
     }
 
-
     public VBox getTeamVBox(int teamId) {
         return teamBoxes.get(teamId);
     }
@@ -106,6 +100,10 @@ public class TeamsContainerController {
         return geographyMap.get(team.getGeographyId());
     }
 
-
+    // New method to add a project team dynamically
+    public void addProjectTeam(ProjectTeam team) {
+        Geography geography = geographyMap.get(team.getGeographyId());
+        team.setGeography(geography);  // Set the geography for the team
+        createAndStoreTeamVBox(team, geography);
+    }
 }
-

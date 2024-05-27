@@ -209,22 +209,22 @@ public class CreateProfileController implements Initializable {
 
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
-        double annualSalary = parseDouble(lblAnnualResultEUR.getText());
-        double hourlyResult = parseDouble(lblHourlyResultEUR.getText());
-        double dailyResult = parseDouble(lblDailyResultInEUR.getText());
+        double annualSalary = parseDouble(txtAnnualSalary.getText());
+        double hourlyResult = calculateAndSetHourlyRateCreateProfile();
+        double dailyResult = calculateAndSetDailyRateCreateProdifle();
         boolean overheadCost = checkOverhead.isSelected();
         double fixedAmount = parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
         List<ProfileRole> selectedRoles = new ArrayList<>(cBoxProfile_ProfileRoles.getCheckModel().getCheckedItems());
         double overheadMultiplier = parseDouble(txtOverheadView.getText());
         double effectiveWorkingHours = parseDouble(txtEffectiveHours.getText());
-
         Profile newProfile = new Profile(firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles, effectiveWorkingHours, overheadMultiplier);
 
         profileModel.createProfile(newProfile);
         clearFields();
         lblShowMassage.setText("Profile has been saved");
     }
+
 
 
     public void clearFields() {
