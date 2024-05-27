@@ -165,17 +165,28 @@ public class UpdateProjectTeamController implements Initializable {
     }
 
     private void updateSumLabels() {
-        double hourlyRateSum = 0;
-        double dailyRateSum = 0;
-        double annualSalarySum = 0;
-        for (Profile profile : profiles) {
-            hourlyRateSum += profile.getHourlyRate();
-            dailyRateSum += profile.getDailyRate();
-            annualSalarySum += profile.getAnnualSalary();
+        double annualSalarySum = 0.0;
+        double dailyRateSum = 0.0;
+        double hourlyRateSum = 0.0;
+
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(2);
+        formatter.setMaximumFractionDigits(2);
+
+        for (Profile profile : tblProfileToTeam.getItems()) {
+            double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
+            double annualSalary = (profile.getAnnualSalary()+profile.getFixedAmount()) * (utilizationCost / 100);
+            double dailyRate = profile.getDailyRate() * (utilizationCost / 100);
+            double hourlyRate = profile.getHourlySalary() * (utilizationCost / 100);
+
+            annualSalarySum += annualSalary;
+            dailyRateSum += dailyRate;
+            hourlyRateSum += hourlyRate;
         }
-        lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
-        lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
-        lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
+
+        lblAnnualSalarySum.setText(formatter.format(annualSalarySum));
+        lblDailyRateSum.setText(formatter.format(dailyRateSum));
+        lblHourlyRateSum.setText(formatter.format(hourlyRateSum));
     }
 
 
@@ -313,9 +324,6 @@ public class UpdateProjectTeamController implements Initializable {
             utilizationsTimeMap.put(selectedProfile, utilizationTimeValue);
             utilizationsCostMap.put(selectedProfile, utilizationCostValue);
 
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() / 100 * utilizationsCostMap.get(selectedProfile));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate() / 100 * utilizationsCostMap.get(selectedProfile));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() / 100 * utilizationsCostMap.get(selectedProfile));
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
             updateSumLabels();
