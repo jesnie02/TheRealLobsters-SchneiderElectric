@@ -209,7 +209,6 @@ public class UpdateProjectTeamController implements Initializable {
             Profile profile = cellData.getValue();
             double annualSalary = profile.getAnnualSalary();
             double fixedAmount = profile.getFixedAmount();
-            System.out.println("Name: " + profile.getFName() + " annualSalary: " + annualSalary + " fixedAmount: " + fixedAmount);
             double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
             double totalAnnualSalary = (annualSalary + fixedAmount) * (utilizationCost / 100);
             return new SimpleStringProperty(formatter.format(totalAnnualSalary));
@@ -223,6 +222,7 @@ public class UpdateProjectTeamController implements Initializable {
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         tblProfileToTeam.setItems(profiles);
+        System.out.println(profiles);
     }
 
 

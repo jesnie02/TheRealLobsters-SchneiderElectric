@@ -16,7 +16,7 @@ public class Profile {
     private List<ProfileRole> profileRoles;
 
 
-    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveWorkingHours, double overheadMultiplier) {
+    public Profile(int profileId, String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate, double dailyWorkingHours, double totalUtilization, double fixedAmount, double utilizationCost, double effectiveWorkingHours, double overheadMultiplier) {
         this.profileId = profileId;
         this.fName = fName;
         this.lName = lName;
@@ -26,6 +26,7 @@ public class Profile {
         this.dailyRate = dailyRate;
         this.dailyWorkingHours = dailyWorkingHours;
         this.totalUtilization = totalUtilization;
+        this.fixedAmount = fixedAmount;
         this.utilizationCost = utilizationCost;
         this.effectiveWorkingHours = effectiveWorkingHours;
         this.overheadMultiplier = overheadMultiplier;
@@ -69,6 +70,23 @@ public class Profile {
         this.utilizationTime = utilizationTime;
         this.utilizationCost = utilizationCost;
         this.profileRoles = profileRoles;
+    }
+
+    // tilhører getProfileFromProjectTeam i Projecteam_DAO bruges til update team
+    public Profile(int profileId, String fName, String lName, Boolean overheadCost, double annualSalary, double hourlyRate, double dailyRate, double fixedAmount, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveHours, double overheadMultiplier) {
+        this.profileId = profileId;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlyRate;
+        this.dailyRate = dailyRate;
+        this.fixedAmount = fixedAmount;
+        this.dailyWorkingHours = dailyWorkingHours;
+        this.totalUtilization = totalUtilization;
+        this.utilizationCost = utilizationCost;
+        this.effectiveWorkingHours = effectiveHours;
+        this.overheadMultiplier = overheadMultiplier;
     }
 
     public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, double utilizationTime, double utilizationCost, List<ProfileRole> profileRoles) {
@@ -115,20 +133,19 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
-    public Profile(int profileId, String fName, String lName, Boolean overheadCost, double annualSalary, double hourlyRate, double dailyRate, double fixedAmount, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveHours, double overheadMultiplier) {
-        this.profileId = profileId;
+    public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, double fixedAmount, List<ProfileRole> profileRoles) {
+        this.profileId = id;
         this.fName = fName;
         this.lName = lName;
-        this.overheadCost = overheadCost;
-        this.annualSalary = annualSalary;
-        this.hourlySalary = hourlyRate;
-        this.dailyRate = dailyRate;
-        this.fixedAmount = fixedAmount;
-        this.dailyWorkingHours = dailyWorkingHours;
-        this.totalUtilization = totalUtilization;
+        this.overheadCost = overhead;
+        this.annualSalary = annual;
+        this.hourlySalary = hourly;
+        this.dailyRate = daily;
+        this.dailyWorkingHours = workingHR;
+        this.utilizationTime = utilizationTime;
         this.utilizationCost = utilizationCost;
-        this.effectiveWorkingHours = effectiveHours;
-        this.overheadMultiplier = overheadMultiplier;
+        this.fixedAmount = fixedAmount;
+        this.profileRoles = profileRoles;
     }
 
 

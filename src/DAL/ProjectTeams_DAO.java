@@ -325,7 +325,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 "JOIN ProfileRole pr ON ppr.ProfileRoleId = pr.ProfileRoleId " +
                 "WHERE ppt.TeamsId = ? " +
                 "GROUP BY p.ProfileId, p.Fname, p.Lname, p.Overheadcost, p.AnualSalary, p.HourlySalary, p.DailyRate, p.FixedAmount, p.DailyWorkingHours, p.TotalUtilization, ppt.Utilization, ppt.UtilizationCost, p.UtilizationCost, p.EffectiveWorkingHours, p.OverheadMultiplierPercentage";
-
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, projectTeamID);
@@ -341,10 +340,11 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 double hourly = rs.getDouble("HourlySalary");
                 double daily = rs.getDouble("DailyRate");
                 double workingHR = rs.getDouble("DailyWorkingHours");
+                double utilizationCost = rs.getDouble("UtilizationCost");
                 double utilizationTime = rs.getDouble("Utilization");
-                double utilizationCost = rs.getDouble("uCost");
+                double fixedAmount = rs.getDouble("FixedAmount");
 
-                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilizationTime, utilizationCost, profileRoles);
+                Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilizationTime, utilizationCost, fixedAmount, profileRoles);
                 profiles.add(profile);
             }
         } catch (SQLException e) {
