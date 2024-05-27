@@ -310,7 +310,7 @@ public class CreateProjectTeamController implements Initializable {
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
 
-            clearInputInFields();
+
             lblMessageCreateTeam.setTextFill(Color.GREEN);
             lblMessageCreateTeam.setText("The team was created successfully.");
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> {
@@ -327,6 +327,8 @@ public class CreateProjectTeamController implements Initializable {
             }));
             timeline.play();
         }
+        clearInputInFields();
+
     }
 
 

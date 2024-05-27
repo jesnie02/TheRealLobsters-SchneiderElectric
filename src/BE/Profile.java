@@ -115,6 +115,22 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
+    public Profile(int profileId, String fName, String lName, Boolean overheadCost, double annualSalary, double hourlyRate, double dailyRate, double fixedAmount, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveHours, double overheadMultiplier) {
+        this.profileId = profileId;
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlyRate;
+        this.dailyRate = dailyRate;
+        this.fixedAmount = fixedAmount;
+        this.dailyWorkingHours = dailyWorkingHours;
+        this.totalUtilization = totalUtilization;
+        this.utilizationCost = utilizationCost;
+        this.effectiveWorkingHours = effectiveHours;
+        this.overheadMultiplier = overheadMultiplier;
+    }
+
 
     public int getProfileId() {
         return profileId;
@@ -291,7 +307,6 @@ public class Profile {
                 ", countryId=" + countryId +
                 ", fName='" + fName + '\'' +
                 ", lName='" + lName + '\'' +
-                ", roles='" + roles + '\'' +
                 ", overheadCost=" + overheadCost +
                 ", annualSalary=" + annualSalary +
                 ", hourlySalary=" + hourlySalary +

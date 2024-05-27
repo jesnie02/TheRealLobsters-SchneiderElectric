@@ -108,21 +108,14 @@ public class TeamDetailsController implements Initializable {
         profiles.forEach(profile -> {
             double utilizationTime = profile.getUtilizationTime();
             double utilizationCost = profile.getUtilizationCost();
-            System.out.println("Utilization Time: " + utilizationTime + " Utilization Cost: " + utilizationCost);
 
-
-            double adjustedAnnualSalary = profile.getAnnualSalary() * (utilizationCost / 100);
+            double adjustedAnnualSalary = team.getSumOfAnnualSalary() * (utilizationCost / 100);
             double adjustedDailyRate = profile.getDailyRate() * (utilizationCost / 100);
             double adjustedHourlyRate = profile.getHourlySalary() * (utilizationCost / 100);
-
 
             double adjustedAnnualSalaryWithTime = adjustedAnnualSalary;
             double adjustedDailyRateWithTime = adjustedDailyRate;
             double adjustedHourlyRateWithTime = adjustedHourlyRate;
-
-            System.out.println("Adjusted Annual Salary: " + adjustedAnnualSalaryWithTime);
-            System.out.println("Adjusted Daily Rate: " + adjustedDailyRateWithTime);
-            System.out.println("Adjusted Hourly Rate: " + adjustedHourlyRateWithTime);
 
             profile.setAnnualSalary(adjustedAnnualSalaryWithTime);
             profile.setDailyRate(adjustedDailyRateWithTime);
@@ -135,33 +128,17 @@ public class TeamDetailsController implements Initializable {
 
 
     private void updateSalaryInfo(ProjectTeam team){
-        ObservableList<Profile> profiles = tableViewProfile.getItems();
-        System.out.println("Profiles: "  + profiles);
+        DataModelSingleton.getInstance().setCurrentTeam(team);
 
-        double sumAnnual = profiles.stream().mapToDouble(Profile::getAnnualSalary).sum();
-        System.out.println("Sum Annual: " + sumAnnual);
-        double fixedAmount = profiles.stream().mapToDouble(Profile::getFixedAmount).sum();
-        System.out.println("Fixed Amount: " + fixedAmount);
-        double sumDaily = profiles.stream().mapToDouble(Profile::getDailyRate).sum();
-        double sumHourly = profiles.stream().mapToDouble(Profile::getHourlySalary).sum();
-        double sumAvgAndFixed = sumAnnual + fixedAmount;
+        txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
 
-        int profileCount = profiles.size();
+        txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
+        txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
 
-        txtSumAnnual.setText(String.format("%.2f", sumAvgAndFixed));
-        txtSumDaily.setText(String.format("%.2f", sumDaily));
-        txtSumHourly.setText(String.format("%.2f", sumHourly));
+        txtAvgDaily.setText(String.format("%.2f", team.getAvgDailyRate()));
+        txtAvgHourly.setText(String.format("%.2f", team.getAvgHourlyRate()));
 
-        if (profileCount > 0) {
-            txtAvgAnnual.setText(String.format("%.2f", sumAnnual / profileCount));
-            txtAvgDaily.setText(String.format("%.2f", sumDaily / profileCount));
-            txtAvgHourly.setText(String.format("%.2f", sumHourly / profileCount));
-        } else {
-            txtAvgAnnual.setText("0.00");
-            txtAvgDaily.setText("0.00");
-            txtAvgHourly.setText("0.00");
         }
-    }
 
 
     @FXML

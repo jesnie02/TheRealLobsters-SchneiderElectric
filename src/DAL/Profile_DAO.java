@@ -50,8 +50,8 @@ public class Profile_DAO implements IProfileDataAccess {
                 double effectiveHours = rs.getDouble("EffectiveWorkingHours");
                 double overheadMultiplier = rs.getDouble("OverheadMultiplierPercentage");
 
-                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, dailyWorkingHours, totalUtilization, utilizationCost, effectiveHours, overheadMultiplier);
-                profile.setFixedAmount(fixedAmount);
+                Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, utilizationCost, effectiveHours, overheadMultiplier);
+
 
                 allProfiles.add(profile);
             }
