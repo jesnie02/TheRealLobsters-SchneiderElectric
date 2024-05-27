@@ -12,8 +12,11 @@ import GUI.Utility.ExceptionHandler;
 import GUI.Utility.SliderDecimalFilter;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +31,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UpdateProjectTeamController implements Initializable {
 
@@ -51,6 +51,8 @@ public class UpdateProjectTeamController implements Initializable {
     private SearchableComboBox<Profile> cBoxProfiles;
     @FXML
     private SearchableComboBox<Geography> cBoxGeographies;
+    @FXML
+    private Button btnUpdateTeam, btnRemoveProfileTeam;
 
     private Map<Integer, Country> countriesMap;
     private Map<Profile, Double> utilizationsTimeMap = new HashMap<>();
@@ -59,6 +61,7 @@ public class UpdateProjectTeamController implements Initializable {
     private ObservableList<Profile> profiles = FXCollections.observableArrayList();
     private double utilizationTime;
     private double utilizationCost;
+    private BooleanProperty changesMade = new SimpleBooleanProperty(false);
 
     ProfileModel profileModel;
     CountryModel countryModel;
@@ -80,6 +83,9 @@ public class UpdateProjectTeamController implements Initializable {
             setupTableView();
             bindSliderAndTextFieldTime();
             bindSliderAndTextFieldCost();
+            initDataFromTeam();
+            setupBindings();
+            setupChangeListeners();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
@@ -146,15 +152,15 @@ public class UpdateProjectTeamController implements Initializable {
             profiles.setAll(projectTeamsModel.getProfileForTeam(currentTeam.getTeamId()));
             utilizationsTimeMap.clear();
 
-           for (Profile profile : profiles) {
+            for (Profile profile : profiles) {
                 utilizationsTimeMap.put(profile, Double.valueOf(profile.getUtilizationTime()));
                 utilizationsCostMap.put(profile, Double.valueOf(profile.getUtilizationCost()));
             }
 
-           tblProfileToTeam.setItems(profiles);
-           tblProfileToTeam.refresh();
-
+            tblProfileToTeam.setItems(profiles);
+            tblProfileToTeam.refresh();
         }
+        changesMade.set(false);
     }
 
     private void updateSumLabels() {
@@ -214,7 +220,19 @@ public class UpdateProjectTeamController implements Initializable {
     }
 
     @FXML
-    private void updateProjectTeam(ActionEvent actionEvent) {
+    void updateProjectTeam(ActionEvent actionEvent) {
+        boolean noChangesMade = !changesMade.get();
+        String alertTitle;
+        String alertMessage;
+
+        if (noChangesMade) {
+            alertTitle = "No Changes Made";
+            alertMessage = "No changes have been made.";
+        } else {
+            alertTitle = "Success";
+            alertMessage = "The team has been successfully updated.";
+        }
+
         try {
             String teamName = txtProjectTeamName.getText();
             ObservableList<Profile> profilesInTeam = tblProfileToTeam.getItems();
@@ -233,7 +251,6 @@ public class UpdateProjectTeamController implements Initializable {
             currentTeam.setUtilizationCostMap(utilizationsCostMap);
             currentTeam.setNumberOfProfiles(profilesInTeam.size());
 
-
             String hourlyRateStr = lblHourlyRateSum.getText().replace(",", ".");
             String dailyRateStr = lblDailyRateSum.getText().replace(",", ".");
             String annualSalaryStr = lblAnnualSalarySum.getText().replace(",", ".");
@@ -244,9 +261,13 @@ public class UpdateProjectTeamController implements Initializable {
 
             projectTeamsModel.updateTeam(currentTeam);
 
-            AlertBox.displayInfo("Success", "The team " + teamName + " has been successfully updated.");
+            // Display the appropriate message after the update logic
+            AlertBox.displayInfo(alertTitle, alertMessage);
+
             FrameController.getInstance().loadTeamsView();
             TeamsController.getInstance().loadTeamsInTilePane();
+            changesMade.set(false);
+            FrameController.getInstance().setAreChangesMade(false);
 
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
@@ -286,6 +307,8 @@ public class UpdateProjectTeamController implements Initializable {
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
             updateSumLabels();
+            changesMade.set(true);
+            FrameController.getInstance().setAreChangesMade(true);
         }
     }
 
@@ -325,7 +348,59 @@ public class UpdateProjectTeamController implements Initializable {
     private void setTextinFieldCost() {
         txtUtilizationCost.setText(String.valueOf(utilizationCost));
     }
+
+    private void setupBindings() {
+        btnUpdateTeam.textProperty().bind(Bindings.when(changesMade.not()).then("Cancel").otherwise("Update Team"));
+        btnUpdateTeam.disableProperty().bind(Bindings.when(changesMade.not().and(btnUpdateTeam.textProperty().isEqualTo("Cancel"))).then(false).otherwise(false));
     }
+
+
+    private void setupChangeListeners() {
+        txtProjectTeamName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!Objects.equals(oldValue, newValue)) {
+                markChangesMade();
+            }
+        });
+        cBoxGeographies.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!Objects.equals(oldValue, newValue)) {
+                markChangesMade();
+            }
+        });
+        sliderUtilizationTime.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!Objects.equals(oldValue, newValue)) {
+                markChangesMade();
+            }
+        });
+        sliderUtilizationCost.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!Objects.equals(oldValue, newValue)) {
+                markChangesMade();
+            }
+        });
+        tblProfileToTeam.getItems().addListener((ListChangeListener<Profile>) change -> markChangesMade());
+
+        profiles.addListener((ListChangeListener<Profile>) change -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved()) {
+                    markChangesMade();
+                }
+            }
+        });
+    }
+
+
+    private void markChangesMade() {
+        if (!changesMade.get()) {
+            changesMade.set(true);
+            FrameController.getInstance().setAreChangesMade(true);
+        }
+    }
+
+}
+
+
+
+
+
 
 
 

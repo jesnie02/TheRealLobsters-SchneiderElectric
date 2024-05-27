@@ -39,7 +39,6 @@ public class ProjectTeamsModel {
 
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeamsManager.addProfileToTeam(projectTeam);
-
     }
 
     public ObservableList<String> getEveryProjectTeam() {

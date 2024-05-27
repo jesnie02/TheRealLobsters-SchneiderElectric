@@ -192,7 +192,4 @@ public class ProjectTeam {
     public Geography getGeography() {
         return geography;
     }
-
-
-
 }

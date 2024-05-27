@@ -3,7 +3,9 @@ package GUI.Controller;
 
 import GUI.Utility.ExceptionHandler;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
@@ -13,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +33,7 @@ public class FrameController implements Initializable {
 
     private static FrameController instance;
     private UpdateProjectTeamController updateProjectTeamController;
+    private BooleanProperty areChangesMade = new SimpleBooleanProperty(false);
 
     @FXML
     private StackPane stackPaneFrame;
@@ -52,26 +57,47 @@ public class FrameController implements Initializable {
 
     public FrameController() {
         instance = this;
-
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, true);
         currentView.addListener((ob, ov, nv) -> {
-          btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.DASHBOARD);
+            if (areChangesMade.get()) {
+                // Ask user to confirm view change if changes are made
+                boolean proceed = showConfirmationDialog();
+                if (!proceed) {
+                    currentView.set(ov); // Revert to the old view
+                    return;
+                }
+                areChangesMade.set(false); // Reset changes flag
+            }
+            btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.DASHBOARD);
             btnProfiles.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.PROFILES);
             btnTeams.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.TEAMS);
             btnGeography.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.GEOGRAPHY);
             btnMultiplier.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.MULTIPLIER);
             btnCurrency.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.CURRENCY);
-        });
 
+            // Re-enable buttons when switching away from UpdateProjectTeamController view
+            if (!nv.equals(ViewType.TEAMS)) {
+                areChangesMade.set(false);
+            }
+        });
         loadDashboardOnStart();
+        setupBindings();
     }
 
+    private void setCurrentView(ViewType viewType) {
+        btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.DASHBOARD);
+        btnProfiles.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.PROFILES);
+        btnTeams.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.TEAMS);
+        btnGeography.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.GEOGRAPHY);
+        btnMultiplier.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.MULTIPLIER);
+        btnCurrency.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.CURRENCY);
+        loadView(viewType.toString().toLowerCase() + "View.fxml");
+    }
 
 
     private void loadDashboardOnStart() {
@@ -216,5 +242,27 @@ public class FrameController implements Initializable {
         } else {
             showErrorAlert("Initialization Error", "UI components are not fully initialized.");
         }
+    }
+
+    public void setAreChangesMade(boolean changesAreMade) {
+        this.areChangesMade.set(changesAreMade);
+    }
+
+    private void setupBindings() {
+        btnDashboard.disableProperty().bind(areChangesMade);
+        btnProfiles.disableProperty().bind(areChangesMade);
+        btnTeams.disableProperty().bind(areChangesMade);
+        btnGeography.disableProperty().bind(areChangesMade);
+        btnMultiplier.disableProperty().bind(areChangesMade);
+        btnCurrency.disableProperty().bind(areChangesMade);
+    }
+
+    private boolean showConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Navigation");
+        alert.setHeaderText("Unsaved Changes");
+        alert.setContentText("You have unsaved changes. Do you really want to leave this page?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 }

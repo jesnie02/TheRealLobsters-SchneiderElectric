@@ -165,7 +165,7 @@
                      <left>
                         <MFXLegacyTableView fx:id="tblGeography" maxWidth="300.0" prefHeight="360.0" prefWidth="210.0" BorderPane.alignment="CENTER">
                            <columns>
-                              <TableColumn fx:id="colGeographies" prefWidth="263.2000240087509" text="geographies" />
+                              <TableColumn fx:id="colGeographies" prefWidth="263.2000240087509" text="Geographies" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

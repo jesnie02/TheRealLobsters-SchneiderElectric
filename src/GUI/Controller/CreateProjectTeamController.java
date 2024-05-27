@@ -229,7 +229,6 @@ public class CreateProjectTeamController implements Initializable {
         }
     }
 
-    @FXML
     public void createProjectTeam(ActionEvent event) {
         if (!validateInput()) {
             return;
