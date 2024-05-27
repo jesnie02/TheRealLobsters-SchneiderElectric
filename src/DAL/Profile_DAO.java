@@ -52,9 +52,7 @@ public class Profile_DAO implements IProfileDataAccess {
 
                 Profile profile = new Profile(profileId, fName, lName, overheadCost, annualSalary, hourlyRate, dailyRate, fixedAmount, dailyWorkingHours, totalUtilization, utilizationCost, effectiveHours, overheadMultiplier);
 
-
                 allProfiles.add(profile);
-                System.out.println(allProfiles);
             }
         } catch (SQLException e) {
             throw new ApplicationWideException("Failed to read all profiles", e);

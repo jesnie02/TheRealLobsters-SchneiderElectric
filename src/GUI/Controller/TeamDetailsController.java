@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -78,9 +79,37 @@ public class TeamDetailsController implements Initializable {
             return new SimpleDoubleProperty(utilizationTime).asObject();
         });
 
+        colUtilizationTime.setCellFactory(column -> new TableCell<Profile, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#.##");
+
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item)+ " %" );
+                }
+            }
+        });
+
         colUtilizationCost.setCellValueFactory(cellData -> {
-            double utilizationCost = cellData.getValue().getUtilizationCost();
+            double utilizationCost = 100- cellData.getValue().getUtilizationCost();
             return new SimpleDoubleProperty(utilizationCost).asObject();
+        });
+
+        colUtilizationCost.setCellFactory(column -> new TableCell<Profile, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#.##");
+
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item) + " %" );
+                }
+            }
         });
 
         colProfileRoleTD.setCellValueFactory(cellData -> new SimpleStringProperty(
@@ -89,10 +118,6 @@ public class TeamDetailsController implements Initializable {
                         .collect(Collectors.joining(", "))
         ));
     }
-
-
-
-
 
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {

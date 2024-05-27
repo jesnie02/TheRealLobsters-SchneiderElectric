@@ -210,7 +210,14 @@ public class UpdateProjectTeamController implements Initializable {
             double annualSalary = profile.getAnnualSalary();
             double fixedAmount = profile.getFixedAmount();
             double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
-            double totalAnnualSalary = (annualSalary + fixedAmount) * (utilizationCost / 100);
+
+            double totalAnnualSalary;
+            if (utilizationCost == 0.0) {
+                totalAnnualSalary = annualSalary + fixedAmount;
+            } else {
+                totalAnnualSalary = (annualSalary + fixedAmount) * (utilizationCost / 100);
+            }
+
             return new SimpleStringProperty(formatter.format(totalAnnualSalary));
         });
         colTeamUtilizationTime.setCellValueFactory(cellData -> {
@@ -218,11 +225,10 @@ public class UpdateProjectTeamController implements Initializable {
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         colTeamUtilizationCost.setCellValueFactory(cellData -> {
-            double utilization = utilizationsCostMap.getOrDefault(cellData.getValue(), 0.0);
+            double utilization = 100-utilizationsCostMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         tblProfileToTeam.setItems(profiles);
-        System.out.println(profiles);
     }
 
 
@@ -289,7 +295,7 @@ public class UpdateProjectTeamController implements Initializable {
             profiles.remove(selectedProfile);
             utilizationsCostMap.remove(selectedProfile);
             utilizationsTimeMap.remove(selectedProfile);
-            tblProfileToTeam.refresh();
+            //tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
             updateSumLabels();
         }

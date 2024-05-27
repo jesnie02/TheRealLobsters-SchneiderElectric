@@ -130,6 +130,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                                 pstmtInsertProfileProjectTeams.setDouble(3, utilization);
                                 pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
                                 pstmtInsertProfileProjectTeams.addBatch();
+
                             } catch (SQLException e) {
                                 throw new ApplicationWideException("Failed to insert into ProfileProjectTeams", e);
                             }
@@ -343,6 +344,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 double utilizationCost = rs.getDouble("UtilizationCost");
                 double utilizationTime = rs.getDouble("Utilization");
                 double fixedAmount = rs.getDouble("FixedAmount");
+
 
                 Profile profile = new Profile(id, fName, lName, overhead, annual, hourly, daily, workingHR, utilizationTime, utilizationCost, fixedAmount, profileRoles);
                 profiles.add(profile);
