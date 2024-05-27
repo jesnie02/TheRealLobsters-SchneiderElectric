@@ -151,13 +151,28 @@ public class CreateProjectTeamController implements Initializable {
     }
 
     private void updateTotals() {
-        double annualSalarySum = projectTeamsModel.calculateTotalAnnualSalary(tblProfileToTeam.getItems());
-        double dailyRateSum = projectTeamsModel.calculateTotalDailyRate(tblProfileToTeam.getItems());
-        double hourlyRateSum = projectTeamsModel.calculateTotalHourlyRate(tblProfileToTeam.getItems());
+        double annualSalarySum = 0.0;
+        double dailyRateSum = 0.0;
+        double hourlyRateSum = 0.0;
 
-        lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
-        lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
-        lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(2);
+        formatter.setMaximumFractionDigits(2);
+
+        for (Profile profile : tblProfileToTeam.getItems()) {
+            double utilizationCost = utilizationCostMap.getOrDefault(profile, 0.0);
+            double annualSalary = (profile.getAnnualSalary()+profile.getFixedAmount()) * (utilizationCost / 100);
+            double dailyRate = profile.getDailyRate() * (utilizationCost / 100);
+            double hourlyRate = profile.getHourlySalary() * (utilizationCost / 100);
+
+            annualSalarySum += annualSalary;
+            dailyRateSum += dailyRate;
+            hourlyRateSum += hourlyRate;
+        }
+
+        lblAnnualSalarySum.setText(formatter.format(annualSalarySum));
+        lblDailyRateSum.setText(formatter.format(dailyRateSum));
+        lblHourlyRateSum.setText(formatter.format(hourlyRateSum));
     }
 
     private void setCountryComboBoxConverter() {
@@ -190,44 +205,65 @@ public class CreateProjectTeamController implements Initializable {
         colTeamProfileId.setCellValueFactory(new PropertyValueFactory<>("profileId"));
         colTeamCountryId.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
         colTeamHourlyRate.setCellValueFactory(cellData -> {
-            double hourlySalary = cellData.getValue().getHourlySalary();
-            return new SimpleStringProperty(formatter.format(hourlySalary));
+            Profile profile = cellData.getValue();
+            double hourlySalary = profile.getHourlySalary();
+            double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+            double adjustedHourlyRate = hourlySalary * (utilizationCost / 100);
+            return new SimpleStringProperty(formatter.format(adjustedHourlyRate));
         });
+
         colTeamDailyRate.setCellValueFactory(cellData -> {
-            double dailyRate = cellData.getValue().getDailyRate();
-            return new SimpleStringProperty(formatter.format(dailyRate));
+            Profile profile = cellData.getValue();
+            double dailyRate = profile.getDailyRate();
+            double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+            double adjustedDailyRate = dailyRate * (utilizationCost / 100);
+            return new SimpleStringProperty(formatter.format(adjustedDailyRate));
         });
+
         colTeamAnnualSalary.setCellValueFactory(cellData -> {
-            double annualSalary = cellData.getValue().getAnnualSalary();
-            return new SimpleStringProperty(formatter.format(annualSalary));
+            Profile profile = cellData.getValue();
+            double annualSalary = profile.getAnnualSalary();
+            double fixedAmount = profile.getFixedAmount();
+            double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+            double totalAnnualSalary = (annualSalary + fixedAmount) * (utilizationCost / 100);
+            return new SimpleStringProperty(formatter.format(totalAnnualSalary));
         });
+
         colTeamUtilizationTime.setCellValueFactory(cellData -> {
             double utilization = utilizationTimeMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
+
         colTeamUtilizationCost.setCellValueFactory(cellData -> {
             double utilization = utilizationCostMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
     }
 
+
+
+
+
+
     @FXML
     public void selectProfileToTable(ActionEvent event) {
         Profile selectedProfile = cBoxProfiles.getValue();
 
         if (selectedProfile != null) {
-            utilizationTimeMap.put(selectedProfile, sliderUtilizationTime.getValue());
-            utilizationCostMap.put(selectedProfile, sliderUtilizationCost.getValue());
+            double utilizationTime = sliderUtilizationTime.getValue();
+            double utilizationCost = sliderUtilizationCost.getValue();
 
-            selectedProfile.setHourlyRate(selectedProfile.getHourlySalary() / 100 * utilizationCostMap.get(selectedProfile));
-            selectedProfile.setDailyRate(selectedProfile.getDailyRate() / 100 * utilizationCostMap.get(selectedProfile));
-            selectedProfile.setAnnualSalary(selectedProfile.getAnnualSalary() / 100 * utilizationCostMap.get(selectedProfile));
+            utilizationTimeMap.put(selectedProfile, utilizationTime);
+            utilizationCostMap.put(selectedProfile, utilizationCost);
 
             tblProfileToTeam.getItems().add(selectedProfile);
             cBoxProfiles.setValue(null);
+            updateTotals();
         }
     }
+
 
     public void createProjectTeam(ActionEvent event) {
         if (!validateInput()) {
@@ -244,6 +280,32 @@ public class CreateProjectTeamController implements Initializable {
         if (selectedGeography != null) {
             projectTeam.setGeographyId(selectedGeography.getGeographyId());
         }
+
+        // Calculate and set total values for the team
+        double totalAnnualSalary = profiles.stream()
+                .mapToDouble(profile -> {
+                    double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+                    return (profile.getAnnualSalary() + profile.getFixedAmount()) * (utilizationCost / 100);
+                })
+                .sum();
+
+        double totalDailyRate = profiles.stream()
+                .mapToDouble(profile -> {
+                    double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+                    return profile.getDailyRate() * (utilizationCost / 100);
+                })
+                .sum();
+
+        double totalHourlyRate = profiles.stream()
+                .mapToDouble(profile -> {
+                    double utilizationCost = utilizationCostMap.getOrDefault(profile, 100.0); // Default to 100% if not set
+                    return profile.getHourlySalary() * (utilizationCost / 100);
+                })
+                .sum();
+
+        projectTeam.setSumOfAnnualSalary(totalAnnualSalary);
+        projectTeam.setSumOfDailyRate(totalDailyRate);
+        projectTeam.setSumOfHourlyRate(totalHourlyRate);
 
         try {
             projectTeamsModel.addProfileToTeam(projectTeam);
@@ -264,10 +326,9 @@ public class CreateProjectTeamController implements Initializable {
                 lblMessageCreateTeam.setText("");
             }));
             timeline.play();
-
-
         }
     }
+
 
     private void clearInputInFields() {
         txtProjectTeamName.clear();
@@ -316,7 +377,6 @@ public class CreateProjectTeamController implements Initializable {
             }
         });
     }
-
 
     private void setTextinFieldTime() {
         txtUtilizationTime.setText(String.valueOf(utilizationTime));

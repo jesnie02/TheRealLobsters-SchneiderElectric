@@ -179,7 +179,7 @@ public class UpdateProjectTeamController implements Initializable {
     }
 
 
-    private void setupTableView(){
+    private void setupTableView() {
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(2);
         formatter.setMaximumFractionDigits(2);
@@ -206,8 +206,12 @@ public class UpdateProjectTeamController implements Initializable {
             return new SimpleStringProperty(formatter.format(dailyRate));
         });
         colTeamAnnualSalary.setCellValueFactory(cellData -> {
-            double annualSalary = cellData.getValue().getAnnualSalary();
-            return new SimpleStringProperty(formatter.format(annualSalary));
+            Profile profile = cellData.getValue();
+            double annualSalary = profile.getAnnualSalary();
+            double fixedAmount = profile.getFixedAmount();
+            double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
+            double totalAnnualSalary = (annualSalary + fixedAmount) * (utilizationCost / 100);
+            return new SimpleStringProperty(formatter.format(totalAnnualSalary));
         });
         colTeamUtilizationTime.setCellValueFactory(cellData -> {
             double utilization = utilizationsTimeMap.getOrDefault(cellData.getValue(), 0.0);
@@ -219,6 +223,7 @@ public class UpdateProjectTeamController implements Initializable {
         });
         tblProfileToTeam.setItems(profiles);
     }
+
 
     @FXML
     void updateProjectTeam(ActionEvent actionEvent) {

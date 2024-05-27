@@ -52,7 +52,7 @@ public class CreateProfileController implements Initializable {
     private CheckComboBox<ProfileRole> cBoxProfile_ProfileRoles;
     @FXML
     private Label lblHourlyResult, lblDailyResult, lblShowMassage, employeeHourlyRateCurrency, employeeDailyRateCurrency, lblDailyResultInEUR, lblAnnualResultEUR, lblHourlyResultEUR;
-    
+
 
     private CountryModel countryModel;
     private ProjectTeamsModel projectTeamsModel;
@@ -203,7 +203,6 @@ public class CreateProfileController implements Initializable {
     //It validates the input, creates a new Profile object, and saves it to the database.
     @FXML
     private void createProfile(ActionEvent actionEvent) {
-
         if (!validateInput()) {
             return;
         }
@@ -220,15 +219,13 @@ public class CreateProfileController implements Initializable {
         double overheadMultiplier = parseDouble(txtOverheadView.getText());
         double effectiveWorkingHours = parseDouble(txtEffectiveHours.getText());
 
-
-
         Profile newProfile = new Profile(firstName, lastName, overheadCost, annualSalary, hourlyResult, dailyResult, fixedAmount, dailyWorkingHours, selectedRoles, effectiveWorkingHours, overheadMultiplier);
 
-
-       profileModel.createProfile(newProfile);
-       clearFields();
-       lblShowMassage.setText("Profile has been saved");
+        profileModel.createProfile(newProfile);
+        clearFields();
+        lblShowMassage.setText("Profile has been saved");
     }
+
 
     public void clearFields() {
         txtFirstnameProfile.clear();
@@ -252,10 +249,10 @@ public class CreateProfileController implements Initializable {
             return 0.0;
         }
 
-        double annualSalaryProfile = Double.parseDouble(txtAnnualSalary.getText().replace(",", "."));
-        double overheadMultiplierProfile = Double.parseDouble(txtOverheadView.getText().replace(",", "."));
-        double annualFixedAmountProfile = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
-        double effectiveHoursProfile = Double.parseDouble(txtEffectiveHours.getText().replace(",", "."));
+        double annualSalaryProfile = parseDouble(txtAnnualSalary.getText());
+        double overheadMultiplierProfile = parseDouble(txtOverheadView.getText());
+        double annualFixedAmountProfile = parseDouble(txtFixedAmount.getText());
+        double effectiveHoursProfile = parseDouble(txtEffectiveHours.getText());
         double result = profileModel.calculateAndSetHourlyRateCreateProfile(annualSalaryProfile,
                 overheadMultiplierProfile,
                 annualFixedAmountProfile,
@@ -269,12 +266,13 @@ public class CreateProfileController implements Initializable {
             return 0.0;
         }
 
-        double dailyWorkingHours = Double.parseDouble(txtDailyWorkingHours.getText().replace(",", "."));
-        double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
+        double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
+        double hourlyRate = parseDouble(lblHourlyResult.getText());
         double result = profileModel.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
         lblDailyResult.setText(String.format("%.2f", result));
         return result;
     }
+
 
     public void calculateAndSetProfileRatesInEUR() throws ApplicationWideException {
         if (txtAnnualSalary.getText().isEmpty() || lblHourlyResult.getText().isEmpty() || lblDailyResult.getText().isEmpty()) {
