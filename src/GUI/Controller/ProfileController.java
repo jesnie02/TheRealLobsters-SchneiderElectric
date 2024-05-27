@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import BE.Currency;
 import BE.Profile;
 import BE.ProjectTeam;
 import CustomExceptions.ApplicationWideException;
@@ -12,6 +13,7 @@ import GUI.Utility.ExceptionHandler;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,9 +37,11 @@ public class ProfileController {
     @FXML
     public MFXLegacyTableView<Profile> tblProfiles;
     @FXML
-    public TableColumn<Profile, String> colNameProfile, colAnnualSalaryProfile, colHourlyRateProfile, colDailyRateProfile;
+    public TableColumn<Profile, String> colNameProfile, colAnnualSalaryProfile, colHourlyRateProfile, colDailyRateProfile,colFixedAmount;
     @FXML
     public TableColumn<Profile, Void> colDeleteIconProfile, colUpdateIconProfile;
+    @FXML
+    private TextField txtSearchFilter;
 
     FrameController frameController = FrameController.getInstance();
     private Map<Integer, String> idToNameMap;
@@ -48,7 +52,7 @@ public class ProfileController {
     private GeographyModel geographyModel;
     private ProjectTeamsModel projectTeamsModel;
 
-
+    private FilteredList<Profile> filteredData;
 
     public ProfileController() {
         profileModel = ProfileModel.getInstance();
@@ -66,17 +70,28 @@ public class ProfileController {
             countryModel = new CountryModel();
             geographyModel = new GeographyModel();
             projectTeamsModel = new ProjectTeamsModel();
+            filteredData = new FilteredList<>(profileModel.getAllProfiles(), p -> true);
             setupTableView();
             loadProfiles();
 
-
+            searchInProfiles();
             idToNameMap = createIdToNameMap();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
     }
 
-
+public void searchInProfiles() {
+        txtSearchFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(profile -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return profile.getFullName().toLowerCase().startsWith(lowerCaseFilter);
+            });
+        });
+    }
 
     private void setupTableView() {
         setupCellValueFactories();
@@ -84,7 +99,7 @@ public class ProfileController {
     }
 
     private void loadProfiles() {
-        tblProfiles.setItems(profileModel.getAllProfiles());
+        tblProfiles.setItems(filteredData);
 
     }
 
@@ -93,6 +108,7 @@ public class ProfileController {
         colAnnualSalaryProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getAnnualSalary())));
         colHourlyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getHourlySalary())));
         colDailyRateProfile.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getDailyRate())));
+        colFixedAmount.setCellValueFactory(cellData -> new SimpleStringProperty(String.format("%.2f", cellData.getValue().getFixedAmount())));
 
         profileModel.getAllProfiles().addListener((ListChangeListener<? super Profile>) c -> {
             tblProfiles.refresh();

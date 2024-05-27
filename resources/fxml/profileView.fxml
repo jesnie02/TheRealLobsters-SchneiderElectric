@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -25,9 +26,10 @@
          <children>
             <MFXLegacyTableView fx:id="tblProfiles" prefHeight="493.0" prefWidth="881.0" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colNameProfile" prefWidth="114.39996337890625" text="Name" />
-                  <TableColumn fx:id="colAnnualSalaryProfile" prefWidth="100.0" text="Anual salary" />
-                  <TableColumn fx:id="colHourlyRateProfile" prefWidth="91.199951171875" text="Hourly Rate" />
+                  <TableColumn fx:id="colNameProfile" prefWidth="154.39996415376663" text="Name" />
+                  <TableColumn fx:id="colAnnualSalaryProfile" prefWidth="177.599853515625" text="Annual salary" />
+                  <TableColumn fx:id="colFixedAmount" prefWidth="176.8001708984375" text="Fixed amount" />
+                  <TableColumn fx:id="colHourlyRateProfile" prefWidth="124.7999267578125" text="Hourly Rate" />
                   <TableColumn fx:id="colDailyRateProfile" prefWidth="101.5999755859375" text="Daily rate" />
                   <TableColumn fx:id="colUpdateIconProfile" prefWidth="57.60009765625" text="Update" />
                   <TableColumn fx:id="colDeleteIconProfile" prefWidth="56.800048828125" text="Delete" />
@@ -53,8 +55,13 @@
             </ImageView>
             <Label fx:id="lblHeaderProfile" prefHeight="34.0" prefWidth="205.0" text="Profile overview" />
             <Pane prefHeight="36.0" prefWidth="393.0" HBox.hgrow="ALWAYS" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="289.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="42.0" prefWidth="422.0">
                <children>
+                  <TextField fx:id="txtSearchFilter" prefHeight="26.0" prefWidth="174.0" promptText="Search..">
+                     <HBox.margin>
+                        <Insets right="8.0" />
+                     </HBox.margin>
+                  </TextField>
                   <Button fx:id="btnCreateProfile" alignment="CENTER" mnemonicParsing="false" onAction="#openCreateProfile" prefHeight="26.0" prefWidth="175.0" text="+ Create profile">
                      <HBox.margin>
                         <Insets bottom="8.0" top="8.0" />

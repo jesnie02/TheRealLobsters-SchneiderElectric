@@ -294,7 +294,7 @@
 
 /* Rounded SearchField */
 
-#txtSearchCurrency, #txtSearchDashboardGeo, #txtSearchDashboardTeam {
+#txtSearchCurrency, #txtSearchDashboardGeo, #txtSearchDashboardTeam,txtSearchFilter {
     -fx-background-radius: 20;
     -fx-border-radius: 20;
     -fx-border-color: #3DCD58;

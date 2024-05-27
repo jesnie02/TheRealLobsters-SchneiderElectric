@@ -264,6 +264,7 @@ public class UpdateProjectTeamController implements Initializable {
             tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
             updateSumLabels();
+
         }
     }
 
