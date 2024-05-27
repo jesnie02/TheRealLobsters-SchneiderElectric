@@ -54,6 +54,7 @@ public class Profile_DAO implements IProfileDataAccess {
 
 
                 allProfiles.add(profile);
+                System.out.println(allProfiles);
             }
         } catch (SQLException e) {
             throw new ApplicationWideException("Failed to read all profiles", e);

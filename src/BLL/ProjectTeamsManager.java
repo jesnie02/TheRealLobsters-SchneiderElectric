@@ -30,8 +30,10 @@ public class ProjectTeamsManager {
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         double avgAnnualSalary = iCalculateManager.avgAnnualSalary(projectTeam);
         projectTeam.setAvgAnnualSalary(avgAnnualSalary);
-        //projectTeam.setAvgHourlyRate(iCalculateManager.avgHourlyRate(projectTeam.getSumOfDailyRate()));//TODO
-        //projectTeam.setAvgDailyRate(iCalculateManager.avgDailyRate(projectTeam.getSumOfDailyRate()));//TODO
+       double avgHourlyRate = iCalculateManager.avgHourlyRate(projectTeam);
+       projectTeam.setAvgHourlyRate(avgHourlyRate);//TODO
+        double avgDailyRate = iCalculateManager.avgDailyRate(projectTeam);
+        projectTeam.setAvgDailyRate(avgDailyRate);//TODO
         teamsDAO.addProfileToTeam(projectTeam);
     }
 
