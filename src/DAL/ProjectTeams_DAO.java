@@ -99,7 +99,7 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                 }
             }
         } catch (SQLException e) {
-            throw new ApplicationWideException("Getting profile utilization for team failed\n." + e.getMessage());
+            throw new ApplicationWideException("Getting profile utilization for team failed", e);
         }
         return utilization;
     }
