@@ -211,13 +211,20 @@ public class UpdateProjectTeamController implements Initializable {
         colTeamCountryId.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         colTeamName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colTeamHourlyRate.setCellValueFactory(cellData -> {
+            Profile profile = cellData.getValue();
             double hourlySalary = cellData.getValue().getHourlySalary();
+            double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
+            double hourlyRateWithUtilization = hourlySalary * (utilizationCost / 100);
             return new SimpleStringProperty(formatter.format(hourlySalary));
         });
         colTeamDailyRate.setCellValueFactory(cellData -> {
-            double dailyRate = cellData.getValue().getDailyRate();
-            return new SimpleStringProperty(formatter.format(dailyRate));
+            Profile profile = cellData.getValue();
+            double dailyRate = profile.getDailyRate();
+            double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
+            double dailyRateWithUtilization = dailyRate * (utilizationCost / 100);
+            return new SimpleStringProperty(formatter.format(dailyRateWithUtilization));
         });
+
         colTeamAnnualSalary.setCellValueFactory(cellData -> {
             Profile profile = cellData.getValue();
             double annualSalary = profile.getAnnualSalary();
