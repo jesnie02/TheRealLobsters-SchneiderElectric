@@ -3,7 +3,8 @@
 
 /* Buttons */
 .button:hover {
-    -fx-background-color: #3DCD58;
+    -fx-background-color: #ececec;
+    -fx-text-fill: #333333;
 }
 
 /* ComboBox */
@@ -254,6 +255,15 @@
         -fx-border-radius: 20;
     }
 
+    #btnOpenRole {
+        -fx-background-color: #3DCD58;
+        -fx-text-fill: #18191a;
+        -fx-font-size: 12px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 10;
+        -fx-border-radius: 10;
+    }
+
 
     #btnDeleteTeamTeamDetails, #btnLogOut, #btnRemoveProfileTeam, #btnRemoveProfileTeams{
         -fx-background-color: transparent;
@@ -325,11 +335,30 @@
 
     /* Buttons/Background/separator/HeaderText TapBar  */
 
-    #btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier, #btnCurrency, #btnCurrency {
+    #btnDashboard, #btnProfiles, #btnGeography, #btnTeams, #btnMultiplier, #btnCurrency {
         -fx-background-color: transparent;
         -fx-font-weight: bold;
         -fx-alignment: CENTER_LEFT;
         -fx-padding: 0 10px;
+    }
+
+    #btnOpenRole:hover {
+        -fx-background-color: #44b85a;
+        -fx-text-fill: #18191a;
+        -fx-font-size: 12px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 10;
+        -fx-border-radius: 10;
+    }
+
+    #btnSaveGeography:hover, #btnLogOut:hover, #btnCreateProfile:hover, #btnCreateProjectTeams:hover, #btnRemoveProfileTeams:hover, #btnCreateTeam:hover, #btnSelectProfile:hover,
+    #btnCreateGeography:hover, #btnResultP:hover, #btnResetP:hover, #btnResultT:hover, #btnResetT:hover, #btnSaveRole:hover, #btnUpdateTeamTeamDetails:hover, #btnUpdateProfile:hover, #btnUpdateTeam:hover,
+        #btnSelectProfileUpdateTeam:hover, #btnRemoveProfileTeam:hover, #btnDeleteTeamTeamDetails:hover, #btnRemoveProfileTeam:hover, #btnRemoveProfileTeams:hover {
+        -fx-background-color: #44b85a;
+        -fx-text-fill: #18191a;
+        -fx-font-size: 14px;
+        -fx-background-radius: 20;
+        -fx-border-radius: 20;
     }
 
 

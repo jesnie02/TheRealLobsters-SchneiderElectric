@@ -119,7 +119,7 @@
                                     <Insets right="8.0" />
                                  </HBox.margin>
                               </CheckComboBox>
-                              <Button mnemonicParsing="false" onAction="#createNewRole" prefHeight="26.0" prefWidth="47.0" text="+" />
+                              <Button fx:id="btnOpenRole" mnemonicParsing="false" onAction="#createNewRole" prefHeight="26.0" prefWidth="47.0" text="＋" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="8.0" />
