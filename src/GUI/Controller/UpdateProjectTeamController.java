@@ -155,11 +155,15 @@ public class UpdateProjectTeamController implements Initializable {
 
             for (Profile profile : profiles) {
                 utilizationsTimeMap.put(profile, Double.valueOf(profile.getUtilizationTime()));
-                utilizationsCostMap.put(profile, Double.valueOf(profile.getUtilizationCost()));
+                try {
+                    utilizationsCostMap.put(profile, projectTeamsModel.getProfileCostUtilizationForTeam(profile.getProfileId(), currentTeam.getTeamId()));
+                } catch (ApplicationWideException e) {
+                    ExceptionHandler.handleException(e);
+                }
             }
 
             tblProfileToTeam.setItems(profiles);
-            tblProfileToTeam.refresh();
+            //tblProfileToTeam.refresh();
         }
         changesMade.set(false);
     }
@@ -304,7 +308,7 @@ public class UpdateProjectTeamController implements Initializable {
             profiles.remove(selectedProfile);
             utilizationsCostMap.remove(selectedProfile);
             utilizationsTimeMap.remove(selectedProfile);
-            //tblProfileToTeam.refresh();
+            tblProfileToTeam.refresh();
             projectTeamsModel.removeProfileFromTeam(DataModelSingleton.getInstance().getCurrentTeam().getTeamId(), selectedProfile.getProfileId());
             updateSumLabels();
         }

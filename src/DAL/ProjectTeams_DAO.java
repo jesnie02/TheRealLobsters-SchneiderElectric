@@ -79,6 +79,30 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
     }
 
 
+    @Override
+    public double getProfileCostUtilizationForTeam(int profileId, int teamId) throws ApplicationWideException {
+        double utilization = 0.0;
+        String query = """
+                    SELECT UtilizationCost AS TotalUtilization
+                    FROM ProfileProjectTeams
+                    WHERE ProfileId_PPT = ? AND TeamsId = ?;
+                    """;
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, profileId);
+            stmt.setInt(2, teamId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    utilization = rs.getDouble("TotalUtilization");
+                }
+            }
+        } catch (SQLException e) {
+            throw new ApplicationWideException("Getting profile utilization for team failed\n." + e.getMessage());
+        }
+        return utilization;
+    }
 
     @Override
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {

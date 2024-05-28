@@ -153,6 +153,10 @@ public class ProjectTeamsModel {
         projectTeamsManager.updateTeam(projectTeam);
     }
 
+    public double getProfileCostUtilizationForTeam(int profileId, int teamId) throws ApplicationWideException {
+        return projectTeamsManager.getProfileCostUtilizationForTeam(profileId, teamId);
+    }
+
     public void removeProfileFromTeam(int projectTeam, int profile) {
         try {
             projectTeamsManager.removeProfileFromProjectTeam(projectTeam, profile);

@@ -93,6 +93,7 @@ public class ProfileModel {
     }
 
 
+
     // Enum for the types of rates a profile can have.
 
     public enum RateType {

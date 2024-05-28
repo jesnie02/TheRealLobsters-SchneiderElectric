@@ -50,6 +50,9 @@ public class ProjectTeamsManager {
         return null;
     }
 
+    public double getProfileCostUtilizationForTeam(int profileId, int teamId) throws ApplicationWideException {
+        return teamsDAO.getProfileCostUtilizationForTeam(profileId, teamId);
+    }
 
 
     public double calculateTotalAnnualSalary(List<Profile> profiles) {
