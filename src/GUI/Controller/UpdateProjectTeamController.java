@@ -215,7 +215,7 @@ public class UpdateProjectTeamController implements Initializable {
             double hourlySalary = cellData.getValue().getHourlySalary();
             double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
             double hourlyRateWithUtilization = hourlySalary * (utilizationCost / 100);
-            return new SimpleStringProperty(formatter.format(hourlySalary));
+            return new SimpleStringProperty(formatter.format(hourlyRateWithUtilization));
         });
         colTeamDailyRate.setCellValueFactory(cellData -> {
             Profile profile = cellData.getValue();
