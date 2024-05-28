@@ -33,7 +33,6 @@ public class Profile {
     }
 
     public Profile(String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
-
         this.fName = fName;
         this.lName = lName;
         this.overheadCost = overheadCost;

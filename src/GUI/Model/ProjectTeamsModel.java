@@ -8,36 +8,23 @@ import GUI.Utility.ExceptionHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectTeamsModel {
 
     private final ProjectTeamsManager projectTeamsManager;
 
+    public enum ProjectTeamRateType {
+        AVGHOURLY,
+        AVGDAILY
+    }
+
     public ProjectTeamsModel() throws ApplicationWideException {
         projectTeamsManager = new ProjectTeamsManager();
     }
 
-
-    public ObservableList<String> getAllProjectTeams() {
-        ObservableList<String> teamNames = null;
-        try {
-            teamNames = FXCollections.observableArrayList(
-                    projectTeamsManager.getAllProjectTeams().stream()
-                            .map(ProjectTeam::getTeamName)
-                            .sorted()
-                            .collect(Collectors.toList())
-            );
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return teamNames;
-    }
 
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         projectTeamsManager.addProfileToTeam(projectTeam);
@@ -57,9 +44,6 @@ public class ProjectTeamsModel {
         }
         return teamNames;
     }
-
-
-
 
     public ObservableList<ProjectTeam> getAllProjectTeamsData() {
         List<ProjectTeam> list = null;
@@ -83,11 +67,6 @@ public class ProjectTeamsModel {
         return observableList;
     }
 
-    public enum ProjectTeamRateType {
-        AVGHOURLY,
-        AVGDAILY
-    }
-
     public double getRateForProjectTeam(String projectTeamName, ProjectTeamRateType rateType) {
         ProjectTeam projectTeam = null;
         try {
@@ -102,21 +81,6 @@ public class ProjectTeamsModel {
         else return projectTeam.getAvgDailyRate();
     }
 
-    public double calculateTotalAnnualSalary(ObservableList<Profile> profiles) {
-        return projectTeamsManager.calculateTotalAnnualSalary(profiles);
-    }
-
-
-
-    public double calculateTotalDailyRate(ObservableList<Profile> profiles)  {
-        return projectTeamsManager.calculateTotalDailyRate(profiles);
-    }
-
-
-    public double calculateTotalHourlyRate(ObservableList<Profile> profiles) {
-        return projectTeamsManager.calculateTotalHourlyRate(profiles);
-    }
-
     public ObservableList<Profile> getProfileForTeam(int teamId) {
         List<Profile> profiles = null;
         try {
@@ -125,20 +89,6 @@ public class ProjectTeamsModel {
             ExceptionHandler.handleException(e);
         }
         return FXCollections.observableArrayList(profiles);
-    }
-
-    public double calculateAndSetHourlyRateWithUtilization(
-            double annualSalaryProfile, double overheadMultiplierProfile,
-            double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {
-
-        return projectTeamsManager.calculateAndSetHourlyRateWithUtilization(
-                annualSalaryProfile, overheadMultiplierProfile,
-                annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
-    }
-
-
-    public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
-        return projectTeamsManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
     }
 
     public void deleteTeam(ProjectTeam projectTeam) {
@@ -163,10 +113,6 @@ public class ProjectTeamsModel {
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
-    }
-
-    public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
-        return projectTeamsManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
     }
 
 }

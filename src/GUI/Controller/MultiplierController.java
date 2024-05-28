@@ -126,9 +126,7 @@ public class MultiplierController {
     }
 
     private void setupListViewProfiles(){
-
         lstVProfile.setItems(profileModel.showAllProfilesNames());
-
     }
 
     private void setupListViewTeams() {
@@ -257,7 +255,6 @@ public class MultiplierController {
     @FXML
     private void resetTeams(ActionEvent actionEvent) {
         lstVTeams.getSelectionModel().clearSelection();
-
         lblMUHourlyResultT.setText("0");
         lblMUDailyResultT.setText("0");
         lblGMHourlyResultT.setText("0");
@@ -265,6 +262,4 @@ public class MultiplierController {
         sliderGMT.setValue(0);
         sliderMUT.setValue(0);
     }
-
-
 }

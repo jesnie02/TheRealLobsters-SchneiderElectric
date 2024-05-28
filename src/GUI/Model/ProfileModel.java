@@ -18,14 +18,11 @@ public class ProfileModel {
     private static ProfileModel instance;
     private ObservableList<Profile> profiles;
 
-    private final UUID id = UUID.randomUUID();
 
     public ProfileModel() throws ApplicationWideException {
         profileManager = new ProfileManager();
         profiles = FXCollections.observableArrayList(profileManager.getAllProfiles());
-
     }
-
 
     public static synchronized ProfileModel getInstance() {
         if (instance == null) {
@@ -50,7 +47,6 @@ public class ProfileModel {
 
     }
 
-
     public ObservableList<String> showAllProfilesNames(){
         ObservableList<String> profileName = null;
         try {
@@ -64,10 +60,6 @@ public class ProfileModel {
         }
         return profileName;
     }
-
-
-
-
 
     public double calculateAndSetHourlyRateCreateProfile(
             double annualSalaryProfile, double overheadMultiplierProfile,
@@ -83,7 +75,6 @@ public class ProfileModel {
         return profiles;
     }
 
-
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         return profileManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
@@ -92,15 +83,11 @@ public class ProfileModel {
         return profileManager.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, currency);
     }
 
-
-
     // Enum for the types of rates a profile can have.
-
     public enum RateType {
         HOURLY,
         DAILY,
     }
-
 
     public double getRateForProfile(String profileName, RateType rateType) {
         Profile profile = null;
@@ -145,7 +132,4 @@ public class ProfileModel {
         profileManager.updateProfileRates(profile);
     }
 
-    public UUID getId() {
-        return id;
-    }
 }

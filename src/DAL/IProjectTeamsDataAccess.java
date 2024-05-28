@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IProjectTeamsDataAccess {
 
-    List<ProjectTeam> getAllProjectTeams() throws ApplicationWideException;
     void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException;
 
     void deleteTeam(ProjectTeam projectTeam) throws Exception;
@@ -15,5 +14,6 @@ public interface IProjectTeamsDataAccess {
     void updateTeam(ProjectTeam projectTeam) throws Exception;
 
     void removeProfileFromProjectTeam(int profileId, int projectTeamId) throws ApplicationWideException;
+
     double getProfileCostUtilizationForTeam(int profileId, int teamId) throws ApplicationWideException;
 }

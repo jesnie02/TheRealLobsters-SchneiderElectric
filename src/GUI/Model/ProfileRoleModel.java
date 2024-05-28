@@ -51,7 +51,7 @@ public class ProfileRoleModel{
         try {
             ProfileRole newRole = new ProfileRole(roleName);
             profileRoleManager.createRole(newRole);
-            roles.add(newRole);// Add the new role to the observable list
+            roles.add(newRole);
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }

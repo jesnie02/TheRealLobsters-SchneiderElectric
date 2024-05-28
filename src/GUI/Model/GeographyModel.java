@@ -15,7 +15,6 @@ import java.util.Map;
 public class GeographyModel {
 
     private final GeographyManager geographyManager;
-
     private final ObservableList<Geography> geographies;
 
     public GeographyModel() throws ApplicationWideException {

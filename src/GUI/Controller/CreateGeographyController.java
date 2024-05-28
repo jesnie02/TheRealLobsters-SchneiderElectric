@@ -61,8 +61,6 @@ public class CreateGeographyController implements Initializable {
 
     }
 
-
-
     private List<Country> getSelectedCountries() {
         return cBoxCountries.getCheckModel().getCheckedItems();
     }

@@ -50,8 +50,6 @@ public class UpdateProfileController implements Initializable {
         }
     }
 
-
-
     public void setProfile(Profile profile) {
         DataModelSingleton.getInstance().setCurrentProfile(profile);
         updateUI(profile);
@@ -79,9 +77,9 @@ public class UpdateProfileController implements Initializable {
         Bindings.bindBidirectional(txtOverhead.textProperty(),sliderOverheadMulti.valueProperty(),  converter);
     }
 
+    // Logic to update the profile in the model
     @FXML
     private void updateProfile(ActionEvent actionEvent) {
-        // Logic to update the profile in the model
         Profile profile = DataModelSingleton.getInstance().getCurrentProfile();
         profile.setFName(txtFName.getText());
         profile.setLName(txtLName.getText());

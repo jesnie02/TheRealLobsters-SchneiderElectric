@@ -71,7 +71,6 @@ public class UpdateProjectTeamController implements Initializable {
 
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -163,7 +162,6 @@ public class UpdateProjectTeamController implements Initializable {
             }
 
             tblProfileToTeam.setItems(profiles);
-            //tblProfileToTeam.refresh();
         }
         changesMade.set(false);
     }
@@ -294,7 +292,6 @@ public class UpdateProjectTeamController implements Initializable {
 
             projectTeamsModel.updateTeam(currentTeam);
 
-            // Display the appropriate message after the update logic
             AlertBox.displayInfo(alertTitle, alertMessage);
 
             FrameController.getInstance().loadTeamsView();

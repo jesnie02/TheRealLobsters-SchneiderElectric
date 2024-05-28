@@ -23,17 +23,13 @@ public class ProjectTeamsManager {
     }
 
 
-    public List<ProjectTeam> getAllProjectTeams() throws ApplicationWideException {
-        return teamsDAO.getAllProjectTeams();
-    }
-
     public void addProfileToTeam(ProjectTeam projectTeam) throws ApplicationWideException {
         double avgAnnualSalary = iCalculateManager.avgAnnualSalary(projectTeam);
         projectTeam.setAvgAnnualSalary(avgAnnualSalary);
-       double avgHourlyRate = iCalculateManager.avgHourlyRate(projectTeam);
-       projectTeam.setAvgHourlyRate(avgHourlyRate);//TODO
+        double avgHourlyRate = iCalculateManager.avgHourlyRate(projectTeam);
+        projectTeam.setAvgHourlyRate(avgHourlyRate);
         double avgDailyRate = iCalculateManager.avgDailyRate(projectTeam);
-        projectTeam.setAvgDailyRate(avgDailyRate);//TODO
+        projectTeam.setAvgDailyRate(avgDailyRate);
         teamsDAO.addProfileToTeam(projectTeam);
     }
 
@@ -52,21 +48,6 @@ public class ProjectTeamsManager {
 
     public double getProfileCostUtilizationForTeam(int profileId, int teamId) throws ApplicationWideException {
         return teamsDAO.getProfileCostUtilizationForTeam(profileId, teamId);
-    }
-
-
-    public double calculateTotalAnnualSalary(List<Profile> profiles) {
-        return iCalculateManager.annualSalaryWithFixedAmount(profiles);
-    }
-
-
-    public double calculateTotalDailyRate(List<Profile> profiles) {
-        return iCalculateManager.sumOfDailyRate(profiles);
-    }
-
-
-    public double calculateTotalHourlyRate(List<Profile> profiles) {
-        return iCalculateManager.sumOfHourlyRate(profiles);
     }
 
     public List<Profile> getProcessedProfilesForTeam(int teamId) throws ApplicationWideException {
@@ -93,15 +74,6 @@ public class ProjectTeamsManager {
         return roles;
     }
 
-
-    public double calculateAndSetDailyRateWithUtilization(double dailyWorkingHours, double hourlyRate) {
-        return iCalculateManager.calculateAndSetDailyRateWithUtilization(dailyWorkingHours, hourlyRate);
-    }
-
-    public double calculateAndSetHourlyRateWithUtilization(double annualSalaryProfile, double overheadMultiplierProfile, double annualFixedAmountProfile, double effectiveHoursProfile, double utilizationPercentage) {
-        return iCalculateManager.calculateAndSetHourlyRateWithUtilization(annualSalaryProfile, overheadMultiplierProfile, annualFixedAmountProfile, effectiveHoursProfile, utilizationPercentage);
-    }
-
     public List<ProjectTeam> getTop10ProjectTeamsByAnnualSalary() throws ApplicationWideException {
         List<ProjectTeam> projectTeams = teamsDAO.getEveryProjectTeam();
         return projectTeams.stream()
@@ -122,7 +94,4 @@ public class ProjectTeamsManager {
         teamsDAO.removeProfileFromProjectTeam(projectTeam, profile);
     }
 
-    public Map<String, Double> calculateRatesWithUtilizationForUpdateTeam(Profile profile, double utilization) {
-        return iCalculateManager.calculateRatesWithUtilizationForUpdateTeam(profile, utilization);
-    }
 }

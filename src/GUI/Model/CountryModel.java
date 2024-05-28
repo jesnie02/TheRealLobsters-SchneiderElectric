@@ -24,7 +24,6 @@ public class CountryModel {
         geographyManager = new BLL.GeographyManager();
     }
 
-
     public ObservableList<Country> getAllCountries()  {
         ObservableList<Country> countries = null;
         try {
@@ -58,20 +57,6 @@ public class CountryModel {
                 .collect(Collectors.toMap(Country::getCountryId, country -> country));
     }
 
-    public ObservableList<Country> getSumsAndAveragesForCountries() {
-        ObservableList<Country> countries = null;
-        try {
-            countries = javafx.collections.FXCollections.observableArrayList(
-                    countryManager.getSumsAndAveragesForCountries().stream()
-                            .sorted(Comparator.comparing(Country::getCountryName))
-                            .collect(Collectors.toList())
-            );
-        } catch (ApplicationWideException e) {
-            ExceptionHandler.handleException(e);
-        }
-        return countries;
-    }
-
     public ObservableList<Country> getCountriesForGeographyOverview(int geographyId) {
         ObservableList<Country> countries = null;
         try {
@@ -86,5 +71,4 @@ public class CountryModel {
         }
         return countries;
     }
-
 }

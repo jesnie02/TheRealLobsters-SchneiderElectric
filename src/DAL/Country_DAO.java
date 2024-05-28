@@ -19,9 +19,7 @@ public class Country_DAO implements ICountryDataAccess {
         } catch (IOException e) {
             throw new ApplicationWideException("Failed to initialize the database connector",e);
         }
-
     }
-
 
     @Override
     public List<Country> getAllCountries() throws ApplicationWideException {
@@ -53,7 +51,7 @@ public class Country_DAO implements ICountryDataAccess {
         try (Connection conn = dbConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, geographyId); // Use geographyId directly
+            pstmt.setInt(1, geographyId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()){

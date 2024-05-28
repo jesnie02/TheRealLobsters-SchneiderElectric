@@ -12,13 +12,8 @@ public class CountryManager {
         countryDAO = new DAL.Country_DAO();
     }
 
-
     public List<Country> getAllCountries() throws ApplicationWideException {
         return countryDAO.getAllCountries();
-    }
-
-    public List <Country> getSumsAndAveragesForCountries() throws ApplicationWideException{
-        return countryDAO.getSumsAndAveragesForCountries();
     }
 
     public List<Country> getCountriesForGeographyOverview(int geographyId) throws ApplicationWideException {

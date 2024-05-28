@@ -79,7 +79,6 @@ public class ProfileController {
             filteredData = new FilteredList<>(profileModel.getAllProfiles(), p -> true);
             setupTableView();
             loadProfiles();
-
             searchInProfiles();
             idToNameMap = createIdToNameMap();
         } catch (ApplicationWideException e) {
@@ -87,7 +86,7 @@ public class ProfileController {
         }
     }
 
-public void searchInProfiles() {
+    public void searchInProfiles() {
         txtSearchFilter.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(profile -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -189,12 +188,7 @@ public void searchInProfiles() {
         return button;
     }
 
-
-    /**
-     * Creates a map from team ID to team name.
-     * This map is used for displaying the team name in the table view.
-     * @return a map from team ID to team name
-     */
+    //This map is used for displaying the team name in the table view. Creates a map from team ID to team name.
     public Map<Integer, String> createIdToNameMap() {
         Map<Integer, String> idToNameMap = new HashMap<>();
         for (ProjectTeam team : projectTeamsModel.getAllProjectTeamsData()) {
@@ -202,9 +196,6 @@ public void searchInProfiles() {
         }
         return idToNameMap;
     }
-
-
-
 
     private void deleteProfile(Profile profile) {
         Optional<ButtonType> result = AlertBox.displayConfirmation("Confirm Deletion", "Are you sure you want to delete the profile?\nProfile: " + profile.getFullName());
@@ -222,7 +213,6 @@ public void searchInProfiles() {
         }
     }
 
-
     private void openUpdateProfileView(Profile profile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProfileView.fxml"));
@@ -233,7 +223,6 @@ public void searchInProfiles() {
             // Pass the selected profile to the controller
             controller.setProfile(profile);// Set a callback to refresh the table view when the update is done
             controller.setOnProfileUpdated(() -> {
-                // Reload profiles and refresh the table view
                 loadProfiles();
                 tblProfiles.refresh();
             });
@@ -247,7 +236,4 @@ public void searchInProfiles() {
             ExceptionHandler.handleException(e);
         }
     }
-
-
-
 }

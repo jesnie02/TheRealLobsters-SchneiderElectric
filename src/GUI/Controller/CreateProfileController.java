@@ -62,8 +62,6 @@ public class CreateProfileController implements Initializable {
     private FrameController frameController;
 
 
-
-
     public CreateProfileController() {
         try {
             countryModel = new CountryModel();
@@ -79,11 +77,6 @@ public class CreateProfileController implements Initializable {
         }
     }
 
-
-    /**
-     * This method is called after all @FXML annotated members have been injected.
-     * It sets up listeners on sliders and checkboxes, and populates the country and team ComboBoxes.
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupListenersAndBindings();
@@ -97,9 +90,6 @@ public class CreateProfileController implements Initializable {
     private void setupListenersAndBindings() {
         Bindings.bindContentBidirectional(cBoxProfile_ProfileRoles.getItems(), profileRoleModel.getProfileRoles());
     }
-
-
-
 
     private void populateCountryCurrencyComboBox() {
         ObservableList<Currency> currencies = currencyModel.getCurrencies();
@@ -141,7 +131,6 @@ public class CreateProfileController implements Initializable {
         Bindings.bindBidirectional(txtOverheadView.textProperty(),sliderOverhead.valueProperty(),  converter);
     }
 
-
      //This method sets up listeners on the overhead and production checkboxes.
      private void setupCheckboxListeners() {
         checkOverhead.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -177,8 +166,6 @@ public class CreateProfileController implements Initializable {
         txtOverheadView.textProperty().addListener(textFieldListener);
         txtDailyWorkingHours.textProperty().addListener(textFieldListener);
     }
-
-
 
      //This method initializes fields, ComboBoxes, and listeners. with the values from the database.
      //getAllCountries() and getAllProjectTeams() are methods read from the database.
@@ -217,8 +204,6 @@ public class CreateProfileController implements Initializable {
         clearFields();
         lblShowMassage.setText("Profile has been saved");
     }
-
-
 
     public void clearFields() {
         txtFirstnameProfile.clear();
@@ -266,7 +251,6 @@ public class CreateProfileController implements Initializable {
         return result;
     }
 
-
     public void calculateAndSetProfileRatesInEUR() {
         if (txtAnnualSalary.getText().isEmpty() || lblHourlyResult.getText().isEmpty() || lblDailyResult.getText().isEmpty()) {
             return;
@@ -293,7 +277,6 @@ public class CreateProfileController implements Initializable {
         lblDailyResultInEUR.setText(String.format("%.2f", result.get("dailyRateEUR")));
     }
 
-
     private double parseDouble(String value) {
         return Double.parseDouble(value.replace(",", "."));
     }
@@ -313,11 +296,7 @@ public class CreateProfileController implements Initializable {
         setRegexValidationForTextFields(txtDailyWorkingHours);
     }
 
-
-
      //This method validates the input in the TextFields and ComboBoxes.
-     //If a field is empty,it is highlighted in red and the method returns false.
-    // If all fields are filled, the method returns true.
     private boolean validateInput() {
         boolean isValid = true;
         // List of all TextFields and ComboBoxes
@@ -352,7 +331,6 @@ public class CreateProfileController implements Initializable {
         }
         return isValid;
     }
-
 
     @FXML
     private void createNewRole(ActionEvent actionEvent) {

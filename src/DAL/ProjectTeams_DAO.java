@@ -19,7 +19,7 @@ import CustomExceptions.ApplicationWideException;
 public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
 
     private final DBConnector dbConnector;
-    private ProjectTeamsManager projectTeamsManager;
+
 
     public ProjectTeams_DAO() throws ApplicationWideException {
         try {
@@ -29,26 +29,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
         }
     }
 
-    @Override
-    public List<ProjectTeam> getAllProjectTeams() throws ApplicationWideException {
-        List<ProjectTeam> allProjectTeams = new ArrayList<>();
-        try (Connection conn = dbConnector.getConnection();
-             Statement stmt = conn.createStatement()) {
-
-            String sql = "SELECT * FROM ProjectTeams";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                ProjectTeam projectTeam = new ProjectTeam(
-                        rs.getInt("TeamsId"),
-                        rs.getString("TeamName")
-                );
-                allProjectTeams.add(projectTeam);
-            }
-        } catch (SQLException e) {
-            throw new ApplicationWideException("Failed to read all project teams", e);
-        }
-        return allProjectTeams;
-    }
 
     public List<ProjectTeam> getEveryProjectTeam() throws ApplicationWideException {
         List<ProjectTeam> everyProjectTeam = new ArrayList<>();
@@ -291,9 +271,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
-
-
-
 
     private void adjustUtilization(Profile profile, double utilization) throws ApplicationWideException {
         String updateUtilizationSQL = "UPDATE Profile SET TotalUtilization = TotalUtilization - ? WHERE ProfileId = ?";
@@ -591,5 +568,4 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
             }
         }
     }
-
 }

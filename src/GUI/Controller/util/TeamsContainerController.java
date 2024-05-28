@@ -34,7 +34,6 @@ public class TeamsContainerController {
         }
     }
 
-    // Initialize method to create VBox for each team
     public void initialize() {
         geographyMap = fetchGeographyMap();
         List<ProjectTeam> teams = fetchAllProjectTeams();
@@ -67,7 +66,6 @@ public class TeamsContainerController {
         VBox vbox = new VBox(10);
         vbox.getStyleClass().add("team-vbox");
 
-        // Labels creation with null-safe geography name retrieval
         Label lblTeamName = createLabel(team.getTeamName(), "top-label");
         String geoName = geography != null ? geography.getGeographyName() : "Unknown";
 
@@ -103,7 +101,7 @@ public class TeamsContainerController {
     // New method to add a project team dynamically
     public void addProjectTeam(ProjectTeam team) {
         Geography geography = geographyMap.get(team.getGeographyId());
-        team.setGeography(geography);  // Set the geography for the team
+        team.setGeography(geography);
         createAndStoreTeamVBox(team, geography);
     }
 }

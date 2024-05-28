@@ -28,50 +28,45 @@ public class FrameController implements Initializable {
    public enum ViewType {
         DASHBOARD, PROFILES, TEAMS, GEOGRAPHY, MULTIPLIER, CURRENCY
    }
-
+    private static final PseudoClass ACTIVPSEOUDOCLASS = PseudoClass.getPseudoClass("active");
     private ObjectProperty<ViewType> currentView = new SimpleObjectProperty<>(ViewType.DASHBOARD);
 
     private static FrameController instance;
-    private UpdateProjectTeamController updateProjectTeamController;
     private BooleanProperty areChangesMade = new SimpleBooleanProperty(false);
 
     @FXML
     private StackPane stackPaneFrame;
-
-    private final UUID id = UUID.randomUUID();
-
-    // A map to store the views that have been loaded.
-    private Map<String, Node> viewCache = new HashMap<>();
-
-
-    // A stack to store the history of the pages that have been visited.
-    private Stack<Node> pageHistory = new Stack<>();
-
-    private static final PseudoClass ACTIVPSEOUDOCLASS = PseudoClass.getPseudoClass("active");
-
-    private final String BASE_PATH = "/fxml/";
     @FXML
     private Button btnDashboard, btnProfiles, btnTeams, btnGeography ,btnMultiplier ,btnCurrency;
 
+    //map to store the views
+    private Map<String, Node> viewCache = new HashMap<>();
+    // store the history of the pages
+    private Stack<Node> pageHistory = new Stack<>();
 
+    private final String BASE_PATH = "/fxml/";
 
     public FrameController() {
         instance = this;
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setCurrentViewPseudo();
+        loadDashboardOnStart();
+        setupBindings();
+    }
+
+    private void setCurrentViewPseudo() {
         btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, true);
         currentView.addListener((ob, ov, nv) -> {
             if (areChangesMade.get()) {
-                // Ask user to confirm view change if changes are made
                 boolean proceed = showConfirmationDialog();
                 if (!proceed) {
-                    currentView.set(ov); // Revert to the old view
+                    currentView.set(ov);
                     return;
                 }
-                areChangesMade.set(false); // Reset changes flag
+                areChangesMade.set(false);
             }
             btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.DASHBOARD);
             btnProfiles.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.PROFILES);
@@ -80,25 +75,11 @@ public class FrameController implements Initializable {
             btnMultiplier.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.MULTIPLIER);
             btnCurrency.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, nv == ViewType.CURRENCY);
 
-            // Re-enable buttons when switching away from UpdateProjectTeamController view
             if (!nv.equals(ViewType.TEAMS)) {
                 areChangesMade.set(false);
             }
         });
-        loadDashboardOnStart();
-        setupBindings();
     }
-
-    private void setCurrentView(ViewType viewType) {
-        btnDashboard.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.DASHBOARD);
-        btnProfiles.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.PROFILES);
-        btnTeams.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.TEAMS);
-        btnGeography.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.GEOGRAPHY);
-        btnMultiplier.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.MULTIPLIER);
-        btnCurrency.pseudoClassStateChanged(ACTIVPSEOUDOCLASS, viewType == ViewType.CURRENCY);
-        loadView(viewType.toString().toLowerCase() + "View.fxml");
-    }
-
 
     private void loadDashboardOnStart() {
         if (stackPaneFrame != null) {
@@ -108,8 +89,7 @@ public class FrameController implements Initializable {
         }
     }
 
-
-    // This method returns the instance of the FrameController class.
+    // Returns the instance of the FrameController class.
     public static synchronized FrameController getInstance() {
 
         if (instance == null) {
@@ -125,7 +105,6 @@ public class FrameController implements Initializable {
         Node view = viewCache.computeIfAbsent(viewName, this::loadFXML);
         if (view != null) {
             stackPaneFrame.getChildren().setAll(view);
-            //updateButtonSelection(viewName);
         }
     }
 
@@ -139,8 +118,6 @@ public class FrameController implements Initializable {
         }
     }
 
-
-
     public UpdateProjectTeamController getUpdateProjectTeamController() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProjectTeamView.fxml"));
@@ -153,9 +130,6 @@ public class FrameController implements Initializable {
             return null;
         }
     }
-
-
-
 
     private void showErrorAlert(String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -187,6 +161,12 @@ public class FrameController implements Initializable {
     }
 
     @FXML
+    private void openCurrency(ActionEvent actionEvent) {
+        currentView.set(ViewType.CURRENCY);
+        loadView("currencyView.fxml");
+    }
+
+    @FXML
     private void openGeography(ActionEvent actionEvent) {
         currentView.set(ViewType.GEOGRAPHY);
         loadView("geographyView.fxml");
@@ -213,28 +193,11 @@ public class FrameController implements Initializable {
         loadView("TeamsView.fxml");
     }
 
-    @FXML
-    public void loadUpdateProjectTeamView() throws IOException {
-       loadView("updateProjectTeamView.fxml");
-    }
 
-    @FXML
-    public void loadProfileView() {
-        loadView("ProfileView.fxml");
-    }
-
-    @FXML
-    private void openCurrency(ActionEvent actionEvent) {
-        currentView.set(ViewType.CURRENCY);
-        loadView("currencyView.fxml");
-    }
-
-    // This method is called when the shutdown button is clicked.
     @FXML
     private void buttonLogOut(ActionEvent actionEvent) {
         Platform.exit();
     }
-
 
     public void setMainView(Node node) {
         if (stackPaneFrame != null){

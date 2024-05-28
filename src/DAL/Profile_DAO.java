@@ -23,10 +23,7 @@ public class Profile_DAO implements IProfileDataAccess {
         }
     }
 
-    /**
-     * Retrieves all profiles from the database.
-     * @return A list of Profile objects.
-     */
+    //Retrieves all profiles from the database.
     @Override
     public List<Profile> getAllProfiles() throws ApplicationWideException {
         List<Profile> allProfiles = new ArrayList<>();
@@ -62,7 +59,7 @@ public class Profile_DAO implements IProfileDataAccess {
 
 
 
-    //Saves a new profile to the database.
+    //Creates a new profile.
     @Override
     public void createProfile(Profile newProfile) throws ApplicationWideException {
         String sqlProfile = "INSERT INTO dbo.Profile (Fname, Lname, AnualSalary, HourlySalary, " +
@@ -143,7 +140,6 @@ public class Profile_DAO implements IProfileDataAccess {
             throw new ApplicationWideException("Failed to update profile", e);
         }
     }
-
 
     @Override
     public void deleteProfile(int profileId) throws ApplicationWideException {

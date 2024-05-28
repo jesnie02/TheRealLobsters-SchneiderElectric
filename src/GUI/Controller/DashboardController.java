@@ -63,18 +63,13 @@ public class DashboardController implements Initializable {
             setUpFilteredData();
             setupSearchListeners();
 
-            // Populate the AreaChart with team expenses
+            // Populates the AreaChart with team expenses
             populateBarChartWithTeamExpenses();
 
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
         setUpComboBoxListeners();
-
-
-
-
-
     }
 
 
@@ -169,7 +164,7 @@ public class DashboardController implements Initializable {
                 series.getData().add(new XYChart.Data<>(team.getTeamName(), team.getSumOfAnnualSalary()));
             }
 
-            // Add the series to the chart
+            // Add series to the chart
             barChart.getData().add(series);
 
     }
@@ -181,7 +176,6 @@ public class DashboardController implements Initializable {
             lblAvgDailyRateGeo.setText(String.format("%.2f", selectedGeography.getAvgDailyRate()));
             lblAvgHourlyRateGeo.setText(String.format("%.2f", selectedGeography.getAvgHourlyRate()));
         } else {
-            // Clear labels if no geography is selected
             lblSumDailyRateGeo.setText("");
             lblSumHourlyRateGeo.setText("");
             lblAvgDailyRateGeo.setText("");
@@ -196,13 +190,10 @@ public class DashboardController implements Initializable {
             lblAvgDailyRateTeam.setText(String.format("%.2f", selectedTeam.getAvgDailyRate()));
             lblAvgHourlyRateTeam.setText(String.format("%.2f", selectedTeam.getAvgHourlyRate()));
         } else {
-            // Clear labels if no team is selected
             lblHourlyRateSumTeam.setText("");
             lblDailyRateSumTeam.setText("");
             lblAvgDailyRateTeam.setText("");
             lblAvgHourlyRateTeam.setText("");
         }
     }
-
-
 }

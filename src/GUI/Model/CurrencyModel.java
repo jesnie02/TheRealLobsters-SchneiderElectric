@@ -10,15 +10,12 @@ import java.util.List;
 
 public class CurrencyModel {
 
-
     private final CurrencyManager currencyManager;
     private ObservableList<Currency> currencies;
-
 
     public CurrencyModel() throws ApplicationWideException {
         currencyManager = new CurrencyManager();
         loadCurrencies();
-
     }
 
     private void loadCurrencies() {
@@ -34,7 +31,6 @@ public class CurrencyModel {
     public ObservableList<Currency> getCurrencies() {
         return this.currencies;
     }
-
 
     public void setCurrency(Currency selectedCurrency) {
         try {

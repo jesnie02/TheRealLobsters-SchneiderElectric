@@ -37,7 +37,6 @@ public class CreateRoleController implements Initializable {
         closeWindow(actionEvent);
     }
 
-
     private void displayInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -45,7 +44,6 @@ public class CreateRoleController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     private void closeWindow(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();

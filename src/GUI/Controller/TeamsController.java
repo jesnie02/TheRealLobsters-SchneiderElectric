@@ -31,7 +31,6 @@ public class TeamsController implements Initializable {
     private TeamsContainerController teamsContainerController;
     private static TeamsController instance;
 
-    // Instance of FrameController to control the main frame of the application
     private FrameController frameController;
 
     public TeamsController() {
@@ -53,15 +52,11 @@ public class TeamsController implements Initializable {
             tPaneTeamOverview.setPadding(new Insets(16, -16, 16, -16));
             tPaneTeamOverview.setAlignment(Pos.CENTER);
 
-
             loadTeamsInTilePane();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
         }
-
     }
-
-
 
     public void loadTeamsInTilePane() {
         tPaneTeamOverview.getChildren().clear();

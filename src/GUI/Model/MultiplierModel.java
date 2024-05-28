@@ -11,13 +11,10 @@ public class MultiplierModel {
     private MultiplierManager multiplierManager;
 
 
-
-
     public MultiplierModel(MultiplierController multiplierController){
         this.multiplierController = multiplierController;
         this.multiplierManager = new MultiplierManager(new CalculatorManager());
     }
-
 
     public double getResultOfDayRWithMultiplier(double dayRate, double percentage) {
         return multiplierManager.calculateDayRateWithMultiplier(dayRate, percentage);

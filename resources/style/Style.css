@@ -1,10 +1,21 @@
 /* General CSS
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-/* Buttons */
-.button:hover {
-    -fx-background-color: #ececec;
-    -fx-text-fill: #333333;
+/* check-box */
+
+.check-box {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;  /* Green background for the checkbox */
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #3DCD58;
+    -fx-border-width: 1px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #3DCD58;
 }
 
 /* ComboBox */
@@ -35,8 +46,6 @@
     -fx-opacity: 0;
 
 }
-
-
 
 .tab {
     -fx-background-color: transparent;
@@ -320,9 +329,6 @@
         -fx-border-color: transparent transparent transparent #3DCD58;
         -fx-border-width: 0 0 0 3px;
     }
-
-
-
 
 
 

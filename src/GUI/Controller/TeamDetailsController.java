@@ -56,7 +56,6 @@ public class TeamDetailsController implements Initializable {
             frameController = FrameController.getInstance();
             setupTable();
 
-            // Add a listener to the items of the table
             tableViewProfile.itemsProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     ProjectTeam team = DataModelSingleton.getInstance().getCurrentTeam();
@@ -119,10 +118,6 @@ public class TeamDetailsController implements Initializable {
         ));
     }
 
-
-
-
-
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {
         DataModelSingleton.getInstance().setCurrentTeam(team);
@@ -155,12 +150,10 @@ public class TeamDetailsController implements Initializable {
         updateSalaryInfo(team);
     }
 
-
     private void updateSalaryInfo(ProjectTeam team){
         DataModelSingleton.getInstance().setCurrentTeam(team);
 
         txtSumAnnual.setText(String.format("%.2f", team.getSumOfAnnualSalary()));
-
         txtSumDaily.setText(String.format("%.2f", team.getSumOfDailyRate()));
         txtSumHourly.setText(String.format("%.2f", team.getSumOfHourlyRate()));
 
@@ -168,7 +161,7 @@ public class TeamDetailsController implements Initializable {
         txtAvgDaily.setText(String.format("%.2f", team.getAvgDailyRate()));
         txtAvgHourly.setText(String.format("%.2f", team.getAvgHourlyRate()));
 
-        }
+    }
 
 
     @FXML

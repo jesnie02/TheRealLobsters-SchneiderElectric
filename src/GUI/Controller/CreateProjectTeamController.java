@@ -82,8 +82,8 @@ public class CreateProjectTeamController implements Initializable {
             setTblProfileToTeam();
             setupSliderTime();
             setupSliderCost();
-            setTextinFieldTime();
-            setTextinFieldCost();
+            setTextInFieldTime();
+            setTextInFieldCost();
             setupRegex();
         } catch (ApplicationWideException e) {
             ExceptionHandler.handleException(e);
@@ -118,8 +118,8 @@ public class CreateProjectTeamController implements Initializable {
                 utilizationTime = profileUtilizationTime;
                 utilizationCost = profileUtilizationCost;
 
-                setTextinFieldTime();
-                setTextinFieldCost();
+                setTextInFieldTime();
+                setTextInFieldCost();
             }
         });
 
@@ -242,11 +242,6 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-
-
-
-
-
     @FXML
     public void selectProfileToTable(ActionEvent event) {
         Profile selectedProfile = cBoxProfiles.getValue();
@@ -263,7 +258,6 @@ public class CreateProjectTeamController implements Initializable {
             updateTotals();
         }
     }
-
 
     public void createProjectTeam(ActionEvent event) {
         if (!validateInput()) {
@@ -331,7 +325,6 @@ public class CreateProjectTeamController implements Initializable {
 
     }
 
-
     private void clearInputInFields() {
         txtProjectTeamName.clear();
         cBoxGeographies.getSelectionModel().clearSelection();
@@ -340,8 +333,6 @@ public class CreateProjectTeamController implements Initializable {
         sliderUtilizationTime.setValue(0);
 
     }
-
-
 
     private void setupSliderTime() {
         SliderDecimalFilter filter = new SliderDecimalFilter();
@@ -380,11 +371,11 @@ public class CreateProjectTeamController implements Initializable {
         });
     }
 
-    private void setTextinFieldTime() {
+    private void setTextInFieldTime() {
         txtUtilizationTime.setText(String.valueOf(utilizationTime));
     }
 
-    private void setTextinFieldCost() {
+    private void setTextInFieldCost() {
         txtUtilizationCost.setText(String.valueOf(utilizationCost));
     }
 

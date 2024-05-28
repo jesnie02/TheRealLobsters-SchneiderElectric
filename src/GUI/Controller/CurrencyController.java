@@ -47,7 +47,6 @@ public class CurrencyController implements Initializable {
         try {
             currencyModel = new CurrencyModel();
 
-
             ObservableList<Currency> data = currencyModel.getCurrencies();
             filteredData = new FilteredList<>(data, p -> true);
             searchInCurrencyCodes();
@@ -86,7 +85,6 @@ public class CurrencyController implements Initializable {
             colCurrencyId.setCellValueFactory(new PropertyValueFactory<>("currencyId"));
             colCurrencyCodes.setCellValueFactory(new PropertyValueFactory<>("currencyCode"));
             colCurrencyRate.setCellValueFactory(new PropertyValueFactory<>("currencyRate"));
-
         } catch (Exception e) {
             displayMessage("Error setting up the currency table: " + e.getMessage(), true);
         }
@@ -128,7 +126,6 @@ public class CurrencyController implements Initializable {
         }
     }
 
-
     private void displayMessage(String message, boolean isError) {
         lblMessageCurrency.setText(message);
         lblMessageCurrency.setStyle(isError ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
@@ -136,6 +133,5 @@ public class CurrencyController implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), evt -> lblMessageCurrency.setText("")));
         timeline.play();
     }
-
 
 }

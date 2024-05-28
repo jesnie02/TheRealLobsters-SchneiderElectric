@@ -13,23 +13,19 @@ public class ProfileManager {
     private CalculatorManager calculatorManager;
     private CurrencyManager currencyManager;
 
-
     public ProfileManager() throws ApplicationWideException {
         calculatorManager = new CalculatorManager();
         profileDAO = new Profile_DAO();
         currencyManager = new CurrencyManager();
     }
 
-
     public List<Profile> getAllProfiles() throws ApplicationWideException {
         return profileDAO.getAllProfiles();
     }
 
-
     public void createProfile(Profile newProfile) throws ApplicationWideException {
         profileDAO.createProfile(newProfile);
     }
-
 
     public Profile getProfileByName(String name) throws ApplicationWideException {
     for (Profile profile : getAllProfiles()) {
@@ -58,12 +54,7 @@ public class ProfileManager {
                 annualFixedAmountProfile, effectiveHoursProfile);
     }
 
-    /**
-     * Calculates and sets the daily rate for a profile during creation.
-     * @param dailyWorkingHours The daily working hours of the profile.
-     * @param hourlyRate The hourly rate of the profile.
-     * @return The calculated daily rate.
-     */
+   // Calculates and sets the daily rate for a profile during creation.
     public double calculateAndSetDailyRateCreateProfile(double dailyWorkingHours, double hourlyRate) {
         return calculatorManager.calculateAndSetDailyRateCreateProfile(dailyWorkingHours, hourlyRate);
     }
@@ -96,7 +87,6 @@ public class ProfileManager {
         profile.setHourlyRate(newHourlyRate);
         profile.setDailyRate(newDailyRate);
     }
-
 
     public Map<String, Double> calculateAndSetProfileRatesEUR(double annualSalary, double fixedAmount, double hourlyRate, double dailyRate, String currencyCode) throws ApplicationWideException {
         Currency selectedCurrency = currencyManager.getCurrencyByCode(currencyCode);
