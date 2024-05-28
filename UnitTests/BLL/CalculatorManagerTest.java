@@ -1,6 +1,7 @@
 package BLL;
 
 import BE.Profile;
+import BE.ProjectTeam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -199,10 +200,11 @@ class CalculatorManagerTest {
         profiles.add(new Profile(20000, 4354, 200, 15));
         profiles.add(new Profile(30000, 2443, 200, 25));
 
+        ProjectTeam team = new ProjectTeam(profiles);
         double expected = 20;
 
         // Act
-        double actual = calculatorManager.avgHourlyRate(profiles);
+        double actual = calculatorManager.avgHourlyRate(team);
 
         // Assert
         assertEquals(expected, actual);
@@ -216,10 +218,11 @@ class CalculatorManagerTest {
         profiles.add(new Profile(200.0, 0.0, 0.0, 0.0));
         profiles.add(new Profile(300.0, 0.0, 0.0, 0.0));
 
+        ProjectTeam team = new ProjectTeam(profiles);
         double expected = 0.0;
 
         // Act
-        double actual = calculatorManager.avgHourlyRate(profiles);
+        double actual = calculatorManager.avgHourlyRate(team);
 
         // Assert
         assertEquals(expected, actual);
@@ -235,13 +238,13 @@ class CalculatorManagerTest {
         profiles.add(new Profile(20000, 4354, 200));
         profiles.add(new Profile(30000, 2443, 200));
 
+        ProjectTeam team = new ProjectTeam(profiles);
         double expected = 581.33;
 
         // Act
-        double actual = calculatorManager.avgDailyRate(profiles);
+        double actual = calculatorManager.avgDailyRate(team);
 
         // Assert
-        // Allows the test to pass if the actual value is within 0.01 of the expected value
         assertEquals(expected, actual, 0.01);
     }
 
@@ -254,10 +257,11 @@ class CalculatorManagerTest {
         profiles.add(new Profile(200.0, 0.0, 0.0));
         profiles.add(new Profile(300.0, 0.0, 0.0));
 
+        ProjectTeam team = new ProjectTeam(profiles);
         double expected = 0.0;
 
         // Act
-        double actual = calculatorManager.avgDailyRate(profiles);
+        double actual = calculatorManager.avgDailyRate(team);
 
         // Assert
         assertEquals(expected, actual);
@@ -412,10 +416,11 @@ class CalculatorManagerTest {
         profiles.add(new Profile(60000, 20000));
         profiles.add(new Profile(70000, 30000));
 
-        double expected = 80000; // ((50000+10000) + (60000+20000) + (70000 + 30000)) / 3 profiler = 80000
+        ProjectTeam team = new ProjectTeam(profiles);
+        double expected = 80000;
 
         // Act
-        double actual = calculatorManager.avgAnnualSalary(profiles);
+        double actual = calculatorManager.avgAnnualSalary(team);
 
         // Assert
         assertEquals(expected, actual);
@@ -425,11 +430,12 @@ class CalculatorManagerTest {
     void avgAnnualSalary_returnsZeroForEmptyProfiles() {
         // Arrange
         List<Profile> profiles = new ArrayList<>();
+        ProjectTeam team = new ProjectTeam(profiles);
 
         double expected = 0.0;
 
         // Act
-        double actual = calculatorManager.avgAnnualSalary(profiles);
+        double actual = calculatorManager.avgAnnualSalary(team);
 
         // Assert
         assertEquals(expected, actual);
@@ -443,10 +449,11 @@ class CalculatorManagerTest {
         profiles.add(new Profile(0.0, 0.0));
         profiles.add(new Profile(0.0, 0.0));
 
+        ProjectTeam team = new ProjectTeam(profiles);
         double expected = 0.0;
 
         // Act
-        double actual = calculatorManager.avgAnnualSalary(profiles);
+        double actual = calculatorManager.avgAnnualSalary(team);
 
         // Assert
         assertEquals(expected, actual);

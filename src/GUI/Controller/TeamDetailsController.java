@@ -94,7 +94,7 @@ public class TeamDetailsController implements Initializable {
         });
 
         colUtilizationCost.setCellValueFactory(cellData -> {
-            double utilizationCost = 100- cellData.getValue().getUtilizationCost();
+            double utilizationCost = 100-cellData.getValue().getUtilizationCost();
             return new SimpleDoubleProperty(utilizationCost).asObject();
         });
 
@@ -107,7 +107,7 @@ public class TeamDetailsController implements Initializable {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(format.format(item) + " %" );
+                    setText(format.format(item)+ " %");
                 }
             }
         });
@@ -118,6 +118,10 @@ public class TeamDetailsController implements Initializable {
                         .collect(Collectors.joining(", "))
         ));
     }
+
+
+
+
 
     //Here we update the UI with the data from the team and geography
     public void updateUI(ProjectTeam team, Geography geography) {
@@ -133,6 +137,7 @@ public class TeamDetailsController implements Initializable {
         profiles.forEach(profile -> {
             double utilizationTime = profile.getUtilizationTime();
             double utilizationCost = profile.getUtilizationCost();
+            System.out.println("Utilization Time: " + utilizationTime + " Utilization Cost: " + utilizationCost);
 
             double adjustedAnnualSalary = team.getSumOfAnnualSalary() * (utilizationCost / 100);
             double adjustedDailyRate = profile.getDailyRate() * (utilizationCost / 100);

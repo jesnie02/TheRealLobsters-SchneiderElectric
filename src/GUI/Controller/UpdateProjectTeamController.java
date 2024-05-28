@@ -169,9 +169,7 @@ public class UpdateProjectTeamController implements Initializable {
         double dailyRateSum = 0.0;
         double hourlyRateSum = 0.0;
 
-        NumberFormat formatter = NumberFormat.getNumberInstance();
-        formatter.setMinimumFractionDigits(2);
-        formatter.setMaximumFractionDigits(2);
+
 
         for (Profile profile : tblProfileToTeam.getItems()) {
             double utilizationCost = utilizationsCostMap.getOrDefault(profile, 0.0);
@@ -184,9 +182,9 @@ public class UpdateProjectTeamController implements Initializable {
             hourlyRateSum += hourlyRate;
         }
 
-        lblAnnualSalarySum.setText(formatter.format(annualSalarySum));
-        lblDailyRateSum.setText(formatter.format(dailyRateSum));
-        lblHourlyRateSum.setText(formatter.format(hourlyRateSum));
+        lblAnnualSalarySum.setText(String.format("%.2f", annualSalarySum));
+        lblDailyRateSum.setText(String.format("%.2f", dailyRateSum));
+        lblHourlyRateSum.setText(String.format("%.2f", hourlyRateSum));
     }
 
 
@@ -236,7 +234,7 @@ public class UpdateProjectTeamController implements Initializable {
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         colTeamUtilizationCost.setCellValueFactory(cellData -> {
-            double utilization = 100-utilizationsCostMap.getOrDefault(cellData.getValue(), 0.0);
+            double utilization = utilizationsCostMap.getOrDefault(cellData.getValue(), 0.0);
             return new SimpleStringProperty(formatter.format(utilization) + " %");
         });
         tblProfileToTeam.setItems(profiles);

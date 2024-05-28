@@ -60,12 +60,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average annual salary for a list of profiles.
-     * @param teams The project team.
+     * @param team The project team.
      * @return The average annual salary.
      */
-    @Override
-    public double avgAnnualSalary(ProjectTeam teams) {
-        return teams.getSumOfAnnualSalary() / teams.getProfiles().size();
+    public double avgAnnualSalary(ProjectTeam team) {
+        if (team.getProfiles().isEmpty()) return 0;
+        return team.getSumOfAnnualSalary() / team.getProfiles().size();
     }
 
     /**
@@ -84,12 +84,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average hourly rate for a list of profiles.
-     * @param teams The list of profiles.
+     * @param team
      * @return The average hourly rate.
      */
-    @Override
-    public double avgHourlyRate(ProjectTeam teams) {
-        return teams.getSumOfHourlyRate() / teams.getProfiles().size();
+    public double avgHourlyRate(ProjectTeam team) {
+        if (team.getProfiles().isEmpty()) return 0;
+        return team.getSumOfHourlyRate() / team.getProfiles().size();
     }
 
     /**
@@ -108,12 +108,12 @@ public class CalculatorManager implements ICalculateManager {
 
     /**
      * Calculates the average daily rate for a list of profiles.
-     * @param teams The list of profiles.
+     * @param team
      * @return The average daily rate.
      */
-    @Override
-    public double avgDailyRate(ProjectTeam teams){
-        return teams.getSumOfDailyRate() / teams.getProfiles().size();
+    public double avgDailyRate(ProjectTeam team) {
+        if (team.getProfiles().isEmpty()) return 0;
+        return team.getSumOfDailyRate() / team.getProfiles().size();
     }
 
 

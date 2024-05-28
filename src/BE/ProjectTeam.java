@@ -50,6 +50,10 @@ public class ProjectTeam {
         this.geographyId = geographyId;
     }
 
+    //For testing
+    public ProjectTeam (List<Profile> profiles){
+        this.profiles = profiles;
+    }
 
     public int getGeographyId() {
         return geographyId;
