@@ -415,7 +415,6 @@ public class UpdateProjectTeamController implements Initializable {
             FrameController.getInstance().setAreChangesMade(true);
         }
     }
-
 }
 
 
