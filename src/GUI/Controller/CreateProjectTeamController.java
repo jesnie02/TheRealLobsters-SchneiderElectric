@@ -407,6 +407,7 @@ public class CreateProjectTeamController implements Initializable {
 
     private void setupRegex() {
         setRegexValidationForTextFields(txtUtilizationTime);
+        setRegexValidationForTextFields(txtUtilizationCost);
     }
 
     private boolean validateInput() {
