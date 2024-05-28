@@ -65,7 +65,7 @@ public class CalculatorManager implements ICalculateManager {
      */
     public double avgAnnualSalary(ProjectTeam team) {
         if (team.getProfiles().isEmpty()) return 0;
-        return team.getSumOfAnnualSalary() / team.getProfiles().size();
+        return team.getSumOfAnnualSalaries() / team.getProfiles().size();
     }
 
     /**
@@ -88,8 +88,10 @@ public class CalculatorManager implements ICalculateManager {
      * @return The average hourly rate.
      */
     public double avgHourlyRate(ProjectTeam team) {
-        if (team.getProfiles().isEmpty()) return 0;
-        return team.getSumOfHourlyRate() / team.getProfiles().size();
+        if (team.getProfiles().isEmpty()) {
+            return 0;
+        }
+        return team.getSumOfHourlyRates() / team.getProfiles().size();
     }
 
     /**
@@ -113,7 +115,7 @@ public class CalculatorManager implements ICalculateManager {
      */
     public double avgDailyRate(ProjectTeam team) {
         if (team.getProfiles().isEmpty()) return 0;
-        return team.getSumOfDailyRate() / team.getProfiles().size();
+        return team.getSumOfDailyRates() / team.getProfiles().size();
     }
 
 

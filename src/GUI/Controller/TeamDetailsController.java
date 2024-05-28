@@ -137,7 +137,6 @@ public class TeamDetailsController implements Initializable {
         profiles.forEach(profile -> {
             double utilizationTime = profile.getUtilizationTime();
             double utilizationCost = profile.getUtilizationCost();
-            System.out.println("Utilization Time: " + utilizationTime + " Utilization Cost: " + utilizationCost);
 
             double adjustedAnnualSalary = team.getSumOfAnnualSalary() * (utilizationCost / 100);
             double adjustedDailyRate = profile.getDailyRate() * (utilizationCost / 100);

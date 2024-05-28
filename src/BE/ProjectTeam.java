@@ -197,4 +197,17 @@ public class ProjectTeam {
     public Geography getGeography() {
         return geography;
     }
+
+    //-----------------------For testing-----------------------
+    public double getSumOfHourlyRates() {
+        return profiles.stream().mapToDouble(Profile::getHourlyRate).sum();
+    }
+
+    public double getSumOfDailyRates() {
+        return profiles.stream().mapToDouble(Profile::getDailyRate).sum();
+    }
+
+    public double getSumOfAnnualSalaries() {
+        return profiles.stream().mapToDouble(Profile::getAnnualSalary).sum();
+    }
 }

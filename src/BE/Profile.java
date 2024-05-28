@@ -123,7 +123,6 @@ public class Profile {
         this.fixedAmount = fixedAmount;
         this.dailyRate = dailyRate;
         this.hourlySalary = hourlyRate;
-        this.profileRoles = new ArrayList<>();
     }
 
 
@@ -132,6 +131,7 @@ public class Profile {
         this.annualSalary = annualSalary;
         this.fixedAmount = fixedAmount;
     }
+
 
     public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, double fixedAmount, List<ProfileRole> profileRoles) {
         this.profileId = id;

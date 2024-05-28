@@ -201,24 +201,27 @@ class CalculatorManagerTest {
         profiles.add(new Profile(30000, 2443, 200, 25));
 
         ProjectTeam team = new ProjectTeam(profiles);
-        double expected = 20;
+
+        double expected = 20.0; // (20 + 15 + 25) / 3 = 20
 
         // Act
         double actual = calculatorManager.avgHourlyRate(team);
 
         // Assert
         assertEquals(expected, actual);
+
     }
 
     @Test
     void avgHourlyRate_returnsZeroForProfilesWithZeroHourlyRate() {
         // Arrange
         List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(100.0, 0.0, 0.0, 0.0));
-        profiles.add(new Profile(200.0, 0.0, 0.0, 0.0));
-        profiles.add(new Profile(300.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(100.0, 0.0, 0.0));
+        profiles.add(new Profile(200.0, 0.0, 0.0));
+        profiles.add(new Profile(300.0, 0.0, 0.0));
 
         ProjectTeam team = new ProjectTeam(profiles);
+
         double expected = 0.0;
 
         // Act
@@ -234,12 +237,13 @@ class CalculatorManagerTest {
     void avgDailyRate_returnsCorrectAverageForValidProfiles() {
         // Arrange
         List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(200000, 14124, 1344));
-        profiles.add(new Profile(20000, 4354, 200));
-        profiles.add(new Profile(30000, 2443, 200));
+        profiles.add(new Profile(200000, 14124, 1344, 20));
+        profiles.add(new Profile(20000, 4354, 200, 15));
+        profiles.add(new Profile(30000, 2443, 200, 25));
 
         ProjectTeam team = new ProjectTeam(profiles);
-        double expected = 581.33;
+
+        double expected = 1744.0 / 3; // Total daily rate sum / number of profiles
 
         // Act
         double actual = calculatorManager.avgDailyRate(team);
@@ -258,6 +262,7 @@ class CalculatorManagerTest {
         profiles.add(new Profile(300.0, 0.0, 0.0));
 
         ProjectTeam team = new ProjectTeam(profiles);
+
         double expected = 0.0;
 
         // Act
@@ -412,12 +417,13 @@ class CalculatorManagerTest {
     void avgAnnualSalary_returnsCorrectAverageForValidProfiles() {
         // Arrange
         List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(50000, 10000));
-        profiles.add(new Profile(60000, 20000));
-        profiles.add(new Profile(70000, 30000));
+        profiles.add(new Profile(50000, 10000, 25, 200));
+        profiles.add(new Profile(60000, 15000, 30, 250));
+        profiles.add(new Profile(70000, 20000, 35, 300));
 
         ProjectTeam team = new ProjectTeam(profiles);
-        double expected = 80000;
+
+        double expected = (50000 + 60000 + 70000) / 3.0; // Annual salary + fixed amount / number of profiles
 
         // Act
         double actual = calculatorManager.avgAnnualSalary(team);
@@ -429,8 +435,7 @@ class CalculatorManagerTest {
     @Test
     void avgAnnualSalary_returnsZeroForEmptyProfiles() {
         // Arrange
-        List<Profile> profiles = new ArrayList<>();
-        ProjectTeam team = new ProjectTeam(profiles);
+        ProjectTeam team = new ProjectTeam(new ArrayList<>());
 
         double expected = 0.0;
 
@@ -439,17 +444,19 @@ class CalculatorManagerTest {
 
         // Assert
         assertEquals(expected, actual);
+
     }
 
     @Test
     void avgAnnualSalary_returnsZeroForProfilesWithZeroAnnualSalary() {
         // Arrange
         List<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile(0.0, 0.0));
-        profiles.add(new Profile(0.0, 0.0));
-        profiles.add(new Profile(0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
+        profiles.add(new Profile(0.0, 0.0, 0.0, 0.0));
 
         ProjectTeam team = new ProjectTeam(profiles);
+
         double expected = 0.0;
 
         // Act

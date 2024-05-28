@@ -153,7 +153,6 @@ public class ProjectTeams_DAO implements IProjectTeamsDataAccess {
                                 pstmtInsertProfileProjectTeams.setInt(2, teamId);
                                 pstmtInsertProfileProjectTeams.setDouble(3, utilization);
                                 pstmtInsertProfileProjectTeams.setDouble(4, utilizationCost);
-                                System.out.println("Profile:" + profile.getFName() + "From PT_DAO " +utilizationCost);
                                 pstmtInsertProfileProjectTeams.addBatch();
 
                             } catch (SQLException e) {
