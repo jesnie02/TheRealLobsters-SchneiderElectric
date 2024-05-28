@@ -32,15 +32,6 @@ public class Profile {
         this.overheadMultiplier = overheadMultiplier;
     }
 
-    public Profile(String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
-        this.fName = fName;
-        this.lName = lName;
-        this.overheadCost = overheadCost;
-        this.annualSalary = annualSalary;
-        this.hourlySalary = hourlySalary;
-        this.dailyRate = dailyRate;
-        this.profileRoles = new ArrayList<>();
-    }
 
     //Create Profile
     public Profile(String firstName, String lastName, boolean overheadCost, double annualSalary, double hourlyResult, double dailyResult, double fixedAmount, double dailyWorkingHours, List<ProfileRole> profileRoles, double effectiveWorkingHours, double overheadMultiplier) {
@@ -71,7 +62,7 @@ public class Profile {
         this.profileRoles = profileRoles;
     }
 
-    // tilhører getProfileFromProjectTeam i Projecteam_DAO bruges til update team
+    // belongs to getProfileFromProjectTeam in Projecteam_DAO used for update team
     public Profile(int profileId, String fName, String lName, Boolean overheadCost, double annualSalary, double hourlyRate, double dailyRate, double fixedAmount, double dailyWorkingHours, double totalUtilization, double utilizationCost, double effectiveHours, double overheadMultiplier) {
         this.profileId = profileId;
         this.fName = fName;
@@ -131,7 +122,18 @@ public class Profile {
         this.fixedAmount = fixedAmount;
     }
 
+    // For testing purposes
+    public Profile(String fName, String lName, boolean overheadCost, double annualSalary, double hourlySalary, double dailyRate) {
+        this.fName = fName;
+        this.lName = lName;
+        this.overheadCost = overheadCost;
+        this.annualSalary = annualSalary;
+        this.hourlySalary = hourlySalary;
+        this.dailyRate = dailyRate;
+        this.profileRoles = new ArrayList<>();
+    }
 
+    // Used in ProjectTeamDAO to get profiles from a team
     public Profile(int id, String fName, String lName, boolean overhead, double annual, double hourly, double daily, double workingHR, double utilizationTime, double utilizationCost, double fixedAmount, List<ProfileRole> profileRoles) {
         this.profileId = id;
         this.fName = fName;
