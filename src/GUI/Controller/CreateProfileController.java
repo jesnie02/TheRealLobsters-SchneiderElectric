@@ -158,11 +158,7 @@ public class CreateProfileController implements Initializable {
 
          cBox_Currency.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
              if (newValue != null) {
-                 try {
-                     calculateAndSetProfileRatesInEUR();
-                 } catch (ApplicationWideException e) {
-                     ExceptionHandler.handleException(e);
-                 }
+                 calculateAndSetProfileRatesInEUR();
              }
          });
     }
@@ -171,11 +167,8 @@ public class CreateProfileController implements Initializable {
         ChangeListener<String> textFieldListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             calculateAndSetHourlyRateCreateProfile();
             calculateAndSetDailyRateCreateProdifle();
-            try {
-                calculateAndSetProfileRatesInEUR();
-            } catch (ApplicationWideException e) {
-                ExceptionHandler.handleException(e);
-            }
+            calculateAndSetProfileRatesInEUR();
+
         };
 
         txtFixedAmount.textProperty().addListener(textFieldListener);
@@ -274,7 +267,7 @@ public class CreateProfileController implements Initializable {
     }
 
 
-    public void calculateAndSetProfileRatesInEUR() throws ApplicationWideException {
+    public void calculateAndSetProfileRatesInEUR() {
         if (txtAnnualSalary.getText().isEmpty() || lblHourlyResult.getText().isEmpty() || lblDailyResult.getText().isEmpty()) {
             return;
         }
@@ -289,7 +282,12 @@ public class CreateProfileController implements Initializable {
         double fixedAmount = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
         double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
         double dailyRate = Double.parseDouble(lblDailyResult.getText().replace(",", "."));
-        Map<String, Double> result = profileModel.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, currency);
+        Map<String, Double> result = null;
+        try {
+            result = profileModel.calculateAndSetProfileRatesEUR(annualSalary, fixedAmount, hourlyRate, dailyRate, currency);
+        } catch (ApplicationWideException e) {
+            ExceptionHandler.handleException(e);
+        }
         lblAnnualResultEUR.setText(String.format("%.2f", result.get("annualSalaryEUR")));
         lblHourlyResultEUR.setText(String.format("%.2f", result.get("hourlyRateEUR")));
         lblDailyResultInEUR.setText(String.format("%.2f", result.get("dailyRateEUR")));
