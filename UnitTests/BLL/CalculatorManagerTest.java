@@ -583,7 +583,7 @@ class CalculatorManagerTest {
         double fixedAmount = 10000;
         double hourlyRate = 25;
         double dailyRate = 200;
-        double conversionRate = 1.2; // Assuming 1 EUR = 1.2 of the selected currency
+        double conversionRate = 1.2;
 
         Map<String, Double> expected = new HashMap<>();
         expected.put("annualSalaryEUR", (annualSalary + fixedAmount) / conversionRate);
@@ -689,8 +689,8 @@ class CalculatorManagerTest {
     @Test
     void calculateRatesWithUtilizationForUpdateTeam_returnsCorrectValuesForValidInput() {
         // Arrange
-        Profile profile = new Profile(50000, 10000, 25, 200); // Assuming these are the annualSalary, fixedAmount, hourlyRate, and dailyRate respectively
-        double utilization = 80; // 80%
+        Profile profile = new Profile(50000, 10000, 25, 200);
+        double utilization = 80;
 
         double expectedHourlyRate = profile.getHourlySalary() * (utilization / 100);
         double expectedDailyRate = profile.getDailyRate() * (utilization / 100);
