@@ -157,8 +157,13 @@ public class CreateProfileController implements Initializable {
             calculateAndSetHourlyRateCreateProfile();
             calculateAndSetDailyRateCreateProdifle();
             calculateAndSetProfileRatesInEUR();
-
         };
+
+        setRegexValidationForTextFields(txtFixedAmount);
+        setRegexValidationForTextFields(txtEffectiveHours);
+        setRegexValidationForTextFields(txtAnnualSalary);
+        setRegexValidationForTextFields(txtOverheadView);
+        setRegexValidationForTextFields(txtDailyWorkingHours);
 
         txtFixedAmount.textProperty().addListener(textFieldListener);
         txtEffectiveHours.textProperty().addListener(textFieldListener);
@@ -167,7 +172,9 @@ public class CreateProfileController implements Initializable {
         txtDailyWorkingHours.textProperty().addListener(textFieldListener);
     }
 
-     //This method initializes fields, ComboBoxes, and listeners. with the values from the database.
+
+
+    //This method initializes fields, ComboBoxes, and listeners. with the values from the database.
      //getAllCountries() and getAllProjectTeams() are methods read from the database.
     @FXML
     public void initialize() {
@@ -189,9 +196,9 @@ public class CreateProfileController implements Initializable {
 
         String firstName = txtFirstnameProfile.getText();
         String lastName = txtLastnameProfile.getText();
-        double annualSalary = parseDouble(txtAnnualSalary.getText());
-        double hourlyResult = calculateAndSetHourlyRateCreateProfile();
-        double dailyResult = calculateAndSetDailyRateCreateProdifle();
+        double annualSalary = parseDouble(lblAnnualResultEUR.getText());
+        double hourlyResult = parseDouble(lblHourlyResultEUR.getText());
+        double dailyResult = parseDouble(lblDailyResultInEUR.getText());
         boolean overheadCost = checkOverhead.isSelected();
         double fixedAmount = parseDouble(txtFixedAmount.getText());
         double dailyWorkingHours = parseDouble(txtDailyWorkingHours.getText());
@@ -262,6 +269,7 @@ public class CreateProfileController implements Initializable {
         }
 
         String currency = selectedCurrency.toString();
+
         double annualSalary = Double.parseDouble(txtAnnualSalary.getText().replace(",", "."));
         double fixedAmount = Double.parseDouble(txtFixedAmount.getText().replace(",", "."));
         double hourlyRate = Double.parseDouble(lblHourlyResult.getText().replace(",", "."));
@@ -278,16 +286,25 @@ public class CreateProfileController implements Initializable {
     }
 
     private double parseDouble(String value) {
-        return Double.parseDouble(value.replace(",", "."));
+        if (value == null || value.trim().isEmpty()) {
+            return 0.0;
+        }
+
+            return Double.parseDouble(value.replace(",", "."));
+
     }
 
-    private void setRegexValidationForTextFields(TextField textField){
+
+    private void setRegexValidationForTextFields(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*([\\.,]\\d*)?")) {
+            if (newValue.isEmpty()) {
+                textField.setText("0");
+            } else if (!newValue.matches("\\d*([\\.,]\\d*)?")) {
                 textField.setText(oldValue);
             }
         });
     }
+
 
     private void setupRegex(){
         setRegexValidationForTextFields(txtAnnualSalary);
