@@ -242,7 +242,6 @@ public class Geography_DAO implements IGeographyDataAccess {
                 throw new ApplicationWideException("Failed to delete geography roolback", e);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new ApplicationWideException("Failed to delete geography", e);
         }
     }
@@ -273,9 +272,11 @@ public class Geography_DAO implements IGeographyDataAccess {
                 pstmtDeleteGeographyCountry.executeUpdate();
 
                 for (Country country : geography.getCountries()) {
-                    pstmtInsertGeographyCountry.setInt(1, geography.getGeographyId());
-                    pstmtInsertGeographyCountry.setInt(2, country.getCountryId());
-                    pstmtInsertGeographyCountry.addBatch();
+                    if (country != null) {
+                        pstmtInsertGeographyCountry.setInt(1, geography.getGeographyId());
+                        pstmtInsertGeographyCountry.setInt(2, country.getCountryId());
+                        pstmtInsertGeographyCountry.addBatch();
+                    }
                 }
                 pstmtInsertGeographyCountry.executeBatch();
 
@@ -288,4 +289,5 @@ public class Geography_DAO implements IGeographyDataAccess {
             throw new ApplicationWideException("Failed to update geography", e);
         }
     }
+
 }
